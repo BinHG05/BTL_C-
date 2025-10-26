@@ -1,5 +1,15 @@
-﻿.vs/
-bin/
-obj/
+﻿## Visual Studio
+.vs/
 *.user
 *.suo
+
+## Build results
+bin/
+obj/
+Debug/
+Release/
+
+## User-specific files
+*.userprefs
+*.userosscache
+*.sln.docstates
