@@ -9,7 +9,9 @@ namespace ExpenseManager.App
         static void Main()
         {
             ApplicationConfiguration.Initialize();
-            Application.Run(new MainForm());
+            //Application.Run(new Layout());
+            Application.Run(new ExpenseManager.App.Views.Layout());
+
         }
     }
 }
