@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using FontAwesome.Sharp;
 using System.IO;
-
+using ExpenseManager.App.Views.User.UC;
 
 namespace ExpenseManager.App.Views
 {
     public partial class Layout : Form
     {
-        private IconButton btnDashboard, btnWallets, btnBudgets, btnGoals, btnAnalytics, btnProfile;
+        private IconButton btnDashboard, btnWallets, btnBudgets, btnGoals, btnAnalytics, btnSettings;
         private IconButton currentButton;
 
         private Color themeColor = ColorTranslator.FromHtml("#2F2CD8");
@@ -42,7 +42,7 @@ namespace ExpenseManager.App.Views
                 Height = 80,
                 BackColor = Color.White
             };
-            mainPanel.Controls.Add(headerPanel);
+            this.headerPanel.Controls.Add(headerPanel);
 
             // Ô tìm kiếm
             Panel searchBox = new Panel
@@ -218,7 +218,7 @@ namespace ExpenseManager.App.Views
 
             PictureBox logoPic = new PictureBox
             {
-                Image = Image.FromFile(Path.Combine(Application.StartupPath, "Images", "logo.png")),
+                Image = Image.FromFile(Path.Combine(Application.StartupPath, "image", "logo.png")),
                 SizeMode = PictureBoxSizeMode.Zoom,
                 Dock = DockStyle.Fill,
                 BackColor = Color.Transparent
@@ -226,7 +226,7 @@ namespace ExpenseManager.App.Views
             
 
             // === Buttons ===
-            btnProfile = CreateSidebarButton("Profile", IconChar.UserCircle);
+            btnSettings = CreateSidebarButton("Settings", IconChar.Gear);
             btnAnalytics = CreateSidebarButton("Analytics", IconChar.ChartLine);
             btnGoals = CreateSidebarButton("Goals", IconChar.Bullseye);
             btnBudgets = CreateSidebarButton("Budgets", IconChar.Coins);
@@ -235,14 +235,14 @@ namespace ExpenseManager.App.Views
 
             sidebarPanel.Controls.AddRange(new Control[]
             {
-                btnProfile, btnAnalytics, btnGoals, btnBudgets, btnWallets, btnDashboard
+                btnSettings, btnAnalytics, btnGoals, btnBudgets, btnWallets, btnDashboard
             });
 
             logoPanel.Controls.Add(logoPic);
             sidebarPanel.Controls.Add(logoPanel);
 
             // === Main Panel (có sẵn) ===
-            mainPanel.BackColor = Color.FromArgb(245, 245, 245);
+            this.headerPanel.BackColor = Color.FromArgb(245, 245, 245);
 
             // === Timer & Hover logic ===
             sidebarTimer = new Timer { Interval = 200 };
@@ -251,6 +251,9 @@ namespace ExpenseManager.App.Views
 
             sidebarPanel.MouseEnter += SidebarPanel_MouseEnter;
             sidebarPanel.MouseLeave += SidebarPanel_MouseLeave;
+
+            //thêm sự kiện settings click
+            btnSettings.Click += BtnSettings_Click;
         }
 
         private IconButton CreateSidebarButton(string text, IconChar icon)
@@ -375,6 +378,17 @@ namespace ExpenseManager.App.Views
             int nLeftRect, int nTopRect, int nRightRect, int nBottomRect,
             int nWidthEllipse, int nHeightEllipse
         );
+        private void BtnSettings_Click(object sender, EventArgs e)
+        {
+            ActivateButton(btnSettings);
+            LoadContent(new UC_Settings());
+        }
+        private void LoadContent(UserControl uc)
+        {
+            contentPanel.Controls.Clear();
+            uc.Dock = DockStyle.Fill;
+            contentPanel.Controls.Add(uc);
+        }
 
     }
 }
