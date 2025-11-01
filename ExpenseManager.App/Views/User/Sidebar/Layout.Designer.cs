@@ -29,7 +29,8 @@
         private void InitializeComponent()
         {
             sidebarPanel = new System.Windows.Forms.Panel();
-            mainPanel = new System.Windows.Forms.Panel();
+            headerPanel = new System.Windows.Forms.Panel();
+            contentPanel = new System.Windows.Forms.Panel();
             SuspendLayout();
             // 
             // sidebarPanel
@@ -40,20 +41,30 @@
             sidebarPanel.Size = new System.Drawing.Size(250, 553);
             sidebarPanel.TabIndex = 0;
             // 
-            // mainPanel
+            // headerPanel
             // 
-            mainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            mainPanel.Location = new System.Drawing.Point(250, 0);
-            mainPanel.Name = "mainPanel";
-            mainPanel.Size = new System.Drawing.Size(932, 553);
-            mainPanel.TabIndex = 1;
+            headerPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            headerPanel.Location = new System.Drawing.Point(250, 0);
+            headerPanel.Name = "headerPanel";
+            headerPanel.Size = new System.Drawing.Size(932, 64);
+            headerPanel.TabIndex = 1;
+            // 
+            // contentPanel
+            // 
+            contentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            contentPanel.Location = new System.Drawing.Point(250, 64);
+            contentPanel.Name = "contentPanel";
+            contentPanel.Size = new System.Drawing.Size(932, 489);
+            contentPanel.TabIndex = 2;
+            //contentPanel.Paint += this.contentPanel_Paint;
             // 
             // Layout
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(1182, 553);
-            Controls.Add(mainPanel);
+            Controls.Add(contentPanel);
+            Controls.Add(headerPanel);
             Controls.Add(sidebarPanel);
             Name = "Layout";
             Text = "Form1";
@@ -63,6 +74,7 @@
         #endregion
 
         private System.Windows.Forms.Panel sidebarPanel;
-        private System.Windows.Forms.Panel mainPanel;
+        private System.Windows.Forms.Panel headerPanel;
+        private System.Windows.Forms.Panel contentPanel;
     }
 }
