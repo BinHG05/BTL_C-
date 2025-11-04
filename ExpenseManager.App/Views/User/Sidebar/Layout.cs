@@ -100,7 +100,7 @@ namespace ExpenseManager.App.Views
             btnSearch.FlatAppearance.BorderSize = 0;
             btnSearch.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, btnSearch.Width, btnSearch.Height, 15, 15));
 
-           
+
             // Nút thêm giao dịch
             IconButton btnAddTransaction = new IconButton
             {
@@ -119,7 +119,7 @@ namespace ExpenseManager.App.Views
             btnAddTransaction.FlatAppearance.BorderSize = 0;
             btnAddTransaction.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, btnAddTransaction.Width, btnAddTransaction.Height, 15, 15));
 
-            
+
             Panel rightPanel = new Panel
             {
                 Dock = DockStyle.Right,
@@ -129,7 +129,7 @@ namespace ExpenseManager.App.Views
             };
             headerPanel.Controls.Add(rightPanel);
 
-            
+
             IconButton btnProfileTop = new IconButton
             {
                 IconChar = IconChar.UserCircle,
@@ -143,7 +143,7 @@ namespace ExpenseManager.App.Views
             };
             btnProfileTop.FlatAppearance.BorderSize = 0;
 
-            
+
             IconButton btnToggleTheme = new IconButton
             {
                 IconChar = IconChar.Moon,
@@ -159,7 +159,7 @@ namespace ExpenseManager.App.Views
 
             rightPanel.Controls.Add(btnToggleTheme);
             rightPanel.Controls.Add(btnProfileTop);
-            
+
 
 
             //Panel căn giữa
@@ -208,7 +208,7 @@ namespace ExpenseManager.App.Views
             sidebarPanel.BackColor = Color.White;
             sidebarPanel.Width = sidebarFullWidth;
 
-            
+
             Panel logoPanel = new Panel
             {
                 Height = 80,
@@ -223,7 +223,7 @@ namespace ExpenseManager.App.Views
                 Dock = DockStyle.Fill,
                 BackColor = Color.Transparent
             };
-            
+
 
             // === Buttons ===
             btnSettings = CreateSidebarButton("Settings", IconChar.Gear);
@@ -330,15 +330,15 @@ namespace ExpenseManager.App.Views
 
         private void SidebarTimer_Tick(object sender, EventArgs e)
         {
-            
+
             Point cursorPos = PointToClient(Cursor.Position);
 
-            
+
             if (cursorPos.X <= 20 && !sidebarExpanded)
             {
                 ExpandSidebar(true);
             }
-            
+
             else if (cursorPos.X > sidebarPanel.Width + 50 && sidebarExpanded)
             {
                 ExpandSidebar(false);
@@ -390,5 +390,9 @@ namespace ExpenseManager.App.Views
             contentPanel.Controls.Add(uc);
         }
 
+        private void Layout_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

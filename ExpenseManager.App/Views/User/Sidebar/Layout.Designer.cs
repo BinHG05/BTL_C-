@@ -37,37 +37,41 @@
             // 
             sidebarPanel.Dock = System.Windows.Forms.DockStyle.Left;
             sidebarPanel.Location = new System.Drawing.Point(0, 0);
+            sidebarPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             sidebarPanel.Name = "sidebarPanel";
-            sidebarPanel.Size = new System.Drawing.Size(250, 553);
+            sidebarPanel.Size = new System.Drawing.Size(312, 691);
             sidebarPanel.TabIndex = 0;
             // 
             // headerPanel
             // 
             headerPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            headerPanel.Location = new System.Drawing.Point(250, 0);
+            headerPanel.Location = new System.Drawing.Point(312, 0);
+            headerPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             headerPanel.Name = "headerPanel";
-            headerPanel.Size = new System.Drawing.Size(932, 64);
+            headerPanel.Size = new System.Drawing.Size(1166, 80);
             headerPanel.TabIndex = 1;
             // 
             // contentPanel
             // 
             contentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            contentPanel.Location = new System.Drawing.Point(250, 64);
+            contentPanel.Location = new System.Drawing.Point(312, 80);
+            contentPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             contentPanel.Name = "contentPanel";
-            contentPanel.Size = new System.Drawing.Size(932, 489);
+            contentPanel.Size = new System.Drawing.Size(1166, 611);
             contentPanel.TabIndex = 2;
-            //contentPanel.Paint += this.contentPanel_Paint;
             // 
             // Layout
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(1182, 553);
+            ClientSize = new System.Drawing.Size(1478, 691);
             Controls.Add(contentPanel);
             Controls.Add(headerPanel);
             Controls.Add(sidebarPanel);
+            Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             Name = "Layout";
             Text = "Form1";
+            Load += Layout_Load;
             ResumeLayout(false);
         }
 
