@@ -32,7 +32,6 @@
             cmbAmount = new System.Windows.Forms.ComboBox();
             btnResetAll = new System.Windows.Forms.Button();
             lblItemsCount = new System.Windows.Forms.Label();
-            pnlBudgetGrid = new System.Windows.Forms.Panel();
             pnlFoodGroceries = new System.Windows.Forms.Panel();
             lblFoodTitle = new System.Windows.Forms.Label();
             pnlFoodChart = new System.Windows.Forms.Panel();
@@ -97,6 +96,8 @@
             lblPercentLeft = new System.Windows.Forms.Label();
             lblAmountLeft = new System.Windows.Forms.Label();
             btnMoreMonthly = new System.Windows.Forms.Button();
+            tlpMain = new System.Windows.Forms.TableLayoutPanel();
+            tlpRight = new System.Windows.Forms.TableLayoutPanel();
             pnlMostExpenses = new System.Windows.Forms.Panel();
             lblMostExpensesTitle = new System.Windows.Forms.Label();
             cmbExpensesMonth = new System.Windows.Forms.ComboBox();
@@ -104,7 +105,6 @@
             pnlHeader.SuspendLayout();
             pnlFilters.SuspendLayout();
             pnlActiveFilters.SuspendLayout();
-            pnlBudgetGrid.SuspendLayout();
             pnlFoodGroceries.SuspendLayout();
             pnlCafeRestaurants.SuspendLayout();
             pnlHealthBeauty.SuspendLayout();
@@ -112,6 +112,8 @@
             pnlInvestments.SuspendLayout();
             pnlEntertainment.SuspendLayout();
             pnlMonthlyBudget.SuspendLayout();
+            tlpMain.SuspendLayout();
+            tlpRight.SuspendLayout();
             pnlMostExpenses.SuspendLayout();
             SuspendLayout();
             // 
@@ -126,8 +128,9 @@
             pnlHeader.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             pnlHeader.Name = "pnlHeader";
             pnlHeader.Padding = new System.Windows.Forms.Padding(43, 33, 43, 33);
-            pnlHeader.Size = new System.Drawing.Size(1714, 167);
+            pnlHeader.Size = new System.Drawing.Size(2157, 167);
             pnlHeader.TabIndex = 0;
+            pnlHeader.Paint += pnlHeader_Paint;
             // 
             // lblTitle
             // 
@@ -160,7 +163,7 @@
             btnAddNewBudget.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             btnAddNewBudget.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             btnAddNewBudget.ForeColor = System.Drawing.Color.White;
-            btnAddNewBudget.Location = new System.Drawing.Point(1446, 58);
+            btnAddNewBudget.Location = new System.Drawing.Point(1385, 58);
             btnAddNewBudget.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             btnAddNewBudget.Name = "btnAddNewBudget";
             btnAddNewBudget.Size = new System.Drawing.Size(257, 67);
@@ -181,7 +184,7 @@
             pnlFilters.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             pnlFilters.Name = "pnlFilters";
             pnlFilters.Padding = new System.Windows.Forms.Padding(43, 25, 43, 25);
-            pnlFilters.Size = new System.Drawing.Size(1714, 117);
+            pnlFilters.Size = new System.Drawing.Size(2157, 117);
             pnlFilters.TabIndex = 1;
             pnlFilters.Paint += pnlFilters_Paint;
             // 
@@ -266,8 +269,9 @@
             pnlActiveFilters.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             pnlActiveFilters.Name = "pnlActiveFilters";
             pnlActiveFilters.Padding = new System.Windows.Forms.Padding(43, 25, 43, 25);
-            pnlActiveFilters.Size = new System.Drawing.Size(1714, 100);
+            pnlActiveFilters.Size = new System.Drawing.Size(2157, 100);
             pnlActiveFilters.TabIndex = 2;
+            pnlActiveFilters.Paint += pnlActiveFilters_Paint;
             // 
             // cmbStatus
             // 
@@ -322,21 +326,6 @@
             lblItemsCount.TabIndex = 3;
             lblItemsCount.Text = "6 items";
             // 
-            // pnlBudgetGrid
-            // 
-            pnlBudgetGrid.BackColor = System.Drawing.Color.Transparent;
-            pnlBudgetGrid.Controls.Add(pnlFoodGroceries);
-            pnlBudgetGrid.Controls.Add(pnlCafeRestaurants);
-            pnlBudgetGrid.Controls.Add(pnlHealthBeauty);
-            pnlBudgetGrid.Controls.Add(pnlTraveling);
-            pnlBudgetGrid.Controls.Add(pnlInvestments);
-            pnlBudgetGrid.Controls.Add(pnlEntertainment);
-            pnlBudgetGrid.Location = new System.Drawing.Point(43, 417);
-            pnlBudgetGrid.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            pnlBudgetGrid.Name = "pnlBudgetGrid";
-            pnlBudgetGrid.Size = new System.Drawing.Size(1257, 967);
-            pnlBudgetGrid.TabIndex = 3;
-            // 
             // pnlFoodGroceries
             // 
             pnlFoodGroceries.BackColor = System.Drawing.Color.White;
@@ -348,11 +337,12 @@
             pnlFoodGroceries.Controls.Add(lblFoodLeftAmount);
             pnlFoodGroceries.Controls.Add(lblFoodStatus);
             pnlFoodGroceries.Controls.Add(btnEditFood);
-            pnlFoodGroceries.Location = new System.Drawing.Point(0, 0);
-            pnlFoodGroceries.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            pnlFoodGroceries.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnlFoodGroceries.Location = new System.Drawing.Point(70, 70);
+            pnlFoodGroceries.Margin = new System.Windows.Forms.Padding(20);
             pnlFoodGroceries.Name = "pnlFoodGroceries";
             pnlFoodGroceries.Padding = new System.Windows.Forms.Padding(29, 33, 29, 33);
-            pnlFoodGroceries.Size = new System.Drawing.Size(614, 300);
+            pnlFoodGroceries.Size = new System.Drawing.Size(678, 360);
             pnlFoodGroceries.TabIndex = 0;
             // 
             // lblFoodTitle
@@ -441,7 +431,7 @@
             btnEditFood.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
             btnEditFood.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             btnEditFood.Font = new System.Drawing.Font("Segoe UI", 10F);
-            btnEditFood.Location = new System.Drawing.Point(529, 25);
+            btnEditFood.Location = new System.Drawing.Point(367, 25);
             btnEditFood.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             btnEditFood.Name = "btnEditFood";
             btnEditFood.Size = new System.Drawing.Size(57, 58);
@@ -460,18 +450,19 @@
             pnlCafeRestaurants.Controls.Add(lblCafeLeftAmount);
             pnlCafeRestaurants.Controls.Add(lblCafeStatus);
             pnlCafeRestaurants.Controls.Add(btnEditCafe);
-            pnlCafeRestaurants.Location = new System.Drawing.Point(643, 0);
-            pnlCafeRestaurants.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            pnlCafeRestaurants.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnlCafeRestaurants.Location = new System.Drawing.Point(788, 70);
+            pnlCafeRestaurants.Margin = new System.Windows.Forms.Padding(20);
             pnlCafeRestaurants.Name = "pnlCafeRestaurants";
             pnlCafeRestaurants.Padding = new System.Windows.Forms.Padding(29, 33, 29, 33);
-            pnlCafeRestaurants.Size = new System.Drawing.Size(614, 300);
+            pnlCafeRestaurants.Size = new System.Drawing.Size(799, 360);
             pnlCafeRestaurants.TabIndex = 1;
             // 
             // lblCafeTitle
             // 
             lblCafeTitle.AutoSize = true;
             lblCafeTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            lblCafeTitle.Location = new System.Drawing.Point(29, 33);
+            lblCafeTitle.Location = new System.Drawing.Point(52, 33);
             lblCafeTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             lblCafeTitle.Name = "lblCafeTitle";
             lblCafeTitle.Size = new System.Drawing.Size(244, 38);
@@ -525,7 +516,7 @@
             // 
             lblCafeLeftAmount.AutoSize = true;
             lblCafeLeftAmount.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            lblCafeLeftAmount.Location = new System.Drawing.Point(377, 147);
+            lblCafeLeftAmount.Location = new System.Drawing.Point(369, 147);
             lblCafeLeftAmount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             lblCafeLeftAmount.Name = "lblCafeLeftAmount";
             lblCafeLeftAmount.Size = new System.Drawing.Size(229, 38);
@@ -553,7 +544,7 @@
             btnEditCafe.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
             btnEditCafe.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             btnEditCafe.Font = new System.Drawing.Font("Segoe UI", 10F);
-            btnEditCafe.Location = new System.Drawing.Point(529, 25);
+            btnEditCafe.Location = new System.Drawing.Point(449, 25);
             btnEditCafe.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             btnEditCafe.Name = "btnEditCafe";
             btnEditCafe.Size = new System.Drawing.Size(57, 58);
@@ -572,12 +563,13 @@
             pnlHealthBeauty.Controls.Add(lblHealthLeftAmount);
             pnlHealthBeauty.Controls.Add(lblHealthStatus);
             pnlHealthBeauty.Controls.Add(btnEditHealth);
-            pnlHealthBeauty.Location = new System.Drawing.Point(0, 333);
-            pnlHealthBeauty.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            pnlHealthBeauty.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnlHealthBeauty.Location = new System.Drawing.Point(70, 870);
+            pnlHealthBeauty.Margin = new System.Windows.Forms.Padding(20);
             pnlHealthBeauty.Name = "pnlHealthBeauty";
             pnlHealthBeauty.Padding = new System.Windows.Forms.Padding(29, 33, 29, 33);
-            pnlHealthBeauty.Size = new System.Drawing.Size(614, 300);
-            pnlHealthBeauty.TabIndex = 2;
+            pnlHealthBeauty.Size = new System.Drawing.Size(678, 360);
+            pnlHealthBeauty.TabIndex = 6;
             // 
             // lblHealthTitle
             // 
@@ -665,7 +657,7 @@
             btnEditHealth.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
             btnEditHealth.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             btnEditHealth.Font = new System.Drawing.Font("Segoe UI", 10F);
-            btnEditHealth.Location = new System.Drawing.Point(529, 25);
+            btnEditHealth.Location = new System.Drawing.Point(367, 25);
             btnEditHealth.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             btnEditHealth.Name = "btnEditHealth";
             btnEditHealth.Size = new System.Drawing.Size(57, 58);
@@ -684,11 +676,12 @@
             pnlTraveling.Controls.Add(lblTravelingLeftAmount);
             pnlTraveling.Controls.Add(lblTravelingStatus);
             pnlTraveling.Controls.Add(btnEditTraveling);
-            pnlTraveling.Location = new System.Drawing.Point(643, 333);
-            pnlTraveling.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            pnlTraveling.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnlTraveling.Location = new System.Drawing.Point(70, 470);
+            pnlTraveling.Margin = new System.Windows.Forms.Padding(20);
             pnlTraveling.Name = "pnlTraveling";
             pnlTraveling.Padding = new System.Windows.Forms.Padding(29, 33, 29, 33);
-            pnlTraveling.Size = new System.Drawing.Size(614, 300);
+            pnlTraveling.Size = new System.Drawing.Size(678, 360);
             pnlTraveling.TabIndex = 3;
             // 
             // lblTravelingTitle
@@ -762,7 +755,7 @@
             lblTravelingStatus.BackColor = System.Drawing.Color.FromArgb(255, 237, 213);
             lblTravelingStatus.Font = new System.Drawing.Font("Segoe UI", 9F);
             lblTravelingStatus.ForeColor = System.Drawing.Color.FromArgb(217, 119, 6);
-            lblTravelingStatus.Location = new System.Drawing.Point(29, 233);
+            lblTravelingStatus.Location = new System.Drawing.Point(37, 288);
             lblTravelingStatus.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             lblTravelingStatus.Name = "lblTravelingStatus";
             lblTravelingStatus.Padding = new System.Windows.Forms.Padding(11, 7, 11, 7);
@@ -777,7 +770,7 @@
             btnEditTraveling.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
             btnEditTraveling.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             btnEditTraveling.Font = new System.Drawing.Font("Segoe UI", 10F);
-            btnEditTraveling.Location = new System.Drawing.Point(529, 25);
+            btnEditTraveling.Location = new System.Drawing.Point(246, 25);
             btnEditTraveling.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             btnEditTraveling.Name = "btnEditTraveling";
             btnEditTraveling.Size = new System.Drawing.Size(57, 58);
@@ -796,11 +789,12 @@
             pnlInvestments.Controls.Add(lblInvestmentsLeftAmount);
             pnlInvestments.Controls.Add(lblInvestmentsStatus);
             pnlInvestments.Controls.Add(btnEditInvestments);
-            pnlInvestments.Location = new System.Drawing.Point(0, 667);
-            pnlInvestments.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            pnlInvestments.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnlInvestments.Location = new System.Drawing.Point(788, 470);
+            pnlInvestments.Margin = new System.Windows.Forms.Padding(20);
             pnlInvestments.Name = "pnlInvestments";
             pnlInvestments.Padding = new System.Windows.Forms.Padding(29, 33, 29, 33);
-            pnlInvestments.Size = new System.Drawing.Size(614, 300);
+            pnlInvestments.Size = new System.Drawing.Size(799, 360);
             pnlInvestments.TabIndex = 4;
             // 
             // lblInvestmentsTitle
@@ -874,7 +868,7 @@
             lblInvestmentsStatus.BackColor = System.Drawing.Color.FromArgb(217, 249, 157);
             lblInvestmentsStatus.Font = new System.Drawing.Font("Segoe UI", 9F);
             lblInvestmentsStatus.ForeColor = System.Drawing.Color.FromArgb(74, 142, 8);
-            lblInvestmentsStatus.Location = new System.Drawing.Point(29, 233);
+            lblInvestmentsStatus.Location = new System.Drawing.Point(33, 272);
             lblInvestmentsStatus.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             lblInvestmentsStatus.Name = "lblInvestmentsStatus";
             lblInvestmentsStatus.Padding = new System.Windows.Forms.Padding(11, 7, 11, 7);
@@ -889,7 +883,7 @@
             btnEditInvestments.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
             btnEditInvestments.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             btnEditInvestments.Font = new System.Drawing.Font("Segoe UI", 10F);
-            btnEditInvestments.Location = new System.Drawing.Point(529, 25);
+            btnEditInvestments.Location = new System.Drawing.Point(449, 25);
             btnEditInvestments.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             btnEditInvestments.Name = "btnEditInvestments";
             btnEditInvestments.Size = new System.Drawing.Size(57, 58);
@@ -908,11 +902,12 @@
             pnlEntertainment.Controls.Add(lblEntertainmentLeftAmount);
             pnlEntertainment.Controls.Add(lblEntertainmentStatus);
             pnlEntertainment.Controls.Add(btnEditEntertainment);
-            pnlEntertainment.Location = new System.Drawing.Point(643, 667);
-            pnlEntertainment.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            pnlEntertainment.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnlEntertainment.Location = new System.Drawing.Point(788, 870);
+            pnlEntertainment.Margin = new System.Windows.Forms.Padding(20);
             pnlEntertainment.Name = "pnlEntertainment";
             pnlEntertainment.Padding = new System.Windows.Forms.Padding(29, 33, 29, 33);
-            pnlEntertainment.Size = new System.Drawing.Size(614, 300);
+            pnlEntertainment.Size = new System.Drawing.Size(799, 360);
             pnlEntertainment.TabIndex = 5;
             // 
             // lblEntertainmentTitle
@@ -1001,7 +996,7 @@
             btnEditEntertainment.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
             btnEditEntertainment.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             btnEditEntertainment.Font = new System.Drawing.Font("Segoe UI", 10F);
-            btnEditEntertainment.Location = new System.Drawing.Point(529, 25);
+            btnEditEntertainment.Location = new System.Drawing.Point(645, 25);
             btnEditEntertainment.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             btnEditEntertainment.Name = "btnEditEntertainment";
             btnEditEntertainment.Size = new System.Drawing.Size(57, 58);
@@ -1021,11 +1016,11 @@
             pnlMonthlyBudget.Controls.Add(lblPercentLeft);
             pnlMonthlyBudget.Controls.Add(lblAmountLeft);
             pnlMonthlyBudget.Controls.Add(btnMoreMonthly);
-            pnlMonthlyBudget.Location = new System.Drawing.Point(1329, 417);
-            pnlMonthlyBudget.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            pnlMonthlyBudget.Location = new System.Drawing.Point(20, 20);
+            pnlMonthlyBudget.Margin = new System.Windows.Forms.Padding(20);
             pnlMonthlyBudget.Name = "pnlMonthlyBudget";
             pnlMonthlyBudget.Padding = new System.Windows.Forms.Padding(29, 33, 29, 33);
-            pnlMonthlyBudget.Size = new System.Drawing.Size(343, 583);
+            pnlMonthlyBudget.Size = new System.Drawing.Size(451, 595);
             pnlMonthlyBudget.TabIndex = 4;
             pnlMonthlyBudget.Paint += pnlMonthlyBudget_Paint;
             // 
@@ -1072,6 +1067,7 @@
             pnlMonthlyChart.Name = "pnlMonthlyChart";
             pnlMonthlyChart.Size = new System.Drawing.Size(229, 267);
             pnlMonthlyChart.TabIndex = 3;
+            pnlMonthlyChart.Paint += pnlMonthlyChart_Paint;
             // 
             // lblMonthlySpent
             // 
@@ -1102,7 +1098,7 @@
             lblPercentLeft.AutoSize = true;
             lblPercentLeft.Font = new System.Drawing.Font("Segoe UI", 8F);
             lblPercentLeft.ForeColor = System.Drawing.Color.Gray;
-            lblPercentLeft.Location = new System.Drawing.Point(236, 500);
+            lblPercentLeft.Location = new System.Drawing.Point(344, 500);
             lblPercentLeft.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             lblPercentLeft.Name = "lblPercentLeft";
             lblPercentLeft.Size = new System.Drawing.Size(67, 21);
@@ -1114,7 +1110,7 @@
             lblAmountLeft.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             lblAmountLeft.AutoSize = true;
             lblAmountLeft.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            lblAmountLeft.Location = new System.Drawing.Point(207, 530);
+            lblAmountLeft.Location = new System.Drawing.Point(315, 530);
             lblAmountLeft.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             lblAmountLeft.Name = "lblAmountLeft";
             lblAmountLeft.Size = new System.Drawing.Size(77, 28);
@@ -1128,7 +1124,7 @@
             btnMoreMonthly.FlatAppearance.BorderSize = 0;
             btnMoreMonthly.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             btnMoreMonthly.Font = new System.Drawing.Font("Segoe UI", 10F);
-            btnMoreMonthly.Location = new System.Drawing.Point(257, 25);
+            btnMoreMonthly.Location = new System.Drawing.Point(365, 25);
             btnMoreMonthly.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             btnMoreMonthly.Name = "btnMoreMonthly";
             btnMoreMonthly.Size = new System.Drawing.Size(57, 58);
@@ -1136,24 +1132,63 @@
             btnMoreMonthly.Text = "⋯";
             btnMoreMonthly.UseVisualStyleBackColor = false;
             // 
+            // tlpMain
+            // 
+            tlpMain.ColumnCount = 2;
+            tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 46.1538467F));
+            tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 53.8461533F));
+            tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            tlpMain.Controls.Add(pnlEntertainment, 1, 2);
+            tlpMain.Controls.Add(pnlInvestments, 1, 1);
+            tlpMain.Controls.Add(pnlTraveling, 0, 1);
+            tlpMain.Controls.Add(pnlCafeRestaurants, 1, 0);
+            tlpMain.Controls.Add(pnlFoodGroceries, 0, 0);
+            tlpMain.Controls.Add(pnlHealthBeauty, 0, 2);
+            tlpMain.Location = new System.Drawing.Point(0, 384);
+            tlpMain.Name = "tlpMain";
+            tlpMain.Padding = new System.Windows.Forms.Padding(50);
+            tlpMain.RowCount = 3;
+            tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 400F));
+            tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 400F));
+            tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 400F));
+            tlpMain.Size = new System.Drawing.Size(1657, 1270);
+            tlpMain.TabIndex = 10;
+            tlpMain.Paint += tlpMain_Paint;
+            // 
+            // tlpRight
+            // 
+            tlpRight.ColumnCount = 1;
+            tlpRight.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tlpRight.Controls.Add(pnlMostExpenses, 0, 1);
+            tlpRight.Controls.Add(pnlMonthlyBudget, 0, 0);
+            tlpRight.Location = new System.Drawing.Point(1657, 384);
+            tlpRight.Name = "tlpRight";
+            tlpRight.RowCount = 1;
+            tlpRight.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            tlpRight.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            tlpRight.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            tlpRight.Size = new System.Drawing.Size(500, 1270);
+            tlpRight.TabIndex = 9;
+            // 
             // pnlMostExpenses
             // 
             pnlMostExpenses.BackColor = System.Drawing.Color.White;
             pnlMostExpenses.Controls.Add(lblMostExpensesTitle);
             pnlMostExpenses.Controls.Add(cmbExpensesMonth);
             pnlMostExpenses.Controls.Add(pnlExpensesList);
-            pnlMostExpenses.Location = new System.Drawing.Point(1329, 1033);
-            pnlMostExpenses.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            pnlMostExpenses.Location = new System.Drawing.Point(20, 655);
+            pnlMostExpenses.Margin = new System.Windows.Forms.Padding(20);
             pnlMostExpenses.Name = "pnlMostExpenses";
             pnlMostExpenses.Padding = new System.Windows.Forms.Padding(29, 33, 29, 33);
-            pnlMostExpenses.Size = new System.Drawing.Size(343, 350);
+            pnlMostExpenses.Size = new System.Drawing.Size(450, 575);
             pnlMostExpenses.TabIndex = 5;
+            pnlMostExpenses.Paint += pnlMostExpenses_Paint;
             // 
             // lblMostExpensesTitle
             // 
             lblMostExpensesTitle.AutoSize = true;
             lblMostExpensesTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            lblMostExpensesTitle.Location = new System.Drawing.Point(29, 33);
+            lblMostExpensesTitle.Location = new System.Drawing.Point(29, 29);
             lblMostExpensesTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             lblMostExpensesTitle.Name = "lblMostExpensesTitle";
             lblMostExpensesTitle.Size = new System.Drawing.Size(183, 32);
@@ -1167,7 +1202,7 @@
             cmbExpensesMonth.Font = new System.Drawing.Font("Segoe UI", 8F);
             cmbExpensesMonth.FormattingEnabled = true;
             cmbExpensesMonth.Items.AddRange(new object[] { "This month", "Last month", "This year" });
-            cmbExpensesMonth.Location = new System.Drawing.Point(179, 35);
+            cmbExpensesMonth.Location = new System.Drawing.Point(286, 35);
             cmbExpensesMonth.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             cmbExpensesMonth.Name = "cmbExpensesMonth";
             cmbExpensesMonth.Size = new System.Drawing.Size(134, 29);
@@ -1180,7 +1215,7 @@
             pnlExpensesList.Location = new System.Drawing.Point(29, 92);
             pnlExpensesList.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             pnlExpensesList.Name = "pnlExpensesList";
-            pnlExpensesList.Size = new System.Drawing.Size(286, 233);
+            pnlExpensesList.Size = new System.Drawing.Size(286, 180);
             pnlExpensesList.TabIndex = 2;
             // 
             // UC_Budget
@@ -1189,21 +1224,19 @@
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             AutoScroll = true;
             BackColor = System.Drawing.Color.FromArgb(243, 240, 253);
-            Controls.Add(pnlMostExpenses);
-            Controls.Add(pnlMonthlyBudget);
-            Controls.Add(pnlBudgetGrid);
+            Controls.Add(tlpRight);
+            Controls.Add(tlpMain);
             Controls.Add(pnlActiveFilters);
             Controls.Add(pnlFilters);
             Controls.Add(pnlHeader);
             Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             Name = "UC_Budget";
-            Size = new System.Drawing.Size(1714, 1500);
+            Size = new System.Drawing.Size(2157, 1654);
             pnlHeader.ResumeLayout(false);
             pnlHeader.PerformLayout();
             pnlFilters.ResumeLayout(false);
             pnlActiveFilters.ResumeLayout(false);
             pnlActiveFilters.PerformLayout();
-            pnlBudgetGrid.ResumeLayout(false);
             pnlFoodGroceries.ResumeLayout(false);
             pnlFoodGroceries.PerformLayout();
             pnlCafeRestaurants.ResumeLayout(false);
@@ -1218,6 +1251,8 @@
             pnlEntertainment.PerformLayout();
             pnlMonthlyBudget.ResumeLayout(false);
             pnlMonthlyBudget.PerformLayout();
+            tlpMain.ResumeLayout(false);
+            tlpRight.ResumeLayout(false);
             pnlMostExpenses.ResumeLayout(false);
             pnlMostExpenses.PerformLayout();
             ResumeLayout(false);
@@ -1240,7 +1275,6 @@
         private System.Windows.Forms.ComboBox cmbAmount;
         private System.Windows.Forms.Button btnResetAll;
         private System.Windows.Forms.Label lblItemsCount;
-        private System.Windows.Forms.Panel pnlBudgetGrid;
         private System.Windows.Forms.Panel pnlFoodGroceries;
         private System.Windows.Forms.Label lblFoodTitle;
         private System.Windows.Forms.Panel pnlFoodChart;
@@ -1305,12 +1339,12 @@
         private System.Windows.Forms.Label lblPercentLeft;
         private System.Windows.Forms.Label lblAmountLeft;
         private System.Windows.Forms.Button btnMoreMonthly;
+        private System.Windows.Forms.TableLayoutPanel tlpMain;
+        private System.Windows.Forms.TableLayoutPanel tlpRight;
         private System.Windows.Forms.Panel pnlMostExpenses;
         private System.Windows.Forms.Label lblMostExpensesTitle;
         private System.Windows.Forms.ComboBox cmbExpensesMonth;
         private System.Windows.Forms.Panel pnlExpensesList;
-
-
     }
             
 }

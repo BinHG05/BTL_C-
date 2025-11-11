@@ -62,6 +62,8 @@
             pnlRecentTransactions = new System.Windows.Forms.Panel();
             lblRecentTitle = new System.Windows.Forms.Label();
             dgvTransactions = new System.Windows.Forms.DataGridView();
+            tlpMain = new System.Windows.Forms.TableLayoutPanel();
+            tlpTop = new System.Windows.Forms.TableLayoutPanel();
             pnlHeader.SuspendLayout();
             pnlTotalBalance.SuspendLayout();
             pnlAccounts.SuspendLayout();
@@ -76,6 +78,8 @@
             pnlStatistics.SuspendLayout();
             pnlRecentTransactions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvTransactions).BeginInit();
+            tlpMain.SuspendLayout();
+            tlpTop.SuspendLayout();
             SuspendLayout();
             // 
             // pnlHeader
@@ -89,7 +93,7 @@
             pnlHeader.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             pnlHeader.Name = "pnlHeader";
             pnlHeader.Padding = new System.Windows.Forms.Padding(43, 33, 43, 33);
-            pnlHeader.Size = new System.Drawing.Size(1714, 167);
+            pnlHeader.Size = new System.Drawing.Size(1662, 167);
             pnlHeader.TabIndex = 0;
             // 
             // lblTitle
@@ -123,7 +127,7 @@
             btnAddNewAccount.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             btnAddNewAccount.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             btnAddNewAccount.ForeColor = System.Drawing.Color.White;
-            btnAddNewAccount.Location = new System.Drawing.Point(1446, 58);
+            btnAddNewAccount.Location = new System.Drawing.Point(1394, 58);
             btnAddNewAccount.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             btnAddNewAccount.Name = "btnAddNewAccount";
             btnAddNewAccount.Size = new System.Drawing.Size(257, 67);
@@ -141,11 +145,12 @@
             pnlTotalBalance.Controls.Add(btnTransfer);
             pnlTotalBalance.Controls.Add(btnRequest);
             pnlTotalBalance.Controls.Add(btnMore);
-            pnlTotalBalance.Location = new System.Drawing.Point(43, 200);
-            pnlTotalBalance.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            pnlTotalBalance.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnlTotalBalance.Location = new System.Drawing.Point(50, 50);
+            pnlTotalBalance.Margin = new System.Windows.Forms.Padding(20);
             pnlTotalBalance.Name = "pnlTotalBalance";
             pnlTotalBalance.Padding = new System.Windows.Forms.Padding(36, 42, 36, 42);
-            pnlTotalBalance.Size = new System.Drawing.Size(686, 367);
+            pnlTotalBalance.Size = new System.Drawing.Size(600, 370);
             pnlTotalBalance.TabIndex = 1;
             // 
             // lblTotalBalanceTitle
@@ -190,7 +195,7 @@
             cmbAllAccounts.Font = new System.Drawing.Font("Segoe UI", 9F);
             cmbAllAccounts.FormattingEnabled = true;
             cmbAllAccounts.Items.AddRange(new object[] { "All accounts", "Bank accounts", "Credit cards", "Digital wallets" });
-            cmbAllAccounts.Location = new System.Drawing.Point(471, 50);
+            cmbAllAccounts.Location = new System.Drawing.Point(385, 50);
             cmbAllAccounts.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             cmbAllAccounts.Name = "cmbAllAccounts";
             cmbAllAccounts.Size = new System.Drawing.Size(170, 33);
@@ -249,11 +254,13 @@
             pnlAccounts.Controls.Add(pnlAccountCards);
             pnlAccounts.Controls.Add(btnDetails);
             pnlAccounts.Controls.Add(cmbMonth);
-            pnlAccounts.Location = new System.Drawing.Point(757, 200);
-            pnlAccounts.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            pnlAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnlAccounts.Location = new System.Drawing.Point(690, 50);
+            pnlAccounts.Margin = new System.Windows.Forms.Padding(20);
             pnlAccounts.Name = "pnlAccounts";
-            pnlAccounts.Size = new System.Drawing.Size(914, 367);
+            pnlAccounts.Size = new System.Drawing.Size(922, 370);
             pnlAccounts.TabIndex = 2;
+            pnlAccounts.Paint += pnlAccounts_Paint;
             // 
             // lblYourAccounts
             // 
@@ -287,7 +294,7 @@
             pnlAccountCards.Location = new System.Drawing.Point(14, 117);
             pnlAccountCards.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             pnlAccountCards.Name = "pnlAccountCards";
-            pnlAccountCards.Size = new System.Drawing.Size(886, 233);
+            pnlAccountCards.Size = new System.Drawing.Size(810, 233);
             pnlAccountCards.TabIndex = 2;
             // 
             // pnlCard1
@@ -462,7 +469,7 @@
             btnDetails.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             btnDetails.Font = new System.Drawing.Font("Segoe UI", 9F);
             btnDetails.ForeColor = System.Drawing.Color.FromArgb(124, 108, 254);
-            btnDetails.Location = new System.Drawing.Point(729, 17);
+            btnDetails.Location = new System.Drawing.Point(737, 17);
             btnDetails.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             btnDetails.Name = "btnDetails";
             btnDetails.Size = new System.Drawing.Size(114, 50);
@@ -477,7 +484,7 @@
             cmbMonth.Font = new System.Drawing.Font("Segoe UI", 9F);
             cmbMonth.FormattingEnabled = true;
             cmbMonth.Items.AddRange(new object[] { "Jun 2024", "May 2024", "Apr 2024" });
-            cmbMonth.Location = new System.Drawing.Point(614, 20);
+            cmbMonth.Location = new System.Drawing.Point(622, 20);
             cmbMonth.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             cmbMonth.Name = "cmbMonth";
             cmbMonth.Size = new System.Drawing.Size(113, 33);
@@ -490,11 +497,12 @@
             pnlTransactionsChart.Controls.Add(lblTransactionsTitle);
             pnlTransactionsChart.Controls.Add(pnlChart);
             pnlTransactionsChart.Controls.Add(btnSeeAll);
-            pnlTransactionsChart.Location = new System.Drawing.Point(43, 600);
-            pnlTransactionsChart.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            pnlTransactionsChart.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnlTransactionsChart.Location = new System.Drawing.Point(70, 70);
+            pnlTransactionsChart.Margin = new System.Windows.Forms.Padding(20);
             pnlTransactionsChart.Name = "pnlTransactionsChart";
             pnlTransactionsChart.Padding = new System.Windows.Forms.Padding(36, 42, 36, 42);
-            pnlTransactionsChart.Size = new System.Drawing.Size(1057, 467);
+            pnlTransactionsChart.Size = new System.Drawing.Size(897, 464);
             pnlTransactionsChart.TabIndex = 3;
             // 
             // lblTransactionsTitle
@@ -513,7 +521,7 @@
             pnlChart.Location = new System.Drawing.Point(36, 117);
             pnlChart.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             pnlChart.Name = "pnlChart";
-            pnlChart.Size = new System.Drawing.Size(986, 308);
+            pnlChart.Size = new System.Drawing.Size(840, 308);
             pnlChart.TabIndex = 1;
             // 
             // btnSeeAll
@@ -524,7 +532,7 @@
             btnSeeAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             btnSeeAll.Font = new System.Drawing.Font("Segoe UI", 9F);
             btnSeeAll.ForeColor = System.Drawing.Color.FromArgb(124, 108, 254);
-            btnSeeAll.Location = new System.Drawing.Point(907, 42);
+            btnSeeAll.Location = new System.Drawing.Point(747, 42);
             btnSeeAll.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             btnSeeAll.Name = "btnSeeAll";
             btnSeeAll.Size = new System.Drawing.Size(114, 50);
@@ -540,11 +548,12 @@
             pnlStatistics.Controls.Add(pnlDonutChart);
             pnlStatistics.Controls.Add(lblTotalIncome);
             pnlStatistics.Controls.Add(lblIncomeAmount);
-            pnlStatistics.Location = new System.Drawing.Point(1129, 600);
-            pnlStatistics.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            pnlStatistics.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnlStatistics.Location = new System.Drawing.Point(1007, 70);
+            pnlStatistics.Margin = new System.Windows.Forms.Padding(20);
             pnlStatistics.Name = "pnlStatistics";
             pnlStatistics.Padding = new System.Windows.Forms.Padding(36, 42, 36, 42);
-            pnlStatistics.Size = new System.Drawing.Size(543, 467);
+            pnlStatistics.Size = new System.Drawing.Size(585, 464);
             pnlStatistics.TabIndex = 4;
             // 
             // lblStatisticsTitle
@@ -565,7 +574,7 @@
             cmbStatMonth.Font = new System.Drawing.Font("Segoe UI", 9F);
             cmbStatMonth.FormattingEnabled = true;
             cmbStatMonth.Items.AddRange(new object[] { "Jun 2024", "May 2024", "Apr 2024" });
-            cmbStatMonth.Location = new System.Drawing.Point(379, 47);
+            cmbStatMonth.Location = new System.Drawing.Point(421, 47);
             cmbStatMonth.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             cmbStatMonth.Name = "cmbStatMonth";
             cmbStatMonth.Size = new System.Drawing.Size(127, 33);
@@ -606,13 +615,15 @@
             // pnlRecentTransactions
             // 
             pnlRecentTransactions.BackColor = System.Drawing.Color.White;
+            tlpMain.SetColumnSpan(pnlRecentTransactions, 2);
             pnlRecentTransactions.Controls.Add(lblRecentTitle);
             pnlRecentTransactions.Controls.Add(dgvTransactions);
-            pnlRecentTransactions.Location = new System.Drawing.Point(43, 1100);
-            pnlRecentTransactions.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            pnlRecentTransactions.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnlRecentTransactions.Location = new System.Drawing.Point(70, 574);
+            pnlRecentTransactions.Margin = new System.Windows.Forms.Padding(20);
             pnlRecentTransactions.Name = "pnlRecentTransactions";
             pnlRecentTransactions.Padding = new System.Windows.Forms.Padding(36, 42, 36, 42);
-            pnlRecentTransactions.Size = new System.Drawing.Size(1629, 417);
+            pnlRecentTransactions.Size = new System.Drawing.Size(1522, 465);
             pnlRecentTransactions.TabIndex = 5;
             // 
             // lblRecentTitle
@@ -638,21 +649,53 @@
             dgvTransactions.Size = new System.Drawing.Size(1557, 267);
             dgvTransactions.TabIndex = 1;
             // 
+            // tlpMain
+            // 
+            tlpMain.ColumnCount = 2;
+            tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            tlpMain.Controls.Add(pnlRecentTransactions, 0, 1);
+            tlpMain.Controls.Add(pnlStatistics, 1, 0);
+            tlpMain.Controls.Add(pnlTransactionsChart, 0, 0);
+            tlpMain.Dock = System.Windows.Forms.DockStyle.Bottom;
+            tlpMain.Location = new System.Drawing.Point(0, 637);
+            tlpMain.Name = "tlpMain";
+            tlpMain.Padding = new System.Windows.Forms.Padding(50);
+            tlpMain.RowCount = 2;
+            tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            tlpMain.Size = new System.Drawing.Size(1662, 1109);
+            tlpMain.TabIndex = 6;
+            tlpMain.Paint += tlpMain_Paint;
+            // 
+            // tlpTop
+            // 
+            tlpTop.ColumnCount = 2;
+            tlpTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            tlpTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            tlpTop.Controls.Add(pnlAccounts, 1, 0);
+            tlpTop.Controls.Add(pnlTotalBalance, 0, 0);
+            tlpTop.Dock = System.Windows.Forms.DockStyle.Top;
+            tlpTop.Location = new System.Drawing.Point(0, 167);
+            tlpTop.Name = "tlpTop";
+            tlpTop.Padding = new System.Windows.Forms.Padding(30);
+            tlpTop.RowCount = 1;
+            tlpTop.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tlpTop.Size = new System.Drawing.Size(1662, 470);
+            tlpTop.TabIndex = 7;
+            // 
             // UC_Wallet
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             AutoScroll = true;
             BackColor = System.Drawing.Color.FromArgb(243, 240, 253);
-            Controls.Add(pnlRecentTransactions);
-            Controls.Add(pnlStatistics);
-            Controls.Add(pnlTransactionsChart);
-            Controls.Add(pnlAccounts);
-            Controls.Add(pnlTotalBalance);
+            Controls.Add(tlpTop);
+            Controls.Add(tlpMain);
             Controls.Add(pnlHeader);
             Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             Name = "UC_Wallet";
-            Size = new System.Drawing.Size(1714, 1583);
+            Size = new System.Drawing.Size(1662, 1583);
             Load += UC_Wallet_Load;
             pnlHeader.ResumeLayout(false);
             pnlHeader.PerformLayout();
@@ -677,6 +720,8 @@
             pnlRecentTransactions.ResumeLayout(false);
             pnlRecentTransactions.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvTransactions).EndInit();
+            tlpMain.ResumeLayout(false);
+            tlpTop.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -727,5 +772,7 @@
         private System.Windows.Forms.Panel pnlRecentTransactions;
         private System.Windows.Forms.Label lblRecentTitle;
         private System.Windows.Forms.DataGridView dgvTransactions;
+        private System.Windows.Forms.TableLayoutPanel tlpMain;
+        private System.Windows.Forms.TableLayoutPanel tlpTop;
     }
 }

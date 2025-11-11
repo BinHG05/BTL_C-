@@ -21,5 +21,15 @@ namespace ExpenseManager.App.Views.Admin.UC
         {
 
         }
+
+        private void pnlAccounts_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void tlpMain_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

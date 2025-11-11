@@ -26,7 +26,6 @@
             pnlFilter = new System.Windows.Forms.Panel();
             btnCalendar = new System.Windows.Forms.Button();
             btnThisMonth = new System.Windows.Forms.Button();
-            pnlStats = new System.Windows.Forms.Panel();
             pnlTotalBalance = new System.Windows.Forms.Panel();
             lblTotalBalanceTitle = new System.Windows.Forms.Label();
             cmbTotalBalanceCurrency = new System.Windows.Forms.ComboBox();
@@ -43,14 +42,6 @@
             lblIncomeTransactions = new System.Windows.Forms.Label();
             lblIncomeExtra = new System.Windows.Forms.Label();
             lblIncomeCategories = new System.Windows.Forms.Label();
-            pnlExpense = new System.Windows.Forms.Panel();
-            lblExpenseTitle = new System.Windows.Forms.Label();
-            cmbExpenseCurrency = new System.Windows.Forms.ComboBox();
-            lblExpenseAmount = new System.Windows.Forms.Label();
-            lblExpenseChange = new System.Windows.Forms.Label();
-            lblExpenseTransactions = new System.Windows.Forms.Label();
-            lblExpenseExtra = new System.Windows.Forms.Label();
-            lblExpenseCategories = new System.Windows.Forms.Label();
             pnlTotalBalanceOverview = new System.Windows.Forms.Panel();
             lblOverviewTitle = new System.Windows.Forms.Label();
             pnlOverviewChart = new System.Windows.Forms.Panel();
@@ -65,15 +56,26 @@
             lblComparingTitle = new System.Windows.Forms.Label();
             cmbComparingYear = new System.Windows.Forms.ComboBox();
             pnlBarChart = new System.Windows.Forms.Panel();
+            tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            pnlExpense = new System.Windows.Forms.Panel();
+            lblExpenseTitle = new System.Windows.Forms.Label();
+            cmbExpenseCurrency = new System.Windows.Forms.ComboBox();
+            lblExpenseAmount = new System.Windows.Forms.Label();
+            lblExpenseChange = new System.Windows.Forms.Label();
+            lblExpenseTransactions = new System.Windows.Forms.Label();
+            lblExpenseExtra = new System.Windows.Forms.Label();
+            lblExpenseCategories = new System.Windows.Forms.Label();
+            tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             pnlHeader.SuspendLayout();
             pnlFilter.SuspendLayout();
-            pnlStats.SuspendLayout();
             pnlTotalBalance.SuspendLayout();
             pnlIncome.SuspendLayout();
-            pnlExpense.SuspendLayout();
             pnlTotalBalanceOverview.SuspendLayout();
             pnlStatistics.SuspendLayout();
             pnlComparingBudget.SuspendLayout();
+            tableLayoutPanel1.SuspendLayout();
+            pnlExpense.SuspendLayout();
+            tableLayoutPanel2.SuspendLayout();
             SuspendLayout();
             // 
             // pnlHeader
@@ -202,18 +204,6 @@
             btnThisMonth.Text = "This month";
             btnThisMonth.UseVisualStyleBackColor = false;
             // 
-            // pnlStats
-            // 
-            pnlStats.BackColor = System.Drawing.Color.Transparent;
-            pnlStats.Controls.Add(pnlTotalBalance);
-            pnlStats.Controls.Add(pnlIncome);
-            pnlStats.Controls.Add(pnlExpense);
-            pnlStats.Location = new System.Drawing.Point(43, 300);
-            pnlStats.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            pnlStats.Name = "pnlStats";
-            pnlStats.Size = new System.Drawing.Size(1629, 300);
-            pnlStats.TabIndex = 2;
-            // 
             // pnlTotalBalance
             // 
             pnlTotalBalance.BackColor = System.Drawing.Color.White;
@@ -224,11 +214,12 @@
             pnlTotalBalance.Controls.Add(lblTotalBalanceTransactions);
             pnlTotalBalance.Controls.Add(lblTotalBalanceExtra);
             pnlTotalBalance.Controls.Add(lblTotalBalanceCategories);
-            pnlTotalBalance.Location = new System.Drawing.Point(0, 0);
-            pnlTotalBalance.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            pnlTotalBalance.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnlTotalBalance.Location = new System.Drawing.Point(60, 60);
+            pnlTotalBalance.Margin = new System.Windows.Forms.Padding(20);
             pnlTotalBalance.Name = "pnlTotalBalance";
             pnlTotalBalance.Padding = new System.Windows.Forms.Padding(29, 33, 29, 33);
-            pnlTotalBalance.Size = new System.Drawing.Size(514, 300);
+            pnlTotalBalance.Size = new System.Drawing.Size(504, 278);
             pnlTotalBalance.TabIndex = 0;
             // 
             // lblTotalBalanceTitle
@@ -249,7 +240,7 @@
             cmbTotalBalanceCurrency.Font = new System.Drawing.Font("Segoe UI", 8F);
             cmbTotalBalanceCurrency.FormattingEnabled = true;
             cmbTotalBalanceCurrency.Items.AddRange(new object[] { "USD", "EUR", "VND" });
-            cmbTotalBalanceCurrency.Location = new System.Drawing.Point(414, 37);
+            cmbTotalBalanceCurrency.Location = new System.Drawing.Point(404, 37);
             cmbTotalBalanceCurrency.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             cmbTotalBalanceCurrency.Name = "cmbTotalBalanceCurrency";
             cmbTotalBalanceCurrency.Size = new System.Drawing.Size(70, 29);
@@ -325,11 +316,12 @@
             pnlIncome.Controls.Add(lblIncomeTransactions);
             pnlIncome.Controls.Add(lblIncomeExtra);
             pnlIncome.Controls.Add(lblIncomeCategories);
-            pnlIncome.Location = new System.Drawing.Point(557, 0);
-            pnlIncome.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            pnlIncome.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnlIncome.Location = new System.Drawing.Point(604, 60);
+            pnlIncome.Margin = new System.Windows.Forms.Padding(20);
             pnlIncome.Name = "pnlIncome";
             pnlIncome.Padding = new System.Windows.Forms.Padding(29, 33, 29, 33);
-            pnlIncome.Size = new System.Drawing.Size(514, 300);
+            pnlIncome.Size = new System.Drawing.Size(504, 278);
             pnlIncome.TabIndex = 1;
             // 
             // lblIncomeTitle
@@ -350,7 +342,7 @@
             cmbIncomeCurrency.Font = new System.Drawing.Font("Segoe UI", 8F);
             cmbIncomeCurrency.FormattingEnabled = true;
             cmbIncomeCurrency.Items.AddRange(new object[] { "USD", "EUR", "VND" });
-            cmbIncomeCurrency.Location = new System.Drawing.Point(414, 37);
+            cmbIncomeCurrency.Location = new System.Drawing.Point(404, 37);
             cmbIncomeCurrency.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             cmbIncomeCurrency.Name = "cmbIncomeCurrency";
             cmbIncomeCurrency.Size = new System.Drawing.Size(70, 29);
@@ -416,6 +408,194 @@
             lblIncomeCategories.TabIndex = 6;
             lblIncomeCategories.Text = "📊 6 categories";
             // 
+            // pnlTotalBalanceOverview
+            // 
+            pnlTotalBalanceOverview.BackColor = System.Drawing.Color.White;
+            pnlTotalBalanceOverview.Controls.Add(lblOverviewTitle);
+            pnlTotalBalanceOverview.Controls.Add(pnlOverviewChart);
+            pnlTotalBalanceOverview.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnlTotalBalanceOverview.Location = new System.Drawing.Point(60, 60);
+            pnlTotalBalanceOverview.Margin = new System.Windows.Forms.Padding(20);
+            pnlTotalBalanceOverview.Name = "pnlTotalBalanceOverview";
+            pnlTotalBalanceOverview.Padding = new System.Windows.Forms.Padding(36, 42, 36, 42);
+            pnlTotalBalanceOverview.Size = new System.Drawing.Size(940, 515);
+            pnlTotalBalanceOverview.TabIndex = 3;
+            pnlTotalBalanceOverview.Paint += pnlTotalBalanceOverview_Paint;
+            // 
+            // lblOverviewTitle
+            // 
+            lblOverviewTitle.AutoSize = true;
+            lblOverviewTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            lblOverviewTitle.Location = new System.Drawing.Point(36, 42);
+            lblOverviewTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblOverviewTitle.Name = "lblOverviewTitle";
+            lblOverviewTitle.Size = new System.Drawing.Size(316, 38);
+            lblOverviewTitle.TabIndex = 0;
+            lblOverviewTitle.Text = "Total balance overview";
+            // 
+            // pnlOverviewChart
+            // 
+            pnlOverviewChart.Location = new System.Drawing.Point(36, 108);
+            pnlOverviewChart.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            pnlOverviewChart.Name = "pnlOverviewChart";
+            pnlOverviewChart.Size = new System.Drawing.Size(857, 350);
+            pnlOverviewChart.TabIndex = 1;
+            // 
+            // pnlStatistics
+            // 
+            pnlStatistics.BackColor = System.Drawing.Color.White;
+            pnlStatistics.Controls.Add(lblStatisticsTitle);
+            pnlStatistics.Controls.Add(cmbStatistics);
+            pnlStatistics.Controls.Add(btnStatDetails);
+            pnlStatistics.Controls.Add(pnlDonutChart);
+            pnlStatistics.Controls.Add(lblStatDescription);
+            pnlStatistics.Controls.Add(lblStatExpenseAmount);
+            pnlStatistics.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnlStatistics.Location = new System.Drawing.Point(1040, 60);
+            pnlStatistics.Margin = new System.Windows.Forms.Padding(20);
+            pnlStatistics.Name = "pnlStatistics";
+            pnlStatistics.Padding = new System.Windows.Forms.Padding(36, 42, 36, 42);
+            pnlStatistics.Size = new System.Drawing.Size(614, 515);
+            pnlStatistics.TabIndex = 4;
+            // 
+            // lblStatisticsTitle
+            // 
+            lblStatisticsTitle.AutoSize = true;
+            lblStatisticsTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            lblStatisticsTitle.Location = new System.Drawing.Point(36, 42);
+            lblStatisticsTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblStatisticsTitle.Name = "lblStatisticsTitle";
+            lblStatisticsTitle.Size = new System.Drawing.Size(133, 38);
+            lblStatisticsTitle.TabIndex = 0;
+            lblStatisticsTitle.Text = "Statistics";
+            // 
+            // cmbStatistics
+            // 
+            cmbStatistics.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            cmbStatistics.Font = new System.Drawing.Font("Segoe UI", 9F);
+            cmbStatistics.FormattingEnabled = true;
+            cmbStatistics.Items.AddRange(new object[] { "Expense", "Income", "Balance" });
+            cmbStatistics.Location = new System.Drawing.Point(400, 45);
+            cmbStatistics.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            cmbStatistics.Name = "cmbStatistics";
+            cmbStatistics.Size = new System.Drawing.Size(127, 33);
+            cmbStatistics.TabIndex = 1;
+            cmbStatistics.Text = "Expense";
+            // 
+            // btnStatDetails
+            // 
+            btnStatDetails.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            btnStatDetails.BackColor = System.Drawing.Color.Transparent;
+            btnStatDetails.FlatAppearance.BorderSize = 0;
+            btnStatDetails.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            btnStatDetails.Font = new System.Drawing.Font("Segoe UI", 9F);
+            btnStatDetails.ForeColor = System.Drawing.Color.FromArgb(124, 108, 254);
+            btnStatDetails.Location = new System.Drawing.Point(486, 37);
+            btnStatDetails.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            btnStatDetails.Name = "btnStatDetails";
+            btnStatDetails.Size = new System.Drawing.Size(100, 50);
+            btnStatDetails.TabIndex = 2;
+            btnStatDetails.Text = "Details ›";
+            btnStatDetails.UseVisualStyleBackColor = false;
+            // 
+            // pnlDonutChart
+            // 
+            pnlDonutChart.Location = new System.Drawing.Point(129, 117);
+            pnlDonutChart.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            pnlDonutChart.Name = "pnlDonutChart";
+            pnlDonutChart.Size = new System.Drawing.Size(400, 267);
+            pnlDonutChart.TabIndex = 3;
+            // 
+            // lblStatDescription
+            // 
+            lblStatDescription.AutoSize = true;
+            lblStatDescription.Font = new System.Drawing.Font("Segoe UI", 9F);
+            lblStatDescription.ForeColor = System.Drawing.Color.Gray;
+            lblStatDescription.Location = new System.Drawing.Point(36, 400);
+            lblStatDescription.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblStatDescription.Name = "lblStatDescription";
+            lblStatDescription.Size = new System.Drawing.Size(438, 25);
+            lblStatDescription.TabIndex = 4;
+            lblStatDescription.Text = "You have an increase of expenses in several categories";
+            // 
+            // lblStatExpenseAmount
+            // 
+            lblStatExpenseAmount.AutoSize = true;
+            lblStatExpenseAmount.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
+            lblStatExpenseAmount.Location = new System.Drawing.Point(214, 433);
+            lblStatExpenseAmount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblStatExpenseAmount.Name = "lblStatExpenseAmount";
+            lblStatExpenseAmount.Size = new System.Drawing.Size(164, 45);
+            lblStatExpenseAmount.TabIndex = 5;
+            lblStatExpenseAmount.Text = "$6,222.00";
+            // 
+            // pnlComparingBudget
+            // 
+            pnlComparingBudget.BackColor = System.Drawing.Color.White;
+            tableLayoutPanel2.SetColumnSpan(pnlComparingBudget, 2);
+            pnlComparingBudget.Controls.Add(lblComparingTitle);
+            pnlComparingBudget.Controls.Add(cmbComparingYear);
+            pnlComparingBudget.Controls.Add(pnlBarChart);
+            pnlComparingBudget.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnlComparingBudget.Location = new System.Drawing.Point(60, 615);
+            pnlComparingBudget.Margin = new System.Windows.Forms.Padding(20);
+            pnlComparingBudget.Name = "pnlComparingBudget";
+            pnlComparingBudget.Padding = new System.Windows.Forms.Padding(36, 42, 36, 42);
+            pnlComparingBudget.Size = new System.Drawing.Size(1594, 460);
+            pnlComparingBudget.TabIndex = 5;
+            // 
+            // lblComparingTitle
+            // 
+            lblComparingTitle.AutoSize = true;
+            lblComparingTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            lblComparingTitle.Location = new System.Drawing.Point(36, 42);
+            lblComparingTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblComparingTitle.Name = "lblComparingTitle";
+            lblComparingTitle.Size = new System.Drawing.Size(471, 38);
+            lblComparingTitle.TabIndex = 0;
+            lblComparingTitle.Text = "Comparing of budget and expense";
+            // 
+            // cmbComparingYear
+            // 
+            cmbComparingYear.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            cmbComparingYear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            cmbComparingYear.Font = new System.Drawing.Font("Segoe UI", 9F);
+            cmbComparingYear.FormattingEnabled = true;
+            cmbComparingYear.Items.AddRange(new object[] { "This year", "Last year", "2023" });
+            cmbComparingYear.Location = new System.Drawing.Point(1422, 45);
+            cmbComparingYear.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            cmbComparingYear.Name = "cmbComparingYear";
+            cmbComparingYear.Size = new System.Drawing.Size(134, 33);
+            cmbComparingYear.TabIndex = 1;
+            cmbComparingYear.Text = "This year";
+            // 
+            // pnlBarChart
+            // 
+            pnlBarChart.Location = new System.Drawing.Point(40, 88);
+            pnlBarChart.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            pnlBarChart.Name = "pnlBarChart";
+            pnlBarChart.Size = new System.Drawing.Size(1526, 349);
+            pnlBarChart.TabIndex = 2;
+            // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.ColumnCount = 3;
+            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.3333321F));
+            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.3333359F));
+            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.3333359F));
+            tableLayoutPanel1.Controls.Add(pnlIncome, 1, 0);
+            tableLayoutPanel1.Controls.Add(pnlTotalBalance, 0, 0);
+            tableLayoutPanel1.Controls.Add(pnlExpense, 2, 0);
+            tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
+            tableLayoutPanel1.Location = new System.Drawing.Point(0, 267);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(40);
+            tableLayoutPanel1.RowCount = 1;
+            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            tableLayoutPanel1.Size = new System.Drawing.Size(1714, 398);
+            tableLayoutPanel1.TabIndex = 5;
+            // 
             // pnlExpense
             // 
             pnlExpense.BackColor = System.Drawing.Color.White;
@@ -426,11 +606,12 @@
             pnlExpense.Controls.Add(lblExpenseTransactions);
             pnlExpense.Controls.Add(lblExpenseExtra);
             pnlExpense.Controls.Add(lblExpenseCategories);
-            pnlExpense.Location = new System.Drawing.Point(1114, 0);
-            pnlExpense.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            pnlExpense.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnlExpense.Location = new System.Drawing.Point(1148, 60);
+            pnlExpense.Margin = new System.Windows.Forms.Padding(20);
             pnlExpense.Name = "pnlExpense";
             pnlExpense.Padding = new System.Windows.Forms.Padding(29, 33, 29, 33);
-            pnlExpense.Size = new System.Drawing.Size(514, 300);
+            pnlExpense.Size = new System.Drawing.Size(506, 278);
             pnlExpense.TabIndex = 2;
             // 
             // lblExpenseTitle
@@ -451,7 +632,7 @@
             cmbExpenseCurrency.Font = new System.Drawing.Font("Segoe UI", 8F);
             cmbExpenseCurrency.FormattingEnabled = true;
             cmbExpenseCurrency.Items.AddRange(new object[] { "USD", "EUR", "VND" });
-            cmbExpenseCurrency.Location = new System.Drawing.Point(414, 37);
+            cmbExpenseCurrency.Location = new System.Drawing.Point(406, 37);
             cmbExpenseCurrency.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             cmbExpenseCurrency.Name = "cmbExpenseCurrency";
             cmbExpenseCurrency.Size = new System.Drawing.Size(70, 29);
@@ -517,169 +698,23 @@
             lblExpenseCategories.TabIndex = 6;
             lblExpenseCategories.Text = "📊 9 categories";
             // 
-            // pnlTotalBalanceOverview
+            // tableLayoutPanel2
             // 
-            pnlTotalBalanceOverview.BackColor = System.Drawing.Color.White;
-            pnlTotalBalanceOverview.Controls.Add(lblOverviewTitle);
-            pnlTotalBalanceOverview.Controls.Add(pnlOverviewChart);
-            pnlTotalBalanceOverview.Location = new System.Drawing.Point(43, 633);
-            pnlTotalBalanceOverview.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            pnlTotalBalanceOverview.Name = "pnlTotalBalanceOverview";
-            pnlTotalBalanceOverview.Padding = new System.Windows.Forms.Padding(36, 42, 36, 42);
-            pnlTotalBalanceOverview.Size = new System.Drawing.Size(929, 500);
-            pnlTotalBalanceOverview.TabIndex = 3;
-            // 
-            // lblOverviewTitle
-            // 
-            lblOverviewTitle.AutoSize = true;
-            lblOverviewTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            lblOverviewTitle.Location = new System.Drawing.Point(36, 42);
-            lblOverviewTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            lblOverviewTitle.Name = "lblOverviewTitle";
-            lblOverviewTitle.Size = new System.Drawing.Size(316, 38);
-            lblOverviewTitle.TabIndex = 0;
-            lblOverviewTitle.Text = "Total balance overview";
-            // 
-            // pnlOverviewChart
-            // 
-            pnlOverviewChart.Location = new System.Drawing.Point(36, 108);
-            pnlOverviewChart.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            pnlOverviewChart.Name = "pnlOverviewChart";
-            pnlOverviewChart.Size = new System.Drawing.Size(857, 350);
-            pnlOverviewChart.TabIndex = 1;
-            // 
-            // pnlStatistics
-            // 
-            pnlStatistics.BackColor = System.Drawing.Color.White;
-            pnlStatistics.Controls.Add(lblStatisticsTitle);
-            pnlStatistics.Controls.Add(cmbStatistics);
-            pnlStatistics.Controls.Add(btnStatDetails);
-            pnlStatistics.Controls.Add(pnlDonutChart);
-            pnlStatistics.Controls.Add(lblStatDescription);
-            pnlStatistics.Controls.Add(lblStatExpenseAmount);
-            pnlStatistics.Location = new System.Drawing.Point(1000, 633);
-            pnlStatistics.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            pnlStatistics.Name = "pnlStatistics";
-            pnlStatistics.Padding = new System.Windows.Forms.Padding(36, 42, 36, 42);
-            pnlStatistics.Size = new System.Drawing.Size(671, 500);
-            pnlStatistics.TabIndex = 4;
-            // 
-            // lblStatisticsTitle
-            // 
-            lblStatisticsTitle.AutoSize = true;
-            lblStatisticsTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            lblStatisticsTitle.Location = new System.Drawing.Point(36, 42);
-            lblStatisticsTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            lblStatisticsTitle.Name = "lblStatisticsTitle";
-            lblStatisticsTitle.Size = new System.Drawing.Size(133, 38);
-            lblStatisticsTitle.TabIndex = 0;
-            lblStatisticsTitle.Text = "Statistics";
-            // 
-            // cmbStatistics
-            // 
-            cmbStatistics.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            cmbStatistics.Font = new System.Drawing.Font("Segoe UI", 9F);
-            cmbStatistics.FormattingEnabled = true;
-            cmbStatistics.Items.AddRange(new object[] { "Expense", "Income", "Balance" });
-            cmbStatistics.Location = new System.Drawing.Point(400, 45);
-            cmbStatistics.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            cmbStatistics.Name = "cmbStatistics";
-            cmbStatistics.Size = new System.Drawing.Size(127, 33);
-            cmbStatistics.TabIndex = 1;
-            cmbStatistics.Text = "Expense";
-            // 
-            // btnStatDetails
-            // 
-            btnStatDetails.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            btnStatDetails.BackColor = System.Drawing.Color.Transparent;
-            btnStatDetails.FlatAppearance.BorderSize = 0;
-            btnStatDetails.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            btnStatDetails.Font = new System.Drawing.Font("Segoe UI", 9F);
-            btnStatDetails.ForeColor = System.Drawing.Color.FromArgb(124, 108, 254);
-            btnStatDetails.Location = new System.Drawing.Point(543, 37);
-            btnStatDetails.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            btnStatDetails.Name = "btnStatDetails";
-            btnStatDetails.Size = new System.Drawing.Size(100, 50);
-            btnStatDetails.TabIndex = 2;
-            btnStatDetails.Text = "Details ›";
-            btnStatDetails.UseVisualStyleBackColor = false;
-            // 
-            // pnlDonutChart
-            // 
-            pnlDonutChart.Location = new System.Drawing.Point(129, 117);
-            pnlDonutChart.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            pnlDonutChart.Name = "pnlDonutChart";
-            pnlDonutChart.Size = new System.Drawing.Size(400, 267);
-            pnlDonutChart.TabIndex = 3;
-            // 
-            // lblStatDescription
-            // 
-            lblStatDescription.AutoSize = true;
-            lblStatDescription.Font = new System.Drawing.Font("Segoe UI", 9F);
-            lblStatDescription.ForeColor = System.Drawing.Color.Gray;
-            lblStatDescription.Location = new System.Drawing.Point(36, 400);
-            lblStatDescription.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            lblStatDescription.Name = "lblStatDescription";
-            lblStatDescription.Size = new System.Drawing.Size(438, 25);
-            lblStatDescription.TabIndex = 4;
-            lblStatDescription.Text = "You have an increase of expenses in several categories";
-            // 
-            // lblStatExpenseAmount
-            // 
-            lblStatExpenseAmount.AutoSize = true;
-            lblStatExpenseAmount.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
-            lblStatExpenseAmount.Location = new System.Drawing.Point(214, 433);
-            lblStatExpenseAmount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            lblStatExpenseAmount.Name = "lblStatExpenseAmount";
-            lblStatExpenseAmount.Size = new System.Drawing.Size(164, 45);
-            lblStatExpenseAmount.TabIndex = 5;
-            lblStatExpenseAmount.Text = "$6,222.00";
-            // 
-            // pnlComparingBudget
-            // 
-            pnlComparingBudget.BackColor = System.Drawing.Color.White;
-            pnlComparingBudget.Controls.Add(lblComparingTitle);
-            pnlComparingBudget.Controls.Add(cmbComparingYear);
-            pnlComparingBudget.Controls.Add(pnlBarChart);
-            pnlComparingBudget.Location = new System.Drawing.Point(43, 1167);
-            pnlComparingBudget.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            pnlComparingBudget.Name = "pnlComparingBudget";
-            pnlComparingBudget.Padding = new System.Windows.Forms.Padding(36, 42, 36, 42);
-            pnlComparingBudget.Size = new System.Drawing.Size(1629, 500);
-            pnlComparingBudget.TabIndex = 5;
-            // 
-            // lblComparingTitle
-            // 
-            lblComparingTitle.AutoSize = true;
-            lblComparingTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            lblComparingTitle.Location = new System.Drawing.Point(36, 42);
-            lblComparingTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            lblComparingTitle.Name = "lblComparingTitle";
-            lblComparingTitle.Size = new System.Drawing.Size(471, 38);
-            lblComparingTitle.TabIndex = 0;
-            lblComparingTitle.Text = "Comparing of budget and expense";
-            // 
-            // cmbComparingYear
-            // 
-            cmbComparingYear.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            cmbComparingYear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            cmbComparingYear.Font = new System.Drawing.Font("Segoe UI", 9F);
-            cmbComparingYear.FormattingEnabled = true;
-            cmbComparingYear.Items.AddRange(new object[] { "This year", "Last year", "2023" });
-            cmbComparingYear.Location = new System.Drawing.Point(1457, 45);
-            cmbComparingYear.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            cmbComparingYear.Name = "cmbComparingYear";
-            cmbComparingYear.Size = new System.Drawing.Size(134, 33);
-            cmbComparingYear.TabIndex = 1;
-            cmbComparingYear.Text = "This year";
-            // 
-            // pnlBarChart
-            // 
-            pnlBarChart.Location = new System.Drawing.Point(36, 108);
-            pnlBarChart.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            pnlBarChart.Name = "pnlBarChart";
-            pnlBarChart.Size = new System.Drawing.Size(1557, 350);
-            pnlBarChart.TabIndex = 2;
+            tableLayoutPanel2.ColumnCount = 2;
+            tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            tableLayoutPanel2.Controls.Add(pnlComparingBudget, 0, 1);
+            tableLayoutPanel2.Controls.Add(pnlStatistics, 1, 0);
+            tableLayoutPanel2.Controls.Add(pnlTotalBalanceOverview, 0, 0);
+            tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            tableLayoutPanel2.Location = new System.Drawing.Point(0, 665);
+            tableLayoutPanel2.Name = "tableLayoutPanel2";
+            tableLayoutPanel2.Padding = new System.Windows.Forms.Padding(40);
+            tableLayoutPanel2.RowCount = 2;
+            tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 555F));
+            tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 500F));
+            tableLayoutPanel2.Size = new System.Drawing.Size(1714, 1085);
+            tableLayoutPanel2.TabIndex = 6;
             // 
             // UC_Analytics
             // 
@@ -687,10 +722,8 @@
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             AutoScroll = true;
             BackColor = System.Drawing.Color.FromArgb(243, 240, 253);
-            Controls.Add(pnlComparingBudget);
-            Controls.Add(pnlStatistics);
-            Controls.Add(pnlTotalBalanceOverview);
-            Controls.Add(pnlStats);
+            Controls.Add(tableLayoutPanel2);
+            Controls.Add(tableLayoutPanel1);
             Controls.Add(pnlFilter);
             Controls.Add(pnlHeader);
             Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -699,19 +732,20 @@
             pnlHeader.ResumeLayout(false);
             pnlHeader.PerformLayout();
             pnlFilter.ResumeLayout(false);
-            pnlStats.ResumeLayout(false);
             pnlTotalBalance.ResumeLayout(false);
             pnlTotalBalance.PerformLayout();
             pnlIncome.ResumeLayout(false);
             pnlIncome.PerformLayout();
-            pnlExpense.ResumeLayout(false);
-            pnlExpense.PerformLayout();
             pnlTotalBalanceOverview.ResumeLayout(false);
             pnlTotalBalanceOverview.PerformLayout();
             pnlStatistics.ResumeLayout(false);
             pnlStatistics.PerformLayout();
             pnlComparingBudget.ResumeLayout(false);
             pnlComparingBudget.PerformLayout();
+            tableLayoutPanel1.ResumeLayout(false);
+            pnlExpense.ResumeLayout(false);
+            pnlExpense.PerformLayout();
+            tableLayoutPanel2.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -726,7 +760,6 @@
         private System.Windows.Forms.Panel pnlFilter;
         private System.Windows.Forms.Button btnCalendar;
         private System.Windows.Forms.Button btnThisMonth;
-        private System.Windows.Forms.Panel pnlStats;
         private System.Windows.Forms.Panel pnlTotalBalance;
         private System.Windows.Forms.Label lblTotalBalanceTitle;
         private System.Windows.Forms.ComboBox cmbTotalBalanceCurrency;
@@ -743,14 +776,6 @@
         private System.Windows.Forms.Label lblIncomeTransactions;
         private System.Windows.Forms.Label lblIncomeExtra;
         private System.Windows.Forms.Label lblIncomeCategories;
-        private System.Windows.Forms.Panel pnlExpense;
-        private System.Windows.Forms.Label lblExpenseTitle;
-        private System.Windows.Forms.ComboBox cmbExpenseCurrency;
-        private System.Windows.Forms.Label lblExpenseAmount;
-        private System.Windows.Forms.Label lblExpenseChange;
-        private System.Windows.Forms.Label lblExpenseTransactions;
-        private System.Windows.Forms.Label lblExpenseExtra;
-        private System.Windows.Forms.Label lblExpenseCategories;
         private System.Windows.Forms.Panel pnlTotalBalanceOverview;
         private System.Windows.Forms.Label lblOverviewTitle;
         private System.Windows.Forms.Panel pnlOverviewChart;
@@ -765,5 +790,15 @@
         private System.Windows.Forms.Label lblComparingTitle;
         private System.Windows.Forms.ComboBox cmbComparingYear;
         private System.Windows.Forms.Panel pnlBarChart;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.Panel pnlExpense;
+        private System.Windows.Forms.Label lblExpenseTitle;
+        private System.Windows.Forms.ComboBox cmbExpenseCurrency;
+        private System.Windows.Forms.Label lblExpenseAmount;
+        private System.Windows.Forms.Label lblExpenseChange;
+        private System.Windows.Forms.Label lblExpenseTransactions;
+        private System.Windows.Forms.Label lblExpenseExtra;
+        private System.Windows.Forms.Label lblExpenseCategories;
     }
 }
