@@ -19,472 +19,534 @@ namespace ExpenseManager.App.Views.Admin.UC
 
         private void InitializeComponent()
         {
-            this.pnlHeader = new System.Windows.Forms.Panel();
-            this.lblWelcome = new System.Windows.Forms.Label();
-            this.lblSubtitle = new System.Windows.Forms.Label();
-            this.btnManageWidgets = new System.Windows.Forms.Button();
-            this.btnAddWidget = new System.Windows.Forms.Button();
-            this.btnThisMonth = new System.Windows.Forms.Button();
-            this.pnlStats = new System.Windows.Forms.Panel();
-            this.pnlTotalBalance = new System.Windows.Forms.Panel();
-            this.lblTotalBalanceTitle = new System.Windows.Forms.Label();
-            this.lblTotalBalanceAmount = new System.Windows.Forms.Label();
-            this.lblTotalBalanceChange = new System.Windows.Forms.Label();
-            this.pnlIncome = new System.Windows.Forms.Panel();
-            this.lblIncomeTitle = new System.Windows.Forms.Label();
-            this.lblIncomeAmount = new System.Windows.Forms.Label();
-            this.lblIncomeChange = new System.Windows.Forms.Label();
-            this.pnlExpense = new System.Windows.Forms.Panel();
-            this.lblExpenseTitle = new System.Windows.Forms.Label();
-            this.lblExpenseAmount = new System.Windows.Forms.Label();
-            this.lblExpenseChange = new System.Windows.Forms.Label();
-            this.pnlTotalSavings = new System.Windows.Forms.Panel();
-            this.lblTotalSavingsTitle = new System.Windows.Forms.Label();
-            this.lblTotalSavingsAmount = new System.Windows.Forms.Label();
-            this.lblTotalSavingsChange = new System.Windows.Forms.Label();
-            this.pnlMoneyFlow = new System.Windows.Forms.Panel();
-            this.lblMoneyFlowTitle = new System.Windows.Forms.Label();
-            this.pnlMoneyFlowChart = new System.Windows.Forms.Panel();
-            this.pnlBudget = new System.Windows.Forms.Panel();
-            this.lblBudgetTitle = new System.Windows.Forms.Label();
-            this.pnlBudgetChart = new System.Windows.Forms.Panel();
-            this.pnlTransactions = new System.Windows.Forms.Panel();
-            this.lblTransactionsTitle = new System.Windows.Forms.Label();
-            this.dgvTransactions = new System.Windows.Forms.DataGridView();
-            this.pnlSavingGoals = new System.Windows.Forms.Panel();
-            this.lblSavingGoalsTitle = new System.Windows.Forms.Label();
-            this.pnlGoalsList = new System.Windows.Forms.Panel();
-            this.pnlHeader.SuspendLayout();
-            this.pnlStats.SuspendLayout();
-            this.pnlTotalBalance.SuspendLayout();
-            this.pnlIncome.SuspendLayout();
-            this.pnlExpense.SuspendLayout();
-            this.pnlTotalSavings.SuspendLayout();
-            this.pnlMoneyFlow.SuspendLayout();
-            this.pnlBudget.SuspendLayout();
-            this.pnlTransactions.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvTransactions)).BeginInit();
-            this.pnlSavingGoals.SuspendLayout();
-            this.SuspendLayout();
+            pnlHeader = new Panel();
+            lblWelcome = new Label();
+            lblSubtitle = new Label();
+            btnManageWidgets = new Button();
+            btnAddWidget = new Button();
+            btnThisMonth = new Button();
+            pnlTotalBalance = new Panel();
+            lblTotalBalanceTitle = new Label();
+            lblTotalBalanceAmount = new Label();
+            lblTotalBalanceChange = new Label();
+            pnlIncome = new Panel();
+            lblIncomeTitle = new Label();
+            lblIncomeAmount = new Label();
+            lblIncomeChange = new Label();
+            pnlExpense = new Panel();
+            lblExpenseTitle = new Label();
+            lblExpenseAmount = new Label();
+            lblExpenseChange = new Label();
+            pnlTotalSavings = new Panel();
+            lblTotalSavingsTitle = new Label();
+            lblTotalSavingsAmount = new Label();
+            lblTotalSavingsChange = new Label();
+            pnlMoneyFlow = new Panel();
+            lblMoneyFlowTitle = new Label();
+            pnlMoneyFlowChart = new Panel();
+            pnlBudget = new Panel();
+            lblBudgetTitle = new Label();
+            pnlBudgetChart = new Panel();
+            pnlTransactions = new Panel();
+            lblTransactionsTitle = new Label();
+            dgvTransactions = new DataGridView();
+            pnlSavingGoals = new Panel();
+            lblSavingGoalsTitle = new Label();
+            pnlGoalsList = new Panel();
+            tableLayoutPanel1 = new TableLayoutPanel();
+            flbStaus = new FlowLayoutPanel();
+            pnlHeader.SuspendLayout();
+            pnlTotalBalance.SuspendLayout();
+            pnlIncome.SuspendLayout();
+            pnlExpense.SuspendLayout();
+            pnlTotalSavings.SuspendLayout();
+            pnlMoneyFlow.SuspendLayout();
+            pnlBudget.SuspendLayout();
+            pnlTransactions.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvTransactions).BeginInit();
+            pnlSavingGoals.SuspendLayout();
+            tableLayoutPanel1.SuspendLayout();
+            flbStaus.SuspendLayout();
+            SuspendLayout();
             // 
             // pnlHeader
             // 
-            this.pnlHeader.BackColor = System.Drawing.Color.White;
-            this.pnlHeader.Controls.Add(this.lblWelcome);
-            this.pnlHeader.Controls.Add(this.lblSubtitle);
-            this.pnlHeader.Controls.Add(this.btnManageWidgets);
-            this.pnlHeader.Controls.Add(this.btnAddWidget);
-            this.pnlHeader.Controls.Add(this.btnThisMonth);
-            this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlHeader.Location = new System.Drawing.Point(0, 0);
-            this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Padding = new System.Windows.Forms.Padding(30, 20, 30, 20);
-            this.pnlHeader.Size = new System.Drawing.Size(1200, 100);
-            this.pnlHeader.TabIndex = 0;
+            pnlHeader.BackColor = System.Drawing.Color.White;
+            pnlHeader.Controls.Add(lblWelcome);
+            pnlHeader.Controls.Add(lblSubtitle);
+            pnlHeader.Controls.Add(btnManageWidgets);
+            pnlHeader.Controls.Add(btnAddWidget);
+            pnlHeader.Controls.Add(btnThisMonth);
+            pnlHeader.Dock = DockStyle.Top;
+            pnlHeader.Location = new System.Drawing.Point(0, 0);
+            pnlHeader.Margin = new Padding(4, 5, 4, 5);
+            pnlHeader.Name = "pnlHeader";
+            pnlHeader.Padding = new Padding(43, 33, 43, 33);
+            pnlHeader.Size = new System.Drawing.Size(1610, 192);
+            pnlHeader.TabIndex = 0;
             // 
             // lblWelcome
             // 
-            this.lblWelcome.AutoSize = true;
-            this.lblWelcome.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
-            this.lblWelcome.Location = new System.Drawing.Point(30, 20);
-            this.lblWelcome.Name = "lblWelcome";
-            this.lblWelcome.Size = new System.Drawing.Size(350, 45);
-            this.lblWelcome.TabIndex = 0;
-            this.lblWelcome.Text = "Welcome back, Adaline!";
+            lblWelcome.AutoSize = true;
+            lblWelcome.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
+            lblWelcome.Location = new System.Drawing.Point(43, 33);
+            lblWelcome.Margin = new Padding(4, 0, 4, 0);
+            lblWelcome.Name = "lblWelcome";
+            lblWelcome.Size = new System.Drawing.Size(573, 65);
+            lblWelcome.TabIndex = 0;
+            lblWelcome.Text = "Welcome back, Adaline!";
             // 
             // lblSubtitle
             // 
-            this.lblSubtitle.AutoSize = true;
-            this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.lblSubtitle.ForeColor = System.Drawing.Color.Gray;
-            this.lblSubtitle.Location = new System.Drawing.Point(33, 65);
-            this.lblSubtitle.Name = "lblSubtitle";
-            this.lblSubtitle.Size = new System.Drawing.Size(280, 20);
-            this.lblSubtitle.TabIndex = 1;
-            this.lblSubtitle.Text = "It is the best time to manage your finances.";
+            lblSubtitle.AutoSize = true;
+            lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 11F);
+            lblSubtitle.ForeColor = System.Drawing.Color.Gray;
+            lblSubtitle.Location = new System.Drawing.Point(47, 108);
+            lblSubtitle.Margin = new Padding(4, 0, 4, 0);
+            lblSubtitle.Name = "lblSubtitle";
+            lblSubtitle.Size = new System.Drawing.Size(428, 30);
+            lblSubtitle.TabIndex = 1;
+            lblSubtitle.Text = "It is the best time to manage your finances.";
             // 
             // btnManageWidgets
             // 
-            this.btnManageWidgets.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnManageWidgets.BackColor = System.Drawing.Color.White;
-            this.btnManageWidgets.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
-            this.btnManageWidgets.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnManageWidgets.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnManageWidgets.Location = new System.Drawing.Point(886, 35);
-            this.btnManageWidgets.Name = "btnManageWidgets";
-            this.btnManageWidgets.Size = new System.Drawing.Size(150, 40);
-            this.btnManageWidgets.TabIndex = 2;
-            this.btnManageWidgets.Text = "⊞ Manage widgets";
-            this.btnManageWidgets.UseVisualStyleBackColor = false;
+            btnManageWidgets.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnManageWidgets.BackColor = System.Drawing.Color.White;
+            btnManageWidgets.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
+            btnManageWidgets.FlatStyle = FlatStyle.Flat;
+            btnManageWidgets.Font = new System.Drawing.Font("Segoe UI", 10F);
+            btnManageWidgets.Location = new System.Drawing.Point(1013, 71);
+            btnManageWidgets.Margin = new Padding(4, 5, 4, 5);
+            btnManageWidgets.Name = "btnManageWidgets";
+            btnManageWidgets.Size = new System.Drawing.Size(214, 67);
+            btnManageWidgets.TabIndex = 2;
+            btnManageWidgets.Text = "⊞ Manage widgets";
+            btnManageWidgets.UseVisualStyleBackColor = false;
             // 
             // btnAddWidget
             // 
-            this.btnAddWidget.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAddWidget.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(124)))), ((int)(((byte)(108)))), ((int)(((byte)(254)))));
-            this.btnAddWidget.FlatAppearance.BorderSize = 0;
-            this.btnAddWidget.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddWidget.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnAddWidget.ForeColor = System.Drawing.Color.White;
-            this.btnAddWidget.Location = new System.Drawing.Point(1042, 35);
-            this.btnAddWidget.Name = "btnAddWidget";
-            this.btnAddWidget.Size = new System.Drawing.Size(150, 40);
-            this.btnAddWidget.TabIndex = 3;
-            this.btnAddWidget.Text = "+ Add new widget";
-            this.btnAddWidget.UseVisualStyleBackColor = false;
+            btnAddWidget.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnAddWidget.BackColor = System.Drawing.Color.FromArgb(124, 108, 254);
+            btnAddWidget.FlatAppearance.BorderSize = 0;
+            btnAddWidget.FlatStyle = FlatStyle.Flat;
+            btnAddWidget.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            btnAddWidget.ForeColor = System.Drawing.Color.White;
+            btnAddWidget.Location = new System.Drawing.Point(1322, 71);
+            btnAddWidget.Margin = new Padding(4, 5, 4, 5);
+            btnAddWidget.Name = "btnAddWidget";
+            btnAddWidget.Size = new System.Drawing.Size(214, 67);
+            btnAddWidget.TabIndex = 3;
+            btnAddWidget.Text = "+ Add new widget";
+            btnAddWidget.UseVisualStyleBackColor = false;
             // 
             // btnThisMonth
             // 
-            this.btnThisMonth.BackColor = System.Drawing.Color.White;
-            this.btnThisMonth.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
-            this.btnThisMonth.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnThisMonth.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnThisMonth.Location = new System.Drawing.Point(420, 35);
-            this.btnThisMonth.Name = "btnThisMonth";
-            this.btnThisMonth.Size = new System.Drawing.Size(120, 40);
-            this.btnThisMonth.TabIndex = 4;
-            this.btnThisMonth.Text = "📅 This month";
-            this.btnThisMonth.UseVisualStyleBackColor = false;
-            // 
-            // pnlStats
-            // 
-            this.pnlStats.Controls.Add(this.pnlTotalBalance);
-            this.pnlStats.Controls.Add(this.pnlIncome);
-            this.pnlStats.Controls.Add(this.pnlExpense);
-            this.pnlStats.Controls.Add(this.pnlTotalSavings);
-            this.pnlStats.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlStats.Location = new System.Drawing.Point(0, 100);
-            this.pnlStats.Name = "pnlStats";
-            this.pnlStats.Padding = new System.Windows.Forms.Padding(30, 20, 30, 20);
-            this.pnlStats.Size = new System.Drawing.Size(1200, 160);
-            this.pnlStats.TabIndex = 1;
+            btnThisMonth.BackColor = System.Drawing.Color.White;
+            btnThisMonth.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
+            btnThisMonth.FlatStyle = FlatStyle.Flat;
+            btnThisMonth.Font = new System.Drawing.Font("Segoe UI", 10F);
+            btnThisMonth.Location = new System.Drawing.Point(647, 71);
+            btnThisMonth.Margin = new Padding(4, 5, 4, 5);
+            btnThisMonth.Name = "btnThisMonth";
+            btnThisMonth.Size = new System.Drawing.Size(171, 67);
+            btnThisMonth.TabIndex = 4;
+            btnThisMonth.Text = "📅 This month";
+            btnThisMonth.UseVisualStyleBackColor = false;
             // 
             // pnlTotalBalance
             // 
-            this.pnlTotalBalance.BackColor = System.Drawing.Color.White;
-            this.pnlTotalBalance.Controls.Add(this.lblTotalBalanceTitle);
-            this.pnlTotalBalance.Controls.Add(this.lblTotalBalanceAmount);
-            this.pnlTotalBalance.Controls.Add(this.lblTotalBalanceChange);
-            this.pnlTotalBalance.Location = new System.Drawing.Point(30, 20);
-            this.pnlTotalBalance.Name = "pnlTotalBalance";
-            this.pnlTotalBalance.Padding = new System.Windows.Forms.Padding(20);
-            this.pnlTotalBalance.Size = new System.Drawing.Size(270, 120);
-            this.pnlTotalBalance.TabIndex = 0;
+            pnlTotalBalance.BackColor = System.Drawing.Color.White;
+            pnlTotalBalance.Controls.Add(lblTotalBalanceTitle);
+            pnlTotalBalance.Controls.Add(lblTotalBalanceAmount);
+            pnlTotalBalance.Controls.Add(lblTotalBalanceChange);
+            pnlTotalBalance.Location = new System.Drawing.Point(44, 255);
+            pnlTotalBalance.Margin = new Padding(4, 5, 4, 5);
+            pnlTotalBalance.Name = "pnlTotalBalance";
+            pnlTotalBalance.Padding = new Padding(29, 33, 29, 33);
+            pnlTotalBalance.Size = new System.Drawing.Size(386, 200);
+            pnlTotalBalance.TabIndex = 0;
             // 
             // lblTotalBalanceTitle
             // 
-            this.lblTotalBalanceTitle.AutoSize = true;
-            this.lblTotalBalanceTitle.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.lblTotalBalanceTitle.ForeColor = System.Drawing.Color.Gray;
-            this.lblTotalBalanceTitle.Location = new System.Drawing.Point(20, 15);
-            this.lblTotalBalanceTitle.Name = "lblTotalBalanceTitle";
-            this.lblTotalBalanceTitle.Size = new System.Drawing.Size(100, 20);
-            this.lblTotalBalanceTitle.TabIndex = 0;
-            this.lblTotalBalanceTitle.Text = "Total balance";
+            lblTotalBalanceTitle.AutoSize = true;
+            lblTotalBalanceTitle.Font = new System.Drawing.Font("Segoe UI", 11F);
+            lblTotalBalanceTitle.ForeColor = System.Drawing.Color.Gray;
+            lblTotalBalanceTitle.Location = new System.Drawing.Point(29, 25);
+            lblTotalBalanceTitle.Margin = new Padding(4, 0, 4, 0);
+            lblTotalBalanceTitle.Name = "lblTotalBalanceTitle";
+            lblTotalBalanceTitle.Size = new System.Drawing.Size(139, 30);
+            lblTotalBalanceTitle.TabIndex = 0;
+            lblTotalBalanceTitle.Text = "Total balance";
             // 
             // lblTotalBalanceAmount
             // 
-            this.lblTotalBalanceAmount.AutoSize = true;
-            this.lblTotalBalanceAmount.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
-            this.lblTotalBalanceAmount.Location = new System.Drawing.Point(17, 45);
-            this.lblTotalBalanceAmount.Name = "lblTotalBalanceAmount";
-            this.lblTotalBalanceAmount.Size = new System.Drawing.Size(155, 37);
-            this.lblTotalBalanceAmount.TabIndex = 1;
-            this.lblTotalBalanceAmount.Text = "$15,700.00";
+            lblTotalBalanceAmount.AutoSize = true;
+            lblTotalBalanceAmount.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
+            lblTotalBalanceAmount.Location = new System.Drawing.Point(24, 75);
+            lblTotalBalanceAmount.Margin = new Padding(4, 0, 4, 0);
+            lblTotalBalanceAmount.Name = "lblTotalBalanceAmount";
+            lblTotalBalanceAmount.Size = new System.Drawing.Size(229, 54);
+            lblTotalBalanceAmount.TabIndex = 1;
+            lblTotalBalanceAmount.Text = "$15,700.00";
             // 
             // lblTotalBalanceChange
             // 
-            this.lblTotalBalanceChange.AutoSize = true;
-            this.lblTotalBalanceChange.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblTotalBalanceChange.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(197)))), ((int)(((byte)(94)))));
-            this.lblTotalBalanceChange.Location = new System.Drawing.Point(20, 87);
-            this.lblTotalBalanceChange.Name = "lblTotalBalanceChange";
-            this.lblTotalBalanceChange.Size = new System.Drawing.Size(110, 15);
-            this.lblTotalBalanceChange.TabIndex = 2;
-            this.lblTotalBalanceChange.Text = "↑ 12.1%  vs last month";
+            lblTotalBalanceChange.AutoSize = true;
+            lblTotalBalanceChange.Font = new System.Drawing.Font("Segoe UI", 9F);
+            lblTotalBalanceChange.ForeColor = System.Drawing.Color.FromArgb(34, 197, 94);
+            lblTotalBalanceChange.Location = new System.Drawing.Point(29, 145);
+            lblTotalBalanceChange.Margin = new Padding(4, 0, 4, 0);
+            lblTotalBalanceChange.Name = "lblTotalBalanceChange";
+            lblTotalBalanceChange.Size = new System.Drawing.Size(192, 25);
+            lblTotalBalanceChange.TabIndex = 2;
+            lblTotalBalanceChange.Text = "↑ 12.1%  vs last month";
             // 
             // pnlIncome
             // 
-            this.pnlIncome.BackColor = System.Drawing.Color.White;
-            this.pnlIncome.Controls.Add(this.lblIncomeTitle);
-            this.pnlIncome.Controls.Add(this.lblIncomeAmount);
-            this.pnlIncome.Controls.Add(this.lblIncomeChange);
-            this.pnlIncome.Location = new System.Drawing.Point(310, 20);
-            this.pnlIncome.Name = "pnlIncome";
-            this.pnlIncome.Padding = new System.Windows.Forms.Padding(20);
-            this.pnlIncome.Size = new System.Drawing.Size(270, 120);
-            this.pnlIncome.TabIndex = 1;
+            pnlIncome.BackColor = System.Drawing.Color.White;
+            pnlIncome.Controls.Add(lblIncomeTitle);
+            pnlIncome.Controls.Add(lblIncomeAmount);
+            pnlIncome.Controls.Add(lblIncomeChange);
+            pnlIncome.Location = new System.Drawing.Point(864, 45);
+            pnlIncome.Margin = new Padding(4, 5, 20, 5);
+            pnlIncome.Name = "pnlIncome";
+            pnlIncome.Padding = new Padding(29, 33, 29, 33);
+            pnlIncome.Size = new System.Drawing.Size(386, 200);
+            pnlIncome.TabIndex = 1;
             // 
             // lblIncomeTitle
             // 
-            this.lblIncomeTitle.AutoSize = true;
-            this.lblIncomeTitle.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.lblIncomeTitle.ForeColor = System.Drawing.Color.Gray;
-            this.lblIncomeTitle.Location = new System.Drawing.Point(20, 15);
-            this.lblIncomeTitle.Name = "lblIncomeTitle";
-            this.lblIncomeTitle.Size = new System.Drawing.Size(60, 20);
-            this.lblIncomeTitle.TabIndex = 0;
-            this.lblIncomeTitle.Text = "Income";
+            lblIncomeTitle.AutoSize = true;
+            lblIncomeTitle.Font = new System.Drawing.Font("Segoe UI", 11F);
+            lblIncomeTitle.ForeColor = System.Drawing.Color.Gray;
+            lblIncomeTitle.Location = new System.Drawing.Point(29, 25);
+            lblIncomeTitle.Margin = new Padding(4, 0, 4, 0);
+            lblIncomeTitle.Name = "lblIncomeTitle";
+            lblIncomeTitle.Size = new System.Drawing.Size(85, 30);
+            lblIncomeTitle.TabIndex = 0;
+            lblIncomeTitle.Text = "Income";
             // 
             // lblIncomeAmount
             // 
-            this.lblIncomeAmount.AutoSize = true;
-            this.lblIncomeAmount.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
-            this.lblIncomeAmount.Location = new System.Drawing.Point(17, 45);
-            this.lblIncomeAmount.Name = "lblIncomeAmount";
-            this.lblIncomeAmount.Size = new System.Drawing.Size(140, 37);
-            this.lblIncomeAmount.TabIndex = 1;
-            this.lblIncomeAmount.Text = "$8,500.00";
+            lblIncomeAmount.AutoSize = true;
+            lblIncomeAmount.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
+            lblIncomeAmount.Location = new System.Drawing.Point(24, 75);
+            lblIncomeAmount.Margin = new Padding(4, 0, 4, 0);
+            lblIncomeAmount.Name = "lblIncomeAmount";
+            lblIncomeAmount.Size = new System.Drawing.Size(206, 54);
+            lblIncomeAmount.TabIndex = 1;
+            lblIncomeAmount.Text = "$8,500.00";
             // 
             // lblIncomeChange
             // 
-            this.lblIncomeChange.AutoSize = true;
-            this.lblIncomeChange.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblIncomeChange.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(197)))), ((int)(((byte)(94)))));
-            this.lblIncomeChange.Location = new System.Drawing.Point(20, 87);
-            this.lblIncomeChange.Name = "lblIncomeChange";
-            this.lblIncomeChange.Size = new System.Drawing.Size(103, 15);
-            this.lblIncomeChange.TabIndex = 2;
-            this.lblIncomeChange.Text = "↑ 6.3%  vs last month";
+            lblIncomeChange.AutoSize = true;
+            lblIncomeChange.Font = new System.Drawing.Font("Segoe UI", 9F);
+            lblIncomeChange.ForeColor = System.Drawing.Color.FromArgb(34, 197, 94);
+            lblIncomeChange.Location = new System.Drawing.Point(29, 145);
+            lblIncomeChange.Margin = new Padding(4, 0, 4, 0);
+            lblIncomeChange.Name = "lblIncomeChange";
+            lblIncomeChange.Size = new System.Drawing.Size(182, 25);
+            lblIncomeChange.TabIndex = 2;
+            lblIncomeChange.Text = "↑ 6.3%  vs last month";
             // 
             // pnlExpense
             // 
-            this.pnlExpense.BackColor = System.Drawing.Color.White;
-            this.pnlExpense.Controls.Add(this.lblExpenseTitle);
-            this.pnlExpense.Controls.Add(this.lblExpenseAmount);
-            this.pnlExpense.Controls.Add(this.lblExpenseChange);
-            this.pnlExpense.Location = new System.Drawing.Point(590, 20);
-            this.pnlExpense.Name = "pnlExpense";
-            this.pnlExpense.Padding = new System.Windows.Forms.Padding(20);
-            this.pnlExpense.Size = new System.Drawing.Size(270, 120);
-            this.pnlExpense.TabIndex = 2;
+            pnlExpense.BackColor = System.Drawing.Color.White;
+            pnlExpense.Controls.Add(lblExpenseTitle);
+            pnlExpense.Controls.Add(lblExpenseAmount);
+            pnlExpense.Controls.Add(lblExpenseChange);
+            pnlExpense.Location = new System.Drawing.Point(454, 45);
+            pnlExpense.Margin = new Padding(4, 5, 20, 5);
+            pnlExpense.Name = "pnlExpense";
+            pnlExpense.Padding = new Padding(29, 33, 29, 33);
+            pnlExpense.Size = new System.Drawing.Size(386, 200);
+            pnlExpense.TabIndex = 2;
             // 
             // lblExpenseTitle
             // 
-            this.lblExpenseTitle.AutoSize = true;
-            this.lblExpenseTitle.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.lblExpenseTitle.ForeColor = System.Drawing.Color.Gray;
-            this.lblExpenseTitle.Location = new System.Drawing.Point(20, 15);
-            this.lblExpenseTitle.Name = "lblExpenseTitle";
-            this.lblExpenseTitle.Size = new System.Drawing.Size(63, 20);
-            this.lblExpenseTitle.TabIndex = 0;
-            this.lblExpenseTitle.Text = "Expense";
+            lblExpenseTitle.AutoSize = true;
+            lblExpenseTitle.Font = new System.Drawing.Font("Segoe UI", 11F);
+            lblExpenseTitle.ForeColor = System.Drawing.Color.Gray;
+            lblExpenseTitle.Location = new System.Drawing.Point(29, 25);
+            lblExpenseTitle.Margin = new Padding(4, 0, 4, 0);
+            lblExpenseTitle.Name = "lblExpenseTitle";
+            lblExpenseTitle.Size = new System.Drawing.Size(92, 30);
+            lblExpenseTitle.TabIndex = 0;
+            lblExpenseTitle.Text = "Expense";
             // 
             // lblExpenseAmount
             // 
-            this.lblExpenseAmount.AutoSize = true;
-            this.lblExpenseAmount.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
-            this.lblExpenseAmount.Location = new System.Drawing.Point(17, 45);
-            this.lblExpenseAmount.Name = "lblExpenseAmount";
-            this.lblExpenseAmount.Size = new System.Drawing.Size(140, 37);
-            this.lblExpenseAmount.TabIndex = 1;
-            this.lblExpenseAmount.Text = "$6,222.00";
+            lblExpenseAmount.AutoSize = true;
+            lblExpenseAmount.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
+            lblExpenseAmount.Location = new System.Drawing.Point(24, 75);
+            lblExpenseAmount.Margin = new Padding(4, 0, 4, 0);
+            lblExpenseAmount.Name = "lblExpenseAmount";
+            lblExpenseAmount.Size = new System.Drawing.Size(206, 54);
+            lblExpenseAmount.TabIndex = 1;
+            lblExpenseAmount.Text = "$6,222.00";
             // 
             // lblExpenseChange
             // 
-            this.lblExpenseChange.AutoSize = true;
-            this.lblExpenseChange.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblExpenseChange.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(68)))), ((int)(((byte)(68)))));
-            this.lblExpenseChange.Location = new System.Drawing.Point(20, 87);
-            this.lblExpenseChange.Name = "lblExpenseChange";
-            this.lblExpenseChange.Size = new System.Drawing.Size(103, 15);
-            this.lblExpenseChange.TabIndex = 2;
-            this.lblExpenseChange.Text = "↑ 2.4%  vs last month";
+            lblExpenseChange.AutoSize = true;
+            lblExpenseChange.Font = new System.Drawing.Font("Segoe UI", 9F);
+            lblExpenseChange.ForeColor = System.Drawing.Color.FromArgb(239, 68, 68);
+            lblExpenseChange.Location = new System.Drawing.Point(29, 145);
+            lblExpenseChange.Margin = new Padding(4, 0, 4, 0);
+            lblExpenseChange.Name = "lblExpenseChange";
+            lblExpenseChange.Size = new System.Drawing.Size(182, 25);
+            lblExpenseChange.TabIndex = 2;
+            lblExpenseChange.Text = "↑ 2.4%  vs last month";
             // 
             // pnlTotalSavings
             // 
-            this.pnlTotalSavings.BackColor = System.Drawing.Color.White;
-            this.pnlTotalSavings.Controls.Add(this.lblTotalSavingsTitle);
-            this.pnlTotalSavings.Controls.Add(this.lblTotalSavingsAmount);
-            this.pnlTotalSavings.Controls.Add(this.lblTotalSavingsChange);
-            this.pnlTotalSavings.Location = new System.Drawing.Point(870, 20);
-            this.pnlTotalSavings.Name = "pnlTotalSavings";
-            this.pnlTotalSavings.Padding = new System.Windows.Forms.Padding(20);
-            this.pnlTotalSavings.Size = new System.Drawing.Size(270, 120);
-            this.pnlTotalSavings.TabIndex = 3;
+            pnlTotalSavings.BackColor = System.Drawing.Color.White;
+            pnlTotalSavings.Controls.Add(lblTotalSavingsTitle);
+            pnlTotalSavings.Controls.Add(lblTotalSavingsAmount);
+            pnlTotalSavings.Controls.Add(lblTotalSavingsChange);
+            pnlTotalSavings.Location = new System.Drawing.Point(44, 45);
+            pnlTotalSavings.Margin = new Padding(4, 5, 20, 5);
+            pnlTotalSavings.Name = "pnlTotalSavings";
+            pnlTotalSavings.Padding = new Padding(29, 33, 29, 33);
+            pnlTotalSavings.Size = new System.Drawing.Size(386, 200);
+            pnlTotalSavings.TabIndex = 3;
             // 
             // lblTotalSavingsTitle
             // 
-            this.lblTotalSavingsTitle.AutoSize = true;
-            this.lblTotalSavingsTitle.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.lblTotalSavingsTitle.ForeColor = System.Drawing.Color.Gray;
-            this.lblTotalSavingsTitle.Location = new System.Drawing.Point(20, 15);
-            this.lblTotalSavingsTitle.Name = "lblTotalSavingsTitle";
-            this.lblTotalSavingsTitle.Size = new System.Drawing.Size(98, 20);
-            this.lblTotalSavingsTitle.TabIndex = 0;
-            this.lblTotalSavingsTitle.Text = "Total savings";
+            lblTotalSavingsTitle.AutoSize = true;
+            lblTotalSavingsTitle.Font = new System.Drawing.Font("Segoe UI", 11F);
+            lblTotalSavingsTitle.ForeColor = System.Drawing.Color.Gray;
+            lblTotalSavingsTitle.Location = new System.Drawing.Point(29, 25);
+            lblTotalSavingsTitle.Margin = new Padding(4, 0, 4, 0);
+            lblTotalSavingsTitle.Name = "lblTotalSavingsTitle";
+            lblTotalSavingsTitle.Size = new System.Drawing.Size(135, 30);
+            lblTotalSavingsTitle.TabIndex = 0;
+            lblTotalSavingsTitle.Text = "Total savings";
             // 
             // lblTotalSavingsAmount
             // 
-            this.lblTotalSavingsAmount.AutoSize = true;
-            this.lblTotalSavingsAmount.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
-            this.lblTotalSavingsAmount.Location = new System.Drawing.Point(17, 45);
-            this.lblTotalSavingsAmount.Name = "lblTotalSavingsAmount";
-            this.lblTotalSavingsAmount.Size = new System.Drawing.Size(155, 37);
-            this.lblTotalSavingsAmount.TabIndex = 1;
-            this.lblTotalSavingsAmount.Text = "$32,913.00";
+            lblTotalSavingsAmount.AutoSize = true;
+            lblTotalSavingsAmount.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
+            lblTotalSavingsAmount.Location = new System.Drawing.Point(24, 75);
+            lblTotalSavingsAmount.Margin = new Padding(4, 0, 4, 0);
+            lblTotalSavingsAmount.Name = "lblTotalSavingsAmount";
+            lblTotalSavingsAmount.Size = new System.Drawing.Size(229, 54);
+            lblTotalSavingsAmount.TabIndex = 1;
+            lblTotalSavingsAmount.Text = "$32,913.00";
             // 
             // lblTotalSavingsChange
             // 
-            this.lblTotalSavingsChange.AutoSize = true;
-            this.lblTotalSavingsChange.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblTotalSavingsChange.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(197)))), ((int)(((byte)(94)))));
-            this.lblTotalSavingsChange.Location = new System.Drawing.Point(20, 87);
-            this.lblTotalSavingsChange.Name = "lblTotalSavingsChange";
-            this.lblTotalSavingsChange.Size = new System.Drawing.Size(110, 15);
-            this.lblTotalSavingsChange.TabIndex = 2;
-            this.lblTotalSavingsChange.Text = "↑ 12.1%  vs last month";
+            lblTotalSavingsChange.AutoSize = true;
+            lblTotalSavingsChange.Font = new System.Drawing.Font("Segoe UI", 9F);
+            lblTotalSavingsChange.ForeColor = System.Drawing.Color.FromArgb(34, 197, 94);
+            lblTotalSavingsChange.Location = new System.Drawing.Point(29, 145);
+            lblTotalSavingsChange.Margin = new Padding(4, 0, 4, 0);
+            lblTotalSavingsChange.Name = "lblTotalSavingsChange";
+            lblTotalSavingsChange.Size = new System.Drawing.Size(192, 25);
+            lblTotalSavingsChange.TabIndex = 2;
+            lblTotalSavingsChange.Text = "↑ 12.1%  vs last month";
             // 
             // pnlMoneyFlow
             // 
-            this.pnlMoneyFlow.BackColor = System.Drawing.Color.White;
-            this.pnlMoneyFlow.Controls.Add(this.lblMoneyFlowTitle);
-            this.pnlMoneyFlow.Controls.Add(this.pnlMoneyFlowChart);
-            this.pnlMoneyFlow.Location = new System.Drawing.Point(30, 280);
-            this.pnlMoneyFlow.Name = "pnlMoneyFlow";
-            this.pnlMoneyFlow.Padding = new System.Windows.Forms.Padding(20);
-            this.pnlMoneyFlow.Size = new System.Drawing.Size(580, 300);
-            this.pnlMoneyFlow.TabIndex = 2;
+            pnlMoneyFlow.BackColor = System.Drawing.Color.White;
+            pnlMoneyFlow.Controls.Add(lblMoneyFlowTitle);
+            pnlMoneyFlow.Controls.Add(pnlMoneyFlowChart);
+            pnlMoneyFlow.Dock = DockStyle.Fill;
+            pnlMoneyFlow.Location = new System.Drawing.Point(80, 80);
+            pnlMoneyFlow.Margin = new Padding(30);
+            pnlMoneyFlow.Name = "pnlMoneyFlow";
+            pnlMoneyFlow.Padding = new Padding(29, 33, 29, 33);
+            pnlMoneyFlow.Size = new System.Drawing.Size(699, 470);
+            pnlMoneyFlow.TabIndex = 2;
             // 
             // lblMoneyFlowTitle
             // 
-            this.lblMoneyFlowTitle.AutoSize = true;
-            this.lblMoneyFlowTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.lblMoneyFlowTitle.Location = new System.Drawing.Point(20, 20);
-            this.lblMoneyFlowTitle.Name = "lblMoneyFlowTitle";
-            this.lblMoneyFlowTitle.Size = new System.Drawing.Size(113, 25);
-            this.lblMoneyFlowTitle.TabIndex = 0;
-            this.lblMoneyFlowTitle.Text = "Money flow";
+            lblMoneyFlowTitle.AutoSize = true;
+            lblMoneyFlowTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            lblMoneyFlowTitle.Location = new System.Drawing.Point(29, 33);
+            lblMoneyFlowTitle.Margin = new Padding(4, 0, 4, 0);
+            lblMoneyFlowTitle.Name = "lblMoneyFlowTitle";
+            lblMoneyFlowTitle.Size = new System.Drawing.Size(174, 38);
+            lblMoneyFlowTitle.TabIndex = 0;
+            lblMoneyFlowTitle.Text = "Money flow";
             // 
             // pnlMoneyFlowChart
             // 
-            this.pnlMoneyFlowChart.Location = new System.Drawing.Point(20, 60);
-            this.pnlMoneyFlowChart.Name = "pnlMoneyFlowChart";
-            this.pnlMoneyFlowChart.Size = new System.Drawing.Size(540, 220);
-            this.pnlMoneyFlowChart.TabIndex = 1;
+            pnlMoneyFlowChart.Location = new System.Drawing.Point(29, 100);
+            pnlMoneyFlowChart.Margin = new Padding(10);
+            pnlMoneyFlowChart.Name = "pnlMoneyFlowChart";
+            pnlMoneyFlowChart.Size = new System.Drawing.Size(662, 333);
+            pnlMoneyFlowChart.TabIndex = 1;
             // 
             // pnlBudget
             // 
-            this.pnlBudget.BackColor = System.Drawing.Color.White;
-            this.pnlBudget.Controls.Add(this.lblBudgetTitle);
-            this.pnlBudget.Controls.Add(this.pnlBudgetChart);
-            this.pnlBudget.Location = new System.Drawing.Point(630, 280);
-            this.pnlBudget.Name = "pnlBudget";
-            this.pnlBudget.Padding = new System.Windows.Forms.Padding(20);
-            this.pnlBudget.Size = new System.Drawing.Size(510, 300);
-            this.pnlBudget.TabIndex = 3;
+            pnlBudget.BackColor = System.Drawing.Color.White;
+            pnlBudget.Controls.Add(lblBudgetTitle);
+            pnlBudget.Controls.Add(pnlBudgetChart);
+            pnlBudget.Dock = DockStyle.Fill;
+            pnlBudget.Location = new System.Drawing.Point(839, 80);
+            pnlBudget.Margin = new Padding(30);
+            pnlBudget.Name = "pnlBudget";
+            pnlBudget.Padding = new Padding(29, 33, 29, 33);
+            pnlBudget.Size = new System.Drawing.Size(691, 470);
+            pnlBudget.TabIndex = 3;
+            pnlBudget.Paint += pnlBudget_Paint;
             // 
             // lblBudgetTitle
             // 
-            this.lblBudgetTitle.AutoSize = true;
-            this.lblBudgetTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.lblBudgetTitle.Location = new System.Drawing.Point(20, 20);
-            this.lblBudgetTitle.Name = "lblBudgetTitle";
-            this.lblBudgetTitle.Size = new System.Drawing.Size(75, 25);
-            this.lblBudgetTitle.TabIndex = 0;
-            this.lblBudgetTitle.Text = "Budget";
+            lblBudgetTitle.AutoSize = true;
+            lblBudgetTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            lblBudgetTitle.Location = new System.Drawing.Point(29, 33);
+            lblBudgetTitle.Margin = new Padding(4, 0, 4, 0);
+            lblBudgetTitle.Name = "lblBudgetTitle";
+            lblBudgetTitle.Size = new System.Drawing.Size(112, 38);
+            lblBudgetTitle.TabIndex = 0;
+            lblBudgetTitle.Text = "Budget";
             // 
             // pnlBudgetChart
             // 
-            this.pnlBudgetChart.Location = new System.Drawing.Point(20, 60);
-            this.pnlBudgetChart.Name = "pnlBudgetChart";
-            this.pnlBudgetChart.Size = new System.Drawing.Size(470, 220);
-            this.pnlBudgetChart.TabIndex = 1;
+            pnlBudgetChart.Location = new System.Drawing.Point(29, 100);
+            pnlBudgetChart.Margin = new Padding(4, 5, 4, 5);
+            pnlBudgetChart.Name = "pnlBudgetChart";
+            pnlBudgetChart.Size = new System.Drawing.Size(657, 333);
+            pnlBudgetChart.TabIndex = 1;
             // 
             // pnlTransactions
             // 
-            this.pnlTransactions.BackColor = System.Drawing.Color.White;
-            this.pnlTransactions.Controls.Add(this.lblTransactionsTitle);
-            this.pnlTransactions.Controls.Add(this.dgvTransactions);
-            this.pnlTransactions.Location = new System.Drawing.Point(30, 600);
-            this.pnlTransactions.Name = "pnlTransactions";
-            this.pnlTransactions.Padding = new System.Windows.Forms.Padding(20);
-            this.pnlTransactions.Size = new System.Drawing.Size(580, 300);
-            this.pnlTransactions.TabIndex = 4;
+            pnlTransactions.BackColor = System.Drawing.Color.White;
+            pnlTransactions.Controls.Add(lblTransactionsTitle);
+            pnlTransactions.Controls.Add(dgvTransactions);
+            pnlTransactions.Dock = DockStyle.Fill;
+            pnlTransactions.Location = new System.Drawing.Point(80, 610);
+            pnlTransactions.Margin = new Padding(30);
+            pnlTransactions.Name = "pnlTransactions";
+            pnlTransactions.Padding = new Padding(29, 33, 29, 33);
+            pnlTransactions.Size = new System.Drawing.Size(699, 471);
+            pnlTransactions.TabIndex = 4;
             // 
             // lblTransactionsTitle
             // 
-            this.lblTransactionsTitle.AutoSize = true;
-            this.lblTransactionsTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.lblTransactionsTitle.Location = new System.Drawing.Point(20, 20);
-            this.lblTransactionsTitle.Name = "lblTransactionsTitle";
-            this.lblTransactionsTitle.Size = new System.Drawing.Size(180, 25);
-            this.lblTransactionsTitle.TabIndex = 0;
-            this.lblTransactionsTitle.Text = "Recent transactions";
+            lblTransactionsTitle.AutoSize = true;
+            lblTransactionsTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            lblTransactionsTitle.Location = new System.Drawing.Point(29, 33);
+            lblTransactionsTitle.Margin = new Padding(4, 0, 4, 0);
+            lblTransactionsTitle.Name = "lblTransactionsTitle";
+            lblTransactionsTitle.Size = new System.Drawing.Size(272, 38);
+            lblTransactionsTitle.TabIndex = 0;
+            lblTransactionsTitle.Text = "Recent transactions";
             // 
             // dgvTransactions
             // 
-            this.dgvTransactions.BackgroundColor = System.Drawing.Color.White;
-            this.dgvTransactions.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgvTransactions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvTransactions.Location = new System.Drawing.Point(20, 60);
-            this.dgvTransactions.Name = "dgvTransactions";
-            this.dgvTransactions.Size = new System.Drawing.Size(540, 220);
-            this.dgvTransactions.TabIndex = 1;
+            dgvTransactions.BackgroundColor = System.Drawing.Color.White;
+            dgvTransactions.BorderStyle = BorderStyle.None;
+            dgvTransactions.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvTransactions.Location = new System.Drawing.Point(29, 100);
+            dgvTransactions.Margin = new Padding(4, 5, 4, 5);
+            dgvTransactions.Name = "dgvTransactions";
+            dgvTransactions.RowHeadersWidth = 62;
+            dgvTransactions.Size = new System.Drawing.Size(662, 327);
+            dgvTransactions.TabIndex = 1;
             // 
             // pnlSavingGoals
             // 
-            this.pnlSavingGoals.BackColor = System.Drawing.Color.White;
-            this.pnlSavingGoals.Controls.Add(this.lblSavingGoalsTitle);
-            this.pnlSavingGoals.Controls.Add(this.pnlGoalsList);
-            this.pnlSavingGoals.Location = new System.Drawing.Point(630, 600);
-            this.pnlSavingGoals.Name = "pnlSavingGoals";
-            this.pnlSavingGoals.Padding = new System.Windows.Forms.Padding(20);
-            this.pnlSavingGoals.Size = new System.Drawing.Size(510, 300);
-            this.pnlSavingGoals.TabIndex = 5;
+            pnlSavingGoals.BackColor = System.Drawing.Color.White;
+            pnlSavingGoals.Controls.Add(lblSavingGoalsTitle);
+            pnlSavingGoals.Controls.Add(pnlGoalsList);
+            pnlSavingGoals.Dock = DockStyle.Fill;
+            pnlSavingGoals.Location = new System.Drawing.Point(839, 610);
+            pnlSavingGoals.Margin = new Padding(30);
+            pnlSavingGoals.Name = "pnlSavingGoals";
+            pnlSavingGoals.Padding = new Padding(29, 33, 29, 33);
+            pnlSavingGoals.Size = new System.Drawing.Size(691, 471);
+            pnlSavingGoals.TabIndex = 5;
             // 
             // lblSavingGoalsTitle
             // 
-            this.lblSavingGoalsTitle.AutoSize = true;
-            this.lblSavingGoalsTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.lblSavingGoalsTitle.Location = new System.Drawing.Point(20, 20);
-            this.lblSavingGoalsTitle.Name = "lblSavingGoalsTitle";
-            this.lblSavingGoalsTitle.Size = new System.Drawing.Size(121, 25);
-            this.lblSavingGoalsTitle.TabIndex = 0;
-            this.lblSavingGoalsTitle.Text = "Saving goals";
+            lblSavingGoalsTitle.AutoSize = true;
+            lblSavingGoalsTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            lblSavingGoalsTitle.Location = new System.Drawing.Point(29, 33);
+            lblSavingGoalsTitle.Margin = new Padding(4, 0, 4, 0);
+            lblSavingGoalsTitle.Name = "lblSavingGoalsTitle";
+            lblSavingGoalsTitle.Size = new System.Drawing.Size(182, 38);
+            lblSavingGoalsTitle.TabIndex = 0;
+            lblSavingGoalsTitle.Text = "Saving goals";
             // 
             // pnlGoalsList
             // 
-            this.pnlGoalsList.AutoScroll = true;
-            this.pnlGoalsList.Location = new System.Drawing.Point(20, 60);
-            this.pnlGoalsList.Name = "pnlGoalsList";
-            this.pnlGoalsList.Size = new System.Drawing.Size(470, 220);
-            this.pnlGoalsList.TabIndex = 1;
+            pnlGoalsList.AutoScroll = true;
+            pnlGoalsList.Location = new System.Drawing.Point(29, 100);
+            pnlGoalsList.Margin = new Padding(4, 5, 4, 5);
+            pnlGoalsList.Name = "pnlGoalsList";
+            pnlGoalsList.Size = new System.Drawing.Size(657, 349);
+            pnlGoalsList.TabIndex = 1;
+            // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.ColumnCount = 2;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50.30979F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 49.6902122F));
+            tableLayoutPanel1.Controls.Add(pnlTransactions, 0, 1);
+            tableLayoutPanel1.Controls.Add(pnlBudget, 1, 0);
+            tableLayoutPanel1.Controls.Add(pnlMoneyFlow, 0, 0);
+            tableLayoutPanel1.Controls.Add(pnlSavingGoals, 1, 1);
+            tableLayoutPanel1.Dock = DockStyle.Bottom;
+            tableLayoutPanel1.Location = new System.Drawing.Point(0, 469);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.Padding = new Padding(50);
+            tableLayoutPanel1.RowCount = 2;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel1.Size = new System.Drawing.Size(1610, 1161);
+            tableLayoutPanel1.TabIndex = 6;
+            // 
+            // flbStaus
+            // 
+            flbStaus.Controls.Add(pnlTotalSavings);
+            flbStaus.Controls.Add(pnlExpense);
+            flbStaus.Controls.Add(pnlIncome);
+            flbStaus.Controls.Add(pnlTotalBalance);
+            flbStaus.Dock = DockStyle.Top;
+            flbStaus.Location = new System.Drawing.Point(0, 192);
+            flbStaus.Margin = new Padding(20);
+            flbStaus.Name = "flbStaus";
+            flbStaus.Padding = new Padding(40);
+            flbStaus.Size = new System.Drawing.Size(1610, 277);
+            flbStaus.TabIndex = 2;
             // 
             // UC_Dashboard
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoScroll = true;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(240)))), ((int)(((byte)(253)))));
-            this.Controls.Add(this.pnlSavingGoals);
-            this.Controls.Add(this.pnlTransactions);
-            this.Controls.Add(this.pnlBudget);
-            this.Controls.Add(this.pnlMoneyFlow);
-            this.Controls.Add(this.pnlStats);
-            this.Controls.Add(this.pnlHeader);
-            this.Name = "UC_Dashboard";
-            this.Size = new System.Drawing.Size(1200, 950);
-            this.pnlHeader.ResumeLayout(false);
-            this.pnlHeader.PerformLayout();
-            this.pnlStats.ResumeLayout(false);
-            this.pnlTotalBalance.ResumeLayout(false);
-            this.pnlTotalBalance.PerformLayout();
-            this.pnlIncome.ResumeLayout(false);
-            this.pnlIncome.PerformLayout();
-            this.pnlExpense.ResumeLayout(false);
-            this.pnlExpense.PerformLayout();
-            this.pnlTotalSavings.ResumeLayout(false);
-            this.pnlTotalSavings.PerformLayout();
-            this.pnlMoneyFlow.ResumeLayout(false);
-            this.pnlMoneyFlow.PerformLayout();
-            this.pnlBudget.ResumeLayout(false);
-            this.pnlBudget.PerformLayout();
-            this.pnlTransactions.ResumeLayout(false);
-            this.pnlTransactions.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvTransactions)).EndInit();
-            this.pnlSavingGoals.ResumeLayout(false);
-            this.pnlSavingGoals.PerformLayout();
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
+            AutoScaleMode = AutoScaleMode.Font;
+            AutoScroll = true;
+            BackColor = System.Drawing.Color.FromArgb(243, 240, 253);
+            Controls.Add(flbStaus);
+            Controls.Add(tableLayoutPanel1);
+            Controls.Add(pnlHeader);
+            Margin = new Padding(4, 5, 4, 5);
+            Name = "UC_Dashboard";
+            Size = new System.Drawing.Size(1610, 1583);
+            pnlHeader.ResumeLayout(false);
+            pnlHeader.PerformLayout();
+            pnlTotalBalance.ResumeLayout(false);
+            pnlTotalBalance.PerformLayout();
+            pnlIncome.ResumeLayout(false);
+            pnlIncome.PerformLayout();
+            pnlExpense.ResumeLayout(false);
+            pnlExpense.PerformLayout();
+            pnlTotalSavings.ResumeLayout(false);
+            pnlTotalSavings.PerformLayout();
+            pnlMoneyFlow.ResumeLayout(false);
+            pnlMoneyFlow.PerformLayout();
+            pnlBudget.ResumeLayout(false);
+            pnlBudget.PerformLayout();
+            pnlTransactions.ResumeLayout(false);
+            pnlTransactions.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvTransactions).EndInit();
+            pnlSavingGoals.ResumeLayout(false);
+            pnlSavingGoals.PerformLayout();
+            tableLayoutPanel1.ResumeLayout(false);
+            flbStaus.ResumeLayout(false);
+            ResumeLayout(false);
         }
 
         #endregion
@@ -495,7 +557,6 @@ namespace ExpenseManager.App.Views.Admin.UC
         private System.Windows.Forms.Button btnManageWidgets;
         private System.Windows.Forms.Button btnAddWidget;
         private System.Windows.Forms.Button btnThisMonth;
-        private System.Windows.Forms.Panel pnlStats;
         private System.Windows.Forms.Panel pnlTotalBalance;
         private System.Windows.Forms.Label lblTotalBalanceTitle;
         private System.Windows.Forms.Label lblTotalBalanceAmount;
@@ -524,5 +585,7 @@ namespace ExpenseManager.App.Views.Admin.UC
         private System.Windows.Forms.Panel pnlSavingGoals;
         private System.Windows.Forms.Label lblSavingGoalsTitle;
         private System.Windows.Forms.Panel pnlGoalsList;
+        private TableLayoutPanel tableLayoutPanel1;
+        private FlowLayoutPanel flbStaus;
     }
 }

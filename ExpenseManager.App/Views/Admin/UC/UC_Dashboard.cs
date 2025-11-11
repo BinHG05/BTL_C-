@@ -17,5 +17,10 @@ namespace ExpenseManager.App.Views.Admin.UC
             InitializeComponent();
 
         }
+
+        private void pnlBudget_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

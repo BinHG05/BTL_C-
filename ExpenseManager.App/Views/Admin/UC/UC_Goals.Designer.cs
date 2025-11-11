@@ -17,1064 +17,1155 @@
 
         private void InitializeComponent()
         {
-            this.pnlHeader = new System.Windows.Forms.Panel();
-            this.lblTitle = new System.Windows.Forms.Label();
-            this.lblSubtitle = new System.Windows.Forms.Label();
-            this.btnAddNewGoal = new System.Windows.Forms.Button();
-            this.pnlFilters = new System.Windows.Forms.Panel();
-            this.btnCalendar = new System.Windows.Forms.Button();
-            this.btnThisYear = new System.Windows.Forms.Button();
-            this.btnSort = new System.Windows.Forms.Button();
-            this.cmbSortBy = new System.Windows.Forms.ComboBox();
-            this.btnFilter = new System.Windows.Forms.Button();
-            this.pnlActiveFilters = new System.Windows.Forms.Panel();
-            this.btnInProgress = new System.Windows.Forms.Button();
-            this.btnDueDate = new System.Windows.Forms.Button();
-            this.btnAmount = new System.Windows.Forms.Button();
-            this.btnResetAll = new System.Windows.Forms.Button();
-            this.lblItemsCount = new System.Windows.Forms.Label();
-            this.pnlGoalsGrid = new System.Windows.Forms.Panel();
-            this.pnlGoal1 = new System.Windows.Forms.Panel();
-            this.lblGoal1Title = new System.Windows.Forms.Label();
-            this.lblGoal1DueDate = new System.Windows.Forms.Label();
-            this.lblGoal1Amount = new System.Windows.Forms.Label();
-            this.lblGoal1Target = new System.Windows.Forms.Label();
-            this.prgGoal1 = new System.Windows.Forms.ProgressBar();
-            this.lblGoal1Progress = new System.Windows.Forms.Label();
-            this.lblGoal1Left = new System.Windows.Forms.Label();
-            this.btnGoal1Edit = new System.Windows.Forms.Button();
-            this.pnlGoal2 = new System.Windows.Forms.Panel();
-            this.lblGoal2Title = new System.Windows.Forms.Label();
-            this.lblGoal2DueDate = new System.Windows.Forms.Label();
-            this.lblGoal2Amount = new System.Windows.Forms.Label();
-            this.lblGoal2Target = new System.Windows.Forms.Label();
-            this.prgGoal2 = new System.Windows.Forms.ProgressBar();
-            this.lblGoal2Progress = new System.Windows.Forms.Label();
-            this.lblGoal2Left = new System.Windows.Forms.Label();
-            this.btnGoal2Edit = new System.Windows.Forms.Button();
-            this.pnlGoal3 = new System.Windows.Forms.Panel();
-            this.lblGoal3Title = new System.Windows.Forms.Label();
-            this.lblGoal3DueDate = new System.Windows.Forms.Label();
-            this.lblGoal3Amount = new System.Windows.Forms.Label();
-            this.lblGoal3Target = new System.Windows.Forms.Label();
-            this.prgGoal3 = new System.Windows.Forms.ProgressBar();
-            this.lblGoal3Progress = new System.Windows.Forms.Label();
-            this.lblGoal3Left = new System.Windows.Forms.Label();
-            this.btnGoal3Edit = new System.Windows.Forms.Button();
-            this.pnlGoal4 = new System.Windows.Forms.Panel();
-            this.lblGoal4Title = new System.Windows.Forms.Label();
-            this.lblGoal4DueDate = new System.Windows.Forms.Label();
-            this.lblGoal4Amount = new System.Windows.Forms.Label();
-            this.lblGoal4Target = new System.Windows.Forms.Label();
-            this.prgGoal4 = new System.Windows.Forms.ProgressBar();
-            this.lblGoal4Progress = new System.Windows.Forms.Label();
-            this.lblGoal4Left = new System.Windows.Forms.Label();
-            this.btnGoal4Edit = new System.Windows.Forms.Button();
-            this.pnlBottom = new System.Windows.Forms.Panel();
-            this.pnlTotalGoals = new System.Windows.Forms.Panel();
-            this.lblTotalGoalsTitle = new System.Windows.Forms.Label();
-            this.lblTotalGoalsCount = new System.Windows.Forms.Label();
-            this.cmbThisYear = new System.Windows.Forms.ComboBox();
-            this.pnlGoalsStatus = new System.Windows.Forms.Panel();
-            this.pnlNotStarted = new System.Windows.Forms.Panel();
-            this.lblNotStartedIcon = new System.Windows.Forms.Label();
-            this.lblNotStartedTitle = new System.Windows.Forms.Label();
-            this.lblNotStartedCount = new System.Windows.Forms.Label();
-            this.pnlInProgress = new System.Windows.Forms.Panel();
-            this.lblInProgressIcon = new System.Windows.Forms.Label();
-            this.lblInProgressTitle = new System.Windows.Forms.Label();
-            this.lblInProgressCount = new System.Windows.Forms.Label();
-            this.pnlCanceled = new System.Windows.Forms.Panel();
-            this.lblCanceledIcon = new System.Windows.Forms.Label();
-            this.lblCanceledTitle = new System.Windows.Forms.Label();
-            this.lblCanceledCount = new System.Windows.Forms.Label();
-            this.pnlFinished = new System.Windows.Forms.Panel();
-            this.lblFinishedIcon = new System.Windows.Forms.Label();
-            this.lblFinishedTitle = new System.Windows.Forms.Label();
-            this.lblFinishedCount = new System.Windows.Forms.Label();
-            this.pnlSavingsOverview = new System.Windows.Forms.Panel();
-            this.lblSavingsTitle = new System.Windows.Forms.Label();
-            this.pnlSavingsChart = new System.Windows.Forms.Panel();
-            this.pnlHeader.SuspendLayout();
-            this.pnlFilters.SuspendLayout();
-            this.pnlActiveFilters.SuspendLayout();
-            this.pnlGoalsGrid.SuspendLayout();
-            this.pnlGoal1.SuspendLayout();
-            this.pnlGoal2.SuspendLayout();
-            this.pnlGoal3.SuspendLayout();
-            this.pnlGoal4.SuspendLayout();
-            this.pnlBottom.SuspendLayout();
-            this.pnlTotalGoals.SuspendLayout();
-            this.pnlGoalsStatus.SuspendLayout();
-            this.pnlNotStarted.SuspendLayout();
-            this.pnlInProgress.SuspendLayout();
-            this.pnlCanceled.SuspendLayout();
-            this.pnlFinished.SuspendLayout();
-            this.pnlSavingsOverview.SuspendLayout();
-            this.SuspendLayout();
+            pnlHeader = new System.Windows.Forms.Panel();
+            lblTitle = new System.Windows.Forms.Label();
+            lblSubtitle = new System.Windows.Forms.Label();
+            btnAddNewGoal = new System.Windows.Forms.Button();
+            pnlFilters = new System.Windows.Forms.Panel();
+            btnCalendar = new System.Windows.Forms.Button();
+            btnThisYear = new System.Windows.Forms.Button();
+            btnSort = new System.Windows.Forms.Button();
+            cmbSortBy = new System.Windows.Forms.ComboBox();
+            btnFilter = new System.Windows.Forms.Button();
+            pnlActiveFilters = new System.Windows.Forms.Panel();
+            btnInProgress = new System.Windows.Forms.Button();
+            btnDueDate = new System.Windows.Forms.Button();
+            btnAmount = new System.Windows.Forms.Button();
+            btnResetAll = new System.Windows.Forms.Button();
+            lblItemsCount = new System.Windows.Forms.Label();
+            pnlGoal1 = new System.Windows.Forms.Panel();
+            lblGoal1Title = new System.Windows.Forms.Label();
+            lblGoal1DueDate = new System.Windows.Forms.Label();
+            lblGoal1Amount = new System.Windows.Forms.Label();
+            lblGoal1Target = new System.Windows.Forms.Label();
+            prgGoal1 = new System.Windows.Forms.ProgressBar();
+            lblGoal1Progress = new System.Windows.Forms.Label();
+            lblGoal1Left = new System.Windows.Forms.Label();
+            btnGoal1Edit = new System.Windows.Forms.Button();
+            pnlGoal2 = new System.Windows.Forms.Panel();
+            lblGoal2Title = new System.Windows.Forms.Label();
+            lblGoal2DueDate = new System.Windows.Forms.Label();
+            lblGoal2Amount = new System.Windows.Forms.Label();
+            lblGoal2Target = new System.Windows.Forms.Label();
+            prgGoal2 = new System.Windows.Forms.ProgressBar();
+            lblGoal2Progress = new System.Windows.Forms.Label();
+            lblGoal2Left = new System.Windows.Forms.Label();
+            btnGoal2Edit = new System.Windows.Forms.Button();
+            pnlGoal3 = new System.Windows.Forms.Panel();
+            lblGoal3Title = new System.Windows.Forms.Label();
+            lblGoal3DueDate = new System.Windows.Forms.Label();
+            lblGoal3Amount = new System.Windows.Forms.Label();
+            lblGoal3Target = new System.Windows.Forms.Label();
+            prgGoal3 = new System.Windows.Forms.ProgressBar();
+            lblGoal3Progress = new System.Windows.Forms.Label();
+            lblGoal3Left = new System.Windows.Forms.Label();
+            btnGoal3Edit = new System.Windows.Forms.Button();
+            pnlGoal4 = new System.Windows.Forms.Panel();
+            lblGoal4Title = new System.Windows.Forms.Label();
+            lblGoal4DueDate = new System.Windows.Forms.Label();
+            lblGoal4Amount = new System.Windows.Forms.Label();
+            lblGoal4Target = new System.Windows.Forms.Label();
+            prgGoal4 = new System.Windows.Forms.ProgressBar();
+            lblGoal4Progress = new System.Windows.Forms.Label();
+            lblGoal4Left = new System.Windows.Forms.Label();
+            btnGoal4Edit = new System.Windows.Forms.Button();
+            pnlTotalGoals = new System.Windows.Forms.Panel();
+            lblTotalGoalsTitle = new System.Windows.Forms.Label();
+            lblTotalGoalsCount = new System.Windows.Forms.Label();
+            cmbThisYear = new System.Windows.Forms.ComboBox();
+            pnlGoalsStatus = new System.Windows.Forms.Panel();
+            pnlNotStarted = new System.Windows.Forms.Panel();
+            lblNotStartedIcon = new System.Windows.Forms.Label();
+            lblNotStartedTitle = new System.Windows.Forms.Label();
+            lblNotStartedCount = new System.Windows.Forms.Label();
+            pnlInProgress = new System.Windows.Forms.Panel();
+            lblInProgressIcon = new System.Windows.Forms.Label();
+            lblInProgressTitle = new System.Windows.Forms.Label();
+            lblInProgressCount = new System.Windows.Forms.Label();
+            pnlCanceled = new System.Windows.Forms.Panel();
+            lblCanceledIcon = new System.Windows.Forms.Label();
+            lblCanceledTitle = new System.Windows.Forms.Label();
+            lblCanceledCount = new System.Windows.Forms.Label();
+            pnlFinished = new System.Windows.Forms.Panel();
+            lblFinishedIcon = new System.Windows.Forms.Label();
+            lblFinishedTitle = new System.Windows.Forms.Label();
+            lblFinishedCount = new System.Windows.Forms.Label();
+            pnlSavingsOverview = new System.Windows.Forms.Panel();
+            lblSavingsTitle = new System.Windows.Forms.Label();
+            pnlSavingsChart = new System.Windows.Forms.Panel();
+            tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            pnlHeader.SuspendLayout();
+            pnlFilters.SuspendLayout();
+            pnlActiveFilters.SuspendLayout();
+            pnlGoal1.SuspendLayout();
+            pnlGoal2.SuspendLayout();
+            pnlGoal3.SuspendLayout();
+            pnlGoal4.SuspendLayout();
+            pnlTotalGoals.SuspendLayout();
+            pnlGoalsStatus.SuspendLayout();
+            pnlNotStarted.SuspendLayout();
+            pnlInProgress.SuspendLayout();
+            pnlCanceled.SuspendLayout();
+            pnlFinished.SuspendLayout();
+            pnlSavingsOverview.SuspendLayout();
+            tableLayoutPanel1.SuspendLayout();
+            tableLayoutPanel2.SuspendLayout();
+            SuspendLayout();
             // 
             // pnlHeader
             // 
-            this.pnlHeader.BackColor = System.Drawing.Color.White;
-            this.pnlHeader.Controls.Add(this.lblTitle);
-            this.pnlHeader.Controls.Add(this.lblSubtitle);
-            this.pnlHeader.Controls.Add(this.btnAddNewGoal);
-            this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlHeader.Location = new System.Drawing.Point(0, 0);
-            this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Padding = new System.Windows.Forms.Padding(30, 20, 30, 20);
-            this.pnlHeader.Size = new System.Drawing.Size(1200, 100);
-            this.pnlHeader.TabIndex = 0;
+            pnlHeader.BackColor = System.Drawing.Color.White;
+            pnlHeader.Controls.Add(lblTitle);
+            pnlHeader.Controls.Add(lblSubtitle);
+            pnlHeader.Controls.Add(btnAddNewGoal);
+            pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
+            pnlHeader.Location = new System.Drawing.Point(0, 0);
+            pnlHeader.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            pnlHeader.Name = "pnlHeader";
+            pnlHeader.Padding = new System.Windows.Forms.Padding(43, 33, 43, 33);
+            pnlHeader.Size = new System.Drawing.Size(1584, 167);
+            pnlHeader.TabIndex = 0;
             // 
             // lblTitle
             // 
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
-            this.lblTitle.Location = new System.Drawing.Point(30, 20);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(94, 45);
-            this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "Goals";
+            lblTitle.AutoSize = true;
+            lblTitle.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
+            lblTitle.Location = new System.Drawing.Point(43, 33);
+            lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new System.Drawing.Size(152, 65);
+            lblTitle.TabIndex = 0;
+            lblTitle.Text = "Goals";
             // 
             // lblSubtitle
             // 
-            this.lblSubtitle.AutoSize = true;
-            this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.lblSubtitle.ForeColor = System.Drawing.Color.Gray;
-            this.lblSubtitle.Location = new System.Drawing.Point(33, 65);
-            this.lblSubtitle.Name = "lblSubtitle";
-            this.lblSubtitle.Size = new System.Drawing.Size(295, 20);
-            this.lblSubtitle.TabIndex = 1;
-            this.lblSubtitle.Text = "Create financial goals and manage your savings";
+            lblSubtitle.AutoSize = true;
+            lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 11F);
+            lblSubtitle.ForeColor = System.Drawing.Color.Gray;
+            lblSubtitle.Location = new System.Drawing.Point(47, 108);
+            lblSubtitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblSubtitle.Name = "lblSubtitle";
+            lblSubtitle.Size = new System.Drawing.Size(470, 30);
+            lblSubtitle.TabIndex = 1;
+            lblSubtitle.Text = "Create financial goals and manage your savings";
             // 
             // btnAddNewGoal
             // 
-            this.btnAddNewGoal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAddNewGoal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(124)))), ((int)(((byte)(108)))), ((int)(((byte)(254)))));
-            this.btnAddNewGoal.FlatAppearance.BorderSize = 0;
-            this.btnAddNewGoal.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddNewGoal.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnAddNewGoal.ForeColor = System.Drawing.Color.White;
-            this.btnAddNewGoal.Location = new System.Drawing.Point(1042, 35);
-            this.btnAddNewGoal.Name = "btnAddNewGoal";
-            this.btnAddNewGoal.Size = new System.Drawing.Size(150, 40);
-            this.btnAddNewGoal.TabIndex = 2;
-            this.btnAddNewGoal.Text = "+ Add new goal";
-            this.btnAddNewGoal.UseVisualStyleBackColor = false;
+            btnAddNewGoal.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            btnAddNewGoal.BackColor = System.Drawing.Color.FromArgb(124, 108, 254);
+            btnAddNewGoal.FlatAppearance.BorderSize = 0;
+            btnAddNewGoal.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            btnAddNewGoal.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            btnAddNewGoal.ForeColor = System.Drawing.Color.White;
+            btnAddNewGoal.Location = new System.Drawing.Point(1359, 58);
+            btnAddNewGoal.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            btnAddNewGoal.Name = "btnAddNewGoal";
+            btnAddNewGoal.Size = new System.Drawing.Size(214, 67);
+            btnAddNewGoal.TabIndex = 2;
+            btnAddNewGoal.Text = "+ Add new goal";
+            btnAddNewGoal.UseVisualStyleBackColor = false;
             // 
             // pnlFilters
             // 
-            this.pnlFilters.BackColor = System.Drawing.Color.White;
-            this.pnlFilters.Controls.Add(this.btnCalendar);
-            this.pnlFilters.Controls.Add(this.btnThisYear);
-            this.pnlFilters.Controls.Add(this.btnSort);
-            this.pnlFilters.Controls.Add(this.cmbSortBy);
-            this.pnlFilters.Controls.Add(this.btnFilter);
-            this.pnlFilters.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlFilters.Location = new System.Drawing.Point(0, 100);
-            this.pnlFilters.Name = "pnlFilters";
-            this.pnlFilters.Padding = new System.Windows.Forms.Padding(30, 15, 30, 15);
-            this.pnlFilters.Size = new System.Drawing.Size(1200, 70);
-            this.pnlFilters.TabIndex = 1;
+            pnlFilters.BackColor = System.Drawing.Color.White;
+            pnlFilters.Controls.Add(btnCalendar);
+            pnlFilters.Controls.Add(btnThisYear);
+            pnlFilters.Controls.Add(btnSort);
+            pnlFilters.Controls.Add(cmbSortBy);
+            pnlFilters.Controls.Add(btnFilter);
+            pnlFilters.Dock = System.Windows.Forms.DockStyle.Top;
+            pnlFilters.Location = new System.Drawing.Point(0, 167);
+            pnlFilters.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            pnlFilters.Name = "pnlFilters";
+            pnlFilters.Padding = new System.Windows.Forms.Padding(43, 25, 43, 25);
+            pnlFilters.Size = new System.Drawing.Size(1584, 117);
+            pnlFilters.TabIndex = 1;
             // 
             // btnCalendar
             // 
-            this.btnCalendar.BackColor = System.Drawing.Color.White;
-            this.btnCalendar.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
-            this.btnCalendar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCalendar.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnCalendar.Location = new System.Drawing.Point(30, 15);
-            this.btnCalendar.Name = "btnCalendar";
-            this.btnCalendar.Size = new System.Drawing.Size(50, 40);
-            this.btnCalendar.TabIndex = 0;
-            this.btnCalendar.Text = "📅";
-            this.btnCalendar.UseVisualStyleBackColor = false;
+            btnCalendar.BackColor = System.Drawing.Color.White;
+            btnCalendar.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
+            btnCalendar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            btnCalendar.Font = new System.Drawing.Font("Segoe UI", 10F);
+            btnCalendar.Location = new System.Drawing.Point(43, 25);
+            btnCalendar.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            btnCalendar.Name = "btnCalendar";
+            btnCalendar.Size = new System.Drawing.Size(71, 67);
+            btnCalendar.TabIndex = 0;
+            btnCalendar.Text = "📅";
+            btnCalendar.UseVisualStyleBackColor = false;
             // 
             // btnThisYear
             // 
-            this.btnThisYear.BackColor = System.Drawing.Color.White;
-            this.btnThisYear.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
-            this.btnThisYear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnThisYear.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnThisYear.Location = new System.Drawing.Point(90, 15);
-            this.btnThisYear.Name = "btnThisYear";
-            this.btnThisYear.Size = new System.Drawing.Size(100, 40);
-            this.btnThisYear.TabIndex = 1;
-            this.btnThisYear.Text = "This year";
-            this.btnThisYear.UseVisualStyleBackColor = false;
+            btnThisYear.BackColor = System.Drawing.Color.White;
+            btnThisYear.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
+            btnThisYear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            btnThisYear.Font = new System.Drawing.Font("Segoe UI", 10F);
+            btnThisYear.Location = new System.Drawing.Point(129, 25);
+            btnThisYear.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            btnThisYear.Name = "btnThisYear";
+            btnThisYear.Size = new System.Drawing.Size(143, 67);
+            btnThisYear.TabIndex = 1;
+            btnThisYear.Text = "This year";
+            btnThisYear.UseVisualStyleBackColor = false;
             // 
             // btnSort
             // 
-            this.btnSort.BackColor = System.Drawing.Color.White;
-            this.btnSort.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
-            this.btnSort.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSort.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnSort.Location = new System.Drawing.Point(200, 15);
-            this.btnSort.Name = "btnSort";
-            this.btnSort.Size = new System.Drawing.Size(50, 40);
-            this.btnSort.TabIndex = 2;
-            this.btnSort.Text = "⇅";
-            this.btnSort.UseVisualStyleBackColor = false;
+            btnSort.BackColor = System.Drawing.Color.White;
+            btnSort.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
+            btnSort.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            btnSort.Font = new System.Drawing.Font("Segoe UI", 10F);
+            btnSort.Location = new System.Drawing.Point(286, 25);
+            btnSort.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            btnSort.Name = "btnSort";
+            btnSort.Size = new System.Drawing.Size(71, 67);
+            btnSort.TabIndex = 2;
+            btnSort.Text = "⇅";
+            btnSort.UseVisualStyleBackColor = false;
             // 
             // cmbSortBy
             // 
-            this.cmbSortBy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cmbSortBy.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.cmbSortBy.FormattingEnabled = true;
-            this.cmbSortBy.Items.AddRange(new object[] {
-            "Name A-Z",
-            "Name Z-A",
-            "Amount Low-High",
-            "Amount High-Low"});
-            this.cmbSortBy.Location = new System.Drawing.Point(260, 20);
-            this.cmbSortBy.Name = "cmbSortBy";
-            this.cmbSortBy.Size = new System.Drawing.Size(150, 25);
-            this.cmbSortBy.TabIndex = 3;
-            this.cmbSortBy.Text = "Sort by: Name A-Z";
+            cmbSortBy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            cmbSortBy.Font = new System.Drawing.Font("Segoe UI", 10F);
+            cmbSortBy.FormattingEnabled = true;
+            cmbSortBy.Items.AddRange(new object[] { "Name A-Z", "Name Z-A", "Amount Low-High", "Amount High-Low" });
+            cmbSortBy.Location = new System.Drawing.Point(371, 33);
+            cmbSortBy.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            cmbSortBy.Name = "cmbSortBy";
+            cmbSortBy.Size = new System.Drawing.Size(213, 36);
+            cmbSortBy.TabIndex = 3;
+            cmbSortBy.Text = "Sort by: Name A-Z";
             // 
             // btnFilter
             // 
-            this.btnFilter.BackColor = System.Drawing.Color.White;
-            this.btnFilter.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
-            this.btnFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFilter.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnFilter.Location = new System.Drawing.Point(420, 15);
-            this.btnFilter.Name = "btnFilter";
-            this.btnFilter.Size = new System.Drawing.Size(50, 40);
-            this.btnFilter.TabIndex = 4;
-            this.btnFilter.Text = "☰";
-            this.btnFilter.UseVisualStyleBackColor = false;
+            btnFilter.BackColor = System.Drawing.Color.White;
+            btnFilter.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
+            btnFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            btnFilter.Font = new System.Drawing.Font("Segoe UI", 10F);
+            btnFilter.Location = new System.Drawing.Point(600, 25);
+            btnFilter.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            btnFilter.Name = "btnFilter";
+            btnFilter.Size = new System.Drawing.Size(71, 67);
+            btnFilter.TabIndex = 4;
+            btnFilter.Text = "☰";
+            btnFilter.UseVisualStyleBackColor = false;
             // 
             // pnlActiveFilters
             // 
-            this.pnlActiveFilters.BackColor = System.Drawing.Color.White;
-            this.pnlActiveFilters.Controls.Add(this.btnInProgress);
-            this.pnlActiveFilters.Controls.Add(this.btnDueDate);
-            this.pnlActiveFilters.Controls.Add(this.btnAmount);
-            this.pnlActiveFilters.Controls.Add(this.btnResetAll);
-            this.pnlActiveFilters.Controls.Add(this.lblItemsCount);
-            this.pnlActiveFilters.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlActiveFilters.Location = new System.Drawing.Point(0, 170);
-            this.pnlActiveFilters.Name = "pnlActiveFilters";
-            this.pnlActiveFilters.Padding = new System.Windows.Forms.Padding(30, 15, 30, 15);
-            this.pnlActiveFilters.Size = new System.Drawing.Size(1200, 60);
-            this.pnlActiveFilters.TabIndex = 2;
+            pnlActiveFilters.BackColor = System.Drawing.Color.White;
+            pnlActiveFilters.Controls.Add(btnInProgress);
+            pnlActiveFilters.Controls.Add(btnDueDate);
+            pnlActiveFilters.Controls.Add(btnAmount);
+            pnlActiveFilters.Controls.Add(btnResetAll);
+            pnlActiveFilters.Controls.Add(lblItemsCount);
+            pnlActiveFilters.Dock = System.Windows.Forms.DockStyle.Top;
+            pnlActiveFilters.Location = new System.Drawing.Point(0, 284);
+            pnlActiveFilters.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            pnlActiveFilters.Name = "pnlActiveFilters";
+            pnlActiveFilters.Padding = new System.Windows.Forms.Padding(43, 25, 43, 25);
+            pnlActiveFilters.Size = new System.Drawing.Size(1584, 119);
+            pnlActiveFilters.TabIndex = 2;
             // 
             // btnInProgress
             // 
-            this.btnInProgress.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(222)))), ((int)(((byte)(255)))));
-            this.btnInProgress.FlatAppearance.BorderSize = 0;
-            this.btnInProgress.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnInProgress.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnInProgress.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(124)))), ((int)(((byte)(108)))), ((int)(((byte)(254)))));
-            this.btnInProgress.Location = new System.Drawing.Point(30, 15);
-            this.btnInProgress.Name = "btnInProgress";
-            this.btnInProgress.Size = new System.Drawing.Size(120, 30);
-            this.btnInProgress.TabIndex = 0;
-            this.btnInProgress.Text = "In progress   ✕";
-            this.btnInProgress.UseVisualStyleBackColor = false;
+            btnInProgress.BackColor = System.Drawing.Color.FromArgb(229, 222, 255);
+            btnInProgress.FlatAppearance.BorderSize = 0;
+            btnInProgress.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            btnInProgress.Font = new System.Drawing.Font("Segoe UI", 9F);
+            btnInProgress.ForeColor = System.Drawing.Color.FromArgb(124, 108, 254);
+            btnInProgress.Location = new System.Drawing.Point(43, 25);
+            btnInProgress.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            btnInProgress.Name = "btnInProgress";
+            btnInProgress.Size = new System.Drawing.Size(171, 50);
+            btnInProgress.TabIndex = 0;
+            btnInProgress.Text = "In progress   ✕";
+            btnInProgress.UseVisualStyleBackColor = false;
             // 
             // btnDueDate
             // 
-            this.btnDueDate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(222)))), ((int)(((byte)(255)))));
-            this.btnDueDate.FlatAppearance.BorderSize = 0;
-            this.btnDueDate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDueDate.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnDueDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(124)))), ((int)(((byte)(108)))), ((int)(((byte)(254)))));
-            this.btnDueDate.Location = new System.Drawing.Point(160, 15);
-            this.btnDueDate.Name = "btnDueDate";
-            this.btnDueDate.Size = new System.Drawing.Size(100, 30);
-            this.btnDueDate.TabIndex = 1;
-            this.btnDueDate.Text = "Due date   ✕";
-            this.btnDueDate.UseVisualStyleBackColor = false;
+            btnDueDate.BackColor = System.Drawing.Color.FromArgb(229, 222, 255);
+            btnDueDate.FlatAppearance.BorderSize = 0;
+            btnDueDate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            btnDueDate.Font = new System.Drawing.Font("Segoe UI", 9F);
+            btnDueDate.ForeColor = System.Drawing.Color.FromArgb(124, 108, 254);
+            btnDueDate.Location = new System.Drawing.Point(229, 25);
+            btnDueDate.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            btnDueDate.Name = "btnDueDate";
+            btnDueDate.Size = new System.Drawing.Size(143, 50);
+            btnDueDate.TabIndex = 1;
+            btnDueDate.Text = "Due date   ✕";
+            btnDueDate.UseVisualStyleBackColor = false;
             // 
             // btnAmount
             // 
-            this.btnAmount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(222)))), ((int)(((byte)(255)))));
-            this.btnAmount.FlatAppearance.BorderSize = 0;
-            this.btnAmount.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAmount.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnAmount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(124)))), ((int)(((byte)(108)))), ((int)(((byte)(254)))));
-            this.btnAmount.Location = new System.Drawing.Point(270, 15);
-            this.btnAmount.Name = "btnAmount";
-            this.btnAmount.Size = new System.Drawing.Size(100, 30);
-            this.btnAmount.TabIndex = 2;
-            this.btnAmount.Text = "Amount   ✕";
-            this.btnAmount.UseVisualStyleBackColor = false;
+            btnAmount.BackColor = System.Drawing.Color.FromArgb(229, 222, 255);
+            btnAmount.FlatAppearance.BorderSize = 0;
+            btnAmount.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            btnAmount.Font = new System.Drawing.Font("Segoe UI", 9F);
+            btnAmount.ForeColor = System.Drawing.Color.FromArgb(124, 108, 254);
+            btnAmount.Location = new System.Drawing.Point(386, 25);
+            btnAmount.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            btnAmount.Name = "btnAmount";
+            btnAmount.Size = new System.Drawing.Size(143, 50);
+            btnAmount.TabIndex = 2;
+            btnAmount.Text = "Amount   ✕";
+            btnAmount.UseVisualStyleBackColor = false;
             // 
             // btnResetAll
             // 
-            this.btnResetAll.BackColor = System.Drawing.Color.Transparent;
-            this.btnResetAll.FlatAppearance.BorderSize = 0;
-            this.btnResetAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnResetAll.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnResetAll.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(124)))), ((int)(((byte)(108)))), ((int)(((byte)(254)))));
-            this.btnResetAll.Location = new System.Drawing.Point(380, 15);
-            this.btnResetAll.Name = "btnResetAll";
-            this.btnResetAll.Size = new System.Drawing.Size(80, 30);
-            this.btnResetAll.TabIndex = 3;
-            this.btnResetAll.Text = "↻ Reset all";
-            this.btnResetAll.UseVisualStyleBackColor = false;
+            btnResetAll.BackColor = System.Drawing.Color.Transparent;
+            btnResetAll.FlatAppearance.BorderSize = 0;
+            btnResetAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            btnResetAll.Font = new System.Drawing.Font("Segoe UI", 9F);
+            btnResetAll.ForeColor = System.Drawing.Color.FromArgb(124, 108, 254);
+            btnResetAll.Location = new System.Drawing.Point(543, 25);
+            btnResetAll.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            btnResetAll.Name = "btnResetAll";
+            btnResetAll.Size = new System.Drawing.Size(114, 50);
+            btnResetAll.TabIndex = 3;
+            btnResetAll.Text = "↻ Reset all";
+            btnResetAll.UseVisualStyleBackColor = false;
             // 
             // lblItemsCount
             // 
-            this.lblItemsCount.AutoSize = true;
-            this.lblItemsCount.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblItemsCount.ForeColor = System.Drawing.Color.Gray;
-            this.lblItemsCount.Location = new System.Drawing.Point(30, 52);
-            this.lblItemsCount.Name = "lblItemsCount";
-            this.lblItemsCount.Size = new System.Drawing.Size(45, 15);
-            this.lblItemsCount.TabIndex = 4;
-            this.lblItemsCount.Text = "4 items";
-            // 
-            // pnlGoalsGrid
-            // 
-            this.pnlGoalsGrid.BackColor = System.Drawing.Color.Transparent;
-            this.pnlGoalsGrid.Controls.Add(this.pnlGoal1);
-            this.pnlGoalsGrid.Controls.Add(this.pnlGoal2);
-            this.pnlGoalsGrid.Controls.Add(this.pnlGoal3);
-            this.pnlGoalsGrid.Controls.Add(this.pnlGoal4);
-            this.pnlGoalsGrid.Location = new System.Drawing.Point(30, 250);
-            this.pnlGoalsGrid.Name = "pnlGoalsGrid";
-            this.pnlGoalsGrid.Size = new System.Drawing.Size(1140, 330);
-            this.pnlGoalsGrid.TabIndex = 3;
+            lblItemsCount.AutoSize = true;
+            lblItemsCount.Font = new System.Drawing.Font("Segoe UI", 9F);
+            lblItemsCount.ForeColor = System.Drawing.Color.Gray;
+            lblItemsCount.Location = new System.Drawing.Point(43, 87);
+            lblItemsCount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblItemsCount.Name = "lblItemsCount";
+            lblItemsCount.Size = new System.Drawing.Size(70, 25);
+            lblItemsCount.TabIndex = 4;
+            lblItemsCount.Text = "4 items";
             // 
             // pnlGoal1
             // 
-            this.pnlGoal1.BackColor = System.Drawing.Color.White;
-            this.pnlGoal1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlGoal1.Controls.Add(this.lblGoal1Title);
-            this.pnlGoal1.Controls.Add(this.lblGoal1DueDate);
-            this.pnlGoal1.Controls.Add(this.lblGoal1Amount);
-            this.pnlGoal1.Controls.Add(this.lblGoal1Target);
-            this.pnlGoal1.Controls.Add(this.prgGoal1);
-            this.pnlGoal1.Controls.Add(this.lblGoal1Progress);
-            this.pnlGoal1.Controls.Add(this.lblGoal1Left);
-            this.pnlGoal1.Controls.Add(this.btnGoal1Edit);
-            this.pnlGoal1.Location = new System.Drawing.Point(0, 0);
-            this.pnlGoal1.Name = "pnlGoal1";
-            this.pnlGoal1.Padding = new System.Windows.Forms.Padding(20);
-            this.pnlGoal1.Size = new System.Drawing.Size(270, 150);
-            this.pnlGoal1.TabIndex = 0;
+            pnlGoal1.BackColor = System.Drawing.Color.White;
+            pnlGoal1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            pnlGoal1.Controls.Add(lblGoal1Title);
+            pnlGoal1.Controls.Add(lblGoal1DueDate);
+            pnlGoal1.Controls.Add(lblGoal1Amount);
+            pnlGoal1.Controls.Add(lblGoal1Target);
+            pnlGoal1.Controls.Add(prgGoal1);
+            pnlGoal1.Controls.Add(lblGoal1Progress);
+            pnlGoal1.Controls.Add(lblGoal1Left);
+            pnlGoal1.Controls.Add(btnGoal1Edit);
+            pnlGoal1.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnlGoal1.Location = new System.Drawing.Point(50, 50);
+            pnlGoal1.Margin = new System.Windows.Forms.Padding(10);
+            pnlGoal1.Name = "pnlGoal1";
+            pnlGoal1.Padding = new System.Windows.Forms.Padding(29, 33, 29, 33);
+            pnlGoal1.Size = new System.Drawing.Size(721, 257);
+            pnlGoal1.TabIndex = 0;
             // 
             // lblGoal1Title
             // 
-            this.lblGoal1Title.AutoSize = true;
-            this.lblGoal1Title.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.lblGoal1Title.Location = new System.Drawing.Point(15, 15);
-            this.lblGoal1Title.Name = "lblGoal1Title";
-            this.lblGoal1Title.Size = new System.Drawing.Size(112, 21);
-            this.lblGoal1Title.TabIndex = 0;
-            this.lblGoal1Title.Text = "MacBook Pro";
+            lblGoal1Title.AutoSize = true;
+            lblGoal1Title.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            lblGoal1Title.Location = new System.Drawing.Point(21, 25);
+            lblGoal1Title.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblGoal1Title.Name = "lblGoal1Title";
+            lblGoal1Title.Size = new System.Drawing.Size(167, 32);
+            lblGoal1Title.TabIndex = 0;
+            lblGoal1Title.Text = "MacBook Pro";
             // 
             // lblGoal1DueDate
             // 
-            this.lblGoal1DueDate.AutoSize = true;
-            this.lblGoal1DueDate.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblGoal1DueDate.ForeColor = System.Drawing.Color.Gray;
-            this.lblGoal1DueDate.Location = new System.Drawing.Point(15, 40);
-            this.lblGoal1DueDate.Name = "lblGoal1DueDate";
-            this.lblGoal1DueDate.Size = new System.Drawing.Size(105, 15);
-            this.lblGoal1DueDate.TabIndex = 1;
-            this.lblGoal1DueDate.Text = "Due date — 7 Oct 2024";
+            lblGoal1DueDate.AutoSize = true;
+            lblGoal1DueDate.Font = new System.Drawing.Font("Segoe UI", 9F);
+            lblGoal1DueDate.ForeColor = System.Drawing.Color.Gray;
+            lblGoal1DueDate.Location = new System.Drawing.Point(21, 67);
+            lblGoal1DueDate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblGoal1DueDate.Name = "lblGoal1DueDate";
+            lblGoal1DueDate.Size = new System.Drawing.Size(200, 25);
+            lblGoal1DueDate.TabIndex = 1;
+            lblGoal1DueDate.Text = "Due date — 7 Oct 2024";
             // 
             // lblGoal1Amount
             // 
-            this.lblGoal1Amount.AutoSize = true;
-            this.lblGoal1Amount.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
-            this.lblGoal1Amount.Location = new System.Drawing.Point(13, 65);
-            this.lblGoal1Amount.Name = "lblGoal1Amount";
-            this.lblGoal1Amount.Size = new System.Drawing.Size(79, 30);
-            this.lblGoal1Amount.TabIndex = 2;
-            this.lblGoal1Amount.Text = "$412.50";
+            lblGoal1Amount.AutoSize = true;
+            lblGoal1Amount.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
+            lblGoal1Amount.Location = new System.Drawing.Point(19, 108);
+            lblGoal1Amount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblGoal1Amount.Name = "lblGoal1Amount";
+            lblGoal1Amount.Size = new System.Drawing.Size(137, 45);
+            lblGoal1Amount.TabIndex = 2;
+            lblGoal1Amount.Text = "$412.50";
             // 
             // lblGoal1Target
             // 
-            this.lblGoal1Target.AutoSize = true;
-            this.lblGoal1Target.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblGoal1Target.ForeColor = System.Drawing.Color.Gray;
-            this.lblGoal1Target.Location = new System.Drawing.Point(92, 73);
-            this.lblGoal1Target.Name = "lblGoal1Target";
-            this.lblGoal1Target.Size = new System.Drawing.Size(51, 19);
-            this.lblGoal1Target.TabIndex = 3;
-            this.lblGoal1Target.Text = "/$1,650";
+            lblGoal1Target.AutoSize = true;
+            lblGoal1Target.Font = new System.Drawing.Font("Segoe UI", 10F);
+            lblGoal1Target.ForeColor = System.Drawing.Color.Gray;
+            lblGoal1Target.Location = new System.Drawing.Point(131, 122);
+            lblGoal1Target.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblGoal1Target.Name = "lblGoal1Target";
+            lblGoal1Target.Size = new System.Drawing.Size(79, 28);
+            lblGoal1Target.TabIndex = 3;
+            lblGoal1Target.Text = "/$1,650";
             // 
             // prgGoal1
             // 
-            this.prgGoal1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(124)))), ((int)(((byte)(108)))), ((int)(((byte)(254)))));
-            this.prgGoal1.Location = new System.Drawing.Point(15, 105);
-            this.prgGoal1.Name = "prgGoal1";
-            this.prgGoal1.Size = new System.Drawing.Size(235, 8);
-            this.prgGoal1.TabIndex = 4;
-            this.prgGoal1.Value = 25;
+            prgGoal1.ForeColor = System.Drawing.Color.FromArgb(124, 108, 254);
+            prgGoal1.Location = new System.Drawing.Point(21, 175);
+            prgGoal1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            prgGoal1.Name = "prgGoal1";
+            prgGoal1.Size = new System.Drawing.Size(336, 13);
+            prgGoal1.TabIndex = 4;
+            prgGoal1.Value = 25;
             // 
             // lblGoal1Progress
             // 
-            this.lblGoal1Progress.AutoSize = true;
-            this.lblGoal1Progress.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(222)))), ((int)(((byte)(255)))));
-            this.lblGoal1Progress.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
-            this.lblGoal1Progress.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(124)))), ((int)(((byte)(108)))), ((int)(((byte)(254)))));
-            this.lblGoal1Progress.Location = new System.Drawing.Point(15, 120);
-            this.lblGoal1Progress.Name = "lblGoal1Progress";
-            this.lblGoal1Progress.Padding = new System.Windows.Forms.Padding(5, 2, 5, 2);
-            this.lblGoal1Progress.Size = new System.Drawing.Size(33, 17);
-            this.lblGoal1Progress.TabIndex = 5;
-            this.lblGoal1Progress.Text = "25%";
+            lblGoal1Progress.AutoSize = true;
+            lblGoal1Progress.BackColor = System.Drawing.Color.FromArgb(229, 222, 255);
+            lblGoal1Progress.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
+            lblGoal1Progress.ForeColor = System.Drawing.Color.FromArgb(124, 108, 254);
+            lblGoal1Progress.Location = new System.Drawing.Point(21, 200);
+            lblGoal1Progress.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblGoal1Progress.Name = "lblGoal1Progress";
+            lblGoal1Progress.Padding = new System.Windows.Forms.Padding(7, 3, 7, 3);
+            lblGoal1Progress.Size = new System.Drawing.Size(56, 27);
+            lblGoal1Progress.TabIndex = 5;
+            lblGoal1Progress.Text = "25%";
             // 
             // lblGoal1Left
             // 
-            this.lblGoal1Left.AutoSize = true;
-            this.lblGoal1Left.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.lblGoal1Left.ForeColor = System.Drawing.Color.Gray;
-            this.lblGoal1Left.Location = new System.Drawing.Point(55, 122);
-            this.lblGoal1Left.Name = "lblGoal1Left";
-            this.lblGoal1Left.Size = new System.Drawing.Size(115, 13);
-            this.lblGoal1Left.TabIndex = 6;
-            this.lblGoal1Left.Text = "Left to complete the goal";
+            lblGoal1Left.AutoSize = true;
+            lblGoal1Left.Font = new System.Drawing.Font("Segoe UI", 8F);
+            lblGoal1Left.ForeColor = System.Drawing.Color.Gray;
+            lblGoal1Left.Location = new System.Drawing.Point(79, 203);
+            lblGoal1Left.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblGoal1Left.Name = "lblGoal1Left";
+            lblGoal1Left.Size = new System.Drawing.Size(182, 21);
+            lblGoal1Left.TabIndex = 6;
+            lblGoal1Left.Text = "Left to complete the goal";
             // 
             // btnGoal1Edit
             // 
-            this.btnGoal1Edit.BackColor = System.Drawing.Color.Transparent;
-            this.btnGoal1Edit.FlatAppearance.BorderSize = 0;
-            this.btnGoal1Edit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGoal1Edit.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnGoal1Edit.Location = new System.Drawing.Point(220, 10);
-            this.btnGoal1Edit.Name = "btnGoal1Edit";
-            this.btnGoal1Edit.Size = new System.Drawing.Size(30, 30);
-            this.btnGoal1Edit.TabIndex = 7;
-            this.btnGoal1Edit.Text = "✎";
-            this.btnGoal1Edit.UseVisualStyleBackColor = false;
+            btnGoal1Edit.BackColor = System.Drawing.Color.Transparent;
+            btnGoal1Edit.FlatAppearance.BorderSize = 0;
+            btnGoal1Edit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            btnGoal1Edit.Font = new System.Drawing.Font("Segoe UI", 10F);
+            btnGoal1Edit.Location = new System.Drawing.Point(314, 17);
+            btnGoal1Edit.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            btnGoal1Edit.Name = "btnGoal1Edit";
+            btnGoal1Edit.Size = new System.Drawing.Size(43, 50);
+            btnGoal1Edit.TabIndex = 7;
+            btnGoal1Edit.Text = "✎";
+            btnGoal1Edit.UseVisualStyleBackColor = false;
             // 
             // pnlGoal2
             // 
-            this.pnlGoal2.BackColor = System.Drawing.Color.White;
-            this.pnlGoal2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlGoal2.Controls.Add(this.lblGoal2Title);
-            this.pnlGoal2.Controls.Add(this.lblGoal2DueDate);
-            this.pnlGoal2.Controls.Add(this.lblGoal2Amount);
-            this.pnlGoal2.Controls.Add(this.lblGoal2Target);
-            this.pnlGoal2.Controls.Add(this.prgGoal2);
-            this.pnlGoal2.Controls.Add(this.lblGoal2Progress);
-            this.pnlGoal2.Controls.Add(this.lblGoal2Left);
-            this.pnlGoal2.Controls.Add(this.btnGoal2Edit);
-            this.pnlGoal2.Location = new System.Drawing.Point(290, 0);
-            this.pnlGoal2.Name = "pnlGoal2";
-            this.pnlGoal2.Padding = new System.Windows.Forms.Padding(20);
-            this.pnlGoal2.Size = new System.Drawing.Size(270, 150);
-            this.pnlGoal2.TabIndex = 1;
+            pnlGoal2.BackColor = System.Drawing.Color.White;
+            pnlGoal2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            pnlGoal2.Controls.Add(lblGoal2Title);
+            pnlGoal2.Controls.Add(lblGoal2DueDate);
+            pnlGoal2.Controls.Add(lblGoal2Amount);
+            pnlGoal2.Controls.Add(lblGoal2Target);
+            pnlGoal2.Controls.Add(prgGoal2);
+            pnlGoal2.Controls.Add(lblGoal2Progress);
+            pnlGoal2.Controls.Add(lblGoal2Left);
+            pnlGoal2.Controls.Add(btnGoal2Edit);
+            pnlGoal2.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnlGoal2.Location = new System.Drawing.Point(791, 50);
+            pnlGoal2.Margin = new System.Windows.Forms.Padding(10);
+            pnlGoal2.Name = "pnlGoal2";
+            pnlGoal2.Padding = new System.Windows.Forms.Padding(29, 33, 29, 33);
+            pnlGoal2.Size = new System.Drawing.Size(743, 257);
+            pnlGoal2.TabIndex = 1;
             // 
             // lblGoal2Title
             // 
-            this.lblGoal2Title.AutoSize = true;
-            this.lblGoal2Title.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.lblGoal2Title.Location = new System.Drawing.Point(15, 15);
-            this.lblGoal2Title.Name = "lblGoal2Title";
-            this.lblGoal2Title.Size = new System.Drawing.Size(72, 21);
-            this.lblGoal2Title.TabIndex = 0;
-            this.lblGoal2Title.Text = "New car";
+            lblGoal2Title.AutoSize = true;
+            lblGoal2Title.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            lblGoal2Title.Location = new System.Drawing.Point(21, 25);
+            lblGoal2Title.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblGoal2Title.Name = "lblGoal2Title";
+            lblGoal2Title.Size = new System.Drawing.Size(107, 32);
+            lblGoal2Title.TabIndex = 0;
+            lblGoal2Title.Text = "New car";
             // 
             // lblGoal2DueDate
             // 
-            this.lblGoal2DueDate.AutoSize = true;
-            this.lblGoal2DueDate.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblGoal2DueDate.ForeColor = System.Drawing.Color.Gray;
-            this.lblGoal2DueDate.Location = new System.Drawing.Point(15, 40);
-            this.lblGoal2DueDate.Name = "lblGoal2DueDate";
-            this.lblGoal2DueDate.Size = new System.Drawing.Size(115, 15);
-            this.lblGoal2DueDate.TabIndex = 1;
-            this.lblGoal2DueDate.Text = "Due date — 25 Sep 2025";
+            lblGoal2DueDate.AutoSize = true;
+            lblGoal2DueDate.Font = new System.Drawing.Font("Segoe UI", 9F);
+            lblGoal2DueDate.ForeColor = System.Drawing.Color.Gray;
+            lblGoal2DueDate.Location = new System.Drawing.Point(21, 67);
+            lblGoal2DueDate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblGoal2DueDate.Name = "lblGoal2DueDate";
+            lblGoal2DueDate.Size = new System.Drawing.Size(212, 25);
+            lblGoal2DueDate.TabIndex = 1;
+            lblGoal2DueDate.Text = "Due date — 25 Sep 2025";
             // 
             // lblGoal2Amount
             // 
-            this.lblGoal2Amount.AutoSize = true;
-            this.lblGoal2Amount.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
-            this.lblGoal2Amount.Location = new System.Drawing.Point(13, 65);
-            this.lblGoal2Amount.Name = "lblGoal2Amount";
-            this.lblGoal2Amount.Size = new System.Drawing.Size(112, 30);
-            this.lblGoal2Amount.TabIndex = 2;
-            this.lblGoal2Amount.Text = "$25,000.50";
+            lblGoal2Amount.AutoSize = true;
+            lblGoal2Amount.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
+            lblGoal2Amount.Location = new System.Drawing.Point(19, 108);
+            lblGoal2Amount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblGoal2Amount.Name = "lblGoal2Amount";
+            lblGoal2Amount.Size = new System.Drawing.Size(182, 45);
+            lblGoal2Amount.TabIndex = 2;
+            lblGoal2Amount.Text = "$25,000.50";
             // 
             // lblGoal2Target
             // 
-            this.lblGoal2Target.AutoSize = true;
-            this.lblGoal2Target.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblGoal2Target.ForeColor = System.Drawing.Color.Gray;
-            this.lblGoal2Target.Location = new System.Drawing.Point(125, 73);
-            this.lblGoal2Target.Name = "lblGoal2Target";
-            this.lblGoal2Target.Size = new System.Drawing.Size(65, 19);
-            this.lblGoal2Target.TabIndex = 3;
-            this.lblGoal2Target.Text = "/$60,000";
+            lblGoal2Target.AutoSize = true;
+            lblGoal2Target.Font = new System.Drawing.Font("Segoe UI", 10F);
+            lblGoal2Target.ForeColor = System.Drawing.Color.Gray;
+            lblGoal2Target.Location = new System.Drawing.Point(179, 122);
+            lblGoal2Target.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblGoal2Target.Name = "lblGoal2Target";
+            lblGoal2Target.Size = new System.Drawing.Size(90, 28);
+            lblGoal2Target.TabIndex = 3;
+            lblGoal2Target.Text = "/$60,000";
             // 
             // prgGoal2
             // 
-            this.prgGoal2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(124)))), ((int)(((byte)(108)))), ((int)(((byte)(254)))));
-            this.prgGoal2.Location = new System.Drawing.Point(15, 105);
-            this.prgGoal2.Name = "prgGoal2";
-            this.prgGoal2.Size = new System.Drawing.Size(235, 8);
-            this.prgGoal2.TabIndex = 4;
-            this.prgGoal2.Value = 42;
+            prgGoal2.ForeColor = System.Drawing.Color.FromArgb(124, 108, 254);
+            prgGoal2.Location = new System.Drawing.Point(21, 175);
+            prgGoal2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            prgGoal2.Name = "prgGoal2";
+            prgGoal2.Size = new System.Drawing.Size(336, 13);
+            prgGoal2.TabIndex = 4;
+            prgGoal2.Value = 42;
             // 
             // lblGoal2Progress
             // 
-            this.lblGoal2Progress.AutoSize = true;
-            this.lblGoal2Progress.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(222)))), ((int)(((byte)(255)))));
-            this.lblGoal2Progress.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
-            this.lblGoal2Progress.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(124)))), ((int)(((byte)(108)))), ((int)(((byte)(254)))));
-            this.lblGoal2Progress.Location = new System.Drawing.Point(15, 120);
-            this.lblGoal2Progress.Name = "lblGoal2Progress";
-            this.lblGoal2Progress.Padding = new System.Windows.Forms.Padding(5, 2, 5, 2);
-            this.lblGoal2Progress.Size = new System.Drawing.Size(33, 17);
-            this.lblGoal2Progress.TabIndex = 5;
-            this.lblGoal2Progress.Text = "42%";
+            lblGoal2Progress.AutoSize = true;
+            lblGoal2Progress.BackColor = System.Drawing.Color.FromArgb(229, 222, 255);
+            lblGoal2Progress.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
+            lblGoal2Progress.ForeColor = System.Drawing.Color.FromArgb(124, 108, 254);
+            lblGoal2Progress.Location = new System.Drawing.Point(21, 200);
+            lblGoal2Progress.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblGoal2Progress.Name = "lblGoal2Progress";
+            lblGoal2Progress.Padding = new System.Windows.Forms.Padding(7, 3, 7, 3);
+            lblGoal2Progress.Size = new System.Drawing.Size(56, 27);
+            lblGoal2Progress.TabIndex = 5;
+            lblGoal2Progress.Text = "42%";
             // 
             // lblGoal2Left
             // 
-            this.lblGoal2Left.AutoSize = true;
-            this.lblGoal2Left.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.lblGoal2Left.ForeColor = System.Drawing.Color.Gray;
-            this.lblGoal2Left.Location = new System.Drawing.Point(55, 122);
-            this.lblGoal2Left.Name = "lblGoal2Left";
-            this.lblGoal2Left.Size = new System.Drawing.Size(115, 13);
-            this.lblGoal2Left.TabIndex = 6;
-            this.lblGoal2Left.Text = "Left to complete the goal";
+            lblGoal2Left.AutoSize = true;
+            lblGoal2Left.Font = new System.Drawing.Font("Segoe UI", 8F);
+            lblGoal2Left.ForeColor = System.Drawing.Color.Gray;
+            lblGoal2Left.Location = new System.Drawing.Point(79, 203);
+            lblGoal2Left.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblGoal2Left.Name = "lblGoal2Left";
+            lblGoal2Left.Size = new System.Drawing.Size(182, 21);
+            lblGoal2Left.TabIndex = 6;
+            lblGoal2Left.Text = "Left to complete the goal";
             // 
             // btnGoal2Edit
             // 
-            this.btnGoal2Edit.BackColor = System.Drawing.Color.Transparent;
-            this.btnGoal2Edit.FlatAppearance.BorderSize = 0;
-            this.btnGoal2Edit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGoal2Edit.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnGoal2Edit.Location = new System.Drawing.Point(220, 10);
-            this.btnGoal2Edit.Name = "btnGoal2Edit";
-            this.btnGoal2Edit.Size = new System.Drawing.Size(30, 30);
-            this.btnGoal2Edit.TabIndex = 7;
-            this.btnGoal2Edit.Text = "✎";
-            this.btnGoal2Edit.UseVisualStyleBackColor = false;
+            btnGoal2Edit.BackColor = System.Drawing.Color.Transparent;
+            btnGoal2Edit.FlatAppearance.BorderSize = 0;
+            btnGoal2Edit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            btnGoal2Edit.Font = new System.Drawing.Font("Segoe UI", 10F);
+            btnGoal2Edit.Location = new System.Drawing.Point(314, 17);
+            btnGoal2Edit.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            btnGoal2Edit.Name = "btnGoal2Edit";
+            btnGoal2Edit.Size = new System.Drawing.Size(43, 50);
+            btnGoal2Edit.TabIndex = 7;
+            btnGoal2Edit.Text = "✎";
+            btnGoal2Edit.UseVisualStyleBackColor = false;
             // 
             // pnlGoal3
             // 
-            this.pnlGoal3.BackColor = System.Drawing.Color.White;
-            this.pnlGoal3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlGoal3.Controls.Add(this.lblGoal3Title);
-            this.pnlGoal3.Controls.Add(this.lblGoal3DueDate);
-            this.pnlGoal3.Controls.Add(this.lblGoal3Amount);
-            this.pnlGoal3.Controls.Add(this.lblGoal3Target);
-            this.pnlGoal3.Controls.Add(this.prgGoal3);
-            this.pnlGoal3.Controls.Add(this.lblGoal3Progress);
-            this.pnlGoal3.Controls.Add(this.lblGoal3Left);
-            this.pnlGoal3.Controls.Add(this.btnGoal3Edit);
-            this.pnlGoal3.Location = new System.Drawing.Point(580, 0);
-            this.pnlGoal3.Name = "pnlGoal3";
-            this.pnlGoal3.Padding = new System.Windows.Forms.Padding(20);
-            this.pnlGoal3.Size = new System.Drawing.Size(270, 150);
-            this.pnlGoal3.TabIndex = 2;
+            pnlGoal3.BackColor = System.Drawing.Color.White;
+            pnlGoal3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            pnlGoal3.Controls.Add(lblGoal3Title);
+            pnlGoal3.Controls.Add(lblGoal3DueDate);
+            pnlGoal3.Controls.Add(lblGoal3Amount);
+            pnlGoal3.Controls.Add(lblGoal3Target);
+            pnlGoal3.Controls.Add(prgGoal3);
+            pnlGoal3.Controls.Add(lblGoal3Progress);
+            pnlGoal3.Controls.Add(lblGoal3Left);
+            pnlGoal3.Controls.Add(btnGoal3Edit);
+            pnlGoal3.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnlGoal3.Location = new System.Drawing.Point(50, 327);
+            pnlGoal3.Margin = new System.Windows.Forms.Padding(10);
+            pnlGoal3.Name = "pnlGoal3";
+            pnlGoal3.Padding = new System.Windows.Forms.Padding(29, 33, 29, 33);
+            pnlGoal3.Size = new System.Drawing.Size(721, 258);
+            pnlGoal3.TabIndex = 2;
             // 
             // lblGoal3Title
             // 
-            this.lblGoal3Title.AutoSize = true;
-            this.lblGoal3Title.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.lblGoal3Title.Location = new System.Drawing.Point(15, 15);
-            this.lblGoal3Title.Name = "lblGoal3Title";
-            this.lblGoal3Title.Size = new System.Drawing.Size(95, 21);
-            this.lblGoal3Title.TabIndex = 0;
-            this.lblGoal3Title.Text = "New house";
+            lblGoal3Title.AutoSize = true;
+            lblGoal3Title.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            lblGoal3Title.Location = new System.Drawing.Point(21, 25);
+            lblGoal3Title.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblGoal3Title.Name = "lblGoal3Title";
+            lblGoal3Title.Size = new System.Drawing.Size(140, 32);
+            lblGoal3Title.TabIndex = 0;
+            lblGoal3Title.Text = "New house";
             // 
             // lblGoal3DueDate
             // 
-            this.lblGoal3DueDate.AutoSize = true;
-            this.lblGoal3DueDate.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblGoal3DueDate.ForeColor = System.Drawing.Color.Gray;
-            this.lblGoal3DueDate.Location = new System.Drawing.Point(15, 40);
-            this.lblGoal3DueDate.Name = "lblGoal3DueDate";
-            this.lblGoal3DueDate.Size = new System.Drawing.Size(115, 15);
-            this.lblGoal3DueDate.TabIndex = 1;
-            this.lblGoal3DueDate.Text = "Due date — 20 Apr 2027";
+            lblGoal3DueDate.AutoSize = true;
+            lblGoal3DueDate.Font = new System.Drawing.Font("Segoe UI", 9F);
+            lblGoal3DueDate.ForeColor = System.Drawing.Color.Gray;
+            lblGoal3DueDate.Location = new System.Drawing.Point(21, 67);
+            lblGoal3DueDate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblGoal3DueDate.Name = "lblGoal3DueDate";
+            lblGoal3DueDate.Size = new System.Drawing.Size(211, 25);
+            lblGoal3DueDate.TabIndex = 1;
+            lblGoal3DueDate.Text = "Due date — 20 Apr 2027";
             // 
             // lblGoal3Amount
             // 
-            this.lblGoal3Amount.AutoSize = true;
-            this.lblGoal3Amount.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
-            this.lblGoal3Amount.Location = new System.Drawing.Point(13, 65);
-            this.lblGoal3Amount.Name = "lblGoal3Amount";
-            this.lblGoal3Amount.Size = new System.Drawing.Size(96, 30);
-            this.lblGoal3Amount.TabIndex = 2;
-            this.lblGoal3Amount.Text = "$5000.00";
+            lblGoal3Amount.AutoSize = true;
+            lblGoal3Amount.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
+            lblGoal3Amount.Location = new System.Drawing.Point(19, 108);
+            lblGoal3Amount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblGoal3Amount.Name = "lblGoal3Amount";
+            lblGoal3Amount.Size = new System.Drawing.Size(155, 45);
+            lblGoal3Amount.TabIndex = 2;
+            lblGoal3Amount.Text = "$5000.00";
             // 
             // lblGoal3Target
             // 
-            this.lblGoal3Target.AutoSize = true;
-            this.lblGoal3Target.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblGoal3Target.ForeColor = System.Drawing.Color.Gray;
-            this.lblGoal3Target.Location = new System.Drawing.Point(109, 73);
-            this.lblGoal3Target.Name = "lblGoal3Target";
-            this.lblGoal3Target.Size = new System.Drawing.Size(73, 19);
-            this.lblGoal3Target.TabIndex = 3;
-            this.lblGoal3Target.Text = "/$150,000";
+            lblGoal3Target.AutoSize = true;
+            lblGoal3Target.Font = new System.Drawing.Font("Segoe UI", 10F);
+            lblGoal3Target.ForeColor = System.Drawing.Color.Gray;
+            lblGoal3Target.Location = new System.Drawing.Point(156, 122);
+            lblGoal3Target.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblGoal3Target.Name = "lblGoal3Target";
+            lblGoal3Target.Size = new System.Drawing.Size(101, 28);
+            lblGoal3Target.TabIndex = 3;
+            lblGoal3Target.Text = "/$150,000";
             // 
             // prgGoal3
             // 
-            this.prgGoal3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(124)))), ((int)(((byte)(108)))), ((int)(((byte)(254)))));
-            this.prgGoal3.Location = new System.Drawing.Point(15, 105);
-            this.prgGoal3.Name = "prgGoal3";
-            this.prgGoal3.Size = new System.Drawing.Size(235, 8);
-            this.prgGoal3.TabIndex = 4;
-            this.prgGoal3.Value = 3;
+            prgGoal3.ForeColor = System.Drawing.Color.FromArgb(124, 108, 254);
+            prgGoal3.Location = new System.Drawing.Point(21, 175);
+            prgGoal3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            prgGoal3.Name = "prgGoal3";
+            prgGoal3.Size = new System.Drawing.Size(336, 13);
+            prgGoal3.TabIndex = 4;
+            prgGoal3.Value = 3;
             // 
             // lblGoal3Progress
             // 
-            this.lblGoal3Progress.AutoSize = true;
-            this.lblGoal3Progress.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(222)))), ((int)(((byte)(255)))));
-            this.lblGoal3Progress.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
-            this.lblGoal3Progress.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(124)))), ((int)(((byte)(108)))), ((int)(((byte)(254)))));
-            this.lblGoal3Progress.Location = new System.Drawing.Point(15, 120);
-            this.lblGoal3Progress.Name = "lblGoal3Progress";
-            this.lblGoal3Progress.Padding = new System.Windows.Forms.Padding(5, 2, 5, 2);
-            this.lblGoal3Progress.Size = new System.Drawing.Size(28, 17);
-            this.lblGoal3Progress.TabIndex = 5;
-            this.lblGoal3Progress.Text = "3%";
+            lblGoal3Progress.AutoSize = true;
+            lblGoal3Progress.BackColor = System.Drawing.Color.FromArgb(229, 222, 255);
+            lblGoal3Progress.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
+            lblGoal3Progress.ForeColor = System.Drawing.Color.FromArgb(124, 108, 254);
+            lblGoal3Progress.Location = new System.Drawing.Point(21, 200);
+            lblGoal3Progress.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblGoal3Progress.Name = "lblGoal3Progress";
+            lblGoal3Progress.Padding = new System.Windows.Forms.Padding(7, 3, 7, 3);
+            lblGoal3Progress.Size = new System.Drawing.Size(47, 27);
+            lblGoal3Progress.TabIndex = 5;
+            lblGoal3Progress.Text = "3%";
             // 
             // lblGoal3Left
             // 
-            this.lblGoal3Left.AutoSize = true;
-            this.lblGoal3Left.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.lblGoal3Left.ForeColor = System.Drawing.Color.Gray;
-            this.lblGoal3Left.Location = new System.Drawing.Point(50, 122);
-            this.lblGoal3Left.Name = "lblGoal3Left";
-            this.lblGoal3Left.Size = new System.Drawing.Size(115, 13);
-            this.lblGoal3Left.TabIndex = 6;
-            this.lblGoal3Left.Text = "Left to complete the goal";
+            lblGoal3Left.AutoSize = true;
+            lblGoal3Left.Font = new System.Drawing.Font("Segoe UI", 8F);
+            lblGoal3Left.ForeColor = System.Drawing.Color.Gray;
+            lblGoal3Left.Location = new System.Drawing.Point(71, 203);
+            lblGoal3Left.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblGoal3Left.Name = "lblGoal3Left";
+            lblGoal3Left.Size = new System.Drawing.Size(182, 21);
+            lblGoal3Left.TabIndex = 6;
+            lblGoal3Left.Text = "Left to complete the goal";
             // 
             // btnGoal3Edit
             // 
-            this.btnGoal3Edit.BackColor = System.Drawing.Color.Transparent;
-            this.btnGoal3Edit.FlatAppearance.BorderSize = 0;
-            this.btnGoal3Edit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGoal3Edit.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnGoal3Edit.Location = new System.Drawing.Point(220, 10);
-            this.btnGoal3Edit.Name = "btnGoal3Edit";
-            this.btnGoal3Edit.Size = new System.Drawing.Size(30, 30);
-            this.btnGoal3Edit.TabIndex = 7;
-            this.btnGoal3Edit.Text = "✎";
-            this.btnGoal3Edit.UseVisualStyleBackColor = false;
+            btnGoal3Edit.BackColor = System.Drawing.Color.Transparent;
+            btnGoal3Edit.FlatAppearance.BorderSize = 0;
+            btnGoal3Edit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            btnGoal3Edit.Font = new System.Drawing.Font("Segoe UI", 10F);
+            btnGoal3Edit.Location = new System.Drawing.Point(314, 17);
+            btnGoal3Edit.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            btnGoal3Edit.Name = "btnGoal3Edit";
+            btnGoal3Edit.Size = new System.Drawing.Size(43, 50);
+            btnGoal3Edit.TabIndex = 7;
+            btnGoal3Edit.Text = "✎";
+            btnGoal3Edit.UseVisualStyleBackColor = false;
             // 
             // pnlGoal4
             // 
-            this.pnlGoal4.BackColor = System.Drawing.Color.White;
-            this.pnlGoal4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlGoal4.Controls.Add(this.lblGoal4Title);
-            this.pnlGoal4.Controls.Add(this.lblGoal4DueDate);
-            this.pnlGoal4.Controls.Add(this.lblGoal4Amount);
-            this.pnlGoal4.Controls.Add(this.lblGoal4Target);
-            this.pnlGoal4.Controls.Add(this.prgGoal4);
-            this.pnlGoal4.Controls.Add(this.lblGoal4Progress);
-            this.pnlGoal4.Controls.Add(this.lblGoal4Left);
-            this.pnlGoal4.Controls.Add(this.btnGoal4Edit);
-            this.pnlGoal4.Location = new System.Drawing.Point(870, 0);
-            this.pnlGoal4.Name = "pnlGoal4";
-            this.pnlGoal4.Padding = new System.Windows.Forms.Padding(20);
-            this.pnlGoal4.Size = new System.Drawing.Size(270, 150);
-            this.pnlGoal4.TabIndex = 3;
+            pnlGoal4.BackColor = System.Drawing.Color.White;
+            pnlGoal4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            pnlGoal4.Controls.Add(lblGoal4Title);
+            pnlGoal4.Controls.Add(lblGoal4DueDate);
+            pnlGoal4.Controls.Add(lblGoal4Amount);
+            pnlGoal4.Controls.Add(lblGoal4Target);
+            pnlGoal4.Controls.Add(prgGoal4);
+            pnlGoal4.Controls.Add(lblGoal4Progress);
+            pnlGoal4.Controls.Add(lblGoal4Left);
+            pnlGoal4.Controls.Add(btnGoal4Edit);
+            pnlGoal4.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnlGoal4.Location = new System.Drawing.Point(791, 327);
+            pnlGoal4.Margin = new System.Windows.Forms.Padding(10);
+            pnlGoal4.Name = "pnlGoal4";
+            pnlGoal4.Padding = new System.Windows.Forms.Padding(29, 33, 29, 33);
+            pnlGoal4.Size = new System.Drawing.Size(743, 258);
+            pnlGoal4.TabIndex = 3;
             // 
             // lblGoal4Title
             // 
-            this.lblGoal4Title.AutoSize = true;
-            this.lblGoal4Title.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.lblGoal4Title.Location = new System.Drawing.Point(15, 15);
-            this.lblGoal4Title.Name = "lblGoal4Title";
-            this.lblGoal4Title.Size = new System.Drawing.Size(76, 21);
-            this.lblGoal4Title.TabIndex = 0;
-            this.lblGoal4Title.Text = "Vacation";
+            lblGoal4Title.AutoSize = true;
+            lblGoal4Title.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            lblGoal4Title.Location = new System.Drawing.Point(21, 25);
+            lblGoal4Title.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblGoal4Title.Name = "lblGoal4Title";
+            lblGoal4Title.Size = new System.Drawing.Size(112, 32);
+            lblGoal4Title.TabIndex = 0;
+            lblGoal4Title.Text = "Vacation";
             // 
             // lblGoal4DueDate
             // 
-            this.lblGoal4DueDate.AutoSize = true;
-            this.lblGoal4DueDate.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblGoal4DueDate.ForeColor = System.Drawing.Color.Gray;
-            this.lblGoal4DueDate.Location = new System.Drawing.Point(15, 40);
-            this.lblGoal4DueDate.Name = "lblGoal4DueDate";
-            this.lblGoal4DueDate.Size = new System.Drawing.Size(75, 15);
-            this.lblGoal4DueDate.TabIndex = 1;
-            this.lblGoal4DueDate.Text = "Left — 18 days";
+            lblGoal4DueDate.AutoSize = true;
+            lblGoal4DueDate.Font = new System.Drawing.Font("Segoe UI", 9F);
+            lblGoal4DueDate.ForeColor = System.Drawing.Color.Gray;
+            lblGoal4DueDate.Location = new System.Drawing.Point(21, 67);
+            lblGoal4DueDate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblGoal4DueDate.Name = "lblGoal4DueDate";
+            lblGoal4DueDate.Size = new System.Drawing.Size(131, 25);
+            lblGoal4DueDate.TabIndex = 1;
+            lblGoal4DueDate.Text = "Left — 18 days";
             // 
             // lblGoal4Amount
             // 
-            this.lblGoal4Amount.AutoSize = true;
-            this.lblGoal4Amount.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
-            this.lblGoal4Amount.Location = new System.Drawing.Point(13, 65);
-            this.lblGoal4Amount.Name = "lblGoal4Amount";
-            this.lblGoal4Amount.Size = new System.Drawing.Size(96, 30);
-            this.lblGoal4Amount.TabIndex = 2;
-            this.lblGoal4Amount.Text = "$2500.00";
+            lblGoal4Amount.AutoSize = true;
+            lblGoal4Amount.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
+            lblGoal4Amount.Location = new System.Drawing.Point(19, 108);
+            lblGoal4Amount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblGoal4Amount.Name = "lblGoal4Amount";
+            lblGoal4Amount.Size = new System.Drawing.Size(155, 45);
+            lblGoal4Amount.TabIndex = 2;
+            lblGoal4Amount.Text = "$2500.00";
             // 
             // lblGoal4Target
             // 
-            this.lblGoal4Target.AutoSize = true;
-            this.lblGoal4Target.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblGoal4Target.ForeColor = System.Drawing.Color.Gray;
-            this.lblGoal4Target.Location = new System.Drawing.Point(109, 73);
-            this.lblGoal4Target.Name = "lblGoal4Target";
-            this.lblGoal4Target.Size = new System.Drawing.Size(51, 19);
-            this.lblGoal4Target.TabIndex = 3;
-            this.lblGoal4Target.Text = "/$3,500";
+            lblGoal4Target.AutoSize = true;
+            lblGoal4Target.Font = new System.Drawing.Font("Segoe UI", 10F);
+            lblGoal4Target.ForeColor = System.Drawing.Color.Gray;
+            lblGoal4Target.Location = new System.Drawing.Point(156, 122);
+            lblGoal4Target.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblGoal4Target.Name = "lblGoal4Target";
+            lblGoal4Target.Size = new System.Drawing.Size(79, 28);
+            lblGoal4Target.TabIndex = 3;
+            lblGoal4Target.Text = "/$3,500";
             // 
             // prgGoal4
             // 
-            this.prgGoal4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(124)))), ((int)(((byte)(108)))), ((int)(((byte)(254)))));
-            this.prgGoal4.Location = new System.Drawing.Point(15, 105);
-            this.prgGoal4.Name = "prgGoal4";
-            this.prgGoal4.Size = new System.Drawing.Size(235, 8);
-            this.prgGoal4.TabIndex = 4;
-            this.prgGoal4.Value = 71;
+            prgGoal4.ForeColor = System.Drawing.Color.FromArgb(124, 108, 254);
+            prgGoal4.Location = new System.Drawing.Point(21, 175);
+            prgGoal4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            prgGoal4.Name = "prgGoal4";
+            prgGoal4.Size = new System.Drawing.Size(336, 13);
+            prgGoal4.TabIndex = 4;
+            prgGoal4.Value = 71;
             // 
             // lblGoal4Progress
             // 
-            this.lblGoal4Progress.AutoSize = true;
-            this.lblGoal4Progress.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(222)))), ((int)(((byte)(255)))));
-            this.lblGoal4Progress.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
-            this.lblGoal4Progress.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(124)))), ((int)(((byte)(108)))), ((int)(((byte)(254)))));
-            this.lblGoal4Progress.Location = new System.Drawing.Point(15, 120);
-            this.lblGoal4Progress.Name = "lblGoal4Progress";
-            this.lblGoal4Progress.Padding = new System.Windows.Forms.Padding(5, 2, 5, 2);
-            this.lblGoal4Progress.Size = new System.Drawing.Size(33, 17);
-            this.lblGoal4Progress.TabIndex = 5;
-            this.lblGoal4Progress.Text = "71%";
+            lblGoal4Progress.AutoSize = true;
+            lblGoal4Progress.BackColor = System.Drawing.Color.FromArgb(229, 222, 255);
+            lblGoal4Progress.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
+            lblGoal4Progress.ForeColor = System.Drawing.Color.FromArgb(124, 108, 254);
+            lblGoal4Progress.Location = new System.Drawing.Point(21, 200);
+            lblGoal4Progress.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblGoal4Progress.Name = "lblGoal4Progress";
+            lblGoal4Progress.Padding = new System.Windows.Forms.Padding(7, 3, 7, 3);
+            lblGoal4Progress.Size = new System.Drawing.Size(56, 27);
+            lblGoal4Progress.TabIndex = 5;
+            lblGoal4Progress.Text = "71%";
             // 
             // lblGoal4Left
             // 
-            this.lblGoal4Left.AutoSize = true;
-            this.lblGoal4Left.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.lblGoal4Left.ForeColor = System.Drawing.Color.Gray;
-            this.lblGoal4Left.Location = new System.Drawing.Point(55, 122);
-            this.lblGoal4Left.Name = "lblGoal4Left";
-            this.lblGoal4Left.Size = new System.Drawing.Size(115, 13);
-            this.lblGoal4Left.TabIndex = 6;
-            this.lblGoal4Left.Text = "Left to complete the goal";
+            lblGoal4Left.AutoSize = true;
+            lblGoal4Left.Font = new System.Drawing.Font("Segoe UI", 8F);
+            lblGoal4Left.ForeColor = System.Drawing.Color.Gray;
+            lblGoal4Left.Location = new System.Drawing.Point(79, 203);
+            lblGoal4Left.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblGoal4Left.Name = "lblGoal4Left";
+            lblGoal4Left.Size = new System.Drawing.Size(182, 21);
+            lblGoal4Left.TabIndex = 6;
+            lblGoal4Left.Text = "Left to complete the goal";
             // 
             // btnGoal4Edit
             // 
-            this.btnGoal4Edit.BackColor = System.Drawing.Color.Transparent;
-            this.btnGoal4Edit.FlatAppearance.BorderSize = 0;
-            this.btnGoal4Edit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGoal4Edit.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnGoal4Edit.Location = new System.Drawing.Point(220, 10);
-            this.btnGoal4Edit.Name = "btnGoal4Edit";
-            this.btnGoal4Edit.Size = new System.Drawing.Size(30, 30);
-            this.btnGoal4Edit.TabIndex = 7;
-            this.btnGoal4Edit.Text = "✎";
-            this.btnGoal4Edit.UseVisualStyleBackColor = false;
-            // 
-            // pnlBottom
-            // 
-            this.pnlBottom.BackColor = System.Drawing.Color.Transparent;
-            this.pnlBottom.Controls.Add(this.pnlTotalGoals);
-            this.pnlBottom.Controls.Add(this.pnlSavingsOverview);
-            this.pnlBottom.Location = new System.Drawing.Point(30, 600);
-            this.pnlBottom.Name = "pnlBottom";
-            this.pnlBottom.Size = new System.Drawing.Size(1140, 320);
-            this.pnlBottom.TabIndex = 4;
+            btnGoal4Edit.BackColor = System.Drawing.Color.Transparent;
+            btnGoal4Edit.FlatAppearance.BorderSize = 0;
+            btnGoal4Edit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            btnGoal4Edit.Font = new System.Drawing.Font("Segoe UI", 10F);
+            btnGoal4Edit.Location = new System.Drawing.Point(314, 17);
+            btnGoal4Edit.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            btnGoal4Edit.Name = "btnGoal4Edit";
+            btnGoal4Edit.Size = new System.Drawing.Size(43, 50);
+            btnGoal4Edit.TabIndex = 7;
+            btnGoal4Edit.Text = "✎";
+            btnGoal4Edit.UseVisualStyleBackColor = false;
             // 
             // pnlTotalGoals
             // 
-            this.pnlTotalGoals.BackColor = System.Drawing.Color.White;
-            this.pnlTotalGoals.Controls.Add(this.lblTotalGoalsTitle);
-            this.pnlTotalGoals.Controls.Add(this.lblTotalGoalsCount);
-            this.pnlTotalGoals.Controls.Add(this.cmbThisYear);
-            this.pnlTotalGoals.Controls.Add(this.pnlGoalsStatus);
-            this.pnlTotalGoals.Location = new System.Drawing.Point(0, 0);
-            this.pnlTotalGoals.Name = "pnlTotalGoals";
-            this.pnlTotalGoals.Padding = new System.Windows.Forms.Padding(20);
-            this.pnlTotalGoals.Size = new System.Drawing.Size(420, 320);
-            this.pnlTotalGoals.TabIndex = 0;
+            pnlTotalGoals.BackColor = System.Drawing.Color.White;
+            pnlTotalGoals.Controls.Add(lblTotalGoalsTitle);
+            pnlTotalGoals.Controls.Add(lblTotalGoalsCount);
+            pnlTotalGoals.Controls.Add(cmbThisYear);
+            pnlTotalGoals.Controls.Add(pnlGoalsStatus);
+            pnlTotalGoals.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnlTotalGoals.Location = new System.Drawing.Point(60, 60);
+            pnlTotalGoals.Margin = new System.Windows.Forms.Padding(20);
+            pnlTotalGoals.Name = "pnlTotalGoals";
+            pnlTotalGoals.Padding = new System.Windows.Forms.Padding(29, 33, 29, 33);
+            pnlTotalGoals.Size = new System.Drawing.Size(712, 471);
+            pnlTotalGoals.TabIndex = 0;
             // 
             // lblTotalGoalsTitle
             // 
-            this.lblTotalGoalsTitle.AutoSize = true;
-            this.lblTotalGoalsTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.lblTotalGoalsTitle.Location = new System.Drawing.Point(20, 20);
-            this.lblTotalGoalsTitle.Name = "lblTotalGoalsTitle";
-            this.lblTotalGoalsTitle.Size = new System.Drawing.Size(108, 25);
-            this.lblTotalGoalsTitle.TabIndex = 0;
-            this.lblTotalGoalsTitle.Text = "Total goals";
+            lblTotalGoalsTitle.AutoSize = true;
+            lblTotalGoalsTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            lblTotalGoalsTitle.Location = new System.Drawing.Point(29, 33);
+            lblTotalGoalsTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblTotalGoalsTitle.Name = "lblTotalGoalsTitle";
+            lblTotalGoalsTitle.Size = new System.Drawing.Size(158, 38);
+            lblTotalGoalsTitle.TabIndex = 0;
+            lblTotalGoalsTitle.Text = "Total goals";
             // 
             // lblTotalGoalsCount
             // 
-            this.lblTotalGoalsCount.AutoSize = true;
-            this.lblTotalGoalsCount.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Bold);
-            this.lblTotalGoalsCount.Location = new System.Drawing.Point(15, 60);
-            this.lblTotalGoalsCount.Name = "lblTotalGoalsCount";
-            this.lblTotalGoalsCount.Size = new System.Drawing.Size(58, 65);
-            this.lblTotalGoalsCount.TabIndex = 1;
-            this.lblTotalGoalsCount.Text = "25";
+            lblTotalGoalsCount.AutoSize = true;
+            lblTotalGoalsCount.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Bold);
+            lblTotalGoalsCount.Location = new System.Drawing.Point(21, 100);
+            lblTotalGoalsCount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblTotalGoalsCount.Name = "lblTotalGoalsCount";
+            lblTotalGoalsCount.Size = new System.Drawing.Size(122, 96);
+            lblTotalGoalsCount.TabIndex = 1;
+            lblTotalGoalsCount.Text = "25";
             // 
             // cmbThisYear
             // 
-            this.cmbThisYear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbThisYear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cmbThisYear.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.cmbThisYear.FormattingEnabled = true;
-            this.cmbThisYear.Items.AddRange(new object[] {
-            "This year",
-            "Last year",
-            "All time"});
-            this.cmbThisYear.Location = new System.Drawing.Point(300, 25);
-            this.cmbThisYear.Name = "cmbThisYear";
-            this.cmbThisYear.Size = new System.Drawing.Size(100, 23);
-            this.cmbThisYear.TabIndex = 2;
-            this.cmbThisYear.Text = "This year";
+            cmbThisYear.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            cmbThisYear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            cmbThisYear.Font = new System.Drawing.Font("Segoe UI", 9F);
+            cmbThisYear.FormattingEnabled = true;
+            cmbThisYear.Items.AddRange(new object[] { "This year", "Last year", "All time" });
+            cmbThisYear.Location = new System.Drawing.Point(541, 42);
+            cmbThisYear.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            cmbThisYear.Name = "cmbThisYear";
+            cmbThisYear.Size = new System.Drawing.Size(141, 33);
+            cmbThisYear.TabIndex = 2;
+            cmbThisYear.Text = "This year";
             // 
             // pnlGoalsStatus
             // 
-            this.pnlGoalsStatus.Controls.Add(this.pnlNotStarted);
-            this.pnlGoalsStatus.Controls.Add(this.pnlInProgress);
-            this.pnlGoalsStatus.Controls.Add(this.pnlCanceled);
-            this.pnlGoalsStatus.Controls.Add(this.pnlFinished);
-            this.pnlGoalsStatus.Location = new System.Drawing.Point(20, 140);
-            this.pnlGoalsStatus.Name = "pnlGoalsStatus";
-            this.pnlGoalsStatus.Size = new System.Drawing.Size(380, 160);
-            this.pnlGoalsStatus.TabIndex = 3;
+            pnlGoalsStatus.Controls.Add(pnlNotStarted);
+            pnlGoalsStatus.Controls.Add(pnlInProgress);
+            pnlGoalsStatus.Controls.Add(pnlCanceled);
+            pnlGoalsStatus.Controls.Add(pnlFinished);
+            pnlGoalsStatus.Location = new System.Drawing.Point(29, 233);
+            pnlGoalsStatus.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            pnlGoalsStatus.Name = "pnlGoalsStatus";
+            pnlGoalsStatus.Size = new System.Drawing.Size(543, 267);
+            pnlGoalsStatus.TabIndex = 3;
             // 
             // pnlNotStarted
             // 
-            this.pnlNotStarted.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(248)))), ((int)(((byte)(225)))));
-            this.pnlNotStarted.Controls.Add(this.lblNotStartedIcon);
-            this.pnlNotStarted.Controls.Add(this.lblNotStartedTitle);
-            this.pnlNotStarted.Controls.Add(this.lblNotStartedCount);
-            this.pnlNotStarted.Location = new System.Drawing.Point(0, 0);
-            this.pnlNotStarted.Name = "pnlNotStarted";
-            this.pnlNotStarted.Padding = new System.Windows.Forms.Padding(15);
-            this.pnlNotStarted.Size = new System.Drawing.Size(180, 70);
-            this.pnlNotStarted.TabIndex = 0;
+            pnlNotStarted.BackColor = System.Drawing.Color.FromArgb(255, 248, 225);
+            pnlNotStarted.Controls.Add(lblNotStartedIcon);
+            pnlNotStarted.Controls.Add(lblNotStartedTitle);
+            pnlNotStarted.Controls.Add(lblNotStartedCount);
+            pnlNotStarted.Location = new System.Drawing.Point(0, 0);
+            pnlNotStarted.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            pnlNotStarted.Name = "pnlNotStarted";
+            pnlNotStarted.Padding = new System.Windows.Forms.Padding(21, 25, 21, 25);
+            pnlNotStarted.Size = new System.Drawing.Size(257, 117);
+            pnlNotStarted.TabIndex = 0;
             // 
             // lblNotStartedIcon
             // 
-            this.lblNotStartedIcon.AutoSize = true;
-            this.lblNotStartedIcon.Font = new System.Drawing.Font("Segoe UI", 20F);
-            this.lblNotStartedIcon.Location = new System.Drawing.Point(10, 15);
-            this.lblNotStartedIcon.Name = "lblNotStartedIcon";
-            this.lblNotStartedIcon.Size = new System.Drawing.Size(40, 37);
-            this.lblNotStartedIcon.TabIndex = 0;
-            this.lblNotStartedIcon.Text = "⚠";
+            lblNotStartedIcon.AutoSize = true;
+            lblNotStartedIcon.Font = new System.Drawing.Font("Segoe UI", 20F);
+            lblNotStartedIcon.Location = new System.Drawing.Point(14, 25);
+            lblNotStartedIcon.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblNotStartedIcon.Name = "lblNotStartedIcon";
+            lblNotStartedIcon.Size = new System.Drawing.Size(78, 54);
+            lblNotStartedIcon.TabIndex = 0;
+            lblNotStartedIcon.Text = "⚠";
             // 
             // lblNotStartedTitle
             // 
-            this.lblNotStartedTitle.AutoSize = true;
-            this.lblNotStartedTitle.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblNotStartedTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(119)))), ((int)(((byte)(6)))));
-            this.lblNotStartedTitle.Location = new System.Drawing.Point(55, 20);
-            this.lblNotStartedTitle.Name = "lblNotStartedTitle";
-            this.lblNotStartedTitle.Size = new System.Drawing.Size(66, 15);
-            this.lblNotStartedTitle.TabIndex = 1;
-            this.lblNotStartedTitle.Text = "Not started";
+            lblNotStartedTitle.AutoSize = true;
+            lblNotStartedTitle.Font = new System.Drawing.Font("Segoe UI", 9F);
+            lblNotStartedTitle.ForeColor = System.Drawing.Color.FromArgb(217, 119, 6);
+            lblNotStartedTitle.Location = new System.Drawing.Point(93, 33);
+            lblNotStartedTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblNotStartedTitle.Name = "lblNotStartedTitle";
+            lblNotStartedTitle.Size = new System.Drawing.Size(102, 25);
+            lblNotStartedTitle.TabIndex = 1;
+            lblNotStartedTitle.Text = "Not started";
             // 
             // lblNotStartedCount
             // 
-            this.lblNotStartedCount.AutoSize = true;
-            this.lblNotStartedCount.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.lblNotStartedCount.Location = new System.Drawing.Point(53, 35);
-            this.lblNotStartedCount.Name = "lblNotStartedCount";
-            this.lblNotStartedCount.Size = new System.Drawing.Size(23, 25);
-            this.lblNotStartedCount.TabIndex = 2;
-            this.lblNotStartedCount.Text = "3";
+            lblNotStartedCount.AutoSize = true;
+            lblNotStartedCount.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            lblNotStartedCount.Location = new System.Drawing.Point(100, 58);
+            lblNotStartedCount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblNotStartedCount.Name = "lblNotStartedCount";
+            lblNotStartedCount.Size = new System.Drawing.Size(33, 38);
+            lblNotStartedCount.TabIndex = 2;
+            lblNotStartedCount.Text = "3";
             // 
             // pnlInProgress
             // 
-            this.pnlInProgress.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(249)))), ((int)(((byte)(157)))));
-            this.pnlInProgress.Controls.Add(this.lblInProgressIcon);
-            this.pnlInProgress.Controls.Add(this.lblInProgressTitle);
-            this.pnlInProgress.Controls.Add(this.lblInProgressCount);
-            this.pnlInProgress.Location = new System.Drawing.Point(200, 0);
-            this.pnlInProgress.Name = "pnlInProgress";
-            this.pnlInProgress.Padding = new System.Windows.Forms.Padding(15);
-            this.pnlInProgress.Size = new System.Drawing.Size(180, 70);
-            this.pnlInProgress.TabIndex = 1;
+            pnlInProgress.BackColor = System.Drawing.Color.FromArgb(217, 249, 157);
+            pnlInProgress.Controls.Add(lblInProgressIcon);
+            pnlInProgress.Controls.Add(lblInProgressTitle);
+            pnlInProgress.Controls.Add(lblInProgressCount);
+            pnlInProgress.Location = new System.Drawing.Point(286, 0);
+            pnlInProgress.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            pnlInProgress.Name = "pnlInProgress";
+            pnlInProgress.Padding = new System.Windows.Forms.Padding(21, 25, 21, 25);
+            pnlInProgress.Size = new System.Drawing.Size(257, 117);
+            pnlInProgress.TabIndex = 1;
             // 
             // lblInProgressIcon
             // 
-            this.lblInProgressIcon.AutoSize = true;
-            this.lblInProgressIcon.Font = new System.Drawing.Font("Segoe UI", 20F);
-            this.lblInProgressIcon.Location = new System.Drawing.Point(10, 15);
-            this.lblInProgressIcon.Name = "lblInProgressIcon";
-            this.lblInProgressIcon.Size = new System.Drawing.Size(40, 37);
-            this.lblInProgressIcon.TabIndex = 0;
-            this.lblInProgressIcon.Text = "💰";
+            lblInProgressIcon.AutoSize = true;
+            lblInProgressIcon.Font = new System.Drawing.Font("Segoe UI", 20F);
+            lblInProgressIcon.Location = new System.Drawing.Point(14, 25);
+            lblInProgressIcon.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblInProgressIcon.Name = "lblInProgressIcon";
+            lblInProgressIcon.Size = new System.Drawing.Size(78, 54);
+            lblInProgressIcon.TabIndex = 0;
+            lblInProgressIcon.Text = "💰";
             // 
             // lblInProgressTitle
             // 
-            this.lblInProgressTitle.AutoSize = true;
-            this.lblInProgressTitle.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblInProgressTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(142)))), ((int)(((byte)(8)))));
-            this.lblInProgressTitle.Location = new System.Drawing.Point(55, 20);
-            this.lblInProgressTitle.Name = "lblInProgressTitle";
-            this.lblInProgressTitle.Size = new System.Drawing.Size(65, 15);
-            this.lblInProgressTitle.TabIndex = 1;
-            this.lblInProgressTitle.Text = "In progress";
+            lblInProgressTitle.AutoSize = true;
+            lblInProgressTitle.Font = new System.Drawing.Font("Segoe UI", 9F);
+            lblInProgressTitle.ForeColor = System.Drawing.Color.FromArgb(74, 142, 8);
+            lblInProgressTitle.Location = new System.Drawing.Point(100, 33);
+            lblInProgressTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblInProgressTitle.Name = "lblInProgressTitle";
+            lblInProgressTitle.Size = new System.Drawing.Size(102, 25);
+            lblInProgressTitle.TabIndex = 1;
+            lblInProgressTitle.Text = "In progress";
             // 
             // lblInProgressCount
             // 
-            this.lblInProgressCount.AutoSize = true;
-            this.lblInProgressCount.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.lblInProgressCount.Location = new System.Drawing.Point(53, 35);
-            this.lblInProgressCount.Name = "lblInProgressCount";
-            this.lblInProgressCount.Size = new System.Drawing.Size(23, 25);
-            this.lblInProgressCount.TabIndex = 2;
-            this.lblInProgressCount.Text = "4";
+            lblInProgressCount.AutoSize = true;
+            lblInProgressCount.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            lblInProgressCount.Location = new System.Drawing.Point(92, 58);
+            lblInProgressCount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblInProgressCount.Name = "lblInProgressCount";
+            lblInProgressCount.Size = new System.Drawing.Size(33, 38);
+            lblInProgressCount.TabIndex = 2;
+            lblInProgressCount.Text = "4";
             // 
             // pnlCanceled
             // 
-            this.pnlCanceled.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.pnlCanceled.Controls.Add(this.lblCanceledIcon);
-            this.pnlCanceled.Controls.Add(this.lblCanceledTitle);
-            this.pnlCanceled.Controls.Add(this.lblCanceledCount);
-            this.pnlCanceled.Location = new System.Drawing.Point(0, 90);
-            this.pnlCanceled.Name = "pnlCanceled";
-            this.pnlCanceled.Padding = new System.Windows.Forms.Padding(15);
-            this.pnlCanceled.Size = new System.Drawing.Size(180, 70);
-            this.pnlCanceled.TabIndex = 2;
+            pnlCanceled.BackColor = System.Drawing.Color.FromArgb(254, 226, 226);
+            pnlCanceled.Controls.Add(lblCanceledIcon);
+            pnlCanceled.Controls.Add(lblCanceledTitle);
+            pnlCanceled.Controls.Add(lblCanceledCount);
+            pnlCanceled.Location = new System.Drawing.Point(0, 150);
+            pnlCanceled.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            pnlCanceled.Name = "pnlCanceled";
+            pnlCanceled.Padding = new System.Windows.Forms.Padding(21, 25, 21, 25);
+            pnlCanceled.Size = new System.Drawing.Size(257, 117);
+            pnlCanceled.TabIndex = 2;
             // 
             // lblCanceledIcon
             // 
-            this.lblCanceledIcon.AutoSize = true;
-            this.lblCanceledIcon.Font = new System.Drawing.Font("Segoe UI", 20F);
-            this.lblCanceledIcon.Location = new System.Drawing.Point(10, 15);
-            this.lblCanceledIcon.Name = "lblCanceledIcon";
-            this.lblCanceledIcon.Size = new System.Drawing.Size(40, 37);
-            this.lblCanceledIcon.TabIndex = 0;
-            this.lblCanceledIcon.Text = "✕";
+            lblCanceledIcon.AutoSize = true;
+            lblCanceledIcon.Font = new System.Drawing.Font("Segoe UI", 20F);
+            lblCanceledIcon.Location = new System.Drawing.Point(14, 25);
+            lblCanceledIcon.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblCanceledIcon.Name = "lblCanceledIcon";
+            lblCanceledIcon.Size = new System.Drawing.Size(56, 54);
+            lblCanceledIcon.TabIndex = 0;
+            lblCanceledIcon.Text = "✕";
             // 
             // lblCanceledTitle
             // 
-            this.lblCanceledTitle.AutoSize = true;
-            this.lblCanceledTitle.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblCanceledTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(38)))), ((int)(((byte)(38)))));
-            this.lblCanceledTitle.Location = new System.Drawing.Point(55, 20);
-            this.lblCanceledTitle.Name = "lblCanceledTitle";
-            this.lblCanceledTitle.Size = new System.Drawing.Size(55, 15);
-            this.lblCanceledTitle.TabIndex = 1;
-            this.lblCanceledTitle.Text = "Canceled";
+            lblCanceledTitle.AutoSize = true;
+            lblCanceledTitle.Font = new System.Drawing.Font("Segoe UI", 9F);
+            lblCanceledTitle.ForeColor = System.Drawing.Color.FromArgb(220, 38, 38);
+            lblCanceledTitle.Location = new System.Drawing.Point(79, 33);
+            lblCanceledTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblCanceledTitle.Name = "lblCanceledTitle";
+            lblCanceledTitle.Size = new System.Drawing.Size(83, 25);
+            lblCanceledTitle.TabIndex = 1;
+            lblCanceledTitle.Text = "Canceled";
             // 
             // lblCanceledCount
             // 
-            this.lblCanceledCount.AutoSize = true;
-            this.lblCanceledCount.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.lblCanceledCount.Location = new System.Drawing.Point(53, 35);
-            this.lblCanceledCount.Name = "lblCanceledCount";
-            this.lblCanceledCount.Size = new System.Drawing.Size(23, 25);
-            this.lblCanceledCount.TabIndex = 2;
-            this.lblCanceledCount.Text = "2";
+            lblCanceledCount.AutoSize = true;
+            lblCanceledCount.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            lblCanceledCount.Location = new System.Drawing.Point(76, 58);
+            lblCanceledCount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblCanceledCount.Name = "lblCanceledCount";
+            lblCanceledCount.Size = new System.Drawing.Size(33, 38);
+            lblCanceledCount.TabIndex = 2;
+            lblCanceledCount.Text = "2";
             // 
             // pnlFinished
             // 
-            this.pnlFinished.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(231)))), ((int)(((byte)(255)))));
-            this.pnlFinished.Controls.Add(this.lblFinishedIcon);
-            this.pnlFinished.Controls.Add(this.lblFinishedTitle);
-            this.pnlFinished.Controls.Add(this.lblFinishedCount);
-            this.pnlFinished.Location = new System.Drawing.Point(200, 90);
-            this.pnlFinished.Name = "pnlFinished";
-            this.pnlFinished.Padding = new System.Windows.Forms.Padding(15);
-            this.pnlFinished.Size = new System.Drawing.Size(180, 70);
-            this.pnlFinished.TabIndex = 3;
+            pnlFinished.BackColor = System.Drawing.Color.FromArgb(224, 231, 255);
+            pnlFinished.Controls.Add(lblFinishedIcon);
+            pnlFinished.Controls.Add(lblFinishedTitle);
+            pnlFinished.Controls.Add(lblFinishedCount);
+            pnlFinished.Location = new System.Drawing.Point(286, 150);
+            pnlFinished.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            pnlFinished.Name = "pnlFinished";
+            pnlFinished.Padding = new System.Windows.Forms.Padding(21, 25, 21, 25);
+            pnlFinished.Size = new System.Drawing.Size(257, 117);
+            pnlFinished.TabIndex = 3;
             // 
             // lblFinishedIcon
             // 
-            this.lblFinishedIcon.AutoSize = true;
-            this.lblFinishedIcon.Font = new System.Drawing.Font("Segoe UI", 20F);
-            this.lblFinishedIcon.Location = new System.Drawing.Point(10, 15);
-            this.lblFinishedIcon.Name = "lblFinishedIcon";
-            this.lblFinishedIcon.Size = new System.Drawing.Size(40, 37);
-            this.lblFinishedIcon.TabIndex = 0;
-            this.lblFinishedIcon.Text = "✓";
+            lblFinishedIcon.AutoSize = true;
+            lblFinishedIcon.Font = new System.Drawing.Font("Segoe UI", 20F);
+            lblFinishedIcon.Location = new System.Drawing.Point(14, 25);
+            lblFinishedIcon.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblFinishedIcon.Name = "lblFinishedIcon";
+            lblFinishedIcon.Size = new System.Drawing.Size(53, 54);
+            lblFinishedIcon.TabIndex = 0;
+            lblFinishedIcon.Text = "✓";
             // 
             // lblFinishedTitle
             // 
-            this.lblFinishedTitle.AutoSize = true;
-            this.lblFinishedTitle.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblFinishedTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(56)))), ((int)(((byte)(202)))));
-            this.lblFinishedTitle.Location = new System.Drawing.Point(55, 20);
-            this.lblFinishedTitle.Name = "lblFinishedTitle";
-            this.lblFinishedTitle.Size = new System.Drawing.Size(50, 15);
-            this.lblFinishedTitle.TabIndex = 1;
-            this.lblFinishedTitle.Text = "Finished";
+            lblFinishedTitle.AutoSize = true;
+            lblFinishedTitle.Font = new System.Drawing.Font("Segoe UI", 9F);
+            lblFinishedTitle.ForeColor = System.Drawing.Color.FromArgb(67, 56, 202);
+            lblFinishedTitle.Location = new System.Drawing.Point(79, 33);
+            lblFinishedTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblFinishedTitle.Name = "lblFinishedTitle";
+            lblFinishedTitle.Size = new System.Drawing.Size(77, 25);
+            lblFinishedTitle.TabIndex = 1;
+            lblFinishedTitle.Text = "Finished";
             // 
             // lblFinishedCount
             // 
-            this.lblFinishedCount.AutoSize = true;
-            this.lblFinishedCount.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.lblFinishedCount.Location = new System.Drawing.Point(53, 35);
-            this.lblFinishedCount.Name = "lblFinishedCount";
-            this.lblFinishedCount.Size = new System.Drawing.Size(34, 25);
-            this.lblFinishedCount.TabIndex = 2;
-            this.lblFinishedCount.Text = "16";
+            lblFinishedCount.AutoSize = true;
+            lblFinishedCount.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            lblFinishedCount.Location = new System.Drawing.Point(76, 58);
+            lblFinishedCount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblFinishedCount.Name = "lblFinishedCount";
+            lblFinishedCount.Size = new System.Drawing.Size(49, 38);
+            lblFinishedCount.TabIndex = 2;
+            lblFinishedCount.Text = "16";
             // 
             // pnlSavingsOverview
             // 
-            this.pnlSavingsOverview.BackColor = System.Drawing.Color.White;
-            this.pnlSavingsOverview.Controls.Add(this.lblSavingsTitle);
-            this.pnlSavingsOverview.Controls.Add(this.pnlSavingsChart);
-            this.pnlSavingsOverview.Location = new System.Drawing.Point(440, 0);
-            this.pnlSavingsOverview.Name = "pnlSavingsOverview";
-            this.pnlSavingsOverview.Padding = new System.Windows.Forms.Padding(20);
-            this.pnlSavingsOverview.Size = new System.Drawing.Size(700, 320);
-            this.pnlSavingsOverview.TabIndex = 1;
+            pnlSavingsOverview.BackColor = System.Drawing.Color.White;
+            pnlSavingsOverview.Controls.Add(lblSavingsTitle);
+            pnlSavingsOverview.Controls.Add(pnlSavingsChart);
+            pnlSavingsOverview.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnlSavingsOverview.Location = new System.Drawing.Point(812, 60);
+            pnlSavingsOverview.Margin = new System.Windows.Forms.Padding(20);
+            pnlSavingsOverview.Name = "pnlSavingsOverview";
+            pnlSavingsOverview.Padding = new System.Windows.Forms.Padding(29, 33, 29, 33);
+            pnlSavingsOverview.Size = new System.Drawing.Size(712, 471);
+            pnlSavingsOverview.TabIndex = 1;
             // 
             // lblSavingsTitle
             // 
-            this.lblSavingsTitle.AutoSize = true;
-            this.lblSavingsTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.lblSavingsTitle.Location = new System.Drawing.Point(20, 20);
-            this.lblSavingsTitle.Name = "lblSavingsTitle";
-            this.lblSavingsTitle.Size = new System.Drawing.Size(164, 25);
-            this.lblSavingsTitle.TabIndex = 0;
-            this.lblSavingsTitle.Text = "Savings overview";
+            lblSavingsTitle.AutoSize = true;
+            lblSavingsTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            lblSavingsTitle.Location = new System.Drawing.Point(29, 33);
+            lblSavingsTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblSavingsTitle.Name = "lblSavingsTitle";
+            lblSavingsTitle.Size = new System.Drawing.Size(244, 38);
+            lblSavingsTitle.TabIndex = 0;
+            lblSavingsTitle.Text = "Savings overview";
             // 
             // pnlSavingsChart
             // 
-            this.pnlSavingsChart.Location = new System.Drawing.Point(20, 60);
-            this.pnlSavingsChart.Name = "pnlSavingsChart";
-            this.pnlSavingsChart.Size = new System.Drawing.Size(660, 240);
-            this.pnlSavingsChart.TabIndex = 1;
+            pnlSavingsChart.Location = new System.Drawing.Point(33, 76);
+            pnlSavingsChart.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            pnlSavingsChart.Name = "pnlSavingsChart";
+            pnlSavingsChart.Size = new System.Drawing.Size(749, 365);
+            pnlSavingsChart.TabIndex = 1;
+            // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.ColumnCount = 2;
+            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.30681F));
+            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.6931877F));
+            tableLayoutPanel1.Controls.Add(pnlGoal4, 1, 1);
+            tableLayoutPanel1.Controls.Add(pnlGoal3, 0, 1);
+            tableLayoutPanel1.Controls.Add(pnlGoal2, 1, 0);
+            tableLayoutPanel1.Controls.Add(pnlGoal1, 0, 0);
+            tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
+            tableLayoutPanel1.Location = new System.Drawing.Point(0, 403);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(40);
+            tableLayoutPanel1.RowCount = 1;
+            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            tableLayoutPanel1.Size = new System.Drawing.Size(1584, 635);
+            tableLayoutPanel1.TabIndex = 4;
+            // 
+            // tableLayoutPanel2
+            // 
+            tableLayoutPanel2.ColumnCount = 2;
+            tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            tableLayoutPanel2.Controls.Add(pnlSavingsOverview, 1, 0);
+            tableLayoutPanel2.Controls.Add(pnlTotalGoals, 0, 0);
+            tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            tableLayoutPanel2.Location = new System.Drawing.Point(0, 1038);
+            tableLayoutPanel2.Name = "tableLayoutPanel2";
+            tableLayoutPanel2.Padding = new System.Windows.Forms.Padding(40);
+            tableLayoutPanel2.RowCount = 1;
+            tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            tableLayoutPanel2.Size = new System.Drawing.Size(1584, 591);
+            tableLayoutPanel2.TabIndex = 2;
+            tableLayoutPanel2.Paint += tableLayoutPanel2_Paint;
             // 
             // UC_Goals
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoScroll = true;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(240)))), ((int)(((byte)(253)))));
-            this.Controls.Add(this.pnlBottom);
-            this.Controls.Add(this.pnlGoalsGrid);
-            this.Controls.Add(this.pnlActiveFilters);
-            this.Controls.Add(this.pnlFilters);
-            this.Controls.Add(this.pnlHeader);
-            this.Name = "UC_Goals";
-            this.Size = new System.Drawing.Size(1200, 950);
-            this.pnlHeader.ResumeLayout(false);
-            this.pnlHeader.PerformLayout();
-            this.pnlFilters.ResumeLayout(false);
-            this.pnlActiveFilters.ResumeLayout(false);
-            this.pnlActiveFilters.PerformLayout();
-            this.pnlGoalsGrid.ResumeLayout(false);
-            this.pnlGoal1.ResumeLayout(false);
-            this.pnlGoal1.PerformLayout();
-            this.pnlGoal2.ResumeLayout(false);
-            this.pnlGoal2.PerformLayout();
-            this.pnlGoal3.ResumeLayout(false);
-            this.pnlGoal3.PerformLayout();
-            this.pnlGoal4.ResumeLayout(false);
-            this.pnlGoal4.PerformLayout();
-            this.pnlBottom.ResumeLayout(false);
-            this.pnlTotalGoals.ResumeLayout(false);
-            this.pnlTotalGoals.PerformLayout();
-            this.pnlGoalsStatus.ResumeLayout(false);
-            this.pnlNotStarted.ResumeLayout(false);
-            this.pnlNotStarted.PerformLayout();
-            this.pnlInProgress.ResumeLayout(false);
-            this.pnlInProgress.PerformLayout();
-            this.pnlCanceled.ResumeLayout(false);
-            this.pnlCanceled.PerformLayout();
-            this.pnlFinished.ResumeLayout(false);
-            this.pnlFinished.PerformLayout();
-            this.pnlSavingsOverview.ResumeLayout(false);
-            this.pnlSavingsOverview.PerformLayout();
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            AutoScroll = true;
+            BackColor = System.Drawing.Color.FromArgb(243, 240, 253);
+            Controls.Add(tableLayoutPanel2);
+            Controls.Add(tableLayoutPanel1);
+            Controls.Add(pnlActiveFilters);
+            Controls.Add(pnlFilters);
+            Controls.Add(pnlHeader);
+            Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            Name = "UC_Goals";
+            Size = new System.Drawing.Size(1584, 1531);
+            pnlHeader.ResumeLayout(false);
+            pnlHeader.PerformLayout();
+            pnlFilters.ResumeLayout(false);
+            pnlActiveFilters.ResumeLayout(false);
+            pnlActiveFilters.PerformLayout();
+            pnlGoal1.ResumeLayout(false);
+            pnlGoal1.PerformLayout();
+            pnlGoal2.ResumeLayout(false);
+            pnlGoal2.PerformLayout();
+            pnlGoal3.ResumeLayout(false);
+            pnlGoal3.PerformLayout();
+            pnlGoal4.ResumeLayout(false);
+            pnlGoal4.PerformLayout();
+            pnlTotalGoals.ResumeLayout(false);
+            pnlTotalGoals.PerformLayout();
+            pnlGoalsStatus.ResumeLayout(false);
+            pnlNotStarted.ResumeLayout(false);
+            pnlNotStarted.PerformLayout();
+            pnlInProgress.ResumeLayout(false);
+            pnlInProgress.PerformLayout();
+            pnlCanceled.ResumeLayout(false);
+            pnlCanceled.PerformLayout();
+            pnlFinished.ResumeLayout(false);
+            pnlFinished.PerformLayout();
+            pnlSavingsOverview.ResumeLayout(false);
+            pnlSavingsOverview.PerformLayout();
+            tableLayoutPanel1.ResumeLayout(false);
+            tableLayoutPanel2.ResumeLayout(false);
+            ResumeLayout(false);
         }
 
         #endregion
@@ -1095,7 +1186,6 @@
         private System.Windows.Forms.Button btnAmount;
         private System.Windows.Forms.Button btnResetAll;
         private System.Windows.Forms.Label lblItemsCount;
-        private System.Windows.Forms.Panel pnlGoalsGrid;
         private System.Windows.Forms.Panel pnlGoal1;
         private System.Windows.Forms.Label lblGoal1Title;
         private System.Windows.Forms.Label lblGoal1DueDate;
@@ -1132,7 +1222,6 @@
         private System.Windows.Forms.Label lblGoal4Progress;
         private System.Windows.Forms.Label lblGoal4Left;
         private System.Windows.Forms.Button btnGoal4Edit;
-        private System.Windows.Forms.Panel pnlBottom;
         private System.Windows.Forms.Panel pnlTotalGoals;
         private System.Windows.Forms.Label lblTotalGoalsTitle;
         private System.Windows.Forms.Label lblTotalGoalsCount;
@@ -1157,5 +1246,7 @@
         private System.Windows.Forms.Panel pnlSavingsOverview;
         private System.Windows.Forms.Label lblSavingsTitle;
         private System.Windows.Forms.Panel pnlSavingsChart;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
     }
 }
