@@ -390,9 +390,5 @@ namespace ExpenseManager.App.Views
             contentPanel.Controls.Add(uc);
         }
 
-        private void Layout_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }
