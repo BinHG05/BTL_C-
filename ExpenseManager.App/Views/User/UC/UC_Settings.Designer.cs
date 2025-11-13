@@ -3,17 +3,10 @@ using System.Drawing;
 
 namespace ExpenseManager.App.Views.User.UC
 {
-    partial class UC_Settings : UserControl
+    partial class UC_Settings
     {
-        /// <summary> 
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary> 
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -23,495 +16,965 @@ namespace ExpenseManager.App.Views.User.UC
             base.Dispose(disposing);
         }
 
+        #region Component Designer generated code
+
         private void InitializeComponent()
         {
-            lblTitle = new Label();
-            lblSubtitle = new Label();
-            tabMain = new TabControl();
-            tabProfile = new TabPage();
-            panelUserProfileLeft = new Panel();
-            textBox1 = new TextBox();
-            lblUserProfileLeft = new Label();
-            lblFullNameLeft = new Label();
-            txtFullNameLeft = new TextBox();
-            picAvatar = new PictureBox();
-            btnBrowse = new Button();
-            lblMaxFile = new Label();
-            btnSaveLeft = new Button();
-            panelUserProfileRight = new Panel();
-            lblUserProfileRight = new Label();
-            lblNewEmail = new Label();
-            txtNewEmail = new TextBox();
-            lblNewPassword = new Label();
-            txtNewPassword = new TextBox();
-            btnSaveRight = new Button();
-            panelPersonalInfo = new Panel();
+            mainPanel = new Panel();
+            personalInfoPanel = new Panel();
             lblPersonalInfo = new Label();
-            lblFullNamePersonal = new Label();
-            txtFullNamePersonal = new TextBox();
-            lblEmailPersonal = new Label();
-            txtEmailPersonal = new TextBox();
             lblAddress = new Label();
             txtAddress = new TextBox();
             lblCity = new Label();
             txtCity = new TextBox();
             lblBirthDate = new Label();
-            dtpBirthDate = new DateTimePicker();
+            dtpBirthDate = new System.Windows.Forms.DateTimePicker();
             lblCountry = new Label();
-            cboCountry = new ComboBox();
+            cmbCountry = new ComboBox();
             btnSavePersonal = new Button();
-            tabCategories = new TabPage();
-            tabSupport = new TabPage();
-            tabMain.SuspendLayout();
-            tabProfile.SuspendLayout();
-            panelUserProfileLeft.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)picAvatar).BeginInit();
-            panelUserProfileRight.SuspendLayout();
-            panelPersonalInfo.SuspendLayout();
+            topPanel = new Panel();
+            profilePanel = new Panel();
+            lblUserProfile = new Label();
+            lblFullName = new Label();
+            txtFullName = new TextBox();
+            lblCurrentEmail = new Label();
+            txtCurrentEmail = new TextBox();
+            picProfile = new PictureBox();
+            lblProfileName = new Label();
+            lblMaxFileSize = new Label();
+            lblFileName = new Label();
+            btnBrowse = new Button();
+            btnSaveProfile = new Button();
+            passwordPanel = new Panel();
+            lblUserProfilePass = new Label();
+            lblNewEmail = new Label();
+            txtNewEmail = new TextBox();
+            lblCurrentPassword = new Label();
+            txtCurrentPassword = new TextBox();
+            btnTogglePassword = new Button();
+            lblNewPassword = new Label();
+            txtNewPassword = new TextBox();
+            lblConfirmPassword = new Label();
+            txtConfirmPassword = new TextBox();
+            btnSavePassword = new Button();
+            headerPanel = new Panel();
+            lblTitle = new Label();
+            lblSubtitle = new Label();
+            breadcrumbPanel = new Panel();
+            lblSettings = new Label();
+            lblArrow = new Label();
+            lblProfile = new Label();
+            tabPanel = new Panel();
+            lblTabProfile = new Label();
+            lblTabCategories = new Label();
+            lblTabSupport = new Label();
+            mainPanel.SuspendLayout();
+            personalInfoPanel.SuspendLayout();
+            topPanel.SuspendLayout();
+            profilePanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)picProfile).BeginInit();
+            passwordPanel.SuspendLayout();
+            headerPanel.SuspendLayout();
+            breadcrumbPanel.SuspendLayout();
+            tabPanel.SuspendLayout();
             SuspendLayout();
             // 
-            // lblTitle
+            // mainPanel
             // 
-            lblTitle.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblTitle.Location = new Point(20, 11);
-            lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(235, 53);
-            lblTitle.TabIndex = 0;
-            lblTitle.Text = "Edit Profile";
+            this.mainPanel.AutoScroll = true;
+            this.mainPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
+            this.mainPanel.Controls.Add(this.personalInfoPanel);
+            this.mainPanel.Controls.Add(this.topPanel);
+            this.mainPanel.Controls.Add(this.headerPanel);
+            this.mainPanel.Controls.Add(this.tabPanel);
+            this.mainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mainPanel.Location = new System.Drawing.Point(0, 0);
+            this.mainPanel.Name = "mainPanel";
+            this.mainPanel.Padding = new System.Windows.Forms.Padding(30, 20, 30, 20);
+            this.mainPanel.Size = new System.Drawing.Size(1000, 700);
+            this.mainPanel.TabIndex = 0;
             // 
-            // lblSubtitle
+            // personalInfoPanel
             // 
-            lblSubtitle.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblSubtitle.ForeColor = Color.Gray;
-            lblSubtitle.Location = new Point(20, 59);
-            lblSubtitle.Name = "lblSubtitle";
-            lblSubtitle.Size = new Size(331, 31);
-            lblSubtitle.TabIndex = 1;
-            lblSubtitle.Text = "Welcome Ekash Finance Management";
+            personalInfoPanel.BackColor = Color.White;
+            personalInfoPanel.Controls.Add(lblPersonalInfo);
+            personalInfoPanel.Controls.Add(lblAddress);
+            personalInfoPanel.Controls.Add(txtAddress);
+            personalInfoPanel.Controls.Add(lblCity);
+            personalInfoPanel.Controls.Add(txtCity);
+            personalInfoPanel.Controls.Add(lblBirthDate);
+            personalInfoPanel.Controls.Add(dtpBirthDate);
+            personalInfoPanel.Controls.Add(lblCountry);
+            personalInfoPanel.Controls.Add(cmbCountry);
+            personalInfoPanel.Controls.Add(btnSavePersonal);
+            personalInfoPanel.Location = new Point(40, 790);
+            personalInfoPanel.Margin = new Padding(4, 5, 4, 5);
+            personalInfoPanel.Name = "personalInfoPanel";
+            personalInfoPanel.Size = new Size(1387, 389);
+            personalInfoPanel.TabIndex = 3;
             // 
-            // tabMain
+            // lblPersonalInfo
             // 
-            tabMain.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            tabMain.Controls.Add(tabProfile);
-            tabMain.Controls.Add(tabCategories);
-            tabMain.Controls.Add(tabSupport);
-            tabMain.Font = new Font("Segoe UI", 10F);
-            tabMain.Location = new Point(20, 116);
-            tabMain.Name = "tabMain";
-            tabMain.SelectedIndex = 0;
-            tabMain.Size = new Size(1311, 639);
-            tabMain.TabIndex = 2;
+            lblPersonalInfo.AutoSize = true;
+            lblPersonalInfo.Font = new Font("Segoe UI Semibold", 14F, FontStyle.Bold);
+            lblPersonalInfo.ForeColor = Color.FromArgb(51, 51, 51);
+            lblPersonalInfo.Location = new Point(40, 38);
+            lblPersonalInfo.Margin = new Padding(4, 0, 4, 0);
+            lblPersonalInfo.Name = "lblPersonalInfo";
+            lblPersonalInfo.Size = new Size(242, 32);
+            lblPersonalInfo.TabIndex = 0;
+            lblPersonalInfo.Text = "Personal Information";
             // 
-            // tabProfile
+            // lblAddress
             // 
-            tabProfile.BackColor = Color.FromArgb(249, 250, 251);
-            tabProfile.Controls.Add(panelUserProfileLeft);
-            tabProfile.Controls.Add(panelUserProfileRight);
-            tabProfile.Controls.Add(panelPersonalInfo);
-            tabProfile.Location = new Point(4, 32);
-            tabProfile.Name = "tabProfile";
-            tabProfile.Size = new Size(1303, 603); // Tăng chiều cao để chứa panel con
-            tabProfile.TabIndex = 0;
-            tabProfile.Text = "Profile";
+            lblAddress.AutoSize = true;
+            lblAddress.Font = new Font("Segoe UI", 10F);
+            lblAddress.ForeColor = Color.FromArgb(102, 102, 102);
+            lblAddress.Location = new Point(40, 108);
+            lblAddress.Margin = new Padding(4, 0, 4, 0);
+            lblAddress.Name = "lblAddress";
+            lblAddress.Size = new Size(70, 23);
+            lblAddress.TabIndex = 1;
+            lblAddress.Text = "Address";
             // 
-            // panelUserProfileLeft
+            // txtAddress
             // 
-            panelUserProfileLeft.Anchor = AnchorStyles.Top | AnchorStyles.Left; // CHỈ Neo Left/Top
-            panelUserProfileLeft.BackColor = Color.White;
-            panelUserProfileLeft.BorderStyle = BorderStyle.FixedSingle;
-            panelUserProfileLeft.Controls.Add(textBox1);
-            panelUserProfileLeft.Controls.Add(lblUserProfileLeft);
-            panelUserProfileLeft.Controls.Add(lblFullNameLeft);
-            panelUserProfileLeft.Controls.Add(txtFullNameLeft);
-            panelUserProfileLeft.Controls.Add(picAvatar);
-            panelUserProfileLeft.Controls.Add(btnBrowse);
-            panelUserProfileLeft.Controls.Add(lblMaxFile);
-            panelUserProfileLeft.Controls.Add(btnSaveLeft);
-            panelUserProfileLeft.Location = new Point(20, 20);
-            panelUserProfileLeft.Name = "panelUserProfileLeft";
-            panelUserProfileLeft.Size = new Size(621, 250); // Chiều rộng 621
-            panelUserProfileLeft.TabIndex = 0;
+            txtAddress.BorderStyle = BorderStyle.FixedSingle;
+            txtAddress.Font = new Font("Segoe UI", 10F);
+            txtAddress.Location = new Point(40, 146);
+            txtAddress.Margin = new Padding(4, 5, 4, 5);
+            txtAddress.Name = "txtAddress";
+            txtAddress.Size = new Size(599, 30);
+            txtAddress.TabIndex = 2;
             // 
-            // textBox1
+            // lblCity
             // 
-            textBox1.Location = new Point(428, 145);
-            textBox1.Name = "textBox1";
-            textBox1.ReadOnly = true;
-            textBox1.Size = new Size(173, 30); // Giảm size
-            textBox1.TabIndex = 7;
+            lblCity.AutoSize = true;
+            lblCity.Font = new Font("Segoe UI", 10F);
+            lblCity.ForeColor = Color.FromArgb(102, 102, 102);
+            lblCity.Location = new Point(707, 108);
+            lblCity.Margin = new Padding(4, 0, 4, 0);
+            lblCity.Name = "lblCity";
+            lblCity.Size = new Size(39, 23);
+            lblCity.TabIndex = 3;
+            lblCity.Text = "City";
             // 
-            // lblUserProfileLeft
+            // txtCity
             // 
-            lblUserProfileLeft.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblUserProfileLeft.Location = new Point(10, 10);
-            lblUserProfileLeft.Name = "lblUserProfileLeft";
-            lblUserProfileLeft.Size = new Size(200, 37);
-            lblUserProfileLeft.TabIndex = 0;
-            lblUserProfileLeft.Text = "User Profile";
+            txtCity.BorderStyle = BorderStyle.FixedSingle;
+            txtCity.Font = new Font("Segoe UI", 10F);
+            txtCity.Location = new Point(707, 146);
+            txtCity.Margin = new Padding(4, 5, 4, 5);
+            txtCity.Name = "txtCity";
+            txtCity.Size = new Size(599, 30);
+            txtCity.TabIndex = 4;
             // 
-            // lblFullNameLeft
+            // lblBirthDate
             // 
-            lblFullNameLeft.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblFullNameLeft.Location = new Point(30, 70);
-            lblFullNameLeft.Name = "lblFullNameLeft";
-            lblFullNameLeft.Size = new Size(180, 34);
-            lblFullNameLeft.TabIndex = 1;
-            lblFullNameLeft.Text = "Full Name";
+            lblBirthDate.AutoSize = true;
+            lblBirthDate.Font = new Font("Segoe UI", 10F);
+            lblBirthDate.ForeColor = Color.FromArgb(102, 102, 102);
+            lblBirthDate.Location = new Point(40, 215);
+            lblBirthDate.Margin = new Padding(4, 0, 4, 0);
+            lblBirthDate.Name = "lblBirthDate";
+            lblBirthDate.Size = new Size(105, 23);
+            lblBirthDate.TabIndex = 5;
+            lblBirthDate.Text = "Birth of date";
+            //
+            // dtpBirthDate (Thay thế txtBirthDate)
+            //
+            dtpBirthDate.Font = new Font("Segoe UI", 10F);
+
+            // ⭐ QUAN TRỌNG: Thiết lập hiển thị (giữ giao diện)
+            dtpBirthDate.Format = DateTimePickerFormat.Custom;
+            dtpBirthDate.CustomFormat = "dd/MM/yyyy"; // Định dạng ngày/tháng/năm
+
+            // Nếu bạn muốn hiển thị hộp nhập liệu ngày tháng có vẻ ngoài giống TextBox:
+            dtpBirthDate.ShowUpDown = false; // Mặc định là false.
+
+            // Nếu bạn muốn dùng mũi tên lên/xuống (UpDown control) thay vì dropdown calendar:
+            // dtpBirthDate.ShowUpDown = true; 
+            // dtpBirthDate.CustomFormat = "yyyy"; // nếu chỉ muốn chọn năm
+
+            dtpBirthDate.Location = new Point(40, 254);
+            dtpBirthDate.Margin = new Padding(4, 5, 4, 5);
+            dtpBirthDate.Name = "dtpBirthDate"; // Cập nhật Name cho dễ phân biệt
+            dtpBirthDate.Size = new Size(599, 30); // Giữ nguyên Size và Location
+            dtpBirthDate.TabIndex = 6;
+            // DTP không có thuộc tính BorderStyle.FixedSingle, 
+            // nhưng với Format=Custom, nó sẽ trông rất giống TextBox.
             // 
-            // txtFullNameLeft
+            // lblCountry
             // 
-            txtFullNameLeft.Location = new Point(30, 123);
-            txtFullNameLeft.Name = "txtFullNameLeft";
-            txtFullNameLeft.Size = new Size(296, 30);
-            txtFullNameLeft.TabIndex = 2;
+            lblCountry.AutoSize = true;
+            lblCountry.Font = new Font("Segoe UI", 10F);
+            lblCountry.ForeColor = Color.FromArgb(102, 102, 102);
+            lblCountry.Location = new Point(707, 215);
+            lblCountry.Margin = new Padding(4, 0, 4, 0);
+            lblCountry.Name = "lblCountry";
+            lblCountry.Size = new Size(71, 23);
+            lblCountry.TabIndex = 7;
+            lblCountry.Text = "Country";
             // 
-            // picAvatar
+            // cmbCountry
             // 
-            picAvatar.BorderStyle = BorderStyle.FixedSingle;
-            picAvatar.Location = new Point(470, 10); // Điều chỉnh X
-            picAvatar.Name = "picAvatar";
-            picAvatar.Size = new Size(131, 129);
-            picAvatar.SizeMode = PictureBoxSizeMode.Zoom;
-            picAvatar.TabIndex = 3;
-            picAvatar.TabStop = false;
+            string[] allCountries = new string[] {
+                "Afghanistan",
+                "Albania",
+                "Algeria",
+                "Andorra",
+                "Angola",
+                "Antigua and Barbuda",
+                "Argentina",
+                "Armenia",
+                "Australia",
+                "Austria",
+                "Azerbaijan",
+                "Bahamas",
+                "Bahrain",
+                "Bangladesh",
+                "Barbados",
+                "Belarus",
+                "Belgium",
+                "Belize",
+                "Benin",
+                "Bhutan",
+                "Bolivia",
+                "Bosnia and Herzegovina",
+                "Botswana",
+                "Brazil",
+                "Brunei",
+                "Bulgaria",
+                "Burkina Faso",
+                "Burundi",
+                "Cabo Verde",
+                "Cambodia",
+                "Cameroon",
+                "Canada",
+                "Central African Republic",
+                "Chad",
+                "Chile",
+                "China",
+                "Colombia",
+                "Comoros",
+                "Congo (Congo-Brazzaville)",
+                "Costa Rica",
+                "Côte d'Ivoire",
+                "Croatia",
+                "Cuba",
+                "Cyprus",
+                "Czechia (Czech Republic)",
+                "Democratic Republic of the Congo",
+                "Denmark",
+                "Djibouti",
+                "Dominica",
+                "Dominican Republic",
+                "Ecuador",
+                "Egypt",
+                "El Salvador",
+                "Equatorial Guinea",
+                "Eritrea",
+                "Estonia",
+                "Eswatini (fmr. \"Swaziland\")",
+                "Ethiopia",
+                "Fiji",
+                "Finland",
+                "France",
+                "Gabon",
+                "Gambia",
+                "Georgia",
+                "Germany",
+                "Ghana",
+                "Greece",
+                "Grenada",
+                "Guatemala",
+                "Guinea",
+                "Guinea-Bissau",
+                "Guyana",
+                "Haiti",
+                "Holy See",
+                "Honduras",
+                "Hungary",
+                "Iceland",
+                "India",
+                "Indonesia",
+                "Iran",
+                "Iraq",
+                "Ireland",
+                "Israel",
+                "Italy",
+                "Jamaica",
+                "Japan",
+                "Jordan",
+                "Kazakhstan",
+                "Kenya",
+                "Kiribati",
+                "Kuwait",
+                "Kyrgyzstan",
+                "Laos",
+                "Latvia",
+                "Lebanon",
+                "Lesotho",
+                "Liberia",
+                "Libya",
+                "Liechtenstein",
+                "Lithuania",
+                "Luxembourg",
+                "Madagascar",
+                "Malawi",
+                "Malaysia",
+                "Maldives",
+                "Mali",
+                "Malta",
+                "Marshall Islands",
+                "Mauritania",
+                "Mauritius",
+                "Mexico",
+                "Micronesia",
+                "Moldova",
+                "Monaco",
+                "Mongolia",
+                "Montenegro",
+                "Morocco",
+                "Mozambique",
+                "Myanmar (formerly Burma)",
+                "Namibia",
+                "Nauru",
+                "Nepal",
+                "Netherlands",
+                "New Zealand",
+                "Nicaragua",
+                "Niger",
+                "Nigeria",
+                "North Korea",
+                "North Macedonia",
+                "Norway",
+                "Oman",
+                "Pakistan",
+                "Palau",
+                "Palestine State",
+                "Panama",
+                "Papua New Guinea",
+                "Paraguay",
+                "Peru",
+                "Philippines",
+                "Poland",
+                "Portugal",
+                "Qatar",
+                "Romania",
+                "Russia",
+                "Rwanda",
+                "Saint Kitts and Nevis",
+                "Saint Lucia",
+                "Saint Vincent and the Grenadines",
+                "Samoa",
+                "San Marino",
+                "Sao Tome and Principe",
+                "Saudi Arabia",
+                "Senegal",
+                "Serbia",
+                "Seychelles",
+                "Sierra Leone",
+                "Singapore",
+                "Slovakia",
+                "Slovenia",
+                "Solomon Islands",
+                "Somalia",
+                "South Africa",
+                "South Korea",
+                "South Sudan",
+                "Spain",
+                "Sri Lanka",
+                "Sudan",
+                "Suriname",
+                "Sweden",
+                "Switzerland",
+                "Syria",
+                "Tajikistan",
+                "Tanzania",
+                "Thailand",
+                "Timor-Leste",
+                "Togo",
+                "Tonga",
+                "Trinidad and Tobago",
+                "Tunisia",
+                "Turkey",
+                "Turkmenistan",
+                "Tuvalu",
+                "Uganda",
+                "Ukraine",
+                "United Arab Emirates",
+                "United Kingdom",
+                "United States of America",
+                "Uruguay",
+                "Uzbekistan",
+                "Vanuatu",
+                "Venezuela",
+                "Vietnam",
+                "Yemen",
+                "Zambia",
+                "Zimbabwe"
+            };
+            cmbCountry.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbCountry.Font = new Font("Segoe UI", 10F);
+            cmbCountry.FormattingEnabled = true;
+            cmbCountry.Items.AddRange(allCountries);
+            cmbCountry.MaxDropDownItems = 15;
+            cmbCountry.Location = new Point(707, 254);
+            cmbCountry.Margin = new Padding(4, 5, 4, 5);
+            cmbCountry.Name = "cmbCountry";
+            cmbCountry.Size = new Size(599, 31);
+            cmbCountry.TabIndex = 8;
+            // 
+            // btnSavePersonal
+            // 
+            btnSavePersonal.BackColor = Color.FromArgb(0, 112, 243);
+            btnSavePersonal.Cursor = Cursors.Hand;
+            btnSavePersonal.FlatAppearance.BorderSize = 0;
+            btnSavePersonal.FlatStyle = FlatStyle.Flat;
+            btnSavePersonal.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            btnSavePersonal.ForeColor = Color.White;
+            btnSavePersonal.Location = new Point(40, 338);
+            btnSavePersonal.Margin = new Padding(4, 5, 4, 5);
+            btnSavePersonal.Name = "btnSavePersonal";
+            btnSavePersonal.Size = new Size(133, 58);
+            btnSavePersonal.TabIndex = 9;
+            btnSavePersonal.Text = "Save";
+            btnSavePersonal.UseVisualStyleBackColor = false;
+            btnSavePersonal.Click += BtnSavePersonal_Click;
+            // 
+            // topPanel
+            // 
+            topPanel.Controls.Add(profilePanel);
+            topPanel.Controls.Add(passwordPanel);
+            topPanel.Location = new Point(40, 215);
+            topPanel.Margin = new Padding(4, 5, 4, 5);
+            topPanel.Name = "topPanel";
+            topPanel.Size = new Size(1387, 544);
+            topPanel.TabIndex = 2;
+            // 
+            // profilePanel
+            // 
+            profilePanel.BackColor = Color.White;
+            profilePanel.Controls.Add(lblUserProfile);
+            profilePanel.Controls.Add(lblFullName);
+            profilePanel.Controls.Add(txtFullName);
+            profilePanel.Controls.Add(lblCurrentEmail);
+            profilePanel.Controls.Add(txtCurrentEmail);
+            profilePanel.Controls.Add(picProfile);
+            profilePanel.Controls.Add(lblProfileName);
+            profilePanel.Controls.Add(lblMaxFileSize);
+            profilePanel.Controls.Add(lblFileName);
+            profilePanel.Controls.Add(btnBrowse);
+            profilePanel.Controls.Add(btnSaveProfile);
+            profilePanel.Location = new Point(0, 0);
+            profilePanel.Margin = new Padding(4, 5, 4, 5);
+            profilePanel.Name = "profilePanel";
+            profilePanel.Size = new Size(673, 544);
+            profilePanel.TabIndex = 0;
+            // 
+            // lblUserProfile
+            // 
+            lblUserProfile.AutoSize = true;
+            lblUserProfile.Font = new Font("Segoe UI Semibold", 14F, FontStyle.Bold);
+            lblUserProfile.ForeColor = Color.FromArgb(51, 51, 51);
+            lblUserProfile.Location = new Point(33, 31);
+            lblUserProfile.Margin = new Padding(4, 0, 4, 0);
+            lblUserProfile.Name = "lblUserProfile";
+            lblUserProfile.Size = new Size(140, 32);
+            lblUserProfile.TabIndex = 0;
+            lblUserProfile.Text = "User Profile";
+            // 
+            // lblFullName
+            // 
+            lblFullName.AutoSize = true;
+            lblFullName.Font = new Font("Segoe UI", 10F);
+            lblFullName.ForeColor = Color.FromArgb(102, 102, 102);
+            lblFullName.Location = new Point(33, 92);
+            lblFullName.Margin = new Padding(4, 0, 4, 0);
+            lblFullName.Name = "lblFullName";
+            lblFullName.Size = new Size(87, 23);
+            lblFullName.TabIndex = 1;
+            lblFullName.Text = "Full Name";
+            // 
+            // txtFullName
+            // 
+            txtFullName.BorderStyle = BorderStyle.FixedSingle;
+            txtFullName.Font = new Font("Segoe UI", 10F);
+            txtFullName.Location = new Point(33, 131);
+            txtFullName.Margin = new Padding(4, 5, 4, 5);
+            txtFullName.Name = "txtFullName";
+            txtFullName.Size = new Size(606, 30);
+            txtFullName.TabIndex = 2;
+            // 
+            // lblCurrentEmail
+            // 
+            lblCurrentEmail.AutoSize = true;
+            lblCurrentEmail.Font = new Font("Segoe UI", 10F);
+            lblCurrentEmail.ForeColor = Color.FromArgb(102, 102, 102);
+            lblCurrentEmail.Location = new Point(33, 192);
+            lblCurrentEmail.Margin = new Padding(4, 0, 4, 0);
+            lblCurrentEmail.Name = "lblCurrentEmail";
+            lblCurrentEmail.Size = new Size(114, 23);
+            lblCurrentEmail.TabIndex = 3;
+            lblCurrentEmail.Text = "Current Email";
+            // 
+            // txtCurrentEmail
+            // 
+            txtCurrentEmail.BorderStyle = BorderStyle.FixedSingle;
+            txtCurrentEmail.Font = new Font("Segoe UI", 10F);
+            txtCurrentEmail.Location = new Point(33, 231);
+            txtCurrentEmail.Margin = new Padding(4, 5, 4, 5);
+            txtCurrentEmail.Name = "txtCurrentEmail";
+            txtCurrentEmail.ReadOnly = true;
+            txtCurrentEmail.Size = new Size(606, 30);
+            txtCurrentEmail.TabIndex = 4;
+            // 
+            // picProfile
+            // 
+            picProfile.BackColor = Color.FromArgb(79, 195, 247);
+            picProfile.Location = new Point(33, 292);
+            picProfile.Margin = new Padding(4, 5, 4, 5);
+            picProfile.Name = "picProfile";
+            picProfile.Size = new Size(67, 77);
+            picProfile.TabIndex = 5;
+            picProfile.TabStop = false;
+            // 
+            // lblProfileName
+            // 
+            lblProfileName.AutoSize = true;
+            lblProfileName.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            lblProfileName.Location = new Point(113, 300);
+            lblProfileName.Margin = new Padding(4, 0, 4, 0);
+            lblProfileName.Name = "lblProfileName";
+            lblProfileName.Size = new Size(116, 23);
+            lblProfileName.TabIndex = 6;
+            lblProfileName.Text = "Âu Dương Tải";
+            // 
+            // lblMaxFileSize
+            // 
+            lblMaxFileSize.AutoSize = true;
+            lblMaxFileSize.Font = new Font("Segoe UI", 9F);
+            lblMaxFileSize.ForeColor = Color.Gray;
+            lblMaxFileSize.Location = new Point(113, 331);
+            lblMaxFileSize.Margin = new Padding(4, 0, 4, 0);
+            lblMaxFileSize.Name = "lblMaxFileSize";
+            lblMaxFileSize.Size = new Size(147, 20);
+            lblMaxFileSize.TabIndex = 7;
+            lblMaxFileSize.Text = "Max file size is 20mb";
+            // 
+            // lblFileName
+            // 
+            lblFileName.AutoSize = true;
+            lblFileName.Font = new Font("Segoe UI", 9F);
+            lblFileName.ForeColor = Color.Gray;
+            lblFileName.Location = new Point(320, 315);
+            lblFileName.Margin = new Padding(4, 0, 4, 0);
+            lblFileName.Name = "lblFileName";
+            lblFileName.Size = new Size(92, 20);
+            lblFileName.TabIndex = 8;
+            lblFileName.Text = "Choose file...";
             // 
             // btnBrowse
             // 
-            btnBrowse.Location = new Point(486, 182);
+            btnBrowse.BackColor = Color.White;
+            btnBrowse.Cursor = Cursors.Hand;
+            btnBrowse.FlatAppearance.BorderColor = Color.FromArgb(200, 200, 200);
+            btnBrowse.FlatStyle = FlatStyle.Flat;
+            btnBrowse.Font = new Font("Segoe UI", 9F);
+            btnBrowse.Location = new Point(533, 305);
+            btnBrowse.Margin = new Padding(4, 5, 4, 5);
             btnBrowse.Name = "btnBrowse";
-            btnBrowse.Size = new Size(110, 30);
-            btnBrowse.TabIndex = 4;
+            btnBrowse.Size = new Size(107, 49);
+            btnBrowse.TabIndex = 9;
             btnBrowse.Text = "Browse";
+            btnBrowse.UseVisualStyleBackColor = false;
+            btnBrowse.Click += BtnBrowse_Click;
             // 
-            // lblMaxFile
+            // btnSaveProfile
             // 
-            lblMaxFile.Font = new Font("Segoe UI", 8F);
-            lblMaxFile.ForeColor = Color.Gray;
-            lblMaxFile.Location = new Point(470, 215); // Điều chỉnh X
-            lblMaxFile.Name = "lblMaxFile";
-            lblMaxFile.Size = new Size(145, 23);
-            lblMaxFile.TabIndex = 5;
-            lblMaxFile.Text = "Max file size is 20mb";
-            lblMaxFile.TextAlign = ContentAlignment.TopCenter;
+            btnSaveProfile.BackColor = Color.FromArgb(0, 112, 243);
+            btnSaveProfile.Cursor = Cursors.Hand;
+            btnSaveProfile.FlatAppearance.BorderSize = 0;
+            btnSaveProfile.FlatStyle = FlatStyle.Flat;
+            btnSaveProfile.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            btnSaveProfile.ForeColor = Color.White;
+            btnSaveProfile.Location = new Point(33, 415);
+            btnSaveProfile.Margin = new Padding(4, 5, 4, 5);
+            btnSaveProfile.Name = "btnSaveProfile";
+            btnSaveProfile.Size = new Size(133, 58);
+            btnSaveProfile.TabIndex = 10;
+            btnSaveProfile.Text = "Save";
+            btnSaveProfile.UseVisualStyleBackColor = false;
+            btnSaveProfile.Click += BtnSaveProfile_Click;
             // 
-            // btnSaveLeft
+            // passwordPanel
             // 
-            btnSaveLeft.BackColor = Color.RoyalBlue;
-            btnSaveLeft.FlatStyle = FlatStyle.Flat;
-            btnSaveLeft.ForeColor = Color.White;
-            btnSaveLeft.Location = new Point(30, 183);
-            btnSaveLeft.Name = "btnSaveLeft";
-            btnSaveLeft.Size = new Size(86, 47);
-            btnSaveLeft.TabIndex = 6;
-            btnSaveLeft.Text = "Save";
-            btnSaveLeft.UseVisualStyleBackColor = false;
+            passwordPanel.BackColor = Color.White;
+            passwordPanel.Controls.Add(lblUserProfilePass);
+            passwordPanel.Controls.Add(lblNewEmail);
+            passwordPanel.Controls.Add(txtNewEmail);
+            passwordPanel.Controls.Add(lblCurrentPassword);
+            passwordPanel.Controls.Add(txtCurrentPassword);
+            passwordPanel.Controls.Add(btnTogglePassword);
+            passwordPanel.Controls.Add(lblNewPassword);
+            passwordPanel.Controls.Add(txtNewPassword);
+            passwordPanel.Controls.Add(lblConfirmPassword);
+            passwordPanel.Controls.Add(txtConfirmPassword);
+            passwordPanel.Controls.Add(btnSavePassword);
+            passwordPanel.Location = new Point(713, 0);
+            passwordPanel.Margin = new Padding(4, 5, 4, 5);
+            passwordPanel.Name = "passwordPanel";
+            passwordPanel.Size = new Size(673, 544);
+            passwordPanel.TabIndex = 1;
             // 
-            // panelUserProfileRight
+            // lblUserProfilePass
             // 
-            panelUserProfileRight.Anchor = AnchorStyles.Top | AnchorStyles.Right; // CHỈ Neo Top/Right
-            panelUserProfileRight.BackColor = Color.White;
-            panelUserProfileRight.BorderStyle = BorderStyle.FixedSingle;
-            panelUserProfileRight.Controls.Add(lblUserProfileRight);
-            panelUserProfileRight.Controls.Add(lblNewEmail);
-            panelUserProfileRight.Controls.Add(txtNewEmail);
-            panelUserProfileRight.Controls.Add(lblNewPassword);
-            panelUserProfileRight.Controls.Add(txtNewPassword);
-            panelUserProfileRight.Controls.Add(btnSaveRight);
-            panelUserProfileRight.Location = new Point(662, 20); // Vị trí X mới
-            panelUserProfileRight.Name = "panelUserProfileRight";
-            panelUserProfileRight.Size = new Size(621, 250); // Chiều rộng 621
-            panelUserProfileRight.TabIndex = 1;
-            // 
-            // lblUserProfileRight
-            // 
-            lblUserProfileRight.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblUserProfileRight.Location = new Point(10, 10);
-            lblUserProfileRight.Name = "lblUserProfileRight";
-            lblUserProfileRight.Size = new Size(261, 37);
-            lblUserProfileRight.TabIndex = 0;
-            lblUserProfileRight.Text = "User Profile";
+            lblUserProfilePass.AutoSize = true;
+            lblUserProfilePass.Font = new Font("Segoe UI Semibold", 14F, FontStyle.Bold);
+            lblUserProfilePass.ForeColor = Color.FromArgb(51, 51, 51);
+            lblUserProfilePass.Location = new Point(33, 31);
+            lblUserProfilePass.Margin = new Padding(4, 0, 4, 0);
+            lblUserProfilePass.Name = "lblUserProfilePass";
+            lblUserProfilePass.Size = new Size(140, 32);
+            lblUserProfilePass.TabIndex = 0;
+            lblUserProfilePass.Text = "User Profile";
             // 
             // lblNewEmail
             // 
-            lblNewEmail.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblNewEmail.Location = new Point(21, 70);
+            lblNewEmail.AutoSize = true;
+            lblNewEmail.Font = new Font("Segoe UI", 10F);
+            lblNewEmail.ForeColor = Color.FromArgb(102, 102, 102);
+            lblNewEmail.Location = new Point(33, 92);
+            lblNewEmail.Margin = new Padding(4, 0, 4, 0);
             lblNewEmail.Name = "lblNewEmail";
-            lblNewEmail.Size = new Size(270, 34); // Width 270
+            lblNewEmail.Size = new Size(90, 23);
             lblNewEmail.TabIndex = 1;
             lblNewEmail.Text = "New Email";
             // 
             // txtNewEmail
             // 
-            txtNewEmail.Anchor = AnchorStyles.Top | AnchorStyles.Left; // Neo Left
-            txtNewEmail.Location = new Point(21, 124);
+            txtNewEmail.BorderStyle = BorderStyle.FixedSingle;
+            txtNewEmail.Font = new Font("Segoe UI", 10F);
+            txtNewEmail.ForeColor = Color.Silver;
+            txtNewEmail.Location = new Point(33, 131);
+            txtNewEmail.Margin = new Padding(4, 5, 4, 5);
             txtNewEmail.Name = "txtNewEmail";
-            txtNewEmail.Size = new Size(270, 30); // Width 270
+            txtNewEmail.Size = new Size(606, 30);
             txtNewEmail.TabIndex = 2;
+            txtNewEmail.Text = "Để trống nếu không đổi";
+            // 
+            // lblCurrentPassword
+            // 
+            lblCurrentPassword.AutoSize = true;
+            lblCurrentPassword.Font = new Font("Segoe UI", 10F);
+            lblCurrentPassword.ForeColor = Color.FromArgb(102, 102, 102);
+            lblCurrentPassword.Location = new Point(33, 192);
+            lblCurrentPassword.Margin = new Padding(4, 0, 4, 0);
+            lblCurrentPassword.Name = "lblCurrentPassword";
+            lblCurrentPassword.Size = new Size(226, 23);
+            lblCurrentPassword.TabIndex = 3;
+            lblCurrentPassword.Text = "Current Password (Required)";
+            // 
+            // txtCurrentPassword
+            // 
+            txtCurrentPassword.BorderStyle = BorderStyle.FixedSingle;
+            txtCurrentPassword.Font = new Font("Segoe UI", 10F);
+            txtCurrentPassword.Location = new Point(33, 231);
+            txtCurrentPassword.Margin = new Padding(4, 5, 4, 5);
+            txtCurrentPassword.Name = "txtCurrentPassword";
+            txtCurrentPassword.Size = new Size(553, 30);
+            txtCurrentPassword.TabIndex = 4;
+            txtCurrentPassword.UseSystemPasswordChar = true;
+            // 
+            // btnTogglePassword
+            // 
+            btnTogglePassword.Location = new Point(593, 231);
+            btnTogglePassword.Margin = new Padding(4, 5, 4, 5);
+            btnTogglePassword.Name = "btnTogglePassword";
+            btnTogglePassword.Size = new Size(47, 38);
+            btnTogglePassword.TabIndex = 5;
+            btnTogglePassword.Text = "👁";
+            btnTogglePassword.UseVisualStyleBackColor = true;
+            btnTogglePassword.Click += BtnTogglePassword_Click;
             // 
             // lblNewPassword
             // 
-            lblNewPassword.Anchor = AnchorStyles.Top | AnchorStyles.Right; // Neo Right
-            lblNewPassword.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblNewPassword.Location = new Point(330, 70); // Vị trí X 330
+            lblNewPassword.AutoSize = true;
+            lblNewPassword.Font = new Font("Segoe UI", 10F);
+            lblNewPassword.ForeColor = Color.FromArgb(102, 102, 102);
+            lblNewPassword.Location = new Point(33, 292);
+            lblNewPassword.Margin = new Padding(4, 0, 4, 0);
             lblNewPassword.Name = "lblNewPassword";
-            lblNewPassword.Size = new Size(270, 34); // Width 270
-            lblNewPassword.TabIndex = 3;
+            lblNewPassword.Size = new Size(119, 23);
+            lblNewPassword.TabIndex = 6;
             lblNewPassword.Text = "New Password";
             // 
             // txtNewPassword
             // 
-            txtNewPassword.Anchor = AnchorStyles.Top | AnchorStyles.Right; // Neo Right
-            txtNewPassword.Location = new Point(330, 123); // Vị trí X 330
+            txtNewPassword.BorderStyle = BorderStyle.FixedSingle;
+            txtNewPassword.Font = new Font("Segoe UI", 10F);
+            txtNewPassword.ForeColor = Color.Silver;
+            txtNewPassword.Location = new Point(33, 331);
+            txtNewPassword.Margin = new Padding(4, 5, 4, 5);
             txtNewPassword.Name = "txtNewPassword";
-            txtNewPassword.PasswordChar = '*';
-            txtNewPassword.Size = new Size(270, 30); // Width 270
-            txtNewPassword.TabIndex = 4;
+            txtNewPassword.Size = new Size(606, 30);
+            txtNewPassword.TabIndex = 7;
+            txtNewPassword.Text = "Để trống nếu không đổi";
+            txtNewPassword.UseSystemPasswordChar = true;
             // 
-            // btnSaveRight
+            // lblConfirmPassword
             // 
-            btnSaveRight.BackColor = Color.RoyalBlue;
-            btnSaveRight.FlatStyle = FlatStyle.Flat;
-            btnSaveRight.ForeColor = Color.White;
-            btnSaveRight.Location = new Point(21, 183);
-            btnSaveRight.Name = "btnSaveRight";
-            btnSaveRight.Size = new Size(86, 47);
-            btnSaveRight.TabIndex = 5;
-            btnSaveRight.Text = "Save";
-            btnSaveRight.UseVisualStyleBackColor = false;
+            lblConfirmPassword.AutoSize = true;
+            lblConfirmPassword.Font = new Font("Segoe UI", 10F);
+            lblConfirmPassword.ForeColor = Color.FromArgb(102, 102, 102);
+            lblConfirmPassword.Location = new Point(33, 392);
+            lblConfirmPassword.Margin = new Padding(4, 0, 4, 0);
+            lblConfirmPassword.Name = "lblConfirmPassword";
+            lblConfirmPassword.Size = new Size(185, 23);
+            lblConfirmPassword.TabIndex = 8;
+            lblConfirmPassword.Text = "Confirm New Password";
             // 
-            // panelPersonalInfo
+            // txtConfirmPassword
             // 
-            panelPersonalInfo.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right; // Neo 4 góc
-            panelPersonalInfo.BackColor = Color.White;
-            panelPersonalInfo.BorderStyle = BorderStyle.FixedSingle;
-            panelPersonalInfo.Controls.Add(lblPersonalInfo);
-            panelPersonalInfo.Controls.Add(lblFullNamePersonal);
-            panelPersonalInfo.Controls.Add(txtFullNamePersonal);
-            panelPersonalInfo.Controls.Add(lblEmailPersonal);
-            panelPersonalInfo.Controls.Add(txtEmailPersonal);
-            panelPersonalInfo.Controls.Add(lblAddress);
-            panelPersonalInfo.Controls.Add(txtAddress);
-            panelPersonalInfo.Controls.Add(lblCity);
-            panelPersonalInfo.Controls.Add(txtCity);
-            panelPersonalInfo.Controls.Add(lblBirthDate);
-            panelPersonalInfo.Controls.Add(dtpBirthDate);
-            panelPersonalInfo.Controls.Add(lblCountry);
-            panelPersonalInfo.Controls.Add(cboCountry);
-            panelPersonalInfo.Controls.Add(btnSavePersonal);
-            panelPersonalInfo.Location = new Point(20, 302); // Tăng Y (khoảng cách 32px)
-            panelPersonalInfo.Name = "panelPersonalInfo";
-            panelPersonalInfo.Size = new Size(1263, 340); // Tăng chiều cao
-            panelPersonalInfo.TabIndex = 2;
+            txtConfirmPassword.BorderStyle = BorderStyle.FixedSingle;
+            txtConfirmPassword.Font = new Font("Segoe UI", 10F);
+            txtConfirmPassword.ForeColor = Color.Silver;
+            txtConfirmPassword.Location = new Point(33, 431);
+            txtConfirmPassword.Margin = new Padding(4, 5, 4, 5);
+            txtConfirmPassword.Name = "txtConfirmPassword";
+            txtConfirmPassword.Size = new Size(606, 30);
+            txtConfirmPassword.TabIndex = 9;
+            txtConfirmPassword.Text = "Nhập lại mật khẩu mới";
+            txtConfirmPassword.UseSystemPasswordChar = true;
             // 
-            // lblPersonalInfo
+            // btnSavePassword
             // 
-            lblPersonalInfo.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            lblPersonalInfo.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblPersonalInfo.Location = new Point(0, 17);
-            lblPersonalInfo.Name = "lblPersonalInfo";
-            lblPersonalInfo.Size = new Size(1263, 47);
-            lblPersonalInfo.TabIndex = 0;
-            lblPersonalInfo.Text = "Personal Information";
-            lblPersonalInfo.TextAlign = ContentAlignment.MiddleCenter;
+            btnSavePassword.BackColor = Color.FromArgb(0, 112, 243);
+            btnSavePassword.Cursor = Cursors.Hand;
+            btnSavePassword.FlatAppearance.BorderSize = 0;
+            btnSavePassword.FlatStyle = FlatStyle.Flat;
+            btnSavePassword.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            btnSavePassword.ForeColor = Color.White;
+            btnSavePassword.Location = new Point(33, 492);
+            btnSavePassword.Margin = new Padding(4, 5, 4, 5);
+            btnSavePassword.Name = "btnSavePassword";
+            btnSavePassword.Size = new Size(133, 58);
+            btnSavePassword.TabIndex = 10;
+            btnSavePassword.Text = "Save";
+            btnSavePassword.UseVisualStyleBackColor = false;
+            btnSavePassword.Click += BtnSavePassword_Click;
             // 
-            // lblFullNamePersonal
+            // headerPanel
             // 
-            lblFullNamePersonal.Font = new Font("Segoe UI", 13.8F);
-            lblFullNamePersonal.Location = new Point(37, 106); // Y = 106 (tăng 20px)
-            lblFullNamePersonal.Name = "lblFullNamePersonal";
-            lblFullNamePersonal.Size = new Size(150, 34);
-            lblFullNamePersonal.TabIndex = 1;
-            lblFullNamePersonal.Text = "Full Name";
+            headerPanel.BackColor = Color.FromArgb(245, 247, 250);
+            headerPanel.Controls.Add(lblTitle);
+            headerPanel.Controls.Add(lblSubtitle);
+            headerPanel.Controls.Add(breadcrumbPanel);
+            headerPanel.Location = new Point(40, 31);
+            headerPanel.Margin = new Padding(4, 5, 4, 5);
+            headerPanel.Name = "headerPanel";
+            headerPanel.Size = new Size(1387, 92);
+            headerPanel.TabIndex = 0;
             // 
-            // txtFullNamePersonal
+            // lblTitle
             // 
-            txtFullNamePersonal.Anchor = AnchorStyles.Top | AnchorStyles.Left; // Neo Left
-            txtFullNamePersonal.Location = new Point(197, 113); // Y = 113
-            txtFullNamePersonal.Name = "txtFullNamePersonal";
-            txtFullNamePersonal.Size = new Size(420, 30); // Width 420
-            txtFullNamePersonal.TabIndex = 2;
+            lblTitle.AutoSize = true;
+            lblTitle.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
+            lblTitle.ForeColor = Color.FromArgb(51, 51, 51);
+            lblTitle.Location = new Point(0, 0);
+            lblTitle.Margin = new Padding(4, 0, 4, 0);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(176, 41);
+            lblTitle.TabIndex = 0;
+            lblTitle.Text = "Edit Profile";
             // 
-            // lblEmailPersonal
+            // lblSubtitle
             // 
-            lblEmailPersonal.Anchor = AnchorStyles.Top | AnchorStyles.Right; // Neo Right
-            lblEmailPersonal.Font = new Font("Segoe UI", 13.8F);
-            lblEmailPersonal.Location = new Point(700, 106); // Y = 106, X = 700
-            lblEmailPersonal.Name = "lblEmailPersonal";
-            lblEmailPersonal.Size = new Size(100, 34);
-            lblEmailPersonal.TabIndex = 3;
-            lblEmailPersonal.Text = "Email";
+            lblSubtitle.AutoSize = true;
+            lblSubtitle.Font = new Font("Segoe UI", 10F);
+            lblSubtitle.ForeColor = Color.Gray;
+            lblSubtitle.Location = new Point(0, 54);
+            lblSubtitle.Margin = new Padding(4, 0, 4, 0);
+            lblSubtitle.Name = "lblSubtitle";
+            lblSubtitle.Size = new Size(298, 23);
+            lblSubtitle.TabIndex = 1;
+            lblSubtitle.Text = "Welcome Ekash Finance Management";
             // 
-            // txtEmailPersonal
+            // breadcrumbPanel
             // 
-            txtEmailPersonal.Anchor = AnchorStyles.Top | AnchorStyles.Right; // Neo Right
-            txtEmailPersonal.Location = new Point(810, 113); // Y = 113, X = 810
-            txtEmailPersonal.Name = "txtEmailPersonal";
-            txtEmailPersonal.Size = new Size(420, 30); // Width 420
-            txtEmailPersonal.TabIndex = 4;
+            breadcrumbPanel.Controls.Add(lblSettings);
+            breadcrumbPanel.Controls.Add(lblArrow);
+            breadcrumbPanel.Controls.Add(lblProfile);
+            breadcrumbPanel.Location = new Point(1133, 12);
+            breadcrumbPanel.Margin = new Padding(4, 5, 4, 5);
+            breadcrumbPanel.Name = "breadcrumbPanel";
+            breadcrumbPanel.Size = new Size(253, 38);
+            breadcrumbPanel.TabIndex = 2;
             // 
-            // lblAddress
+            // lblSettings
             // 
-            lblAddress.Font = new Font("Segoe UI", 13.8F);
-            lblAddress.Location = new Point(37, 176); // Y = 176 (tăng 20px)
-            lblAddress.Name = "lblAddress";
-            lblAddress.Size = new Size(150, 34);
-            lblAddress.TabIndex = 5;
-            lblAddress.Text = "Address";
+            lblSettings.AutoSize = true;
+            lblSettings.Cursor = Cursors.Hand;
+            lblSettings.Font = new Font("Segoe UI", 10F);
+            lblSettings.ForeColor = Color.Gray;
+            lblSettings.Location = new Point(0, 5);
+            lblSettings.Margin = new Padding(4, 0, 4, 0);
+            lblSettings.Name = "lblSettings";
+            lblSettings.Size = new Size(71, 23);
+            lblSettings.TabIndex = 0;
+            lblSettings.Text = "Settings";
             // 
-            // txtAddress
+            // lblArrow
             // 
-            txtAddress.Anchor = AnchorStyles.Top | AnchorStyles.Left; // Neo Left
-            txtAddress.Location = new Point(197, 183); // Y = 183
-            txtAddress.Name = "txtAddress";
-            txtAddress.Size = new Size(420, 30); // Width 420
-            txtAddress.TabIndex = 6;
+            lblArrow.AutoSize = true;
+            lblArrow.Font = new Font("Segoe UI", 10F);
+            lblArrow.ForeColor = Color.Gray;
+            lblArrow.Location = new Point(87, 5);
+            lblArrow.Margin = new Padding(4, 0, 4, 0);
+            lblArrow.Name = "lblArrow";
+            lblArrow.Size = new Size(22, 23);
+            lblArrow.TabIndex = 1;
+            lblArrow.Text = ">";
             // 
-            // lblCity
+            // lblProfile
             // 
-            lblCity.Anchor = AnchorStyles.Top | AnchorStyles.Right; // Neo Right
-            lblCity.Font = new Font("Segoe UI", 13.8F);
-            lblCity.Location = new Point(700, 176); // Y = 176, X = 700
-            lblCity.Name = "lblCity";
-            lblCity.Size = new Size(100, 34);
-            lblCity.TabIndex = 7;
-            lblCity.Text = "City";
+            lblProfile.AutoSize = true;
+            lblProfile.Font = new Font("Segoe UI", 10F);
+            lblProfile.ForeColor = Color.FromArgb(0, 112, 243);
+            lblProfile.Location = new Point(120, 5);
+            lblProfile.Margin = new Padding(4, 0, 4, 0);
+            lblProfile.Name = "lblProfile";
+            lblProfile.Size = new Size(58, 23);
+            lblProfile.TabIndex = 2;
+            lblProfile.Text = "Profile";
             // 
-            // txtCity
+            // tabPanel
             // 
-            txtCity.Anchor = AnchorStyles.Top | AnchorStyles.Right; // Neo Right
-            txtCity.Location = new Point(810, 183); // Y = 183, X = 810
-            txtCity.Name = "txtCity";
-            txtCity.Size = new Size(420, 30); // Width 420
-            txtCity.TabIndex = 8;
+            tabPanel.BackColor = Color.White;
+            tabPanel.Controls.Add(lblTabProfile);
+            tabPanel.Controls.Add(lblTabCategories);
+            tabPanel.Controls.Add(lblTabSupport);
+            tabPanel.Location = new Point(40, 138);
+            tabPanel.Margin = new Padding(4, 5, 4, 5);
+            tabPanel.Name = "tabPanel";
+            tabPanel.Size = new Size(1387, 62);
+            tabPanel.TabIndex = 1;
             // 
-            // lblBirthDate
+            // lblTabProfile
             // 
-            lblBirthDate.Font = new Font("Segoe UI", 13.8F);
-            lblBirthDate.Location = new Point(37, 247); // Y = 247 (tăng 20px)
-            lblBirthDate.Name = "lblBirthDate";
-            lblBirthDate.Size = new Size(150, 34);
-            lblBirthDate.TabIndex = 9;
-            lblBirthDate.Text = "Birth of date";
+            lblTabProfile.AutoSize = true;
+            lblTabProfile.Cursor = Cursors.Hand;
+            lblTabProfile.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
+            lblTabProfile.ForeColor = Color.FromArgb(0, 112, 243);
+            lblTabProfile.Location = new Point(27, 15);
+            lblTabProfile.Margin = new Padding(4, 0, 4, 0);
+            lblTabProfile.Name = "lblTabProfile";
+            lblTabProfile.Size = new Size(68, 25);
+            lblTabProfile.TabIndex = 0;
+            lblTabProfile.Text = "Profile";
             // 
-            // dtpBirthDate
+            // lblTabCategories
             // 
-            dtpBirthDate.Location = new Point(197, 247); // Y = 247
-            dtpBirthDate.Name = "dtpBirthDate";
-            dtpBirthDate.Size = new Size(420, 30); // Width 420
-            dtpBirthDate.TabIndex = 10;
+            lblTabCategories.AutoSize = true;
+            lblTabCategories.Cursor = Cursors.Hand;
+            lblTabCategories.Font = new Font("Segoe UI", 11F);
+            lblTabCategories.ForeColor = Color.Gray;
+            lblTabCategories.Location = new Point(160, 15);
+            lblTabCategories.Margin = new Padding(4, 0, 4, 0);
+            lblTabCategories.Name = "lblTabCategories";
+            lblTabCategories.Size = new Size(102, 25);
+            lblTabCategories.TabIndex = 1;
+            lblTabCategories.Text = "Categories";
             // 
-            // lblCountry
+            // lblTabSupport
             // 
-            lblCountry.Anchor = AnchorStyles.Top | AnchorStyles.Right; // Neo Right
-            lblCountry.Font = new Font("Segoe UI", 13.8F);
-            lblCountry.Location = new Point(700, 247); // Y = 247, X = 700
-            lblCountry.Name = "lblCountry";
-            lblCountry.Size = new Size(100, 34);
-            lblCountry.TabIndex = 11;
-            lblCountry.Text = "Country";
-            // 
-            // cboCountry
-            // 
-            cboCountry.Anchor = AnchorStyles.Top | AnchorStyles.Right; // Neo Right
-            cboCountry.Location = new Point(810, 246); // Y = 246, X = 810
-            cboCountry.Name = "cboCountry";
-            cboCountry.Size = new Size(420, 31); // Width 420
-            cboCountry.TabIndex = 12;
-            // 
-            // btnSavePersonal
-            // 
-            btnSavePersonal.Anchor = AnchorStyles.Bottom; // CHỈ Neo Bottom
-            btnSavePersonal.BackColor = Color.RoyalBlue;
-            btnSavePersonal.FlatStyle = FlatStyle.Flat;
-            btnSavePersonal.ForeColor = Color.White;
-            btnSavePersonal.Location = new Point(588, 290); // Vị trí X = 588 (Căn giữa), Y = 290
-            btnSavePersonal.Name = "btnSavePersonal";
-            btnSavePersonal.Size = new Size(86, 47);
-            btnSavePersonal.TabIndex = 13;
-            btnSavePersonal.Text = "Save";
-            btnSavePersonal.UseVisualStyleBackColor = false;
-            // 
-            // tabCategories
-            // 
-            tabCategories.Location = new Point(4, 32);
-            tabCategories.Name = "tabCategories";
-            tabCategories.Size = new Size(1303, 567);
-            tabCategories.TabIndex = 1;
-            tabCategories.Text = "Categories";
-            // 
-            // tabSupport
-            // 
-            tabSupport.Location = new Point(4, 32);
-            tabSupport.Name = "tabSupport";
-            tabSupport.Size = new Size(1303, 567);
-            tabSupport.TabIndex = 2;
-            tabSupport.Text = "Support";
+            lblTabSupport.AutoSize = true;
+            lblTabSupport.Cursor = Cursors.Hand;
+            lblTabSupport.Font = new Font("Segoe UI", 11F);
+            lblTabSupport.ForeColor = Color.Gray;
+            lblTabSupport.Location = new Point(333, 15);
+            lblTabSupport.Margin = new Padding(4, 0, 4, 0);
+            lblTabSupport.Name = "lblTabSupport";
+            lblTabSupport.Size = new Size(79, 25);
+            lblTabSupport.TabIndex = 2;
+            lblTabSupport.Text = "Support";
             // 
             // UC_Settings
             // 
-            AutoScaleDimensions = new SizeF(9F, 23F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(249, 250, 251);
-            Controls.Add(lblTitle);
-            Controls.Add(lblSubtitle);
-            Controls.Add(tabMain);
-            Font = new Font("Segoe UI", 10F);
+            Controls.Add(mainPanel);
+            Margin = new Padding(4, 5, 4, 5);
             Name = "UC_Settings";
-            Size = new Size(1361, 785);
-            tabMain.ResumeLayout(false);
-            tabProfile.ResumeLayout(false);
-            panelUserProfileLeft.ResumeLayout(false);
-            panelUserProfileLeft.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)picAvatar).EndInit();
-            panelUserProfileRight.ResumeLayout(false);
-            panelUserProfileRight.PerformLayout();
-            panelPersonalInfo.ResumeLayout(false);
-            panelPersonalInfo.PerformLayout();
+            Size = new Size(1463, 1154);
+            mainPanel.ResumeLayout(false);
+            personalInfoPanel.ResumeLayout(false);
+            personalInfoPanel.PerformLayout();
+            topPanel.ResumeLayout(false);
+            profilePanel.ResumeLayout(false);
+            profilePanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)picProfile).EndInit();
+            passwordPanel.ResumeLayout(false);
+            passwordPanel.PerformLayout();
+            headerPanel.ResumeLayout(false);
+            headerPanel.PerformLayout();
+            breadcrumbPanel.ResumeLayout(false);
+            breadcrumbPanel.PerformLayout();
+            tabPanel.ResumeLayout(false);
+            tabPanel.PerformLayout();
             ResumeLayout(false);
         }
 
+        #endregion
+
+        private System.Windows.Forms.Panel mainPanel;
+        private System.Windows.Forms.Panel headerPanel;
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Label lblSubtitle;
-        private System.Windows.Forms.TabControl tabMain;
-        private System.Windows.Forms.TabPage tabProfile;
-        private System.Windows.Forms.TabPage tabCategories;
-        private System.Windows.Forms.TabPage tabSupport;
-
-        private System.Windows.Forms.Panel panelUserProfileLeft;
-        private System.Windows.Forms.Panel panelUserProfileRight;
-        private System.Windows.Forms.Panel panelPersonalInfo;
-
-        private System.Windows.Forms.Label lblUserProfileLeft;
-        private System.Windows.Forms.Label lblFullNameLeft;
-        private System.Windows.Forms.TextBox txtFullNameLeft;
-        private System.Windows.Forms.PictureBox picAvatar;
+        private System.Windows.Forms.Panel breadcrumbPanel;
+        private System.Windows.Forms.Label lblSettings;
+        private System.Windows.Forms.Label lblArrow;
+        private System.Windows.Forms.Label lblProfile;
+        private System.Windows.Forms.Panel tabPanel;
+        private System.Windows.Forms.Label lblTabProfile;
+        private System.Windows.Forms.Label lblTabCategories;
+        private System.Windows.Forms.Label lblTabSupport;
+        private System.Windows.Forms.Panel topPanel;
+        private System.Windows.Forms.Panel profilePanel;
+        private System.Windows.Forms.Label lblUserProfile;
+        private System.Windows.Forms.Label lblFullName;
+        private System.Windows.Forms.TextBox txtFullName;
+        private System.Windows.Forms.Label lblCurrentEmail;
+        private System.Windows.Forms.TextBox txtCurrentEmail;
+        private System.Windows.Forms.PictureBox picProfile;
+        private System.Windows.Forms.Label lblProfileName;
+        private System.Windows.Forms.Label lblMaxFileSize;
+        private System.Windows.Forms.Label lblFileName;
         private System.Windows.Forms.Button btnBrowse;
-        private System.Windows.Forms.Label lblMaxFile;
-        private System.Windows.Forms.Button btnSaveLeft;
-
-        private System.Windows.Forms.Label lblUserProfileRight;
+        private System.Windows.Forms.Button btnSaveProfile;
+        private System.Windows.Forms.Panel passwordPanel;
+        private System.Windows.Forms.Label lblUserProfilePass;
         private System.Windows.Forms.Label lblNewEmail;
         private System.Windows.Forms.TextBox txtNewEmail;
+        private System.Windows.Forms.Label lblCurrentPassword;
+        private System.Windows.Forms.TextBox txtCurrentPassword;
+        private System.Windows.Forms.Button btnTogglePassword;
         private System.Windows.Forms.Label lblNewPassword;
         private System.Windows.Forms.TextBox txtNewPassword;
-        private System.Windows.Forms.Button btnSaveRight;
-
+        private System.Windows.Forms.Label lblConfirmPassword;
+        private System.Windows.Forms.TextBox txtConfirmPassword;
+        private System.Windows.Forms.Button btnSavePassword;
+        private System.Windows.Forms.Panel personalInfoPanel;
         private System.Windows.Forms.Label lblPersonalInfo;
-        private System.Windows.Forms.TextBox txtFullNamePersonal;
-        private System.Windows.Forms.TextBox txtEmailPersonal;
-        private System.Windows.Forms.TextBox txtAddress;
-        private System.Windows.Forms.TextBox txtCity;
-        private System.Windows.Forms.DateTimePicker dtpBirthDate;
-        private System.Windows.Forms.ComboBox cboCountry;
-        private System.Windows.Forms.Button btnSavePersonal;
-
-        private System.Windows.Forms.Label lblFullNamePersonal;
-        private System.Windows.Forms.Label lblEmailPersonal;
         private System.Windows.Forms.Label lblAddress;
+        private System.Windows.Forms.TextBox txtAddress;
         private System.Windows.Forms.Label lblCity;
+        private System.Windows.Forms.TextBox txtCity;
         private System.Windows.Forms.Label lblBirthDate;
+        private System.Windows.Forms.DateTimePicker dtpBirthDate;
         private System.Windows.Forms.Label lblCountry;
-        private TextBox textBox1;
+        private System.Windows.Forms.ComboBox cmbCountry;
+        private System.Windows.Forms.Button btnSavePersonal;
     }
 }
-

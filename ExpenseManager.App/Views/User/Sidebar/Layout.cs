@@ -29,11 +29,6 @@ namespace ExpenseManager.App.Views
         {
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
-            this.Load += Layout_Load;
-        }
-
-        private void Layout_Load(object sender, EventArgs e)
-        {
             SetupUI();
         }
 
@@ -390,15 +385,10 @@ namespace ExpenseManager.App.Views
         }
         private void LoadContent(UserControl uc)
         {
+            contentPanel.Controls.Clear();
             uc.Dock = DockStyle.Fill;
             contentPanel.Controls.Add(uc);
-            contentPanel.ResumeLayout();
-            uc.BringToFront();
         }
 
-        private void Layout_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }
