@@ -1,10 +1,15 @@
-﻿using ExpenseManager.App.Views.Admin.Sidebar;
-using ExpenseManager.App.Models.EF;
+﻿using ExpenseManager.App.Models.EF;
+using ExpenseManager.App.Presenters;
+using ExpenseManager.App.Services;
+using ExpenseManager.App.Views;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Configuration;
-using System.Linq;
 using System.Windows.Forms;
+using ExpenseManager.App.Repositories;
+
+// Thêm using cho LayoutAdmin (nếu cần)
+// using ExpenseManager.App.Views.Admin; 
 
 namespace ExpenseManager.App
 {
@@ -13,9 +18,14 @@ namespace ExpenseManager.App
         [STAThread]
         static void Main()
         {
+            // *** SỬA LỖI LAYOUT Ở ĐÂY ***
+            // Sử dụng hàm Initialize() gốc của bạn
             ApplicationConfiguration.Initialize();
+            // Application.EnableVisualStyles(); // (Không dùng)
+            // Application.SetCompatibleTextRenderingDefault(false); // (Không dùng)
 
-            // Lấy connection string từ App.config
+
+            // 1. Lấy connection string từ App.config (Theo code của bạn)
             string connectionString = ConfigurationManager.ConnectionStrings["ExpenseDB"]?.ConnectionString;
 
             if (string.IsNullOrEmpty(connectionString))
@@ -24,13 +34,41 @@ namespace ExpenseManager.App
                 return;
             }
 
-            // Khởi tạo DbContextOptions
+            // 2. Khởi tạo DbContextOptions (Theo code của bạn)
             var options = new DbContextOptionsBuilder<ExpenseDbContext>()
                 .UseSqlServer(connectionString)
                 .Options;
 
-            // Chạy form chính của bạn
-            Application.Run(new LayoutAdmin());
+            // 3. Quản lý vòng đời DbContext và khởi chạy MVP
+            // 'using' đảm bảo DbContext được giải phóng khi app đóng
+            using (var dbContext = new ExpenseDbContext(options))
+            {
+                try
+                {
+                    // 4. Tạo Repository (Tiêm DbContext)
+                    var userRepository = new UserRepository(dbContext);
+                        
+                    // 5. Tạo Service (Tiêm Repository)
+                    var userService = new UserService(userRepository);
+
+                    // 6. Tạo View (LoginForm)
+                    var loginForm = new LoginForm();
+
+                    // 7. Tạo Presenter (Tiêm View và Service)
+                    var loginPresenter = new LoginPresenter(loginForm, userService);
+
+                    // 8. Gán Presenter cho View
+                    loginForm.SetPresenter(loginPresenter);
+
+                    // 9. Chạy LoginForm
+                    Application.Run(loginForm);
+                }
+                catch (Exception ex)
+                {
+                    // Bắt lỗi nếu không kết nối được CSDL khi khởi động
+                    MessageBox.Show($"Lỗi khởi động ứng dụng: {ex.Message}", "Lỗi nghiêm trọng", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
     }
 }
