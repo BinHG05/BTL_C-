@@ -11,6 +11,7 @@ namespace ExpenseManager.App.Views.User.UC
         {
             if (disposing && (components != null))
             {
+                _presenter?.Dispose();
                 components.Dispose();
             }
             base.Dispose(disposing);

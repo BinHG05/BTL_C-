@@ -44,5 +44,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Logs\" />
+    <Folder Include="Views\Admin\UC\" />
   </ItemGroup>
 </Project>
