@@ -102,7 +102,7 @@ namespace ExpenseManager.App.Views
                 this.Hide(); // Ẩn form Login
 
                 // *** CHÚ Ý: Đổi tên "MainForm" nếu form layout của bạn tên khác (ví dụ: LayoutAdmin) ***
-                var mainForm = new LayoutAdmin();
+                var mainForm = new LayoutUser();
                 mainForm.FormClosed += (s, args) => this.Close(); // Đóng app khi form chính đóng
                 mainForm.Show();
             });

@@ -4,20 +4,188 @@ using System.Drawing.Drawing2D;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using ExpenseManager.App.Models.Entities;
+using ExpenseManager.App.Presenters;
+using ExpenseManager.App.Services;
+using ExpenseManager.App.Services.Interfaces;
+using ExpenseManager.App.Repositories;
+using ExpenseManager.App.Repositories.Interfaces;
+using ExpenseManager.App.Models.EF;
 
 namespace ExpenseManager.App.Views.User.UC
 {
-    public partial class UC_Settings : UserControl
+    public partial class UC_Settings : UserControl, IProfileView
     {
         private string selectedImagePath = "";
+        private ProfilePresenter _presenter;
+        private readonly string _currentUserId = "87de8b0d-fb66-445a-a492-79500cd452db";
+
+        public UC_Settings(string userId)
+        {
+            InitializeComponent();
+
+            // Gán giá trị thực tế sau khi đăng nhập
+            //_currentUserId = userId;
+
+            InitializeCustomComponents();
+            InitializePresenter();
+
+            // ...
+        }
+
+        // ===== IMPLEMENT IProfileView - PROPERTIES =====
+
+        public string UserId => _currentUserId;
+
+        public string FullName
+        {
+            get => txtFullName.Text;
+            set => txtFullName.Text = value;
+        }
+
+        public string CurrentEmail => txtCurrentEmail.Text;
+
+        public string AvatarFilePath => selectedImagePath;
+
+        public string NewEmailInput => GetInputValue(txtNewEmail, "Để trống nếu không đổi");
+
+        public string CurrentPasswordInput => txtCurrentPassword.Text;
+
+        public string NewPasswordInput => GetInputValue(txtNewPassword, "Để trống nếu không đổi");
+
+        public string ConfirmNewPasswordInput => GetInputValue(txtConfirmPassword, "Nhập lại mật khẩu mới");
+
+        public string AddressInput => txtAddress.Text;
+
+        public string CityInput => txtCity.Text;
+
+        public DateTime? DateOfBirthInput
+        {
+            get
+            {
+                // Kiểm tra nếu giá trị là mặc định hoặc quá khứ xa thì return null
+                if (dtpBirthDate.Value.Year < 1900 || dtpBirthDate.Value > DateTime.Now)
+                    return null;
+                return dtpBirthDate.Value;
+            }
+        }
+
+        public string CountryInput => cmbCountry.SelectedItem?.ToString() ?? "";
+
+        // ===== EVENTS =====
+
+        public event EventHandler SaveGeneralInfoClicked;
+        public event EventHandler SaveSecurityClicked;
+        public event EventHandler SavePersonalInfoClicked;
+
+        // ===== CONSTRUCTOR =====
 
         public UC_Settings()
         {
             InitializeComponent();
             InitializeCustomComponents();
+            InitializePresenter();
 
             // Handle resize event
             this.Resize += UC_Settings_Resize;
+        }
+
+        /// <summary>
+        /// Khởi tạo Presenter với Dependency Injection
+        /// </summary>
+        private void InitializePresenter()
+        {
+            try
+            {
+                // TODO: Trong production, nên dùng DI Container
+                var dbContext = new ExpenseDbContext(); // Hoặc inject qua constructor
+                IProfileRepository repository = new ProfileRepository(dbContext);
+                IProfileServices services = new ProfileServices(repository);
+                
+                _presenter = new ProfilePresenter(this, services);
+                
+                // Load dữ liệu ban đầu
+                _presenter.LoadUserProfileAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khởi tạo: {ex.Message}", "Error", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // ===== IMPLEMENT IProfileView - METHODS =====
+
+        public void DisplayUserData(ExpenseManager.App.Models.Entities.User user)
+        {
+            if (user == null) return;
+
+            // Hiển thị thông tin chung
+            txtFullName.Text = user.FullName;
+            txtCurrentEmail.Text = user.Email;
+            lblProfileName.Text = user.FullName;
+
+            // Hiển thị avatar nếu có
+            if (!string.IsNullOrWhiteSpace(user.AvatarUrl) && File.Exists(user.AvatarUrl))
+            {
+                picProfile.Image = Image.FromFile(user.AvatarUrl);
+                lblFileName.Text = Path.GetFileName(user.AvatarUrl);
+            }
+
+            // Hiển thị thông tin cá nhân
+            txtAddress.Text = user.Address ?? "";
+            txtCity.Text = user.City ?? "";
+            
+            if (user.DateOfBirth.HasValue)
+                dtpBirthDate.Value = user.DateOfBirth.Value;
+
+            if (!string.IsNullOrWhiteSpace(user.Country))
+            {
+                int index = cmbCountry.FindStringExact(user.Country);
+                if (index >= 0)
+                    cmbCountry.SelectedIndex = index;
+            }
+        }
+
+        public void ShowSuccess(string message)
+        {
+            MessageBox.Show(message, "Thành công", 
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        public void ShowError(string message)
+        {
+            MessageBox.Show(message, "Lỗi", 
+                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        // ===== BUTTON CLICK HANDLERS =====
+
+        private void BtnSaveProfile_Click(object sender, EventArgs e)
+        {
+            SaveGeneralInfoClicked?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void BtnSavePassword_Click(object sender, EventArgs e)
+        {
+            SaveSecurityClicked?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void BtnSavePersonal_Click(object sender, EventArgs e)
+        {
+            SavePersonalInfoClicked?.Invoke(this, EventArgs.Empty);
+        }
+
+        // ===== PRIVATE HELPER METHODS =====
+
+        /// <summary>
+        /// Lấy giá trị input, trả về empty nếu là placeholder
+        /// </summary>
+        private string GetInputValue(TextBox textBox, string placeholder)
+        {
+            if (textBox.Text == placeholder || string.IsNullOrWhiteSpace(textBox.Text))
+                return "";
+            return textBox.Text;
         }
 
         private void InitializeCustomComponents()
@@ -31,9 +199,6 @@ namespace ExpenseManager.App.Views.User.UC
             // Setup profile picture
             SetupProfilePicture();
 
-            // Load default data
-            LoadDefaultData();
-
             // Setup placeholder text events
             SetupPlaceholders();
         }
@@ -45,39 +210,31 @@ namespace ExpenseManager.App.Views.User.UC
 
         private void AdjustLayout()
         {
-            int availableWidth = this.Width - 60; // 30px padding on each side
+            int availableWidth = this.Width - 60;
             int panelSpacing = 20;
 
-            // Adjust header panel
             headerPanel.Width = availableWidth;
             breadcrumbPanel.Left = availableWidth - breadcrumbPanel.Width;
 
-            // Adjust tab panel
             tabPanel.Width = availableWidth;
 
-            // Adjust top panel (Profile + Password)
             topPanel.Width = availableWidth;
             int halfWidth = (availableWidth - panelSpacing) / 2;
-
             profilePanel.Width = halfWidth;
             passwordPanel.Width = halfWidth;
             passwordPanel.Left = halfWidth + panelSpacing;
 
-            // Adjust controls inside profilePanel
             txtFullName.Width = profilePanel.Width - 50;
             txtCurrentEmail.Width = profilePanel.Width - 50;
 
-            // Adjust controls inside passwordPanel
             txtNewEmail.Width = passwordPanel.Width - 50;
             txtCurrentPassword.Width = passwordPanel.Width - 90;
             btnTogglePassword.Left = passwordPanel.Width - 60;
             txtNewPassword.Width = passwordPanel.Width - 50;
             txtConfirmPassword.Width = passwordPanel.Width - 50;
 
-            // Adjust personal info panel
             personalInfoPanel.Width = availableWidth;
-            int fieldWidth = (availableWidth - 90) / 2; // 30px padding + 30px spacing
-
+            int fieldWidth = (availableWidth - 90) / 2;
             txtAddress.Width = fieldWidth;
             txtCity.Width = fieldWidth;
             txtCity.Left = fieldWidth + 50;
@@ -88,13 +245,11 @@ namespace ExpenseManager.App.Views.User.UC
             cmbCountry.Left = fieldWidth + 50;
             lblCountry.Left = fieldWidth + 50;
 
-            // Re-apply rounded corners after resize
             ApplyRoundedCorners();
         }
 
         private void ApplyRoundedCorners()
         {
-            // Round all textboxes
             ApplyRoundedCorner(txtFullName, 10);
             ApplyRoundedCorner(txtCurrentEmail, 10);
             ApplyRoundedCorner(txtNewEmail, 10);
@@ -105,7 +260,6 @@ namespace ExpenseManager.App.Views.User.UC
             ApplyRoundedCorner(txtCity, 10);
             ApplyRoundedCorner(dtpBirthDate, 10);
 
-            // Round buttons
             ApplyRoundedCorner(btnSaveProfile, 8);
             ApplyRoundedCorner(btnSavePassword, 8);
             ApplyRoundedCorner(btnSavePersonal, 8);
@@ -126,44 +280,36 @@ namespace ExpenseManager.App.Views.User.UC
         {
             btnTogglePassword.FlatStyle = FlatStyle.Flat;
             btnTogglePassword.FlatAppearance.BorderSize = 0;
-            btnTogglePassword.BackColor = Color.White;
+            btnTogglePassword.BackColor = System.Drawing.Color.White;
             btnTogglePassword.Cursor = Cursors.Hand;
         }
 
         private void SetupProfilePicture()
         {
-            // Make profile picture circular
             GraphicsPath path = new GraphicsPath();
             path.AddEllipse(0, 0, picProfile.Width, picProfile.Height);
             picProfile.Region = new Region(path);
-
-            // Set default avatar
             picProfile.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
         private void SetupPlaceholders()
         {
-            // New Email placeholder
             SetupPlaceholder(txtNewEmail, "Để trống nếu không đổi");
-
-            // New Password placeholder
             SetupPlaceholder(txtNewPassword, "Để trống nếu không đổi");
-
-            // Confirm Password placeholder
             SetupPlaceholder(txtConfirmPassword, "Nhập lại mật khẩu mới");
         }
 
         private void SetupPlaceholder(TextBox textBox, string placeholderText)
         {
             textBox.Text = placeholderText;
-            textBox.ForeColor = Color.Silver;
+            textBox.ForeColor = System.Drawing.Color.Silver;
 
             textBox.GotFocus += (s, e) =>
             {
                 if (textBox.Text == placeholderText)
                 {
                     textBox.Text = "";
-                    textBox.ForeColor = Color.Black;
+                    textBox.ForeColor = System.Drawing.Color.Black;
                 }
             };
 
@@ -172,20 +318,9 @@ namespace ExpenseManager.App.Views.User.UC
                 if (string.IsNullOrWhiteSpace(textBox.Text))
                 {
                     textBox.Text = placeholderText;
-                    textBox.ForeColor = Color.Silver;
+                    textBox.ForeColor = System.Drawing.Color.Silver;
                 }
             };
-        }
-
-        private void LoadDefaultData()
-        {
-            // Load current user data (replace with actual data from your system)
-            txtFullName.Text = "Âu Dương Tải";
-            txtCurrentEmail.Text = "auduongtai27@gmail.com";
-            txtAddress.Text = "";
-            txtCity.Text = "";
-            dtpBirthDate.Text = "";
-            cmbCountry.SelectedIndex = 0;
         }
 
         private void BtnBrowse_Click(object sender, EventArgs e)
@@ -197,7 +332,6 @@ namespace ExpenseManager.App.Views.User.UC
 
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    // Check file size (20MB limit)
                     FileInfo fileInfo = new FileInfo(ofd.FileName);
                     if (fileInfo.Length > 20 * 1024 * 1024)
                     {
@@ -225,61 +359,6 @@ namespace ExpenseManager.App.Views.User.UC
                 txtCurrentPassword.UseSystemPasswordChar = true;
                 btnTogglePassword.Text = "👁";
             }
-        }
-
-        private void BtnSaveProfile_Click(object sender, EventArgs e)
-        {
-            // Validate inputs
-            if (string.IsNullOrWhiteSpace(txtFullName.Text))
-            {
-                MessageBox.Show("Please enter your full name", "Validation Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            // Save profile logic here
-            MessageBox.Show("Profile updated successfully!", "Success",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void BtnSavePassword_Click(object sender, EventArgs e)
-        {
-            string newEmail = txtNewEmail.Text == "Để trống nếu không đổi" ? "" : txtNewEmail.Text;
-            string newPass = txtNewPassword.Text == "Để trống nếu không đổi" ? "" : txtNewPassword.Text;
-            string confirmPass = txtConfirmPassword.Text == "Nhập lại mật khẩu mới" ? "" : txtConfirmPassword.Text;
-
-            // Validate password fields
-            if (string.IsNullOrWhiteSpace(txtCurrentPassword.Text))
-            {
-                MessageBox.Show("Please enter current password", "Validation Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            if (!string.IsNullOrEmpty(newPass) && newPass != confirmPass)
-            {
-                MessageBox.Show("New passwords do not match", "Validation Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            // Update password logic here
-            MessageBox.Show("Password updated successfully!", "Success",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            // Clear password fields
-            txtCurrentPassword.Clear();
-            txtNewPassword.Text = "Để trống nếu không đổi";
-            txtNewPassword.ForeColor = Color.Silver;
-            txtConfirmPassword.Text = "Nhập lại mật khẩu mới";
-            txtConfirmPassword.ForeColor = Color.Silver;
-        }
-
-        private void BtnSavePersonal_Click(object sender, EventArgs e)
-        {
-            // Save personal information logic here
-            MessageBox.Show("Personal information updated successfully!", "Success",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
