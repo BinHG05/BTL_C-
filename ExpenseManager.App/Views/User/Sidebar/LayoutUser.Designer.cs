@@ -5,7 +5,7 @@ using FontAwesome.Sharp;
 
 namespace ExpenseManager.App.Views.Admin.Sidebar
 {
-    partial class LayoutAdmin
+    partial class LayoutUser
     {
         private System.ComponentModel.IContainer components = null;
 

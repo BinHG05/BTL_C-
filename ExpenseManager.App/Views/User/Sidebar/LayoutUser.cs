@@ -15,7 +15,7 @@ using System.Windows.Forms;
 
 namespace ExpenseManager.App.Views.Admin.Sidebar
 {
-    public partial class LayoutAdmin : Form
+    public partial class LayoutUser : Form
     {
         private IconButton currentButton;
         private Color sidebarColor = Color.FromArgb(31, 31, 224);
@@ -23,7 +23,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
         private Color hoverColor = Color.FromArgb(61, 61, 244);
         private Color defaultBg = Color.Transparent;
 
-        public LayoutAdmin()
+        public LayoutUser()
         {
             InitializeComponent();
             InitializeCustomComponents();
