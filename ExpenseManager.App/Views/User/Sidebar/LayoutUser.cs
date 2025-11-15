@@ -186,7 +186,31 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             // Load Dashboard by default
             BtnDashboard_Click(btnDashboard, EventArgs.Empty);
         }
+        private void LoadTicketScreen()
+        {
+            UC_TicketUser ticketUC = new UC_TicketUser();
 
+            // Subscribe to event
+            ticketUC.ChangeToCreateTicketRequested += (s, e) =>
+            {
+                LoadCreateTicketScreen();
+            };
+
+            LoadContent(ticketUC);
+        }
+
+        private void LoadCreateTicketScreen()
+        {
+            UC_CreateTicketUser createTicketUC = new UC_CreateTicketUser();
+
+            // Subscribe to event
+            createTicketUC.BackToTicketListRequested += (s, e) =>
+            {
+                LoadTicketScreen();
+            };
+
+            LoadContent(createTicketUC);
+        }
         // Win32 API for rounded corners
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
         private static extern IntPtr CreateRoundRectRgn(

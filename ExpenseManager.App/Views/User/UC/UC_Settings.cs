@@ -1,16 +1,17 @@
-﻿using System;
+﻿using ExpenseManager.App.Models.EF;
+using ExpenseManager.App.Models.Entities;
+using ExpenseManager.App.Presenters;
+using ExpenseManager.App.Repositories;
+using ExpenseManager.App.Repositories.Interfaces;
+using ExpenseManager.App.Services;
+using ExpenseManager.App.Services.Interfaces;
+using ExpenseManager.App.Views.Admin.UC;
+using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using ExpenseManager.App.Models.Entities;
-using ExpenseManager.App.Presenters;
-using ExpenseManager.App.Services;
-using ExpenseManager.App.Services.Interfaces;
-using ExpenseManager.App.Repositories;
-using ExpenseManager.App.Repositories.Interfaces;
-using ExpenseManager.App.Models.EF;
 
 namespace ExpenseManager.App.Views.User.UC
 {
@@ -101,15 +102,15 @@ namespace ExpenseManager.App.Views.User.UC
                 var dbContext = new ExpenseDbContext(); // Hoặc inject qua constructor
                 IProfileRepository repository = new ProfileRepository(dbContext);
                 IProfileServices services = new ProfileServices(repository);
-                
+
                 _presenter = new ProfilePresenter(this, services);
-                
+
                 // Load dữ liệu ban đầu
                 _presenter.LoadUserProfileAsync();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khởi tạo: {ex.Message}", "Error", 
+                MessageBox.Show($"Lỗi khởi tạo: {ex.Message}", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -135,7 +136,7 @@ namespace ExpenseManager.App.Views.User.UC
             // Hiển thị thông tin cá nhân
             txtAddress.Text = user.Address ?? "";
             txtCity.Text = user.City ?? "";
-            
+
             if (user.DateOfBirth.HasValue)
                 dtpBirthDate.Value = user.DateOfBirth.Value;
 
@@ -149,13 +150,13 @@ namespace ExpenseManager.App.Views.User.UC
 
         public void ShowSuccess(string message)
         {
-            MessageBox.Show(message, "Thành công", 
+            MessageBox.Show(message, "Thành công",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         public void ShowError(string message)
         {
-            MessageBox.Show(message, "Lỗi", 
+            MessageBox.Show(message, "Lỗi",
                 MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
@@ -366,5 +367,15 @@ namespace ExpenseManager.App.Views.User.UC
             int nLeftRect, int nTopRect, int nRightRect, int nBottomRect,
             int nWidthEllipse, int nHeightEllipse
         );
+        private void LoadContent(UserControl uc)
+        {
+            this.Controls.Clear();
+            uc.Dock = DockStyle.Fill;
+            this.Controls.Add(uc);
+        }
+        private void lblTabSupport_Click(object sender, EventArgs e)
+        {
+            LoadContent(new UC_TicketUser());
+        }
     }
 }
