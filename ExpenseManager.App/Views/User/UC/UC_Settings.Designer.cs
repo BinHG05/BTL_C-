@@ -43,7 +43,6 @@ namespace ExpenseManager.App.Views.User.UC
             picProfile = new PictureBox();
             lblProfileName = new Label();
             lblMaxFileSize = new Label();
-            lblFileName = new Label();
             btnBrowse = new Button();
             btnSaveProfile = new Button();
             passwordPanel = new Panel();
@@ -256,7 +255,6 @@ namespace ExpenseManager.App.Views.User.UC
             profilePanel.Controls.Add(picProfile);
             profilePanel.Controls.Add(lblProfileName);
             profilePanel.Controls.Add(lblMaxFileSize);
-            profilePanel.Controls.Add(lblFileName);
             profilePanel.Controls.Add(btnBrowse);
             profilePanel.Controls.Add(btnSaveProfile);
             profilePanel.Location = new Point(0, 0);
@@ -355,26 +353,15 @@ namespace ExpenseManager.App.Views.User.UC
             lblMaxFileSize.TabIndex = 7;
             lblMaxFileSize.Text = "Max file size is 20mb";
             // 
-            // lblFileName
-            // 
-            lblFileName.AutoSize = true;
-            lblFileName.Font = new Font("Segoe UI", 9F);
-            lblFileName.ForeColor = Color.Gray;
-            lblFileName.Location = new Point(320, 315);
-            lblFileName.Margin = new Padding(4, 0, 4, 0);
-            lblFileName.Name = "lblFileName";
-            lblFileName.Size = new Size(92, 20);
-            lblFileName.TabIndex = 8;
-            lblFileName.Text = "Choose file...";
-            // 
             // btnBrowse
             // 
-            btnBrowse.BackColor = Color.White;
+            btnBrowse.BackColor = Color.WhiteSmoke;
             btnBrowse.Cursor = Cursors.Hand;
             btnBrowse.FlatAppearance.BorderColor = Color.FromArgb(200, 200, 200);
             btnBrowse.FlatStyle = FlatStyle.Flat;
             btnBrowse.Font = new Font("Segoe UI", 9F);
-            btnBrowse.Location = new Point(533, 305);
+            btnBrowse.ForeColor = Color.CornflowerBlue;
+            btnBrowse.Location = new Point(484, 312);
             btnBrowse.Margin = new Padding(4, 5, 4, 5);
             btnBrowse.Name = "btnBrowse";
             btnBrowse.Size = new Size(107, 49);
@@ -743,7 +730,6 @@ namespace ExpenseManager.App.Views.User.UC
         private System.Windows.Forms.PictureBox picProfile;
         private System.Windows.Forms.Label lblProfileName;
         private System.Windows.Forms.Label lblMaxFileSize;
-        private System.Windows.Forms.Label lblFileName;
         private System.Windows.Forms.Button btnBrowse;
         private System.Windows.Forms.Button btnSaveProfile;
         private System.Windows.Forms.Panel passwordPanel;

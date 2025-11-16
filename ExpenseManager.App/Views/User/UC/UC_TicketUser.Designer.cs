@@ -25,12 +25,12 @@ namespace ExpenseManager.App.Views.User.UC
             ticketListPanel = new FlowLayoutPanel();
             tabPanel = new Panel();
             btnSupport = new Button();
+            btnCreateTicket = new IconButton();
             btnCategories = new Button();
             btnProfile = new Button();
             headerPanel = new Panel();
             breadcrumbPanel = new Panel();
             lblBreadcrumb = new Label();
-            btnCreateTicket = new IconButton();
             lblSubtitle = new Label();
             lblTitle = new Label();
             mainPanel.SuspendLayout();
@@ -96,6 +96,28 @@ namespace ExpenseManager.App.Views.User.UC
             btnSupport.Text = "Support";
             btnSupport.UseVisualStyleBackColor = false;
             // 
+            // btnCreateTicket
+            // 
+            btnCreateTicket.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnCreateTicket.BackColor = Color.FromArgb(101, 109, 255);
+            btnCreateTicket.FlatAppearance.BorderSize = 0;
+            btnCreateTicket.FlatStyle = FlatStyle.Flat;
+            btnCreateTicket.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnCreateTicket.ForeColor = Color.White;
+            btnCreateTicket.IconChar = IconChar.Add;
+            btnCreateTicket.IconColor = Color.White;
+            btnCreateTicket.IconFont = IconFont.Auto;
+            btnCreateTicket.IconSize = 20;
+            btnCreateTicket.Location = new Point(1228, 3);
+            btnCreateTicket.Margin = new Padding(3, 4, 3, 4);
+            btnCreateTicket.Name = "btnCreateTicket";
+            btnCreateTicket.Size = new Size(194, 60);
+            btnCreateTicket.TabIndex = 3;
+            btnCreateTicket.Text = "Create Ticket";
+            btnCreateTicket.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnCreateTicket.UseVisualStyleBackColor = false;
+            btnCreateTicket.Click += BtnCreateTicket_Click;
+            // 
             // btnCategories
             // 
             btnCategories.BackColor = Color.Transparent;
@@ -159,30 +181,8 @@ namespace ExpenseManager.App.Views.User.UC
             lblBreadcrumb.Name = "lblBreadcrumb";
             lblBreadcrumb.Size = new Size(229, 40);
             lblBreadcrumb.TabIndex = 0;
-            lblBreadcrumb.Text = "Settings  >  Profile";
+            lblBreadcrumb.Text = "Settings  >  Support";
             lblBreadcrumb.TextAlign = ContentAlignment.MiddleRight;
-            // 
-            // btnCreateTicket
-            // 
-            btnCreateTicket.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnCreateTicket.BackColor = Color.FromArgb(101, 109, 255);
-            btnCreateTicket.FlatAppearance.BorderSize = 0;
-            btnCreateTicket.FlatStyle = FlatStyle.Flat;
-            btnCreateTicket.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            btnCreateTicket.ForeColor = Color.White;
-            btnCreateTicket.IconChar = IconChar.Add;
-            btnCreateTicket.IconColor = Color.White;
-            btnCreateTicket.IconFont = IconFont.Auto;
-            btnCreateTicket.IconSize = 20;
-            btnCreateTicket.Location = new Point(1228, 3);
-            btnCreateTicket.Margin = new Padding(3, 4, 3, 4);
-            btnCreateTicket.Name = "btnCreateTicket";
-            btnCreateTicket.Size = new Size(194, 60);
-            btnCreateTicket.TabIndex = 3;
-            btnCreateTicket.Text = "Create Ticket";
-            btnCreateTicket.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnCreateTicket.UseVisualStyleBackColor = false;
-            btnCreateTicket.Click += BtnCreateTicket_Click;
             // 
             // lblSubtitle
             // 

@@ -2,6 +2,7 @@
 using ExpenseManager.App.Views;
 using System;
 using System.Threading.Tasks;
+using ExpenseManager.App.Session;
 
 namespace ExpenseManager.App.Presenters
 {
@@ -77,7 +78,7 @@ namespace ExpenseManager.App.Presenters
                 else
                 {
                     // (Lưu ý: Bạn có thể muốn lưu 'user.UserId' vào một biến static toàn cục ở đây)
-                    // Ví dụ: CurrentUserSession.SetUser(user);
+                    CurrentUserSession.SetUser(user);
 
                     _view.ShowSuccess($"Welcome back, {user.FullName}!");
                     // Yêu cầu View chuyển sang màn hình chính

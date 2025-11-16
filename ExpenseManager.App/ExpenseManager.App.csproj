@@ -47,4 +47,9 @@
     <Folder Include="Views\Admin\Sidebar\" />
     <Folder Include="Views\Admin\UC\" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="image\AvatarDefault.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
