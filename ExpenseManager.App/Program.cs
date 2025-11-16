@@ -8,6 +8,7 @@ using System.Configuration;
 using System.Windows.Forms;
 using ExpenseManager.App.Repositories;
 using ExpenseManager.App.Views;
+using ExpenseManager.App.Views.Admin.Sidebar;
 
 
 // Thêm using cho LayoutAdmin (nếu cần)
@@ -51,7 +52,7 @@ namespace ExpenseManager.App
 
 
 
-                    Application.Run(new LoginForm());
+                    Application.Run(new LayoutUser());
 
                 }
                 catch (Exception ex)

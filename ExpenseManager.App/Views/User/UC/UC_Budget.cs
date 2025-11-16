@@ -17,39 +17,32 @@ namespace ExpenseManager.App.Views.Admin.UC
             InitializeComponent();
         }
 
-        private void pnlMonthlyBudget_Paint(object sender, PaintEventArgs e)
+        private void UC_Budget_Load(object sender, EventArgs e)
         {
+            // Căn chỉnh lại nội dung bên phải (giống như UC_Wallet)
+            // Lấy khoảng trống bên trái (30) + độ rộng sidebar (350) + khoảng đệm (30)
+            int leftOffset = pnlLeftSidebar.Left + pnlLeftSidebar.Width + 30;
 
-        }
+            // Lấy độ rộng của toàn bộ User Control
+            int totalWidth = this.Width;
 
-        private void pnlFilters_Paint(object sender, PaintEventArgs e)
-        {
+            // Tính độ rộng còn lại cho pnlMainContent
+            int mainContentWidth = totalWidth - leftOffset - pnlLeftSidebar.Left; // 1600 - 410 - 30 = 1160
 
-        }
+            // Cập nhật vị trí và kích thước
+            pnlMainContent.Location = new Point(leftOffset, pnlLeftSidebar.Top);
+            pnlMainContent.Size = new Size(mainContentWidth, this.Height - pnlHeader.Height - 60); // 60 là padding dưới
 
-        private void pnlActiveFilters_Paint(object sender, PaintEventArgs e)
-        {
+            // Căn chỉnh lại kích thước của các panel con bên trong pnlMainContent
+            pnlBudgetHeader.Width = mainContentWidth - 40; // Trừ padding
+            pnlBudgetOverview.Width = mainContentWidth - 40;
+            pnlBudgetStats.Width = mainContentWidth - 40;
+            pnlBudgetChart.Width = mainContentWidth - 40;
 
-        }
-
-        private void tlpMain_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void pnlMonthlyChart_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void pnlMostExpenses_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void pnlHeader_Paint(object sender, PaintEventArgs e)
-        {
-
+            // Thiết lập giá trị mặc định cho ComboBox và DateTimePicker
+            cmbChartType.SelectedIndex = 0;
+            dtpChartFrom.Value = new DateTime(2025, 11, 10);
+            dtpChartTo.Value = new DateTime(2025, 12, 10);
         }
     }
 }
