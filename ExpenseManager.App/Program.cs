@@ -78,7 +78,7 @@ namespace ExpenseManager.App
             // services.AddTransient<IWalletService, WalletService>();
 
             // 6.4. Đăng ký Presenters
-            // (Đăng ký thẳng class, không cần interface nếu bạn không dùng)
+            // (Đăng ký thẳng class, không cần intergiface nếu bạn không dùng)
             services.AddTransient<LoginPresenter>();
             services.AddTransient<RegisterPresenter>();
             services.AddTransient<ForgotPasswordPresenter>();
@@ -91,6 +91,7 @@ namespace ExpenseManager.App
             services.AddTransient<RegisterForm>();
             services.AddTransient<ForgotPasswordForm>();
             services.AddTransient<LayoutUser>();
+            services.AddTransient<LayoutAdmin>();
             // ... (Thêm các Form/UC khác của bạn ở đây)
             // services.AddTransient<UC_Wallet>();
         }

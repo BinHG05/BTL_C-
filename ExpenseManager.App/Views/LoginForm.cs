@@ -54,25 +54,10 @@ namespace ExpenseManager.App.Views
                 // *** PHÂN QUYỀN DỰA TRÊN ROLE ***
                 if (user.Role == "Admin")
                 {
-                    // Hiển thị thông báo tạm thời cho Admin
-                    MessageBox.Show(
-                        "Chào mừng Admin!\n\nGiao diện quản trị đang được phát triển.",
-                        "Thông báo",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information
-                    );
-
-                    // Tạm thời không chuyển form, giữ nguyên màn hình login
-                    // Hoặc bạn có thể tạo một AdminPlaceholderForm đơn giản
-
-                    // Option 1: Không làm gì, giữ ở màn hình login
-                    // (Bỏ comment dòng dưới nếu muốn đăng xuất ngay)
-                    // CurrentUserSession.ClearUser();
-
-                    // Option 2: Mở form placeholder cho Admin
-                    // var adminForm = Program.ServiceProvider.GetRequiredService<AdminPlaceholderForm>();
-                    // adminForm.Show();
-                    // this.Hide();
+                    // ✅ Chuyển đến giao diện Admin
+                    var layoutAdmin = Program.ServiceProvider.GetRequiredService<LayoutAdmin>();
+                    layoutAdmin.Show();
+                    this.Hide();
                 }
                 else if (user.Role == "User")
                 {
@@ -92,7 +77,6 @@ namespace ExpenseManager.App.Views
                 ShowErrorMessage("Email hoặc mật khẩu không đúng.");
             }
         }
-
         // --- Các hàm khác giữ nguyên ---
         private void txtUsername_Enter(object sender, EventArgs e)
         {
