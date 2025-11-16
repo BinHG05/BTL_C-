@@ -232,4 +232,15 @@ public partial class ExpenseDbContext : DbContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        // Chỉ cấu hình nếu chưa có Provider nào được thiết lập từ bên ngoài
+        if (!optionsBuilder.IsConfigured)
+        {
+            // THAY THẾ CHUỖI KẾT NỐI VÀO DB CỦA BẠN ĐÃ TEST THÀNH CÔNG
+            string connectionString = "Server=localhost,1434;Database=ExpenseDB;User Id=sa;Password=Sa@123456@VeryStrong;TrustServerCertificate=True;";
+
+            optionsBuilder.UseSqlServer(connectionString);
+        }
+    }
 }
