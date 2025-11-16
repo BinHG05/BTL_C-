@@ -15,20 +15,15 @@ using System.Windows.Forms;
 
 namespace ExpenseManager.App.Views.Admin.Sidebar
 {
-    public partial class LayoutAdmin : Form
+    public partial class LayoutUser : Form
     {
         private IconButton currentButton;
-        private Color themeColor = ColorTranslator.FromHtml("#2F2CD8");
-        private Color highlightColor = ColorTranslator.FromHtml("#4F4CFF");
-        private Color hoverColor = Color.FromArgb(245, 245, 255);
-        private Color defaultBg = Color.White;
+        private Color sidebarColor = Color.FromArgb(31, 31, 224);
+        private Color activeColor = Color.FromArgb(51, 51, 255);
+        private Color hoverColor = Color.FromArgb(61, 61, 244);
+        private Color defaultBg = Color.Transparent;
 
-        private Timer sidebarTimer;
-        private bool sidebarExpanded = true;
-        private int sidebarFullWidth = 250;
-        private int sidebarCollapsedWidth = 100;
-
-        public LayoutAdmin()
+        public LayoutUser()
         {
             InitializeComponent();
             InitializeCustomComponents();
@@ -50,36 +45,44 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
                 MessageBox.Show("Cannot load logo: " + ex.Message);
             }
 
-            // Apply rounded corners to search box and buttons
+            // Apply rounded corners to buttons
             ApplyRoundedCorners();
 
             // Setup sidebar buttons hover effects
             SetupButtonHoverEffects();
 
-            // Setup sidebar expand/collapse timer
-            SetupSidebarTimer();
-
             // Center the center panel
             CenterPanelInHeader();
             headerPanel.Resize += (s, e) => CenterPanelInHeader();
+
+            // Round profile button
+            RoundProfileButton();
         }
 
         private void ApplyRoundedCorners()
         {
-            // Round search box
-            searchBox.Region = Region.FromHrgn(
-                CreateRoundRectRgn(0, 0, searchBox.Width, searchBox.Height, 15, 15)
-            );
-
             // Round add transaction button
             btnAddTransaction.Region = Region.FromHrgn(
-                CreateRoundRectRgn(0, 0, btnAddTransaction.Width, btnAddTransaction.Height, 15, 15)
+                CreateRoundRectRgn(0, 0, btnAddTransaction.Width, btnAddTransaction.Height, 10, 10)
             );
 
-            // Round text search
-            txtSearch.Region = Region.FromHrgn(
-                CreateRoundRectRgn(0, 0, txtSearch.Width, txtSearch.Height, 15, 15)
+            // Round search box
+            searchBox.Region = Region.FromHrgn(
+                CreateRoundRectRgn(0, 0, searchBox.Width, searchBox.Height, 10, 10)
             );
+
+            // Round search button inside
+            btnSearchInside.Region = Region.FromHrgn(
+                CreateRoundRectRgn(0, 0, btnSearchInside.Width, btnSearchInside.Height, 8, 8)
+            );
+        }
+
+        private void RoundProfileButton()
+        {
+            // Make profile button circular
+            System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
+            path.AddEllipse(0, 0, btnProfileTop.Width, btnProfileTop.Height);
+            btnProfileTop.Region = new Region(path);
         }
 
         private void SetupButtonHoverEffects()
@@ -91,74 +94,25 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
                 btn.MouseEnter += (s, e) =>
                 {
                     if (btn != currentButton)
+                    {
                         btn.BackColor = hoverColor;
+                    }
                 };
 
                 btn.MouseLeave += (s, e) =>
                 {
                     if (btn != currentButton)
+                    {
                         btn.BackColor = defaultBg;
+                    }
                 };
             }
-        }
-
-        private void SetupSidebarTimer()
-        {
-            sidebarTimer = new Timer { Interval = 200 };
-            sidebarTimer.Tick += SidebarTimer_Tick;
-            sidebarTimer.Start();
-
-            sidebarPanel.MouseEnter += (s, e) => ExpandSidebar(true);
-            sidebarPanel.MouseLeave += (s, e) => { }; // Timer will handle collapse
         }
 
         private void CenterPanelInHeader()
         {
             centerPanel.Left = (headerPanel.Width - centerPanel.Width) / 2;
             centerPanel.Top = (headerPanel.Height - centerPanel.Height) / 2;
-        }
-
-        private void SidebarTimer_Tick(object sender, EventArgs e)
-        {
-            Point cursorPos = PointToClient(Cursor.Position);
-
-            // Expand when cursor near left edge
-            if (cursorPos.X <= 20 && !sidebarExpanded)
-            {
-                ExpandSidebar(true);
-            }
-            // Collapse when cursor away from sidebar
-            else if (cursorPos.X > sidebarPanel.Width + 50 && sidebarExpanded)
-            {
-                ExpandSidebar(false);
-            }
-        }
-
-        private void ExpandSidebar(bool expand)
-        {
-            if (expand && !sidebarExpanded)
-            {
-                sidebarPanel.Width = sidebarFullWidth;
-                foreach (var btn in sidebarPanel.Controls.OfType<IconButton>())
-                {
-                    btn.TextAlign = ContentAlignment.MiddleLeft;
-                    btn.TextImageRelation = TextImageRelation.ImageBeforeText;
-                    btn.Padding = new Padding(20, 0, 0, 0);
-                    btn.Text = btn.Tag?.ToString() ?? btn.Text;
-                }
-                sidebarExpanded = true;
-            }
-            else if (!expand && sidebarExpanded)
-            {
-                sidebarPanel.Width = sidebarCollapsedWidth;
-                foreach (var btn in sidebarPanel.Controls.OfType<IconButton>())
-                {
-                    btn.Text = "";
-                    btn.Padding = new Padding(0);
-                    btn.TextImageRelation = TextImageRelation.Overlay;
-                }
-                sidebarExpanded = false;
-            }
         }
 
         private void ActivateButton(IconButton btn)
@@ -170,19 +124,17 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             if (currentButton != null)
             {
                 currentButton.BackColor = defaultBg;
-                currentButton.ForeColor = Color.Black;
-                currentButton.IconColor = themeColor;
-                currentButton.Font = new Font("Segoe UI", 12, FontStyle.Regular);
+                currentButton.ForeColor = Color.White;
+                currentButton.IconColor = Color.White;
             }
 
             // Set current button
             currentButton = btn;
 
-            // Highlight selected button
-            btn.BackColor = highlightColor;
+            // Highlight selected button with active color
+            btn.BackColor = activeColor;
             btn.ForeColor = Color.White;
             btn.IconColor = Color.White;
-            btn.Font = new Font("Segoe UI", 12, FontStyle.Bold);
         }
 
         private void LoadContent(UserControl uc)
@@ -234,7 +186,6 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             // Load Dashboard by default
             BtnDashboard_Click(btnDashboard, EventArgs.Empty);
         }
-
         // Win32 API for rounded corners
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
         private static extern IntPtr CreateRoundRectRgn(

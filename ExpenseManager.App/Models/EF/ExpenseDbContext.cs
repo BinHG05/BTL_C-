@@ -28,6 +28,8 @@ public partial class ExpenseDbContext : DbContext
 
     public virtual DbSet<Icon> Icons { get; set; }
 
+    public virtual DbSet<Notification> Notifications { get; set; }
+
     public virtual DbSet<Ticket> Tickets { get; set; }
 
     public virtual DbSet<Transaction> Transactions { get; set; }
@@ -36,7 +38,9 @@ public partial class ExpenseDbContext : DbContext
 
     public virtual DbSet<Wallet> Wallets { get; set; }
 
-
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=localhost,1434;Database=ExpenseDB;User Id=sa;Password=Sa@123456@VeryStrong;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -148,11 +152,24 @@ public partial class ExpenseDbContext : DbContext
             entity.Property(e => e.IconId).HasColumnName("IconID");
         });
 
+        modelBuilder.Entity<Notification>(entity =>
+        {
+            entity.HasIndex(e => e.UserId, "IX_Notifications_UserId");
+
+            entity.Property(e => e.NotificationId).HasColumnName("NotificationID");
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.Message).HasMaxLength(500);
+            entity.Property(e => e.Url).HasMaxLength(255);
+
+            entity.HasOne(d => d.User).WithMany(p => p.Notifications).HasForeignKey(d => d.UserId);
+        });
+
         modelBuilder.Entity<Ticket>(entity =>
         {
             entity.HasIndex(e => e.UserId, "IX_Tickets_UserID");
 
             entity.Property(e => e.TicketId).HasColumnName("TicketID");
+            entity.Property(e => e.AdminNote).HasDefaultValue("");
             entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.QuestionType).HasMaxLength(50);
             entity.Property(e => e.RespondType).HasMaxLength(50);
