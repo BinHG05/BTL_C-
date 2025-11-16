@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -84,13 +85,13 @@ namespace ExpenseManager.App.Views
         {
             GoBackToLogin();
         }
-
         private void GoBackToLogin()
         {
-            // Mở lại LoginForm
-            LoginForm loginForm = new LoginForm();
+            // Lấy Form từ DI (Dependency Injection)
+            // KHÔNG DÙNG: new LoginForm();
+            var loginForm = Program.ServiceProvider.GetRequiredService<LoginForm>();
             loginForm.Show();
-            this.Hide(); // Ẩn form hiện tại
+            this.Hide();
         }
 
         public void ShowErrorMessage(string message)
