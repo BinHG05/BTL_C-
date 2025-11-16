@@ -44,8 +44,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Logs\" />
+
     <Folder Include="Views\Admin\Sidebar\" />
+
     <Folder Include="Views\Admin\UC\" />
+    <Folder Include="Views\shared\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="image\AvatarDefault.jpg">

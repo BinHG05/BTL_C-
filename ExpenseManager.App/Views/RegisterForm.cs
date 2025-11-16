@@ -1,108 +1,116 @@
-﻿using ExpenseManager.App.Models.EF;
-using ExpenseManager.App.Repositories;
-using ExpenseManager.App.Services;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Configuration; // Cần để lấy Connection String
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace ExpenseManager.App.Views
 {
     public partial class RegisterForm : Form
     {
-        // Form này sẽ tự quản lý logic của nó (cho đơn giản)
-        // nhưng vẫn TÁI SỬ DỤNG UserService và UserRepository
+        private Color focusColor = Color.FromArgb(0, 123, 255);
+        private Color blurColor = Color.LightGray;
 
         public RegisterForm()
         {
             InitializeComponent();
 
-            // Gắn sự kiện click (Cách làm này an toàn hơn là gán trong Designer)
-            btnSignUp.Click += btnSignUp_Click;
-            linkSignIn.LinkClicked += linkSignIn_LinkClicked;
+            this.lblError.Text = string.Empty;
+            // Set màu mặc định cho cả 3 gạch chân
+            pnlFullNameLine.BackColor = blurColor;
+            pnlUsernameLine.BackColor = blurColor;
+            pnlPasswordLine.BackColor = blurColor;
         }
 
-        // Xử lý sự kiện khi nhấn nút "Sign Up"
-        private async void btnSignUp_Click(object sender, EventArgs e)
+        private void RegisterForm_Load(object sender, EventArgs e)
         {
-            // 1. Validation (Kiểm tra)
-            if (string.IsNullOrWhiteSpace(txtFullName.Text) ||
-                string.IsNullOrWhiteSpace(txtEmail.Text) ||
-                string.IsNullOrWhiteSpace(txtPassword.Text) ||
-                string.IsNullOrWhiteSpace(txtConfirmPassword.Text))
+            // Căn giữa panel đăng ký
+            int panelX = (this.ClientSize.Width - pnlRegisterForm.Width) / 2;
+            int panelY = (this.ClientSize.Height - pnlRegisterForm.Height) / 2;
+            pnlRegisterForm.Location = new Point(panelX, panelY);
+
+            txtFullName.Focus(); // Focus vào ô Họ và Tên đầu tiên
+        }
+
+        private void btnRegister_Click(object sender, EventArgs e)
+        {
+            string fullName = txtFullName.Text;
+            string username = txtUsername.Text;
+            string password = txtPassword.Text;
+
+            lblError.Text = string.Empty;
+
+            if (string.IsNullOrEmpty(fullName) || string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
-                MessageBox.Show("Please fill out all required fields.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                ShowErrorMessage("Vui lòng nhập đầy đủ thông tin.");
                 return;
             }
 
-            if (txtPassword.Text != txtConfirmPassword.Text)
+            // --- Tạm thời ---
+            MessageBox.Show("Đăng ký thành công! (Chưa có logic)", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        // --- Xử lý Focus gạch chân cho 3 ô ---
+        private void txtFullName_Enter(object sender, EventArgs e)
+        {
+            pnlFullNameLine.BackColor = focusColor;
+        }
+
+        private void txtFullName_Leave(object sender, EventArgs e)
+        {
+            pnlFullNameLine.BackColor = blurColor;
+        }
+
+        private void txtUsername_Enter(object sender, EventArgs e)
+        {
+            pnlUsernameLine.BackColor = focusColor;
+        }
+
+        private void txtUsername_Leave(object sender, EventArgs e)
+        {
+            pnlUsernameLine.BackColor = blurColor;
+        }
+
+        private void txtPassword_Enter(object sender, EventArgs e)
+        {
+            pnlPasswordLine.BackColor = focusColor;
+        }
+
+        private void txtPassword_Leave(object sender, EventArgs e)
+        {
+            pnlPasswordLine.BackColor = blurColor;
+        }
+
+        // --- Các hàm xử lý sự kiện khác ---
+        private void btnShowHidePassword_Click(object sender, EventArgs e)
+        {
+            if (txtPassword.PasswordChar == '•')
             {
-                MessageBox.Show("Passwords do not match.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                txtPassword.PasswordChar = '\0';
+                btnShowHidePassword.Text = "🔒";
             }
-
-            if (!chkAgree.Checked)
+            else
             {
-                MessageBox.Show("You must agree to the Terms & Privacy to continue.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            // --- 2. Xử lý Đăng ký (Tái sử dụng logic MVP) ---
-
-            // Tạo một DbContext stack tạm thời (vì form này là độc lập)
-            string connectionString = ConfigurationManager.ConnectionStrings["ExpenseDB"]?.ConnectionString;
-            if (string.IsNullOrEmpty(connectionString))
-            {
-                MessageBox.Show("Connection string 'ExpenseDB' not found.", "Error");
-                return;
-            }
-
-            var options = new DbContextOptionsBuilder<ExpenseDbContext>()
-                .UseSqlServer(connectionString)
-                .Options;
-
-            using (var dbContext = new ExpenseDbContext(options))
-            {
-                // Khởi tạo Service và Repository (giống hệt Program.cs)
-                var userRepository = new UserRepository(dbContext);
-                var userService = new UserService(userRepository);
-
-                try
-                {
-                    // Vẫn vô hiệu hóa nút để tránh click đúp
-                    btnSignUp.Enabled = false;
-                    btnSignUp.Text = "Creating...";
-
-                    // 3. Gọi Service (Tái sử dụng File 6/9)
-                    var newUser = await userService.RegisterAsync(
-                        txtFullName.Text,
-                        txtEmail.Text,
-                        txtPassword.Text
-                    );
-
-                    // 4. Thành công
-                    MessageBox.Show("Account created successfully! Please log in.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    this.DialogResult = DialogResult.OK; // Báo hiệu thành công
-                    this.Close(); // Đóng form Đăng ký
-                }
-                catch (Exception ex)
-                {
-                    // 5. Bắt lỗi (ví dụ: "Email already exists." từ Service)
-                    MessageBox.Show(ex.Message, "Registration Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                    // Mở lại nút
-                    btnSignUp.Enabled = true;
-                    btnSignUp.Text = "Sign Up";
-                }
+                txtPassword.PasswordChar = '•';
+                btnShowHidePassword.Text = "👁️";
             }
         }
 
-        // Xử lý khi nhấn link "Have an account? Sign in"
-        private void linkSignIn_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void lnkLogin_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
-            this.Close(); // Chỉ cần đóng form này lại, form Login đang chờ ở dưới
+            // Xử lý khi người dùng nhấn "Đăng nhập"
+
+            // 1. Tạo một instance mới của LoginForm
+            LoginForm loginForm = new LoginForm();
+
+            // 2. Hiển thị LoginForm
+            loginForm.Show();
+
+            // 3. Ẩn (thay vì đóng) Form đăng ký hiện tại
+            this.Hide();
+        }
+
+        public void ShowErrorMessage(string message)
+        {
+            lblError.Text = message;
         }
     }
 }

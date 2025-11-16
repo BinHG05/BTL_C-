@@ -1,161 +1,124 @@
-﻿using ExpenseManager.App.Presenters;
-using ExpenseManager.App.Views.Admin.Sidebar;
-using System;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
+// using ExpenseManager.App.Presenters; 
 
 namespace ExpenseManager.App.Views
 {
-    // LoginForm (partial class) triển khai ILoginView MỚI (đã dọn dẹp)
-    public partial class LoginForm : Form, ILoginView
+    public partial class LoginForm : Form
     {
-        private LoginPresenter _presenter;
-        // private bool _isLoginMode = true; // ĐÃ XÓA
+        private Color focusColor = Color.FromArgb(0, 123, 255);
+        private Color blurColor = Color.LightGray;
 
         public LoginForm()
         {
             InitializeComponent();
-            WireControlEvents();
-            // UpdateUiForMode(); // ĐÃ XÓA
+            this.lblError.Text = string.Empty;
+            pnlUsernameLine.BackColor = blurColor;
+            pnlPasswordLine.BackColor = blurColor;
         }
 
-        // Phương thức này được gọi từ Program.cs
-        public void SetPresenter(LoginPresenter presenter)
+        private void LoginForm_Load(object sender, EventArgs e)
         {
-            _presenter = presenter;
+            // Căn giữa panel login chính
+            int panelX = (this.ClientSize.Width - pnlLoginForm.Width) / 2;
+            int panelY = (this.ClientSize.Height - pnlLoginForm.Height) / 2;
+            pnlLoginForm.Location = new Point(panelX, panelY);
+
+            txtUsername.Focus();
         }
 
-        // Gắn sự kiện click của Control (Button, Link) vào Event Handlers MỚI
-        private void WireControlEvents()
+        private void btnLogin_Click(object sender, EventArgs e)
         {
-            // Nút chính (Sign In)
-            if (btnLogin != null)
+            string username = txtUsername.Text;
+            string password = txtPassword.Text;
+
+            lblError.Text = string.Empty;
+
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
-                // Gọi OnLoginClicked (tên mới)
-                btnLogin.Click += (s, e) => OnLoginClicked();
+                ShowErrorMessage("Vui lòng nhập đầy đủ Tên đăng nhập và Mật khẩu.");
+                return;
             }
 
-            // Nút chuyển chế độ (lnkCreateAccount)
-            if (lnkCreateAccount != null)
+            if (username == "admin" && password == "123456")
             {
-                // Gọi OnCreateAccountClicked (tên mới)
-                lnkCreateAccount.LinkClicked += (s, e) => OnCreateAccountClicked(s, e);
+                MessageBox.Show("Đăng nhập thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                ShowErrorMessage("Tên đăng nhập hoặc mật khẩu không đúng.");
             }
         }
 
-        #region ILoginView — Properties & Events (Triển khai Interface MỚI)
-
-        // Events
-        public event EventHandler LoginClicked;
-        public event EventHandler CreateAccountClicked;
-
-        // Properties (Chỉ còn của Đăng nhập)
-        public string Email
+        // --- Xử lý Focus gạch chân ---
+        private void txtUsername_Enter(object sender, EventArgs e)
         {
-            get => txtEmail?.Text ?? string.Empty;
-            set { if (txtEmail != null) txtEmail.Text = value; }
+            pnlUsernameLine.BackColor = focusColor;
         }
 
-        public string Password
+        private void txtUsername_Leave(object sender, EventArgs e)
         {
-            get => txtPassword?.Text ?? string.Empty;
-            set { if (txtPassword != null) txtPassword.Text = value; }
+            pnlUsernameLine.BackColor = blurColor;
         }
 
-        public bool RememberMe
+        private void txtPassword_Enter(object sender, EventArgs e)
         {
-            get => chkRememberMe != null && chkRememberMe.Checked;
-            set { if (chkRememberMe != null) chkRememberMe.Checked = value; }
+            pnlPasswordLine.BackColor = focusColor;
         }
 
-        // --- CÁC THUỘC TÍNH ĐĂNG KÝ ĐÃ BỊ XÓA ---
-        // public string FullName { ... }
-        // public string ConfirmPassword { ... }
-        // public bool AgreeTerms { ... }
-        // public bool IsLoginMode => _isLoginMode;
-
-        #endregion
-
-        #region ILoginView — Actions (Triển khai Interface MỚI)
-
-        // Các hàm này được Presenter gọi để điều khiển View
-
-        public void ShowError(string message)
+        private void txtPassword_Leave(object sender, EventArgs e)
         {
-            // Chạy trên UI thread
-            this.Invoke((MethodInvoker)delegate {
-                MessageBox.Show(this, message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            });
+            pnlPasswordLine.BackColor = blurColor;
         }
 
-        public void ShowSuccess(string message)
+        // --- Các hàm xử lý sự kiện khác ---
+        private void btnShowHidePassword_Click(object sender, EventArgs e)
         {
-            // Chạy trên UI thread
-            this.Invoke((MethodInvoker)delegate {
-                MessageBox.Show(this, message, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            });
+            if (txtPassword.PasswordChar == '•')
+            {
+                txtPassword.PasswordChar = '\0';
+                btnShowHidePassword.Text = "🔒";
+            }
+            else
+            {
+                txtPassword.PasswordChar = '•';
+                btnShowHidePassword.Text = "👁️";
+            }
         }
 
-        public void NavigateToMain()
+        // *** ĐÃ SỬA LỖI CÚ PHÁP TẠI ĐÂY ***
+        private void lnkForgotPassword_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            // Chạy trên UI thread
-            this.Invoke((MethodInvoker)delegate {
-                this.Hide(); // Ẩn form Login
-
-                // *** CHÚ Ý: Đổi tên "MainForm" nếu form layout của bạn tên khác (ví dụ: LayoutAdmin) ***
-                var mainForm = new LayoutUser();
-                mainForm.FormClosed += (s, args) => this.Close(); // Đóng app khi form chính đóng
-                mainForm.Show();
-            });
+            // Mở Form Quên Mật Khẩu
+            ForgotPasswordForm forgotForm = new ForgotPasswordForm();
+            forgotForm.Show();
+            this.Hide(); // Ẩn Form đăng nhập
         }
 
-
-
-        // --- HÀM MỚI (để mở RegisterForm) ---
-        public void ShowRegisterForm()
+        private void btnGoogleLogin_Click(object sender, EventArgs e)
         {
-            // Chạy trên UI thread
-            this.Invoke((MethodInvoker)delegate {
-                // Tạo một instance của RegisterForm (Form Đăng ký chúng ta vừa tạo)
-                using (var registerForm = new RegisterForm())
-                {
-                    // Ẩn Form Login
-                    this.Hide();
-
-                    // Hiển thị Form Đăng ký (ShowDialog sẽ khóa Form Login)
-                    var result = registerForm.ShowDialog(this);
-
-                    // Sau khi Form Đăng ký đóng:
-                    // Nếu người dùng đăng ký thành công (hoặc nhấn 'Sign in' trên form đó)
-                    // thì hiển thị lại Form Login
-                    if (result == DialogResult.OK || result == DialogResult.Cancel)
-                    {
-                        this.Show(); // Hiển thị lại Form Login
-                    }
-                }
-            });
+            MessageBox.Show("Chức năng Đăng nhập bằng Google đang được phát triển!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        #endregion
-
-        #region Internal UI helpers (Event Handlers MỚI)
-
-        // Khi người dùng click nút Login
-        private void OnLoginClicked()
+        // *** ĐÃ SỬA LỖI CÚ PHÁP TẠI ĐÂY ***
+        private void lnkRegister_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            // Kích hoạt (raise) event, Presenter (file 3/4) sẽ bắt được
-            LoginClicked?.Invoke(this, EventArgs.Empty);
+            // Xử lý khi người dùng nhấn "Đăng ký"
+
+            // 1. Tạo một instance mới của RegisterForm
+            RegisterForm registerForm = new RegisterForm();
+
+            // 2. Hiển thị RegisterForm
+            registerForm.Show();
+
+            // 3. Ẩn (thay vì đóng) Form đăng nhập hiện tại
+            this.Hide();
         }
 
-        // Khi người dùng click link Chuyển chế độ
-        private void OnCreateAccountClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        public void ShowErrorMessage(string message)
         {
-            // Kích hoạt (raise) event, Presenter (file 3/4) sẽ bắt được
-            CreateAccountClicked?.Invoke(this, EventArgs.Empty);
+            lblError.Text = message;
         }
-
-        // --- ĐÃ XÓA ---
-        // private void UpdateUiForMode() { ... }
-
-        #endregion
     }
 }

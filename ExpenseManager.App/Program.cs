@@ -7,6 +7,8 @@ using System;
 using System.Configuration;
 using System.Windows.Forms;
 using ExpenseManager.App.Repositories;
+using ExpenseManager.App.Views;
+
 
 // Thêm using cho LayoutAdmin (nếu cần)
 // using ExpenseManager.App.Views.Admin; 
@@ -45,23 +47,12 @@ namespace ExpenseManager.App
             {
                 try
                 {
-                    // 4. Tạo Repository (Tiêm DbContext)
-                    var userRepository = new UserRepository(dbContext);
-                        
-                    // 5. Tạo Service (Tiêm Repository)
-                    var userService = new UserService(userRepository);
 
-                    // 6. Tạo View (LoginForm)
-                    var loginForm = new LoginForm();
 
-                    // 7. Tạo Presenter (Tiêm View và Service)
-                    var loginPresenter = new LoginPresenter(loginForm, userService);
 
-                    // 8. Gán Presenter cho View
-                    loginForm.SetPresenter(loginPresenter);
 
-                    // 9. Chạy LoginForm
-                    Application.Run(loginForm);
+                    Application.Run(new LoginForm());
+
                 }
                 catch (Exception ex)
                 {
