@@ -52,7 +52,7 @@ namespace ExpenseManager.App
 
 
 
-                    Application.Run(new LayoutUser());
+                    Application.Run(new LoginForm());
 
                 }
                 catch (Exception ex)
