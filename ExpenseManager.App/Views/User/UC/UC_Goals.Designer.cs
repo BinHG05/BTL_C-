@@ -95,6 +95,13 @@
             pnlSavingsChart = new System.Windows.Forms.Panel();
             tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+
+            // --- SỬA LỖI LAYOUT: Thêm 4 FlowLayoutPanel ---
+            flowGoal1AmountPanel = new System.Windows.Forms.FlowLayoutPanel();
+            flowGoal2AmountPanel = new System.Windows.Forms.FlowLayoutPanel();
+            flowGoal3AmountPanel = new System.Windows.Forms.FlowLayoutPanel();
+            flowGoal4AmountPanel = new System.Windows.Forms.FlowLayoutPanel();
+
             pnlHeader.SuspendLayout();
             pnlFilters.SuspendLayout();
             pnlActiveFilters.SuspendLayout();
@@ -102,6 +109,13 @@
             pnlGoal2.SuspendLayout();
             pnlGoal3.SuspendLayout();
             pnlGoal4.SuspendLayout();
+
+            // --- SỬA LỖI LAYOUT: Thêm .SuspendLayout() ---
+            flowGoal1AmountPanel.SuspendLayout();
+            flowGoal2AmountPanel.SuspendLayout();
+            flowGoal3AmountPanel.SuspendLayout();
+            flowGoal4AmountPanel.SuspendLayout();
+
             pnlTotalGoals.SuspendLayout();
             pnlGoalsStatus.SuspendLayout();
             pnlNotStarted.SuspendLayout();
@@ -279,7 +293,7 @@
             btnInProgress.Name = "btnInProgress";
             btnInProgress.Size = new System.Drawing.Size(171, 50);
             btnInProgress.TabIndex = 0;
-            btnInProgress.Text = "In progress   ✕";
+            btnInProgress.Text = "In progress    ✕";
             btnInProgress.UseVisualStyleBackColor = false;
             // 
             // btnDueDate
@@ -294,7 +308,7 @@
             btnDueDate.Name = "btnDueDate";
             btnDueDate.Size = new System.Drawing.Size(143, 50);
             btnDueDate.TabIndex = 1;
-            btnDueDate.Text = "Due date   ✕";
+            btnDueDate.Text = "Due date    ✕";
             btnDueDate.UseVisualStyleBackColor = false;
             // 
             // btnAmount
@@ -309,7 +323,7 @@
             btnAmount.Name = "btnAmount";
             btnAmount.Size = new System.Drawing.Size(143, 50);
             btnAmount.TabIndex = 2;
-            btnAmount.Text = "Amount   ✕";
+            btnAmount.Text = "Amount    ✕";
             btnAmount.UseVisualStyleBackColor = false;
             // 
             // btnResetAll
@@ -345,12 +359,12 @@
             pnlGoal1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             pnlGoal1.Controls.Add(lblGoal1Title);
             pnlGoal1.Controls.Add(lblGoal1DueDate);
-            pnlGoal1.Controls.Add(lblGoal1Amount);
-            pnlGoal1.Controls.Add(lblGoal1Target);
             pnlGoal1.Controls.Add(prgGoal1);
             pnlGoal1.Controls.Add(lblGoal1Progress);
             pnlGoal1.Controls.Add(lblGoal1Left);
             pnlGoal1.Controls.Add(btnGoal1Edit);
+            // --- SỬA LỖI LAYOUT: Thêm Flow Panel vào pnlGoal1 ---
+            pnlGoal1.Controls.Add(flowGoal1AmountPanel);
             pnlGoal1.Dock = System.Windows.Forms.DockStyle.Fill;
             pnlGoal1.Location = new System.Drawing.Point(50, 50);
             pnlGoal1.Margin = new System.Windows.Forms.Padding(10);
@@ -386,8 +400,8 @@
             // 
             lblGoal1Amount.AutoSize = true;
             lblGoal1Amount.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
-            lblGoal1Amount.Location = new System.Drawing.Point(19, 108);
-            lblGoal1Amount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            // lblGoal1Amount.Location = new System.Drawing.Point(19, 108); // Xóa Location
+            lblGoal1Amount.Margin = new System.Windows.Forms.Padding(0); // Sửa Margin
             lblGoal1Amount.Name = "lblGoal1Amount";
             lblGoal1Amount.Size = new System.Drawing.Size(137, 45);
             lblGoal1Amount.TabIndex = 2;
@@ -398,8 +412,8 @@
             lblGoal1Target.AutoSize = true;
             lblGoal1Target.Font = new System.Drawing.Font("Segoe UI", 10F);
             lblGoal1Target.ForeColor = System.Drawing.Color.Gray;
-            lblGoal1Target.Location = new System.Drawing.Point(131, 122);
-            lblGoal1Target.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            // lblGoal1Target.Location = new System.Drawing.Point(131, 122); // Xóa Location
+            lblGoal1Target.Margin = new System.Windows.Forms.Padding(0); // Sửa Margin
             lblGoal1Target.Name = "lblGoal1Target";
             lblGoal1Target.Size = new System.Drawing.Size(79, 28);
             lblGoal1Target.TabIndex = 3;
@@ -461,12 +475,11 @@
             pnlGoal2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             pnlGoal2.Controls.Add(lblGoal2Title);
             pnlGoal2.Controls.Add(lblGoal2DueDate);
-            pnlGoal2.Controls.Add(lblGoal2Amount);
-            pnlGoal2.Controls.Add(lblGoal2Target);
             pnlGoal2.Controls.Add(prgGoal2);
             pnlGoal2.Controls.Add(lblGoal2Progress);
             pnlGoal2.Controls.Add(lblGoal2Left);
             pnlGoal2.Controls.Add(btnGoal2Edit);
+            pnlGoal2.Controls.Add(flowGoal2AmountPanel); // Thêm
             pnlGoal2.Dock = System.Windows.Forms.DockStyle.Fill;
             pnlGoal2.Location = new System.Drawing.Point(791, 50);
             pnlGoal2.Margin = new System.Windows.Forms.Padding(10);
@@ -502,8 +515,8 @@
             // 
             lblGoal2Amount.AutoSize = true;
             lblGoal2Amount.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
-            lblGoal2Amount.Location = new System.Drawing.Point(19, 108);
-            lblGoal2Amount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            // lblGoal2Amount.Location = new System.Drawing.Point(19, 108); // Xóa
+            lblGoal2Amount.Margin = new System.Windows.Forms.Padding(0);
             lblGoal2Amount.Name = "lblGoal2Amount";
             lblGoal2Amount.Size = new System.Drawing.Size(182, 45);
             lblGoal2Amount.TabIndex = 2;
@@ -514,8 +527,8 @@
             lblGoal2Target.AutoSize = true;
             lblGoal2Target.Font = new System.Drawing.Font("Segoe UI", 10F);
             lblGoal2Target.ForeColor = System.Drawing.Color.Gray;
-            lblGoal2Target.Location = new System.Drawing.Point(179, 122);
-            lblGoal2Target.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            // lblGoal2Target.Location = new System.Drawing.Point(179, 122); // Xóa
+            lblGoal2Target.Margin = new System.Windows.Forms.Padding(0);
             lblGoal2Target.Name = "lblGoal2Target";
             lblGoal2Target.Size = new System.Drawing.Size(90, 28);
             lblGoal2Target.TabIndex = 3;
@@ -577,12 +590,11 @@
             pnlGoal3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             pnlGoal3.Controls.Add(lblGoal3Title);
             pnlGoal3.Controls.Add(lblGoal3DueDate);
-            pnlGoal3.Controls.Add(lblGoal3Amount);
-            pnlGoal3.Controls.Add(lblGoal3Target);
             pnlGoal3.Controls.Add(prgGoal3);
             pnlGoal3.Controls.Add(lblGoal3Progress);
             pnlGoal3.Controls.Add(lblGoal3Left);
             pnlGoal3.Controls.Add(btnGoal3Edit);
+            pnlGoal3.Controls.Add(flowGoal3AmountPanel); // Thêm
             pnlGoal3.Dock = System.Windows.Forms.DockStyle.Fill;
             pnlGoal3.Location = new System.Drawing.Point(50, 327);
             pnlGoal3.Margin = new System.Windows.Forms.Padding(10);
@@ -618,8 +630,8 @@
             // 
             lblGoal3Amount.AutoSize = true;
             lblGoal3Amount.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
-            lblGoal3Amount.Location = new System.Drawing.Point(19, 108);
-            lblGoal3Amount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            // lblGoal3Amount.Location = new System.Drawing.Point(19, 108); // Xóa
+            lblGoal3Amount.Margin = new System.Windows.Forms.Padding(0);
             lblGoal3Amount.Name = "lblGoal3Amount";
             lblGoal3Amount.Size = new System.Drawing.Size(155, 45);
             lblGoal3Amount.TabIndex = 2;
@@ -630,8 +642,8 @@
             lblGoal3Target.AutoSize = true;
             lblGoal3Target.Font = new System.Drawing.Font("Segoe UI", 10F);
             lblGoal3Target.ForeColor = System.Drawing.Color.Gray;
-            lblGoal3Target.Location = new System.Drawing.Point(156, 122);
-            lblGoal3Target.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            // lblGoal3Target.Location = new System.Drawing.Point(156, 122); // Xóa
+            lblGoal3Target.Margin = new System.Windows.Forms.Padding(0);
             lblGoal3Target.Name = "lblGoal3Target";
             lblGoal3Target.Size = new System.Drawing.Size(101, 28);
             lblGoal3Target.TabIndex = 3;
@@ -693,12 +705,11 @@
             pnlGoal4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             pnlGoal4.Controls.Add(lblGoal4Title);
             pnlGoal4.Controls.Add(lblGoal4DueDate);
-            pnlGoal4.Controls.Add(lblGoal4Amount);
-            pnlGoal4.Controls.Add(lblGoal4Target);
             pnlGoal4.Controls.Add(prgGoal4);
             pnlGoal4.Controls.Add(lblGoal4Progress);
             pnlGoal4.Controls.Add(lblGoal4Left);
             pnlGoal4.Controls.Add(btnGoal4Edit);
+            pnlGoal4.Controls.Add(flowGoal4AmountPanel); // Thêm
             pnlGoal4.Dock = System.Windows.Forms.DockStyle.Fill;
             pnlGoal4.Location = new System.Drawing.Point(791, 327);
             pnlGoal4.Margin = new System.Windows.Forms.Padding(10);
@@ -734,8 +745,8 @@
             // 
             lblGoal4Amount.AutoSize = true;
             lblGoal4Amount.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
-            lblGoal4Amount.Location = new System.Drawing.Point(19, 108);
-            lblGoal4Amount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            // lblGoal4Amount.Location = new System.Drawing.Point(19, 108); // Xóa
+            lblGoal4Amount.Margin = new System.Windows.Forms.Padding(0);
             lblGoal4Amount.Name = "lblGoal4Amount";
             lblGoal4Amount.Size = new System.Drawing.Size(155, 45);
             lblGoal4Amount.TabIndex = 2;
@@ -746,8 +757,8 @@
             lblGoal4Target.AutoSize = true;
             lblGoal4Target.Font = new System.Drawing.Font("Segoe UI", 10F);
             lblGoal4Target.ForeColor = System.Drawing.Color.Gray;
-            lblGoal4Target.Location = new System.Drawing.Point(156, 122);
-            lblGoal4Target.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            // lblGoal4Target.Location = new System.Drawing.Point(156, 122); // Xóa
+            lblGoal4Target.Margin = new System.Windows.Forms.Padding(0);
             lblGoal4Target.Name = "lblGoal4Target";
             lblGoal4Target.Size = new System.Drawing.Size(79, 28);
             lblGoal4Target.TabIndex = 3;
@@ -802,6 +813,53 @@
             btnGoal4Edit.TabIndex = 7;
             btnGoal4Edit.Text = "✎";
             btnGoal4Edit.UseVisualStyleBackColor = false;
+
+            // --- SỬA LỖI LAYOUT: Cấu hình 4 FlowLayoutPanel ---
+            // 
+            // flowGoal1AmountPanel
+            // 
+            flowGoal1AmountPanel.AutoSize = true;
+            flowGoal1AmountPanel.Controls.Add(lblGoal1Amount);
+            flowGoal1AmountPanel.Controls.Add(lblGoal1Target);
+            flowGoal1AmountPanel.Location = new System.Drawing.Point(19, 108);
+            flowGoal1AmountPanel.Margin = new System.Windows.Forms.Padding(0);
+            flowGoal1AmountPanel.Name = "flowGoal1AmountPanel";
+            flowGoal1AmountPanel.Size = new System.Drawing.Size(216, 45); // Kích thước tự động
+            flowGoal1AmountPanel.TabIndex = 8;
+            // 
+            // flowGoal2AmountPanel
+            // 
+            flowGoal2AmountPanel.AutoSize = true;
+            flowGoal2AmountPanel.Controls.Add(lblGoal2Amount);
+            flowGoal2AmountPanel.Controls.Add(lblGoal2Target);
+            flowGoal2AmountPanel.Location = new System.Drawing.Point(19, 108);
+            flowGoal2AmountPanel.Margin = new System.Windows.Forms.Padding(0);
+            flowGoal2AmountPanel.Name = "flowGoal2AmountPanel";
+            flowGoal2AmountPanel.Size = new System.Drawing.Size(272, 45);
+            flowGoal2AmountPanel.TabIndex = 8;
+            // 
+            // flowGoal3AmountPanel
+            // 
+            flowGoal3AmountPanel.AutoSize = true;
+            flowGoal3AmountPanel.Controls.Add(lblGoal3Amount);
+            flowGoal3AmountPanel.Controls.Add(lblGoal3Target);
+            flowGoal3AmountPanel.Location = new System.Drawing.Point(19, 108);
+            flowGoal3AmountPanel.Margin = new System.Windows.Forms.Padding(0);
+            flowGoal3AmountPanel.Name = "flowGoal3AmountPanel";
+            flowGoal3AmountPanel.Size = new System.Drawing.Size(256, 45);
+            flowGoal3AmountPanel.TabIndex = 8;
+            // 
+            // flowGoal4AmountPanel
+            // 
+            flowGoal4AmountPanel.AutoSize = true;
+            flowGoal4AmountPanel.Controls.Add(lblGoal4Amount);
+            flowGoal4AmountPanel.Controls.Add(lblGoal4Target);
+            flowGoal4AmountPanel.Location = new System.Drawing.Point(19, 108);
+            flowGoal4AmountPanel.Margin = new System.Windows.Forms.Padding(0);
+            flowGoal4AmountPanel.Name = "flowGoal4AmountPanel";
+            flowGoal4AmountPanel.Size = new System.Drawing.Size(234, 45);
+            flowGoal4AmountPanel.TabIndex = 8;
+
             // 
             // pnlTotalGoals
             // 
@@ -1099,7 +1157,7 @@
             tableLayoutPanel1.Location = new System.Drawing.Point(0, 403);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(40);
-            tableLayoutPanel1.RowCount = 1;
+            tableLayoutPanel1.RowCount = 2; // Đã sửa
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             tableLayoutPanel1.Size = new System.Drawing.Size(1584, 635);
@@ -1118,10 +1176,8 @@
             tableLayoutPanel2.Padding = new System.Windows.Forms.Padding(40);
             tableLayoutPanel2.RowCount = 1;
             tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             tableLayoutPanel2.Size = new System.Drawing.Size(1584, 591);
             tableLayoutPanel2.TabIndex = 2;
-            tableLayoutPanel2.Paint += tableLayoutPanel2_Paint;
             // 
             // UC_Goals
             // 
@@ -1137,19 +1193,33 @@
             Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             Name = "UC_Goals";
             Size = new System.Drawing.Size(1584, 1531);
+            this.Load += new System.EventHandler(this.UC_Goals_Load);
             pnlHeader.ResumeLayout(false);
             pnlHeader.PerformLayout();
             pnlFilters.ResumeLayout(false);
             pnlActiveFilters.ResumeLayout(false);
             pnlActiveFilters.PerformLayout();
+
             pnlGoal1.ResumeLayout(false);
             pnlGoal1.PerformLayout();
+            flowGoal1AmountPanel.ResumeLayout(false); // Thêm
+            flowGoal1AmountPanel.PerformLayout(); // Thêm
+
             pnlGoal2.ResumeLayout(false);
             pnlGoal2.PerformLayout();
+            flowGoal2AmountPanel.ResumeLayout(false); // Thêm
+            flowGoal2AmountPanel.PerformLayout(); // Thêm
+
             pnlGoal3.ResumeLayout(false);
             pnlGoal3.PerformLayout();
+            flowGoal3AmountPanel.ResumeLayout(false); // Thêm
+            flowGoal3AmountPanel.PerformLayout(); // Thêm
+
             pnlGoal4.ResumeLayout(false);
             pnlGoal4.PerformLayout();
+            flowGoal4AmountPanel.ResumeLayout(false); // Thêm
+            flowGoal4AmountPanel.PerformLayout(); // Thêm
+
             pnlTotalGoals.ResumeLayout(false);
             pnlTotalGoals.PerformLayout();
             pnlGoalsStatus.ResumeLayout(false);
@@ -1248,5 +1318,11 @@
         private System.Windows.Forms.Panel pnlSavingsChart;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+
+        // --- SỬA LỖI LAYOUT: Khai báo 4 FlowLayoutPanel ---
+        private System.Windows.Forms.FlowLayoutPanel flowGoal1AmountPanel;
+        private System.Windows.Forms.FlowLayoutPanel flowGoal2AmountPanel;
+        private System.Windows.Forms.FlowLayoutPanel flowGoal3AmountPanel;
+        private System.Windows.Forms.FlowLayoutPanel flowGoal4AmountPanel;
     }
 }
