@@ -19,5 +19,11 @@ public partial class Ticket
 
     public DateTime CreatedAt { get; set; }
 
+    public string AdminNote { get; set; } = null!;
+
+    public DateTime? ResolvedAt { get; set; }
+
+    public DateTime? UpdatedAt { get; set; }
+
     public virtual User User { get; set; } = null!;
 }

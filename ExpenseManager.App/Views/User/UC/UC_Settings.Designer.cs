@@ -29,7 +29,7 @@ namespace ExpenseManager.App.Views.User.UC
             lblCity = new Label();
             txtCity = new TextBox();
             lblBirthDate = new Label();
-            dtpBirthDate = new System.Windows.Forms.DateTimePicker();
+            dtpBirthDate = new DateTimePicker();
             lblCountry = new Label();
             cmbCountry = new ComboBox();
             btnSavePersonal = new Button();
@@ -43,7 +43,6 @@ namespace ExpenseManager.App.Views.User.UC
             picProfile = new PictureBox();
             lblProfileName = new Label();
             lblMaxFileSize = new Label();
-            lblFileName = new Label();
             btnBrowse = new Button();
             btnSaveProfile = new Button();
             passwordPanel = new Panel();
@@ -82,18 +81,18 @@ namespace ExpenseManager.App.Views.User.UC
             // 
             // mainPanel
             // 
-            this.mainPanel.AutoScroll = true;
-            this.mainPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
-            this.mainPanel.Controls.Add(this.personalInfoPanel);
-            this.mainPanel.Controls.Add(this.topPanel);
-            this.mainPanel.Controls.Add(this.headerPanel);
-            this.mainPanel.Controls.Add(this.tabPanel);
-            this.mainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mainPanel.Location = new System.Drawing.Point(0, 0);
-            this.mainPanel.Name = "mainPanel";
-            this.mainPanel.Padding = new System.Windows.Forms.Padding(30, 20, 30, 20);
-            this.mainPanel.Size = new System.Drawing.Size(1000, 700);
-            this.mainPanel.TabIndex = 0;
+            mainPanel.AutoScroll = true;
+            mainPanel.BackColor = Color.FromArgb(245, 247, 250);
+            mainPanel.Controls.Add(personalInfoPanel);
+            mainPanel.Controls.Add(topPanel);
+            mainPanel.Controls.Add(headerPanel);
+            mainPanel.Controls.Add(tabPanel);
+            mainPanel.Dock = DockStyle.Fill;
+            mainPanel.Location = new Point(0, 0);
+            mainPanel.Name = "mainPanel";
+            mainPanel.Padding = new Padding(30, 20, 30, 20);
+            mainPanel.Size = new Size(1463, 1154);
+            mainPanel.TabIndex = 0;
             // 
             // personalInfoPanel
             // 
@@ -181,29 +180,17 @@ namespace ExpenseManager.App.Views.User.UC
             lblBirthDate.Size = new Size(105, 23);
             lblBirthDate.TabIndex = 5;
             lblBirthDate.Text = "Birth of date";
-            //
-            // dtpBirthDate (Thay thế txtBirthDate)
-            //
+            // 
+            // dtpBirthDate
+            // 
+            dtpBirthDate.CustomFormat = "dd/MM/yyyy";
             dtpBirthDate.Font = new Font("Segoe UI", 10F);
-
-            // ⭐ QUAN TRỌNG: Thiết lập hiển thị (giữ giao diện)
             dtpBirthDate.Format = DateTimePickerFormat.Custom;
-            dtpBirthDate.CustomFormat = "dd/MM/yyyy"; // Định dạng ngày/tháng/năm
-
-            // Nếu bạn muốn hiển thị hộp nhập liệu ngày tháng có vẻ ngoài giống TextBox:
-            dtpBirthDate.ShowUpDown = false; // Mặc định là false.
-
-            // Nếu bạn muốn dùng mũi tên lên/xuống (UpDown control) thay vì dropdown calendar:
-            // dtpBirthDate.ShowUpDown = true; 
-            // dtpBirthDate.CustomFormat = "yyyy"; // nếu chỉ muốn chọn năm
-
             dtpBirthDate.Location = new Point(40, 254);
             dtpBirthDate.Margin = new Padding(4, 5, 4, 5);
-            dtpBirthDate.Name = "dtpBirthDate"; // Cập nhật Name cho dễ phân biệt
-            dtpBirthDate.Size = new Size(599, 30); // Giữ nguyên Size và Location
+            dtpBirthDate.Name = "dtpBirthDate";
+            dtpBirthDate.Size = new Size(599, 30);
             dtpBirthDate.TabIndex = 6;
-            // DTP không có thuộc tính BorderStyle.FixedSingle, 
-            // nhưng với Format=Custom, nó sẽ trông rất giống TextBox.
             // 
             // lblCountry
             // 
@@ -219,210 +206,13 @@ namespace ExpenseManager.App.Views.User.UC
             // 
             // cmbCountry
             // 
-            string[] allCountries = new string[] {
-                "Afghanistan",
-                "Albania",
-                "Algeria",
-                "Andorra",
-                "Angola",
-                "Antigua and Barbuda",
-                "Argentina",
-                "Armenia",
-                "Australia",
-                "Austria",
-                "Azerbaijan",
-                "Bahamas",
-                "Bahrain",
-                "Bangladesh",
-                "Barbados",
-                "Belarus",
-                "Belgium",
-                "Belize",
-                "Benin",
-                "Bhutan",
-                "Bolivia",
-                "Bosnia and Herzegovina",
-                "Botswana",
-                "Brazil",
-                "Brunei",
-                "Bulgaria",
-                "Burkina Faso",
-                "Burundi",
-                "Cabo Verde",
-                "Cambodia",
-                "Cameroon",
-                "Canada",
-                "Central African Republic",
-                "Chad",
-                "Chile",
-                "China",
-                "Colombia",
-                "Comoros",
-                "Congo (Congo-Brazzaville)",
-                "Costa Rica",
-                "Côte d'Ivoire",
-                "Croatia",
-                "Cuba",
-                "Cyprus",
-                "Czechia (Czech Republic)",
-                "Democratic Republic of the Congo",
-                "Denmark",
-                "Djibouti",
-                "Dominica",
-                "Dominican Republic",
-                "Ecuador",
-                "Egypt",
-                "El Salvador",
-                "Equatorial Guinea",
-                "Eritrea",
-                "Estonia",
-                "Eswatini (fmr. \"Swaziland\")",
-                "Ethiopia",
-                "Fiji",
-                "Finland",
-                "France",
-                "Gabon",
-                "Gambia",
-                "Georgia",
-                "Germany",
-                "Ghana",
-                "Greece",
-                "Grenada",
-                "Guatemala",
-                "Guinea",
-                "Guinea-Bissau",
-                "Guyana",
-                "Haiti",
-                "Holy See",
-                "Honduras",
-                "Hungary",
-                "Iceland",
-                "India",
-                "Indonesia",
-                "Iran",
-                "Iraq",
-                "Ireland",
-                "Israel",
-                "Italy",
-                "Jamaica",
-                "Japan",
-                "Jordan",
-                "Kazakhstan",
-                "Kenya",
-                "Kiribati",
-                "Kuwait",
-                "Kyrgyzstan",
-                "Laos",
-                "Latvia",
-                "Lebanon",
-                "Lesotho",
-                "Liberia",
-                "Libya",
-                "Liechtenstein",
-                "Lithuania",
-                "Luxembourg",
-                "Madagascar",
-                "Malawi",
-                "Malaysia",
-                "Maldives",
-                "Mali",
-                "Malta",
-                "Marshall Islands",
-                "Mauritania",
-                "Mauritius",
-                "Mexico",
-                "Micronesia",
-                "Moldova",
-                "Monaco",
-                "Mongolia",
-                "Montenegro",
-                "Morocco",
-                "Mozambique",
-                "Myanmar (formerly Burma)",
-                "Namibia",
-                "Nauru",
-                "Nepal",
-                "Netherlands",
-                "New Zealand",
-                "Nicaragua",
-                "Niger",
-                "Nigeria",
-                "North Korea",
-                "North Macedonia",
-                "Norway",
-                "Oman",
-                "Pakistan",
-                "Palau",
-                "Palestine State",
-                "Panama",
-                "Papua New Guinea",
-                "Paraguay",
-                "Peru",
-                "Philippines",
-                "Poland",
-                "Portugal",
-                "Qatar",
-                "Romania",
-                "Russia",
-                "Rwanda",
-                "Saint Kitts and Nevis",
-                "Saint Lucia",
-                "Saint Vincent and the Grenadines",
-                "Samoa",
-                "San Marino",
-                "Sao Tome and Principe",
-                "Saudi Arabia",
-                "Senegal",
-                "Serbia",
-                "Seychelles",
-                "Sierra Leone",
-                "Singapore",
-                "Slovakia",
-                "Slovenia",
-                "Solomon Islands",
-                "Somalia",
-                "South Africa",
-                "South Korea",
-                "South Sudan",
-                "Spain",
-                "Sri Lanka",
-                "Sudan",
-                "Suriname",
-                "Sweden",
-                "Switzerland",
-                "Syria",
-                "Tajikistan",
-                "Tanzania",
-                "Thailand",
-                "Timor-Leste",
-                "Togo",
-                "Tonga",
-                "Trinidad and Tobago",
-                "Tunisia",
-                "Turkey",
-                "Turkmenistan",
-                "Tuvalu",
-                "Uganda",
-                "Ukraine",
-                "United Arab Emirates",
-                "United Kingdom",
-                "United States of America",
-                "Uruguay",
-                "Uzbekistan",
-                "Vanuatu",
-                "Venezuela",
-                "Vietnam",
-                "Yemen",
-                "Zambia",
-                "Zimbabwe"
-            };
             cmbCountry.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbCountry.Font = new Font("Segoe UI", 10F);
             cmbCountry.FormattingEnabled = true;
-            cmbCountry.Items.AddRange(allCountries);
-            cmbCountry.MaxDropDownItems = 15;
+            cmbCountry.Items.AddRange(new object[] { "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo (Congo-Brazzaville)", "Costa Rica", "Côte d'Ivoire", "Croatia", "Cuba", "Cyprus", "Czechia (Czech Republic)", "Democratic Republic of the Congo", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini (fmr. \"Swaziland\")", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Holy See", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar (formerly Burma)", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "North Macedonia", "Norway", "Oman", "Pakistan", "Palau", "Palestine State", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States of America", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe" });
             cmbCountry.Location = new Point(707, 254);
             cmbCountry.Margin = new Padding(4, 5, 4, 5);
+            cmbCountry.MaxDropDownItems = 15;
             cmbCountry.Name = "cmbCountry";
             cmbCountry.Size = new Size(599, 31);
             cmbCountry.TabIndex = 8;
@@ -465,7 +255,6 @@ namespace ExpenseManager.App.Views.User.UC
             profilePanel.Controls.Add(picProfile);
             profilePanel.Controls.Add(lblProfileName);
             profilePanel.Controls.Add(lblMaxFileSize);
-            profilePanel.Controls.Add(lblFileName);
             profilePanel.Controls.Add(btnBrowse);
             profilePanel.Controls.Add(btnSaveProfile);
             profilePanel.Location = new Point(0, 0);
@@ -564,26 +353,15 @@ namespace ExpenseManager.App.Views.User.UC
             lblMaxFileSize.TabIndex = 7;
             lblMaxFileSize.Text = "Max file size is 20mb";
             // 
-            // lblFileName
-            // 
-            lblFileName.AutoSize = true;
-            lblFileName.Font = new Font("Segoe UI", 9F);
-            lblFileName.ForeColor = Color.Gray;
-            lblFileName.Location = new Point(320, 315);
-            lblFileName.Margin = new Padding(4, 0, 4, 0);
-            lblFileName.Name = "lblFileName";
-            lblFileName.Size = new Size(92, 20);
-            lblFileName.TabIndex = 8;
-            lblFileName.Text = "Choose file...";
-            // 
             // btnBrowse
             // 
-            btnBrowse.BackColor = Color.White;
+            btnBrowse.BackColor = Color.WhiteSmoke;
             btnBrowse.Cursor = Cursors.Hand;
             btnBrowse.FlatAppearance.BorderColor = Color.FromArgb(200, 200, 200);
             btnBrowse.FlatStyle = FlatStyle.Flat;
             btnBrowse.Font = new Font("Segoe UI", 9F);
-            btnBrowse.Location = new Point(533, 305);
+            btnBrowse.ForeColor = Color.CornflowerBlue;
+            btnBrowse.Location = new Point(484, 312);
             btnBrowse.Margin = new Padding(4, 5, 4, 5);
             btnBrowse.Name = "btnBrowse";
             btnBrowse.Size = new Size(107, 49);
@@ -900,6 +678,7 @@ namespace ExpenseManager.App.Views.User.UC
             lblTabSupport.Size = new Size(79, 25);
             lblTabSupport.TabIndex = 2;
             lblTabSupport.Text = "Support";
+            lblTabSupport.Click += lblTabSupport_Click;
             // 
             // UC_Settings
             // 
@@ -951,7 +730,6 @@ namespace ExpenseManager.App.Views.User.UC
         private System.Windows.Forms.PictureBox picProfile;
         private System.Windows.Forms.Label lblProfileName;
         private System.Windows.Forms.Label lblMaxFileSize;
-        private System.Windows.Forms.Label lblFileName;
         private System.Windows.Forms.Button btnBrowse;
         private System.Windows.Forms.Button btnSaveProfile;
         private System.Windows.Forms.Panel passwordPanel;

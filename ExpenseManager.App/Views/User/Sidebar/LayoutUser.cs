@@ -186,7 +186,6 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             // Load Dashboard by default
             BtnDashboard_Click(btnDashboard, EventArgs.Empty);
         }
-
         // Win32 API for rounded corners
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
         private static extern IntPtr CreateRoundRectRgn(
