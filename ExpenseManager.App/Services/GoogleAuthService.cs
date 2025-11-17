@@ -2,6 +2,7 @@
 using Google.Apis.Auth.OAuth2.Flows;
 using Google.Apis.Oauth2.v2;
 using Google.Apis.Services;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -19,18 +20,27 @@ namespace ExpenseManager.App.Services
 
     public class GoogleAuthService : IGoogleAuthService
     {
-        private const string CLIENT_ID = "CLIENT_ID_FROM_CONFIG";
-        private const string CLIENT_SECRET = "CLIENT_SECRET_FROM_CONFIG";
+        private readonly string CLIENT_ID;
+        private readonly string CLIENT_SECRET;
 
         private static readonly string[] Scopes = {
             Oauth2Service.Scope.UserinfoEmail,
             Oauth2Service.Scope.UserinfoProfile
         };
 
+        public GoogleAuthService()
+        {
+            var config = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json", optional: false)
+                .Build();
+
+            CLIENT_ID = config["GoogleAuth:ClientId"];
+            CLIENT_SECRET = config["GoogleAuth:ClientSecret"];
+        }
+
         public async Task<(bool Success, string Email, string FullName, string Error)> AuthenticateAsync()
         {
-            string browserUrl = null;
-
             try
             {
                 int port = GetRandomUnusedPort();
@@ -47,7 +57,6 @@ namespace ExpenseManager.App.Services
                 });
 
                 var authUrl = flow.CreateAuthorizationCodeRequest(redirectUri);
-                browserUrl = authUrl.Build().ToString();
 
                 var listener = new HttpListener();
                 listener.Prefixes.Add(redirectUri);
@@ -56,7 +65,7 @@ namespace ExpenseManager.App.Services
                 // Mở browser
                 Process.Start(new ProcessStartInfo
                 {
-                    FileName = browserUrl,
+                    FileName = authUrl.Build().ToString(),
                     UseShellExecute = true
                 });
 
@@ -64,83 +73,33 @@ namespace ExpenseManager.App.Services
                 var context = await listener.GetContextAsync();
                 var code = context.Request.QueryString.Get("code");
 
-                // Trả response trống
-                string html = "<html><body></body></html>";
+                // ===== SỬA LỖI ENCODING VÀ TỰ ĐỘNG ĐÓNG TAB =====
+                string html = @"
+                    <html>
+                        <head>
+                            <meta charset='UTF-8'>
+                            <title>Đang xử lý...</title>
+                        </head>
+                        <body onload='window.open(window.location, ""_self"").close();' style='font-family: Arial, sans-serif; text-align: center; padding-top: 50px;'>
+                            <h2>Đăng nhập thành công!</h2>
+                            <p>Bạn có thể đóng tab này và quay lại ứng dụng.</p>
+                        </body>
+                    </html>";
+
                 var buffer = System.Text.Encoding.UTF8.GetBytes(html);
+                context.Response.ContentEncoding = System.Text.Encoding.UTF8;
+                context.Response.ContentType = "text/html; charset=utf-8";
                 context.Response.ContentLength64 = buffer.Length;
-                context.Response.ContentType = "text/html";
                 await context.Response.OutputStream.WriteAsync(buffer, 0, buffer.Length);
                 context.Response.OutputStream.Close();
+
+                // *** THÊM CẢI TIẾN ***
+                // Cho trình duyệt 500ms để thực thi JavaScript window.close()
+                // trước khi listener bị tắt hoàn toàn.
+                await Task.Delay(500);
+
                 listener.Stop();
-
-                // ✅✅✅ ĐÓNG TẤT CẢ TAB LOCALHOST ✅✅✅
-                await Task.Delay(500); // Đợi browser nhận response
-
-                try
-                {
-                    // Tìm tất cả process browser
-                    var allProcesses = Process.GetProcesses();
-
-                    // Chrome processes
-                    var chromeProcesses = allProcesses.Where(p =>
-                    {
-                        try
-                        {
-                            return p.ProcessName.ToLower().Contains("chrome") &&
-                                   (p.MainWindowTitle.ToLower().Contains("localhost") ||
-                                    p.MainWindowTitle.ToLower().Contains("127.0.0.1") ||
-                                    p.MainWindowTitle.ToLower().Contains("google") ||
-                                    p.MainWindowTitle.ToLower().Contains("sign in"));
-                        }
-                        catch
-                        {
-                            return false;
-                        }
-                    }).ToList();
-
-                    // Edge processes
-                    var edgeProcesses = allProcesses.Where(p =>
-                    {
-                        try
-                        {
-                            return p.ProcessName.ToLower().Contains("msedge") &&
-                                   (p.MainWindowTitle.ToLower().Contains("localhost") ||
-                                    p.MainWindowTitle.ToLower().Contains("127.0.0.1") ||
-                                    p.MainWindowTitle.ToLower().Contains("google") ||
-                                    p.MainWindowTitle.ToLower().Contains("sign in"));
-                        }
-                        catch
-                        {
-                            return false;
-                        }
-                    }).ToList();
-
-                    // Kill tất cả
-                    foreach (var proc in chromeProcesses.Concat(edgeProcesses))
-                    {
-                        try
-                        {
-                            proc.Kill();
-                            proc.WaitForExit(1000);
-                        }
-                        catch { }
-                    }
-
-                    // ✅ NẾU VẪN CHƯA ĐÓNG, DÙNG TASKKILL MẠNH HƠN
-                    try
-                    {
-                        // Kill tất cả Chrome tab chứa localhost
-                        Process.Start(new ProcessStartInfo
-                        {
-                            FileName = "taskkill",
-                            Arguments = "/F /IM chrome.exe /T",
-                            WindowStyle = ProcessWindowStyle.Hidden,
-                            CreateNoWindow = true
-                        })?.WaitForExit(2000);
-                    }
-                    catch { }
-                }
-                catch { }
+                // ===== KẾT THÚC SỬA =====
 
                 if (string.IsNullOrEmpty(code))
                 {
