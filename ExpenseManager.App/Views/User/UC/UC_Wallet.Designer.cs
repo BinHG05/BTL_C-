@@ -10,7 +10,7 @@ namespace ExpenseManager.App.Views.Admin.UC // Đảm bảo namespace này đún
         {
             if (disposing && (components != null))
             {
-                _presenter?.Dispose();
+                _presenter?.Dispose(); // Sửa lỗi
                 components.Dispose();
             }
             base.Dispose(disposing);
@@ -44,7 +44,7 @@ namespace ExpenseManager.App.Views.Admin.UC // Đảm bảo namespace này đún
             this.pnlChartArea = new System.Windows.Forms.Panel();
             this.pieChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.pnlTransactionHistory = new System.Windows.Forms.Panel();
-            this.lblNoTransactions = new System.Windows.Forms.Label();
+            this.lblNoTransactions = new System.Windows.Forms.Label(); // <<< THÊM LABEL "CHƯA CÓ GIAO DỊCH"
             this.lblPageInfo = new System.Windows.Forms.Label();
             this.btnNextPage = new System.Windows.Forms.Button();
             this.btnPrevPage = new System.Windows.Forms.Button();
@@ -99,30 +99,29 @@ namespace ExpenseManager.App.Views.Admin.UC // Đảm bảo namespace này đún
             this.lblSubtitle.TabIndex = 1;
             this.lblSubtitle.Text = "Welcome Ekash Finance Management";
             // 
+            // 
             // pnlLeftSidebar
             // 
-            this.pnlLeftSidebar.AutoSize = true;
-            this.pnlLeftSidebar.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.pnlLeftSidebar.BackColor = System.Drawing.Color.Transparent;
-            this.pnlLeftSidebar.Controls.Add(this.flpWallets);
-            this.pnlLeftSidebar.Controls.Add(this.btnAddWallet);
+            this.pnlLeftSidebar.Controls.Add(this.flpWallets);    // ✅ Thêm FlowLayoutPanel TRƯỚC
+            this.pnlLeftSidebar.Controls.Add(this.btnAddWallet);  // ✅ Thêm Button SAU
             this.pnlLeftSidebar.Location = new System.Drawing.Point(30, 160);
             this.pnlLeftSidebar.Name = "pnlLeftSidebar";
-            this.pnlLeftSidebar.Size = new System.Drawing.Size(350, 55);
+            this.pnlLeftSidebar.Size = new System.Drawing.Size(350, 700);
             this.pnlLeftSidebar.TabIndex = 1;
             // 
             // flpWallets
             // 
+            // 
+            // flpWallets
+            // 
             this.flpWallets.AutoScroll = true;
-            this.flpWallets.AutoSize = true;
-            this.flpWallets.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.flpWallets.Dock = System.Windows.Forms.DockStyle.Top;
+            this.flpWallets.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpWallets.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flpWallets.Location = new System.Drawing.Point(0, 0);
-            this.flpWallets.MaximumSize = new System.Drawing.Size(350, 600);
-            this.flpWallets.MinimumSize = new System.Drawing.Size(350, 0);
             this.flpWallets.Name = "flpWallets";
-            this.flpWallets.Size = new System.Drawing.Size(350, 0);
+            this.flpWallets.Padding = new System.Windows.Forms.Padding(0, 0, 0, 60); // ✅ THÊM padding bottom để tránh che nút Add
+            this.flpWallets.Size = new System.Drawing.Size(350, 645);
             this.flpWallets.TabIndex = 3;
             this.flpWallets.WrapContents = false;
             // 
@@ -130,12 +129,12 @@ namespace ExpenseManager.App.Views.Admin.UC // Đảm bảo namespace này đún
             // 
             this.btnAddWallet.BackColor = System.Drawing.Color.White;
             this.btnAddWallet.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnAddWallet.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btnAddWallet.Dock = System.Windows.Forms.DockStyle.Bottom; // ✅ Dock Bottom
             this.btnAddWallet.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
             this.btnAddWallet.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddWallet.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
             this.btnAddWallet.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.btnAddWallet.Location = new System.Drawing.Point(0, 0);
+            this.btnAddWallet.Location = new System.Drawing.Point(0, 645); // ✅ Vị trí bottom của pnlLeftSidebar
             this.btnAddWallet.Name = "btnAddWallet";
             this.btnAddWallet.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
             this.btnAddWallet.Size = new System.Drawing.Size(350, 55);
@@ -326,7 +325,7 @@ namespace ExpenseManager.App.Views.Admin.UC // Đảm bảo namespace này đún
             // pnlTransactionHistory
             // 
             this.pnlTransactionHistory.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
+  | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlTransactionHistory.BackColor = System.Drawing.Color.White;
             this.pnlTransactionHistory.Controls.Add(this.lblNoTransactions);
             this.pnlTransactionHistory.Controls.Add(this.lblPageInfo);
@@ -336,6 +335,9 @@ namespace ExpenseManager.App.Views.Admin.UC // Đảm bảo namespace này đún
             this.pnlTransactionHistory.Controls.Add(this.dgvTransactions);
             this.pnlTransactionHistory.Location = new System.Drawing.Point(410, 800);
             this.pnlTransactionHistory.Name = "pnlTransactionHistory";
+            this.pnlTransactionHistory.Padding = new System.Windows.Forms.Padding(30);
+            this.pnlTransactionHistory.Size = new System.Drawing.Size(1160, 650); // ✅ Tăng từ 550 → 650
+            this.pnlTransactionHistory.TabIndex = 6;
             this.pnlTransactionHistory.Padding = new System.Windows.Forms.Padding(30);
             // ===== SỬA LỖI LAYOUT BẢNG (1/2) =====
             this.pnlTransactionHistory.Size = new System.Drawing.Size(1160, 550); // Tăng chiều cao
@@ -406,16 +408,15 @@ namespace ExpenseManager.App.Views.Admin.UC // Đảm bảo namespace này đún
             // 
             // dgvTransactions
             // 
-            // ===== SỬA LỖI LAYOUT BẢNG (2/2) =====
             this.dgvTransactions.AllowUserToAddRows = false;
             this.dgvTransactions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right))); // Dãn ra
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvTransactions.BackgroundColor = System.Drawing.Color.White;
             this.dgvTransactions.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvTransactions.ColumnHeadersHeight = 45;
             this.dgvTransactions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.dgvTransactions.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.dgvTransactions.GridColor = System.Drawing.Color.FromArgb(226, 232, 240);
             this.dgvTransactions.Location = new System.Drawing.Point(30, 90);
             this.dgvTransactions.MultiSelect = false;
             this.dgvTransactions.Name = "dgvTransactions";
@@ -424,7 +425,7 @@ namespace ExpenseManager.App.Views.Admin.UC // Đảm bảo namespace này đún
             this.dgvTransactions.RowHeadersWidth = 51;
             this.dgvTransactions.RowTemplate.Height = 50;
             this.dgvTransactions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvTransactions.Size = new System.Drawing.Size(1100, 400); // Tăng chiều cao
+            this.dgvTransactions.Size = new System.Drawing.Size(1100, 500); // ✅ Tăng từ 400 → 500
             this.dgvTransactions.TabIndex = 1;
             // 
             // pnlEmptyState
@@ -472,7 +473,6 @@ namespace ExpenseManager.App.Views.Admin.UC // Đảm bảo namespace này đún
             this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();
             this.pnlLeftSidebar.ResumeLayout(false);
-            this.pnlLeftSidebar.PerformLayout(); // <<< THÊM DÒNG NÀY
             this.pnlBIDVHeader.ResumeLayout(false);
             this.pnlBIDVHeader.PerformLayout();
             this.pnlTotalBalance.ResumeLayout(false);
@@ -524,3 +524,4 @@ namespace ExpenseManager.App.Views.Admin.UC // Đảm bảo namespace này đún
         private System.Windows.Forms.Label lblNoTransactions;
     }
 }
+//ffff

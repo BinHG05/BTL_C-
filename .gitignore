@@ -13,3 +13,4 @@ Release/
 *.userprefs
 *.userosscache
 *.sln.docstates
+appsettings.json
