@@ -44,8 +44,6 @@ namespace ExpenseManager.App
             // 5. Khởi chạy ứng dụng
             try
             {
-                // Lấy LoginForm từ DI container (thay vì new LayoutUser())
-                // Điều này đảm bảo LoginForm sẽ nhận được Presenter của nó
                 var loginForm = ServiceProvider.GetRequiredService<LoginForm>();
                 Application.Run(loginForm);
             }
@@ -59,31 +57,27 @@ namespace ExpenseManager.App
         private static void ConfigureServices(IServiceCollection services, string connectionString)
         {
             // 6.1. Đăng ký DbContext
-            // Nó sẽ tự động quản lý vòng đời của DbContext
+            
             services.AddDbContext<ExpenseDbContext>(options =>
                 options.UseSqlServer(connectionString)
             );
 
             // 6.2. Đăng ký Repositories
-            // Khi ai đó "hỏi" IUserRepository, DI sẽ "tiêm" vào một UserRepository
+       
             services.AddTransient<IUserRepository, UserRepository>();
-            // ... (Thêm các Repositories khác của bạn ở đây)
-            // services.AddTransient<IWalletRepository, WalletRepository>();
-            // services.AddTransient<ITransactionRepository, TransactionRepository>();
+         
 
             // 6.3. Đăng ký Services
-            // Khi ai đó "hỏi" IAuthService, DI sẽ "tiêm" vào một AuthService
+           
             services.AddTransient<IAuthService, AuthService>();
-            // ... (Thêm các Services khác của bạn ở đây)
-            // services.AddTransient<IWalletService, WalletService>();
+ 
 
             // 6.4. Đăng ký Presenters
-            // (Đăng ký thẳng class, không cần intergiface nếu bạn không dùng)
+            
             services.AddTransient<LoginPresenter>();
             services.AddTransient<RegisterPresenter>();
             services.AddTransient<ForgotPasswordPresenter>();
-            // ... (Thêm các Presenters khác của bạn ở đây)
-            // services.AddTransient<WalletPresenter>();
+    
 
             // 6.5. Đăng ký Forms/Views
             // Quan trọng: Đăng ký các Form để chúng có thể nhận Presenter
@@ -92,8 +86,9 @@ namespace ExpenseManager.App
             services.AddTransient<ForgotPasswordForm>();
             services.AddTransient<LayoutUser>();
             services.AddTransient<LayoutAdmin>();
-            // ... (Thêm các Form/UC khác của bạn ở đây)
-            // services.AddTransient<UC_Wallet>();
+            // 6.6. Đăng ký Google Auth Service
+            services.AddTransient<IGoogleAuthService, GoogleAuthService>();
+       
         }
     }
 }

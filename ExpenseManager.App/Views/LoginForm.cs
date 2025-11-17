@@ -119,9 +119,58 @@ namespace ExpenseManager.App.Views
             this.Hide();
         }
 
-        private void btnGoogleLogin_Click(object sender, EventArgs e)
+        private async void btnGoogleLogin_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Chức năng Đăng nhập bằng Google đang được phát triển!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            try
+            {
+                // Hiển thị loading
+                btnGoogleLogin.Enabled = false;
+                btnGoogleLogin.Text = "Đang xử lý...";
+
+                // Gọi Google Login
+                var (success, user, error) = await _presenter.LoginWithGoogleAsync();
+
+                if (success && user != null)
+                {
+                    // Phân quyền
+                    if (user.Role == "Admin")
+                    {
+                        var layoutAdmin = Program.ServiceProvider.GetRequiredService<LayoutAdmin>();
+                        layoutAdmin.Show();
+                        this.Hide();
+                    }
+                    else if (user.Role == "User")
+                    {
+                        var layoutUser = Program.ServiceProvider.GetRequiredService<LayoutUser>();
+                        layoutUser.Show();
+                        this.Hide();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(
+                        error ?? "Đăng nhập Google thất bại.",
+                        "Lỗi",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Lỗi: {ex.Message}",
+                    "Lỗi",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+            }
+            finally
+            {
+                // Reset button
+                btnGoogleLogin.Enabled = true;
+                btnGoogleLogin.Text = "Đăng nhập bằng Google";
+            }
         }
 
         private void lnkRegister_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

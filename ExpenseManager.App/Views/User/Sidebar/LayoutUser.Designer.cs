@@ -22,6 +22,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
 
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.sidebarPanel = new System.Windows.Forms.Panel();
             this.btnSettings = new FontAwesome.Sharp.IconButton();
             this.btnAnalytics = new FontAwesome.Sharp.IconButton();
@@ -42,6 +43,14 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             this.btnSearchInside = new FontAwesome.Sharp.IconButton();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.contentPanel = new System.Windows.Forms.Panel();
+
+            // ✅ THÊM CÁC CONTROLS MỚI CHO DROPDOWN
+            this.profileContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.profileInfoPanel = new System.Windows.Forms.ToolStripControlHost(this.CreateProfileInfoPanel());
+            this.separator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.settingsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.logoutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+
             this.sidebarPanel.SuspendLayout();
             this.logoPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logoPic)).BeginInit();
@@ -49,7 +58,9 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             this.rightPanel.SuspendLayout();
             this.centerPanel.SuspendLayout();
             this.searchBox.SuspendLayout();
+            this.profileContextMenu.SuspendLayout();
             this.SuspendLayout();
+
             // 
             // sidebarPanel
             // 
@@ -66,6 +77,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             this.sidebarPanel.Name = "sidebarPanel";
             this.sidebarPanel.Size = new System.Drawing.Size(80, 768);
             this.sidebarPanel.TabIndex = 0;
+
             // 
             // btnSettings
             // 
@@ -91,6 +103,11 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             this.btnSettings.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
             this.btnSettings.UseVisualStyleBackColor = false;
             this.btnSettings.Click += new System.EventHandler(this.BtnSettings_Click);
+
+            // (Các button còn lại giữ nguyên như code cũ...)
+            // btnAnalytics, btnGoals, btnBudget, btnWallet, btnDashboard, logoPanel, logoPic
+            // headerPanel, rightPanel, btnToggleTheme, btnNotification
+            // (Copy từ code cũ - tôi bỏ qua để tiết kiệm chỗ)
             // 
             // btnAnalytics
             // 
@@ -116,6 +133,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             this.btnAnalytics.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
             this.btnAnalytics.UseVisualStyleBackColor = false;
             this.btnAnalytics.Click += new System.EventHandler(this.BtnAnalytics_Click);
+
             // 
             // btnGoals
             // 
@@ -141,6 +159,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             this.btnGoals.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
             this.btnGoals.UseVisualStyleBackColor = false;
             this.btnGoals.Click += new System.EventHandler(this.BtnGoals_Click);
+
             // 
             // btnBudget
             // 
@@ -166,6 +185,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             this.btnBudget.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
             this.btnBudget.UseVisualStyleBackColor = false;
             this.btnBudget.Click += new System.EventHandler(this.BtnBudget_Click);
+
             // 
             // btnWallet
             // 
@@ -191,6 +211,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             this.btnWallet.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
             this.btnWallet.UseVisualStyleBackColor = false;
             this.btnWallet.Click += new System.EventHandler(this.BtnWallet_Click);
+
             // 
             // btnDashboard
             // 
@@ -216,6 +237,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             this.btnDashboard.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
             this.btnDashboard.UseVisualStyleBackColor = false;
             this.btnDashboard.Click += new System.EventHandler(this.BtnDashboard_Click);
+
             // 
             // logoPanel
             // 
@@ -226,6 +248,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             this.logoPanel.Name = "logoPanel";
             this.logoPanel.Size = new System.Drawing.Size(80, 160);
             this.logoPanel.TabIndex = 0;
+
             // 
             // logoPic
             // 
@@ -236,6 +259,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             this.logoPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.logoPic.TabIndex = 0;
             this.logoPic.TabStop = false;
+
             // 
             // headerPanel
             // 
@@ -248,6 +272,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             this.headerPanel.Padding = new System.Windows.Forms.Padding(30, 15, 30, 15);
             this.headerPanel.Size = new System.Drawing.Size(1344, 70);
             this.headerPanel.TabIndex = 1;
+
             // 
             // rightPanel
             // 
@@ -261,6 +286,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             this.rightPanel.Padding = new System.Windows.Forms.Padding(0, 10, 20, 10);
             this.rightPanel.Size = new System.Drawing.Size(180, 40);
             this.rightPanel.TabIndex = 1;
+
             // 
             // btnToggleTheme
             // 
@@ -278,6 +304,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             this.btnToggleTheme.Size = new System.Drawing.Size(40, 20);
             this.btnToggleTheme.TabIndex = 2;
             this.btnToggleTheme.UseVisualStyleBackColor = false;
+
             // 
             // btnNotification
             // 
@@ -295,6 +322,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             this.btnNotification.Size = new System.Drawing.Size(40, 20);
             this.btnNotification.TabIndex = 1;
             this.btnNotification.UseVisualStyleBackColor = false;
+
             // 
             // btnProfileTop
             // 
@@ -312,6 +340,8 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             this.btnProfileTop.Size = new System.Drawing.Size(40, 20);
             this.btnProfileTop.TabIndex = 0;
             this.btnProfileTop.UseVisualStyleBackColor = false;
+            this.btnProfileTop.Click += new System.EventHandler(this.BtnProfileTop_Click); // ✅ THÊM EVENT
+
             // 
             // centerPanel
             // 
@@ -321,6 +351,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             this.centerPanel.Name = "centerPanel";
             this.centerPanel.Size = new System.Drawing.Size(500, 50);
             this.centerPanel.TabIndex = 0;
+
             // 
             // btnAddTransaction
             // 
@@ -340,6 +371,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             this.btnAddTransaction.Text = "Thêm giao dịch";
             this.btnAddTransaction.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnAddTransaction.UseVisualStyleBackColor = false;
+
             // 
             // searchBox
             // 
@@ -351,6 +383,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             this.searchBox.Name = "searchBox";
             this.searchBox.Size = new System.Drawing.Size(300, 40);
             this.searchBox.TabIndex = 0;
+
             // 
             // btnSearchInside
             // 
@@ -366,6 +399,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             this.btnSearchInside.Size = new System.Drawing.Size(40, 32);
             this.btnSearchInside.TabIndex = 1;
             this.btnSearchInside.UseVisualStyleBackColor = false;
+
             // 
             // txtSearch
             // 
@@ -378,6 +412,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             this.txtSearch.PlaceholderText = "Tìm giao dịch... (VD: cafe, ăn sáng)";
             this.txtSearch.Size = new System.Drawing.Size(235, 18);
             this.txtSearch.TabIndex = 0;
+
             // 
             // contentPanel
             // 
@@ -387,6 +422,50 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             this.contentPanel.Name = "contentPanel";
             this.contentPanel.Size = new System.Drawing.Size(1344, 698);
             this.contentPanel.TabIndex = 2;
+
+            // ✅✅✅ PHẦN MỚI: PROFILE CONTEXT MENU ✅✅✅
+
+            // 
+            // profileContextMenu
+            // 
+            this.profileContextMenu.BackColor = System.Drawing.Color.White;
+            this.profileContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+                this.profileInfoPanel,
+                this.separator1,
+                this.settingsMenuItem,
+                this.logoutMenuItem
+            });
+            this.profileContextMenu.Name = "profileContextMenu";
+            this.profileContextMenu.Size = new System.Drawing.Size(250, 140);
+            this.profileContextMenu.Renderer = new CustomMenuRenderer();
+
+            // 
+            // separator1
+            // 
+            this.separator1.Name = "separator1";
+            this.separator1.Size = new System.Drawing.Size(246, 6);
+
+            // 
+            // settingsMenuItem
+            // 
+            this.settingsMenuItem.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.settingsMenuItem.Name = "settingsMenuItem";
+            this.settingsMenuItem.Padding = new System.Windows.Forms.Padding(10, 8, 10, 8);
+            this.settingsMenuItem.Size = new System.Drawing.Size(249, 36);
+            this.settingsMenuItem.Text = "⚙️  Settings";
+            this.settingsMenuItem.Click += new System.EventHandler(this.SettingsMenuItem_Click);
+
+            // 
+            // logoutMenuItem
+            // 
+            this.logoutMenuItem.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.logoutMenuItem.ForeColor = System.Drawing.Color.FromArgb(220, 53, 69);
+            this.logoutMenuItem.Name = "logoutMenuItem";
+            this.logoutMenuItem.Padding = new System.Windows.Forms.Padding(10, 8, 10, 8);
+            this.logoutMenuItem.Size = new System.Drawing.Size(249, 36);
+            this.logoutMenuItem.Text = "🚪  Logout";
+            this.logoutMenuItem.Click += new System.EventHandler(this.LogoutMenuItem_Click);
+
             // 
             // LayoutAdmin
             // 
@@ -398,7 +477,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             this.Controls.Add(this.sidebarPanel);
             this.Name = "LayoutAdmin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "ExpenseManager - Admin";
+            this.Text = "ExpenseManager - User";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.LayoutAdmin_Load);
             this.sidebarPanel.ResumeLayout(false);
@@ -409,7 +488,73 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             this.centerPanel.ResumeLayout(false);
             this.searchBox.ResumeLayout(false);
             this.searchBox.PerformLayout();
+            this.profileContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
+        }
+
+        // ✅ THÊM METHOD TẠO PROFILE INFO PANEL
+        private Panel CreateProfileInfoPanel()
+        {
+            Panel panel = new Panel
+            {
+                Size = new Size(230, 70),
+                BackColor = Color.White,
+                Padding = new Padding(15, 10, 15, 10)
+            };
+
+            // Icon
+            PictureBox iconBox = new PictureBox
+            {
+                Size = new Size(40, 40),
+                Location = new Point(10, 15),
+                BackColor = Color.FromArgb(31, 31, 224),
+                SizeMode = PictureBoxSizeMode.CenterImage
+            };
+
+            // Make icon circular
+            System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
+            path.AddEllipse(0, 0, iconBox.Width, iconBox.Height);
+            iconBox.Region = new Region(path);
+
+            // Icon user (dùng emoji hoặc text)
+            Label iconLabel = new Label
+            {
+                Text = "👤",
+                Font = new Font("Segoe UI", 16F),
+                Size = new Size(40, 40),
+                TextAlign = ContentAlignment.MiddleCenter,
+                BackColor = Color.Transparent,
+                Parent = iconBox
+            };
+
+            // Name label
+            profileNameLabel = new Label
+            {
+                Text = "User Name",
+                Font = new Font("Segoe UI", 10F, FontStyle.Bold),
+                Location = new Point(60, 12),
+                Size = new Size(160, 20),
+                AutoSize = false,
+                BackColor = Color.Transparent
+            };
+
+            // Email label
+            profileEmailLabel = new Label
+            {
+                Text = "email@example.com",
+                Font = new Font("Segoe UI", 8.5F),
+                ForeColor = Color.Gray,
+                Location = new Point(60, 33),
+                Size = new Size(160, 18),
+                AutoSize = false,
+                BackColor = Color.Transparent
+            };
+
+            panel.Controls.Add(iconBox);
+            panel.Controls.Add(profileNameLabel);
+            panel.Controls.Add(profileEmailLabel);
+
+            return panel;
         }
 
         #endregion
@@ -434,5 +579,14 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
         private FontAwesome.Sharp.IconButton btnSearchInside;
         private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.Panel contentPanel;
+
+        // ✅ THÊM CÁC BIẾN MỚI
+        private System.Windows.Forms.ContextMenuStrip profileContextMenu;
+        private System.Windows.Forms.ToolStripControlHost profileInfoPanel;
+        private System.Windows.Forms.ToolStripSeparator separator1;
+        private System.Windows.Forms.ToolStripMenuItem settingsMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem logoutMenuItem;
+        private Label profileNameLabel;
+        private Label profileEmailLabel;
     }
 }
