@@ -174,7 +174,30 @@ namespace ExpenseManager.App.Views.User.UC
             txtFullName.Text = user.FullName;
             txtCurrentEmail.Text = user.Email;
             lblProfileName.Text = user.FullName;
+            txtAddress.Text = user.Address;
+            txtCity.Text = user.City;
 
+            if (user.DateOfBirth.HasValue)
+            {
+                if (user.DateOfBirth.Value >= dtpBirthDate.MinDate &&
+                    user.DateOfBirth.Value <= dtpBirthDate.MaxDate)
+                {
+                    dtpBirthDate.Value = user.DateOfBirth.Value;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(user.Country))
+            {
+                int index = cmbCountry.FindStringExact(user.Country);
+                if (index != -1)
+                {
+                    cmbCountry.SelectedIndex = index;
+                }
+            }
+            else
+            {
+                cmbCountry.SelectedIndex = -1; 
+            }
             try
             {
                 if (!string.IsNullOrWhiteSpace(user.AvatarUrl) && File.Exists(user.AvatarUrl))

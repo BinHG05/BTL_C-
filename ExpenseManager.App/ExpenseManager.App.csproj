@@ -48,9 +48,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Logs\" />
-    <Folder Include="Views\Admin\Forms\" />
-
-    <Folder Include="Views\Admin\UC\" />
     <Folder Include="Views\shared\" />
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
-using ExpenseManager.App.Services.Interfaces;
+﻿using ExpenseManager.App.Services.Interfaces;
+using ExpenseManager.App.Session;
 using ExpenseManager.App.Views.User.UC;
+using System;
+using System.Threading.Tasks;
 
 namespace ExpenseManager.App.Presenters
 {
@@ -77,6 +78,11 @@ namespace ExpenseManager.App.Presenters
                     _view.ShowSuccess("Cập nhật thông tin thành công!");
 
                     // Reload lại dữ liệu để hiển thị thông tin mới nhất
+                    var updatedUser = await _services.GetUserProfileAsync(userId);
+                    if (updatedUser != null)
+                    {
+                        CurrentUserSession.SetUser(updatedUser);
+                    }
                     await LoadUserProfileAsync();
                 }
                 else
@@ -124,7 +130,12 @@ namespace ExpenseManager.App.Presenters
                 {
                     _view.ShowSuccess("Cập nhật thông tin bảo mật thành công!");
 
-                    // Reload lại dữ liệu
+                    var updatedUser = await _services.GetUserProfileAsync(userId);
+                    if (updatedUser != null)
+                    {
+
+                        CurrentUserSession.SetUser(updatedUser);
+                    }
                     await LoadUserProfileAsync();
                 }
                 else
@@ -164,6 +175,11 @@ namespace ExpenseManager.App.Presenters
                     _view.ShowSuccess("Cập nhật thông tin cá nhân thành công!");
 
                     // Reload lại dữ liệu
+                    var updatedUser = await _services.GetUserProfileAsync(userId);
+                    if (updatedUser != null)
+                    {
+                        CurrentUserSession.SetUser(updatedUser);
+                    }
                     await LoadUserProfileAsync();
                 }
                 else
