@@ -12,6 +12,7 @@ namespace ExpenseManager.App.Views.User.UC
             if (disposing && (components != null))
             {
                 _presenter?.Dispose();
+                _categoryPresenter?.Dispose(); // Thêm
                 components.Dispose();
             }
             base.Dispose(disposing);
@@ -68,6 +69,29 @@ namespace ExpenseManager.App.Views.User.UC
             lblTabProfile = new Label();
             lblTabCategories = new Label();
             lblTabSupport = new Label();
+
+            //
+            // THÊM CÁC CONTROLS MỚI CHO TAB CATEGORIES
+            //
+            this.categoriesPanel = new System.Windows.Forms.Panel();
+            this.pnlCategoryLists = new System.Windows.Forms.Panel();
+            this.flpExpenseCategories = new System.Windows.Forms.FlowLayoutPanel();
+            this.lblExpenseCategories = new System.Windows.Forms.Label();
+            this.flpIncomeCategories = new System.Windows.Forms.FlowLayoutPanel();
+            this.lblIncomeCategories = new System.Windows.Forms.Label();
+            this.createCategoryPanel = new System.Windows.Forms.Panel();
+            this.lblCreateCategoryTitle = new System.Windows.Forms.Label();
+            this.lblCategoryName = new System.Windows.Forms.Label();
+            this.txtCategoryName = new System.Windows.Forms.TextBox();
+            this.lblCategoryType = new System.Windows.Forms.Label();
+            this.cmbCategoryType = new System.Windows.Forms.ComboBox();
+            this.lblCategoryIcon = new System.Windows.Forms.Label();
+            this.cmbIcon = new System.Windows.Forms.ComboBox();
+            this.lblCategoryColor = new System.Windows.Forms.Label();
+            this.cmbColor = new System.Windows.Forms.ComboBox();
+            this.flpColorPicker = new System.Windows.Forms.FlowLayoutPanel(); // Panel chọn màu
+            this.btnSaveCategory = new System.Windows.Forms.Button(); // Nút "Create" hoặc "Save"
+
             mainPanel.SuspendLayout();
             personalInfoPanel.SuspendLayout();
             topPanel.SuspendLayout();
@@ -77,6 +101,12 @@ namespace ExpenseManager.App.Views.User.UC
             headerPanel.SuspendLayout();
             breadcrumbPanel.SuspendLayout();
             tabPanel.SuspendLayout();
+
+            // Thêm các dòng này sau khi SuspendLayout()
+            this.categoriesPanel.SuspendLayout();
+            this.pnlCategoryLists.SuspendLayout();
+            this.createCategoryPanel.SuspendLayout();
+
             SuspendLayout();
             // 
             // mainPanel
@@ -87,6 +117,7 @@ namespace ExpenseManager.App.Views.User.UC
             mainPanel.Controls.Add(topPanel);
             mainPanel.Controls.Add(headerPanel);
             mainPanel.Controls.Add(tabPanel);
+            mainPanel.Controls.Add(this.categoriesPanel); // THÊM PANEL MỚI VÀO MAIN
             mainPanel.Dock = DockStyle.Fill;
             mainPanel.Location = new Point(0, 0);
             mainPanel.Name = "mainPanel";
@@ -652,6 +683,7 @@ namespace ExpenseManager.App.Views.User.UC
             lblTabProfile.Size = new Size(68, 25);
             lblTabProfile.TabIndex = 0;
             lblTabProfile.Text = "Profile";
+            lblTabProfile.Click += new System.EventHandler(this.lblTabProfile_Click); // GÁN EVENT
             // 
             // lblTabCategories
             // 
@@ -665,6 +697,7 @@ namespace ExpenseManager.App.Views.User.UC
             lblTabCategories.Size = new Size(102, 25);
             lblTabCategories.TabIndex = 1;
             lblTabCategories.Text = "Categories";
+            lblTabCategories.Click += new System.EventHandler(this.lblTabCategories_Click); // GÁN EVENT
             // 
             // lblTabSupport
             // 
@@ -679,6 +712,213 @@ namespace ExpenseManager.App.Views.User.UC
             lblTabSupport.TabIndex = 2;
             lblTabSupport.Text = "Support";
             lblTabSupport.Click += lblTabSupport_Click;
+
+            //
+            // ========================================================
+            // START: ĐỊNH NGHĨA CÁC CONTROL MỚI
+            // ========================================================
+            //
+            // categoriesPanel
+            //
+            this.categoriesPanel.Controls.Add(this.pnlCategoryLists);
+            this.categoriesPanel.Controls.Add(this.createCategoryPanel);
+            this.categoriesPanel.Location = new System.Drawing.Point(40, 215);
+            this.categoriesPanel.Name = "categoriesPanel";
+            this.categoriesPanel.Size = new System.Drawing.Size(1387, 800);
+            this.categoriesPanel.TabIndex = 4;
+            this.categoriesPanel.Visible = false; // Ẩn ban đầu
+            // 
+            // createCategoryPanel (Panel bên trái)
+            // 
+            this.createCategoryPanel.BackColor = System.Drawing.Color.White;
+            this.createCategoryPanel.Controls.Add(this.lblCreateCategoryTitle);
+            this.createCategoryPanel.Controls.Add(this.lblCategoryName);
+            this.createCategoryPanel.Controls.Add(this.txtCategoryName);
+            this.createCategoryPanel.Controls.Add(this.lblCategoryType);
+            this.createCategoryPanel.Controls.Add(this.cmbCategoryType);
+            this.createCategoryPanel.Controls.Add(this.lblCategoryIcon);
+            this.createCategoryPanel.Controls.Add(this.cmbIcon);
+            this.createCategoryPanel.Controls.Add(this.lblCategoryColor);
+            this.createCategoryPanel.Controls.Add(this.cmbColor);
+            this.createCategoryPanel.Controls.Add(this.flpColorPicker);
+            this.createCategoryPanel.Controls.Add(this.btnSaveCategory);
+            this.createCategoryPanel.Location = new System.Drawing.Point(0, 0);
+            this.createCategoryPanel.Name = "createCategoryPanel";
+            this.createCategoryPanel.Size = new System.Drawing.Size(450, 780);
+            this.createCategoryPanel.Padding = new System.Windows.Forms.Padding(20);
+            this.createCategoryPanel.TabIndex = 0;
+            // 
+            // lblCreateCategoryTitle
+            // 
+            this.lblCreateCategoryTitle.AutoSize = true;
+            this.lblCreateCategoryTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold);
+            this.lblCreateCategoryTitle.Location = new System.Drawing.Point(20, 20);
+            this.lblCreateCategoryTitle.Name = "lblCreateCategoryTitle";
+            this.lblCreateCategoryTitle.Size = new System.Drawing.Size(243, 32);
+            this.lblCreateCategoryTitle.TabIndex = 0;
+            this.lblCreateCategoryTitle.Text = "Create a new category";
+            // 
+            // lblCategoryName
+            // 
+            this.lblCategoryName.AutoSize = true;
+            this.lblCategoryName.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.lblCategoryName.Location = new System.Drawing.Point(20, 80);
+            this.lblCategoryName.Name = "lblCategoryName";
+            this.lblCategoryName.Size = new System.Drawing.Size(56, 23);
+            this.lblCategoryName.TabIndex = 1;
+            this.lblCategoryName.Text = "Name";
+            // 
+            // txtCategoryName
+            // 
+            this.txtCategoryName.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.txtCategoryName.Location = new System.Drawing.Point(24, 106);
+            this.txtCategoryName.Name = "txtCategoryName";
+            this.txtCategoryName.Size = new System.Drawing.Size(400, 30);
+            this.txtCategoryName.TabIndex = 2;
+            // 
+            // lblCategoryType
+            // 
+            this.lblCategoryType.AutoSize = true;
+            this.lblCategoryType.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.lblCategoryType.Location = new System.Drawing.Point(20, 150);
+            this.lblCategoryType.Name = "lblCategoryType";
+            this.lblCategoryType.Size = new System.Drawing.Size(46, 23);
+            this.lblCategoryType.TabIndex = 3;
+            this.lblCategoryType.Text = "Type";
+            // 
+            // cmbCategoryType
+            // 
+            this.cmbCategoryType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbCategoryType.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.cmbCategoryType.FormattingEnabled = true;
+            this.cmbCategoryType.Items.AddRange(new object[] { "Expense", "Income" });
+            this.cmbCategoryType.Location = new System.Drawing.Point(24, 176);
+            this.cmbCategoryType.Name = "cmbCategoryType";
+            this.cmbCategoryType.Size = new System.Drawing.Size(400, 31);
+            this.cmbCategoryType.TabIndex = 4;
+            // 
+            // lblCategoryIcon
+            // 
+            this.lblCategoryIcon.AutoSize = true;
+            this.lblCategoryIcon.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.lblCategoryIcon.Location = new System.Drawing.Point(20, 220);
+            this.lblCategoryIcon.Name = "lblCategoryIcon";
+            this.lblCategoryIcon.Size = new System.Drawing.Size(42, 23);
+            this.lblCategoryIcon.TabIndex = 5;
+            this.lblCategoryIcon.Text = "Icon";
+            // 
+            // cmbIcon
+            // 
+            this.cmbIcon.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbIcon.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.cmbIcon.FormattingEnabled = true;
+            this.cmbIcon.Location = new System.Drawing.Point(24, 246);
+            this.cmbIcon.Name = "cmbIcon";
+            this.cmbIcon.Size = new System.Drawing.Size(400, 31);
+            this.cmbIcon.TabIndex = 6;
+            // 
+            // lblCategoryColor
+            // 
+            this.lblCategoryColor.AutoSize = true;
+            this.lblCategoryColor.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.lblCategoryColor.Location = new System.Drawing.Point(20, 290);
+            this.lblCategoryColor.Name = "lblCategoryColor";
+            this.lblCategoryColor.Size = new System.Drawing.Size(51, 23);
+            this.lblCategoryColor.TabIndex = 7;
+            this.lblCategoryColor.Text = "Color";
+            // 
+            // cmbColor
+            // 
+            this.cmbColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbColor.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.cmbColor.FormattingEnabled = true;
+            this.cmbColor.Location = new System.Drawing.Point(24, 316);
+            this.cmbColor.Name = "cmbColor";
+            this.cmbColor.Size = new System.Drawing.Size(400, 31);
+            this.cmbColor.TabIndex = 8;
+            // 
+            // flpColorPicker
+            // 
+            this.flpColorPicker.Location = new System.Drawing.Point(24, 360);
+            this.flpColorPicker.Name = "flpColorPicker";
+            this.flpColorPicker.Size = new System.Drawing.Size(400, 200);
+            this.flpColorPicker.TabIndex = 9;
+            // 
+            // btnSaveCategory
+            // 
+            this.btnSaveCategory.BackColor = System.Drawing.Color.FromArgb(28, 176, 80);
+            this.btnSaveCategory.FlatAppearance.BorderSize = 0;
+            this.btnSaveCategory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSaveCategory.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
+            this.btnSaveCategory.ForeColor = System.Drawing.Color.White;
+            this.btnSaveCategory.Location = new System.Drawing.Point(24, 580);
+            this.btnSaveCategory.Name = "btnSaveCategory";
+            this.btnSaveCategory.Size = new System.Drawing.Size(400, 45);
+            this.btnSaveCategory.TabIndex = 10;
+            this.btnSaveCategory.Text = "Create new category";
+            this.btnSaveCategory.UseVisualStyleBackColor = false;
+            // 
+            // pnlCategoryLists (Panel bên phải)
+            // 
+            this.pnlCategoryLists.AutoScroll = false;
+            this.pnlCategoryLists.BackColor = System.Drawing.Color.FromArgb(245, 247, 250);
+            this.pnlCategoryLists.Controls.Add(this.flpExpenseCategories);
+            this.pnlCategoryLists.Controls.Add(this.lblExpenseCategories);
+            this.pnlCategoryLists.Controls.Add(this.flpIncomeCategories);
+            this.pnlCategoryLists.Controls.Add(this.lblIncomeCategories);
+            this.pnlCategoryLists.Location = new System.Drawing.Point(470, 0);
+            this.pnlCategoryLists.Name = "pnlCategoryLists";
+            this.pnlCategoryLists.Padding = new System.Windows.Forms.Padding(20);
+            this.pnlCategoryLists.Size = new System.Drawing.Size(917, 780);
+            this.pnlCategoryLists.TabIndex = 1;
+            // 
+            // flpExpenseCategories
+            // 
+            this.flpExpenseCategories.AutoSize = true;
+            this.flpExpenseCategories.BackColor = System.Drawing.Color.White;
+            this.flpExpenseCategories.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flpExpenseCategories.Location = new System.Drawing.Point(20, 240);
+            this.flpExpenseCategories.MinimumSize = new System.Drawing.Size(870, 50);
+            this.flpExpenseCategories.Name = "flpExpenseCategories";
+            this.flpExpenseCategories.Size = new System.Drawing.Size(870, 50);
+            this.flpExpenseCategories.TabIndex = 3;
+            // 
+            // lblExpenseCategories
+            // 
+            this.lblExpenseCategories.AutoSize = true;
+            this.lblExpenseCategories.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold);
+            this.lblExpenseCategories.Location = new System.Drawing.Point(20, 200);
+            this.lblExpenseCategories.Name = "lblExpenseCategories";
+            this.lblExpenseCategories.Size = new System.Drawing.Size(222, 32);
+            this.lblExpenseCategories.TabIndex = 2;
+            this.lblExpenseCategories.Text = "Expense Categories";
+            // 
+            // flpIncomeCategories
+            // 
+            this.flpIncomeCategories.AutoSize = true;
+            this.flpIncomeCategories.BackColor = System.Drawing.Color.White;
+            this.flpIncomeCategories.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flpIncomeCategories.Location = new System.Drawing.Point(20, 60);
+            this.flpIncomeCategories.MinimumSize = new System.Drawing.Size(870, 50);
+            this.flpIncomeCategories.Name = "flpIncomeCategories";
+            this.flpIncomeCategories.Size = new System.Drawing.Size(870, 50);
+            this.flpIncomeCategories.TabIndex = 1;
+            // 
+            // lblIncomeCategories
+            // 
+            this.lblIncomeCategories.AutoSize = true;
+            this.lblIncomeCategories.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold);
+            this.lblIncomeCategories.Location = new System.Drawing.Point(20, 20);
+            this.lblIncomeCategories.Name = "lblIncomeCategories";
+            this.lblIncomeCategories.Size = new System.Drawing.Size(214, 32);
+            this.lblIncomeCategories.TabIndex = 0;
+            this.lblIncomeCategories.Text = "Income Categories";
+            // 
+            // ========================================================
+            // END: ĐỊNH NGHĨA CÁC CONTROL MỚI
+            // ========================================================
+            //
+
             // 
             // UC_Settings
             // 
@@ -688,6 +928,14 @@ namespace ExpenseManager.App.Views.User.UC
             Margin = new Padding(4, 5, 4, 5);
             Name = "UC_Settings";
             Size = new Size(1463, 1154);
+
+            // Thêm ResumeLayout cho các panel mới
+            this.categoriesPanel.ResumeLayout(false);
+            this.pnlCategoryLists.ResumeLayout(false);
+            this.pnlCategoryLists.PerformLayout();
+            this.createCategoryPanel.ResumeLayout(false);
+            this.createCategoryPanel.PerformLayout();
+
             mainPanel.ResumeLayout(false);
             personalInfoPanel.ResumeLayout(false);
             personalInfoPanel.PerformLayout();
@@ -755,5 +1003,25 @@ namespace ExpenseManager.App.Views.User.UC
         private System.Windows.Forms.Label lblCountry;
         private System.Windows.Forms.ComboBox cmbCountry;
         private System.Windows.Forms.Button btnSavePersonal;
+
+        // CÁC BIẾN MỚI CHO TAB CATEGORIES
+        private System.Windows.Forms.Panel categoriesPanel;
+        private System.Windows.Forms.Panel createCategoryPanel;
+        private System.Windows.Forms.Panel pnlCategoryLists;
+        private System.Windows.Forms.Label lblCreateCategoryTitle;
+        private System.Windows.Forms.Label lblCategoryName;
+        private System.Windows.Forms.TextBox txtCategoryName;
+        private System.Windows.Forms.Label lblCategoryType;
+        private System.Windows.Forms.ComboBox cmbCategoryType;
+        private System.Windows.Forms.Label lblCategoryIcon;
+        private System.Windows.Forms.ComboBox cmbIcon;
+        private System.Windows.Forms.Label lblCategoryColor;
+        private System.Windows.Forms.ComboBox cmbColor;
+        private System.Windows.Forms.FlowLayoutPanel flpColorPicker;
+        private System.Windows.Forms.Button btnSaveCategory;
+        private System.Windows.Forms.Label lblIncomeCategories;
+        private System.Windows.Forms.FlowLayoutPanel flpIncomeCategories;
+        private System.Windows.Forms.Label lblExpenseCategories;
+        private System.Windows.Forms.FlowLayoutPanel flpExpenseCategories;
     }
 }

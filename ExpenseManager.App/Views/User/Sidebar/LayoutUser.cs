@@ -1,5 +1,7 @@
 ﻿using ExpenseManager.App.Views.Admin.UC;
 using ExpenseManager.App.Views.User.UC;
+using ExpenseManager.App.Session; // ✅ THÊM
+using Microsoft.Extensions.DependencyInjection; // ✅ THÊM
 using FontAwesome.Sharp;
 using System;
 using System.Collections.Generic;
@@ -186,6 +188,100 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             // Load Dashboard by default
             BtnDashboard_Click(btnDashboard, EventArgs.Empty);
         }
+
+        // ✅✅✅ THÊM CÁC METHOD MỚI CHO PROFILE DROPDOWN ✅✅✅
+
+        // Hiển thị dropdown khi click vào profile button
+        private void BtnProfileTop_Click(object sender, EventArgs e)
+        {
+            // Cập nhật thông tin user trước khi hiển thị
+            UpdateProfileMenu();
+
+            // Hiển thị menu ở vị trí dưới button
+            Point menuLocation = btnProfileTop.PointToScreen(new Point(-200, btnProfileTop.Height));
+            profileContextMenu.Show(menuLocation);
+        }
+
+        // Cập nhật thông tin user trong menu
+        private void UpdateProfileMenu()
+        {
+            if (CurrentUserSession.CurrentUser != null)
+            {
+                var user = CurrentUserSession.CurrentUser;
+
+                // Hiển thị tên và email
+                profileNameLabel.Text = user.FullName ?? "User";
+                profileEmailLabel.Text = user.Email ?? "";
+            }
+            else
+            {
+                profileNameLabel.Text = "Guest";
+                profileEmailLabel.Text = "";
+            }
+        }
+
+        // Chuyển đến Settings
+        private void SettingsMenuItem_Click(object sender, EventArgs e)
+        {
+            ActivateButton(btnSettings);
+            LoadContent(new UC_Settings());
+        }
+
+        // Đăng xuất
+        private void LogoutMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show(
+                "Bạn có chắc chắn muốn đăng xuất?",
+                "Xác nhận đăng xuất",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            );
+
+            if (result == DialogResult.Yes)
+            {
+                // Xóa session
+                CurrentUserSession.ClearUser();
+
+                // Quay về LoginForm
+                var loginForm = Program.ServiceProvider.GetRequiredService<LoginForm>();
+                loginForm.Show();
+                this.Close();
+            }
+        }
+
+        // Custom Renderer để làm đẹp menu
+        public class CustomMenuRenderer : ToolStripProfessionalRenderer
+        {
+            public CustomMenuRenderer() : base(new CustomColorTable()) { }
+
+            protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
+            {
+                if (!e.Item.Selected)
+                {
+                    base.OnRenderMenuItemBackground(e);
+                }
+                else
+                {
+                    Rectangle rc = new Rectangle(Point.Empty, e.Item.Size);
+                    e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(240, 240, 245)), rc);
+                }
+            }
+
+            protected override void OnRenderSeparator(ToolStripSeparatorRenderEventArgs e)
+            {
+                Rectangle rc = new Rectangle(10, 3, e.Item.Width - 20, 1);
+                e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(220, 220, 220)), rc);
+            }
+        }
+
+        public class CustomColorTable : ProfessionalColorTable
+        {
+            public override Color MenuItemSelected => Color.FromArgb(240, 240, 245);
+            public override Color MenuItemSelectedGradientBegin => Color.FromArgb(240, 240, 245);
+            public override Color MenuItemSelectedGradientEnd => Color.FromArgb(240, 240, 245);
+            public override Color MenuItemBorder => Color.Transparent;
+        }
+
         // Win32 API for rounded corners
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
         private static extern IntPtr CreateRoundRectRgn(

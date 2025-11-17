@@ -48,7 +48,7 @@ namespace ExpenseManager.App.Services
                     QuestionType = questionType,
                     Status = "Open",
                     CreatedAt = DateTime.Now,
-                    AdminNote = "Thank you for your feedback. We are going to consider soon!",
+                    AdminNote = "",
                     RespondType = "Email"
                 };
 

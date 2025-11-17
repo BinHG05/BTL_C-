@@ -13,29 +13,40 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using ExpenseManager.App.Session;
+using System.Collections.Generic;
+using System.Linq;
+
+// Thêm 2 dòng alias này
+using DbColor = ExpenseManager.App.Models.Entities.Color;
+using DbIcon = ExpenseManager.App.Models.Entities.Icon;
 
 namespace ExpenseManager.App.Views.User.UC
 {
-    public partial class UC_Settings : UserControl, IProfileView
+    public partial class UC_Settings : UserControl, IProfileView, ICategoryView
     {
         private string selectedImagePath = "";
         private ProfilePresenter _presenter;
-        //private readonly string _currentUserId = "87de8b0d-fb66-445a-a492-79500cd452db";
+        private CategoryPresenter _categoryPresenter;
+        private int? _selectedCategoryId = null;
 
         public UC_Settings(string userId)
         {
             InitializeComponent();
-
-            // Gán giá trị thực tế sau khi đăng nhập
-            //_currentUserId = userId;
-
             InitializeCustomComponents();
             InitializePresenter();
-
-            // ...
         }
 
-        // ===== IMPLEMENT IProfileView - PROPERTIES =====
+        public UC_Settings()
+        {
+            InitializeComponent();
+            InitializeCustomComponents();
+            InitializePresenter();
+            this.Resize += UC_Settings_Resize;
+        }
+
+        // =========================================================
+        // ===== IMPLEMENT IProfileView - PROPERTIES (ĐÃ CÓ) =====
+        // =========================================================
 
         public string UserId => CurrentUserSession.CurrentUser?.UserId;
 
@@ -65,7 +76,6 @@ namespace ExpenseManager.App.Views.User.UC
         {
             get
             {
-                // Kiểm tra nếu giá trị là mặc định hoặc quá khứ xa thì return null
                 if (dtpBirthDate.Value.Year < 1900 || dtpBirthDate.Value > DateTime.Now)
                     return null;
                 return dtpBirthDate.Value;
@@ -74,40 +84,76 @@ namespace ExpenseManager.App.Views.User.UC
 
         public string CountryInput => cmbCountry.SelectedItem?.ToString() ?? "";
 
-        // ===== EVENTS =====
+        // ======================================================
+        // ===== IMPLEMENT IProfileView - EVENTS (ĐÃ CÓ) =====
+        // ======================================================
 
         public event EventHandler SaveGeneralInfoClicked;
         public event EventHandler SaveSecurityClicked;
         public event EventHandler SavePersonalInfoClicked;
 
-        // ===== CONSTRUCTOR =====
 
-        public UC_Settings()
+        // ============================================================
+        // ===== 2. IMPLEMENT ICategoryView - PROPERTIES (MỚI) =====
+        // ============================================================
+
+        public int? SelectedCategoryId => _selectedCategoryId;
+
+        public string CategoryName
         {
-            InitializeComponent();
-            InitializeCustomComponents();
-            InitializePresenter();
-
-            // Handle resize event
-            this.Resize += UC_Settings_Resize;
+            get => txtCategoryName.Text;
+            set => txtCategoryName.Text = value;
+        }
+        public string CategoryType
+        {
+            get => cmbCategoryType.SelectedItem.ToString();
+            set => cmbCategoryType.SelectedItem = value;
+        }
+        public int SelectedIconId
+        {
+            get => (int)cmbIcon.SelectedValue;
+            set => cmbIcon.SelectedValue = value;
+        }
+        public int SelectedColorId
+        {
+            get => (int)cmbColor.SelectedValue;
+            set => cmbColor.SelectedValue = value;
         }
 
-        /// <summary>
-        /// Khởi tạo Presenter với Dependency Injection
-        /// </summary>
+        // =========================================================
+        // ===== 3. IMPLEMENT ICategoryView - EVENTS (MỚI) =====
+        // =========================================================
+
+        public event EventHandler LoadView;
+        public event EventHandler CreateCategory;
+        public event EventHandler UpdateCategory;
+        public event EventHandler DeleteCategory;
+        public event EventHandler SelectCategory;
+
+
+        // ==========================================================
+        // ===== 4. CẬP NHẬT PRESENTER (GỘP) =====
+        // ==========================================================
+
         private void InitializePresenter()
         {
             try
             {
-                // TODO: Trong production, nên dùng DI Container
-                var dbContext = new ExpenseDbContext(); // Hoặc inject qua constructor
-                IProfileRepository repository = new ProfileRepository(dbContext);
-                IProfileServices services = new ProfileServices(repository);
+                var dbContext = new ExpenseDbContext();
 
-                _presenter = new ProfilePresenter(this, services);
+                IProfileRepository profileRepository = new ProfileRepository(dbContext);
+                IProfileServices profileServices = new ProfileServices(profileRepository);
+                _presenter = new ProfilePresenter(this, profileServices);
 
-                // Load dữ liệu ban đầu
-                _presenter.LoadUserProfileAsync();
+                _ = _presenter.LoadUserProfileAsync();
+
+                ICategoryRepository categoryRepository = new CategoryRepository(dbContext);
+                IIconRepository iconRepository = new IconRepository(dbContext);
+                IColorRepository colorRepository = new ColorRepository(dbContext);
+                ICategoryService categoryService = new CategoryService(categoryRepository, iconRepository, colorRepository);
+                _categoryPresenter = new CategoryPresenter(this, categoryService);
+
+                this.btnSaveCategory.Click += BtnSaveCategory_Click;
             }
             catch (Exception ex)
             {
@@ -116,48 +162,45 @@ namespace ExpenseManager.App.Views.User.UC
             }
         }
 
-        // ===== IMPLEMENT IProfileView - METHODS =====
+        // ====================================================================
+        // ===== 5. IMPLEMENT IProfileView & ICategoryView - METHODS =====
+        // ====================================================================
 
+        // Methods cho IProfileView (ĐÃ CÓ)
         public void DisplayUserData(ExpenseManager.App.Models.Entities.User user)
         {
             if (user == null) return;
 
-            // Hiển thị thông tin chung
             txtFullName.Text = user.FullName;
             txtCurrentEmail.Text = user.Email;
             lblProfileName.Text = user.FullName;
 
-            // Hiển thị avatar
             try
             {
-                // 1. Kiểm tra xem có avatar riêng VÀ file đó tồn tại không
                 if (!string.IsNullOrWhiteSpace(user.AvatarUrl) && File.Exists(user.AvatarUrl))
                 {
-                    picProfile.Image = Image.FromFile(user.AvatarUrl);
+                    picProfile.Image = System.Drawing.Image.FromFile(user.AvatarUrl);
                 }
                 else
                 {
-                    // 2. Nếu không, tải avatar mặc định
                     string defaultAvatarPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
                                                             "image",
                                                             "AvatarDefault.jpg");
 
                     if (File.Exists(defaultAvatarPath))
                     {
-                        picProfile.Image = Image.FromFile(defaultAvatarPath);
+                        picProfile.Image = System.Drawing.Image.FromFile(defaultAvatarPath);
                     }
                     else
                     {
-                        // (Nếu cả avatar default cũng không thấy thì để trống)
                         picProfile.Image = null;
                     }
                 }
             }
             catch (Exception ex)
             {
-                // Xử lý lỗi nếu file ảnh bị hỏng hoặc không đọc được
                 Console.WriteLine($"Error loading image: {ex.Message}");
-                picProfile.Image = null; // Để màu xanh mặc định nếu có lỗi
+                picProfile.Image = null;
             }
         }
 
@@ -173,8 +216,125 @@ namespace ExpenseManager.App.Views.User.UC
                 MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
-        // ===== BUTTON CLICK HANDLERS =====
+        // Methods cho ICategoryView
 
+        // ===== BẮT ĐẦU SỬA (LỖI BIÊN DỊCH) =====
+        public void DisplayCategories(List<Category> incomeCategories, List<Category> expenseCategories)
+        {
+            // Tạm dừng layout
+            pnlCategoryLists.SuspendLayout();
+            flpIncomeCategories.SuspendLayout();
+            flpExpenseCategories.SuspendLayout();
+
+            flpIncomeCategories.Controls.Clear();
+            flpExpenseCategories.Controls.Clear();
+
+            // 1. Lấy chiều rộng CHUẨN từ panel cha (pnlCategoryLists).
+            int panelWidth = pnlCategoryLists.ClientSize.Width;
+
+            // 2. Set width cho cả 2 FlowLayoutPanel
+            flpIncomeCategories.Width = panelWidth;
+            flpExpenseCategories.Width = panelWidth;
+
+            // 3. Lấy chiều rộng item (CHỈ 1 LẦN)
+            // Đã xóa dòng khai báo "int itemWidth" bị lặp lại
+            int itemWidth = flpIncomeCategories.ClientSize.Width;
+
+            // 4. Thêm vào list Income
+            foreach (var category in incomeCategories)
+            {
+                var item = new UC_CategoryItem(category);
+                item.Width = itemWidth; // Dùng itemWidth
+                item.EditClicked += OnCategoryItem_EditClicked;
+                item.DeleteClicked += OnCategoryItem_DeleteClicked;
+                flpIncomeCategories.Controls.Add(item);
+            }
+
+            // 5. Thêm vào list Expense
+            foreach (var category in expenseCategories)
+            {
+                var item = new UC_CategoryItem(category);
+                item.Width = itemWidth; // Dùng CHUNG itemWidth
+                item.EditClicked += OnCategoryItem_EditClicked;
+                item.DeleteClicked += OnCategoryItem_DeleteClicked;
+                flpExpenseCategories.Controls.Add(item);
+            }
+
+            // Tiếp tục layout
+            flpIncomeCategories.ResumeLayout(false);
+            flpExpenseCategories.ResumeLayout(false);
+            pnlCategoryLists.ResumeLayout(true);
+        }
+        // ===== KẾT THÚC SỬA =====
+
+
+        public void PopulateDropdowns(List<DbIcon> icons, List<DbColor> colors)
+        {
+            cmbIcon.DataSource = icons;
+            cmbIcon.DisplayMember = "IconName";
+            cmbIcon.ValueMember = "IconId";
+
+            cmbColor.DataSource = colors;
+            cmbColor.DisplayMember = "ColorName";
+            cmbColor.ValueMember = "ColorId";
+
+            flpColorPicker.Controls.Clear();
+            foreach (var color in colors)
+            {
+                Panel colorPanel = new Panel
+                {
+                    Width = 30,
+                    Height = 30,
+                    Margin = new Padding(5),
+                    BackColor = System.Drawing.ColorTranslator.FromHtml(color.HexCode),
+                    Cursor = Cursors.Hand,
+                    Tag = color.ColorId
+                };
+                colorPanel.Click += (s, e) => {
+                    cmbColor.SelectedValue = (int)((Panel)s).Tag;
+                };
+                flpColorPicker.Controls.Add(colorPanel);
+            }
+        }
+
+        public void LoadCategoryForEdit(Category category)
+        {
+            _selectedCategoryId = category.CategoryId;
+            txtCategoryName.Text = category.CategoryName;
+            cmbCategoryType.SelectedItem = category.Type;
+            cmbIcon.SelectedValue = category.IconId;
+            cmbColor.SelectedValue = category.ColorId;
+
+            btnSaveCategory.Text = "Lưu thay đổi";
+            btnSaveCategory.BackColor = System.Drawing.Color.FromArgb(0, 112, 243);
+            lblCreateCategoryTitle.Text = "Edit category";
+        }
+
+        public void ResetForm()
+        {
+            _selectedCategoryId = null;
+            txtCategoryName.Text = "";
+            cmbCategoryType.SelectedIndex = 0;
+            if (cmbIcon.Items.Count > 0) cmbIcon.SelectedIndex = 0;
+            if (cmbColor.Items.Count > 0) cmbColor.SelectedIndex = 0;
+
+            btnSaveCategory.Text = "Create new category";
+            btnSaveCategory.BackColor = System.Drawing.Color.FromArgb(28, 176, 80);
+            lblCreateCategoryTitle.Text = "Create a new category";
+        }
+
+        public void ShowMessage(string message, string title, bool isError = false)
+        {
+            MessageBox.Show(message, title,
+                MessageBoxButtons.OK,
+                isError ? MessageBoxIcon.Warning : MessageBoxIcon.Information);
+        }
+
+        // ========================================================
+        // ===== 6. EVENT HANDLERS (GỘP) =====
+        // ========================================================
+
+        // Handlers cho IProfileView (ĐÃ CÓ)
         private void BtnSaveProfile_Click(object sender, EventArgs e)
         {
             SaveGeneralInfoClicked?.Invoke(this, EventArgs.Empty);
@@ -190,31 +350,150 @@ namespace ExpenseManager.App.Views.User.UC
             SavePersonalInfoClicked?.Invoke(this, EventArgs.Empty);
         }
 
-        // ===== PRIVATE HELPER METHODS =====
-
-        /// <summary>
-        /// Lấy giá trị input, trả về empty nếu là placeholder
-        /// </summary>
-        private string GetInputValue(TextBox textBox, string placeholder)
+        private void BtnBrowse_Click(object sender, EventArgs e)
         {
-            if (textBox.Text == placeholder || string.IsNullOrWhiteSpace(textBox.Text))
+            using (OpenFileDialog ofd = new OpenFileDialog())
+            {
+                ofd.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
+                ofd.Title = "Select Profile Picture";
+
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    FileInfo fileInfo = new FileInfo(ofd.FileName);
+                    if (fileInfo.Length > 20 * 1024 * 1024) // 20MB
+                    {
+                        MessageBox.Show("File size must be less than 20MB", "Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    selectedImagePath = ofd.FileName;
+                    picProfile.Image = System.Drawing.Image.FromFile(ofd.FileName);
+                }
+            }
+        }
+
+        private void BtnTogglePassword_Click(object sender, EventArgs e)
+        {
+            if (txtCurrentPassword.UseSystemPasswordChar)
+            {
+                txtCurrentPassword.UseSystemPasswordChar = false;
+                btnTogglePassword.Text = "🙈";
+            }
+            else
+            {
+                txtCurrentPassword.UseSystemPasswordChar = true;
+                btnTogglePassword.Text = "👁";
+            }
+        }
+
+        // Handlers cho Chuyển Tab (MỚI / CẬP NHẬT)
+        private void lblTabProfile_Click(object sender, EventArgs e)
+        {
+            SwitchTab(Tab.Profile);
+        }
+
+        private void lblTabCategories_Click(object sender, EventArgs e)
+        {
+            SwitchTab(Tab.Categories);
+            LoadView?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void lblTabSupport_Click(object sender, EventArgs e)
+        {
+            SwitchTab(Tab.Support);
+            LoadContent(new UC_TicketUser());
+        }
+
+        private enum Tab { Profile, Categories, Support }
+        private void SwitchTab(Tab tab)
+        {
+            topPanel.Visible = false;
+            personalInfoPanel.Visible = false;
+            categoriesPanel.Visible = false;
+
+            lblTabProfile.Font = new Font("Segoe UI", 11F, FontStyle.Regular);
+            lblTabProfile.ForeColor = System.Drawing.Color.Gray;
+            lblTabCategories.Font = new Font("Segoe UI", 11F, FontStyle.Regular);
+            lblTabCategories.ForeColor = System.Drawing.Color.Gray;
+            lblTabSupport.Font = new Font("Segoe UI", 11F, FontStyle.Regular);
+            lblTabSupport.ForeColor = System.Drawing.Color.Gray;
+
+            if (tab == Tab.Profile)
+            {
+                topPanel.Visible = true;
+                personalInfoPanel.Visible = true;
+                lblTabProfile.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
+                lblTabProfile.ForeColor = System.Drawing.Color.FromArgb(0, 112, 243);
+            }
+            else if (tab == Tab.Categories)
+            {
+                categoriesPanel.Visible = true;
+                lblTabCategories.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
+                lblTabCategories.ForeColor = System.Drawing.Color.FromArgb(0, 112, 243);
+                ResetForm();
+                AdjustLayout();
+            }
+            else if (tab == Tab.Support)
+            {
+                lblTabSupport.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
+                lblTabSupport.ForeColor = System.Drawing.Color.FromArgb(0, 112, 243);
+            }
+        }
+
+        // Handlers cho ICategoryView (MỚI)
+        private void BtnSaveCategory_Click(object sender, EventArgs e)
+        {
+            if (_selectedCategoryId == null)
+            {
+                CreateCategory?.Invoke(this, EventArgs.Empty);
+            }
+            else
+            {
+                UpdateCategory?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        private void OnCategoryItem_EditClicked(object sender, EventArgs e)
+        {
+            var item = (UC_CategoryItem)sender;
+            _selectedCategoryId = item.CategoryId;
+            SelectCategory?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void OnCategoryItem_DeleteClicked(object sender, EventArgs e)
+        {
+            var item = (UC_CategoryItem)sender;
+
+            var confirmResult = MessageBox.Show($"Bạn có chắc muốn xóa danh mục '{item.GetCategory().CategoryName}' không?",
+                                     "Xác nhận xóa",
+                                     MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (confirmResult == DialogResult.Yes)
+            {
+                _selectedCategoryId = item.CategoryId;
+                DeleteCategory?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        // ========================================================
+        // ===== 7. HELPER METHODS (ĐÃ CÓ) =====
+        // ========================================================
+
+        private string GetInputValue(TextBox textBox, string placeholderText)
+        {
+            if (textBox.Text == placeholderText || string.IsNullOrWhiteSpace(textBox.Text))
                 return "";
             return textBox.Text;
         }
 
         private void InitializeCustomComponents()
         {
-            // Apply rounded corners to textboxes
             ApplyRoundedCorners();
-
-            // Setup password visibility toggle
             SetupPasswordToggle();
-
-            // Setup profile picture
             SetupProfilePicture();
-
-            // Setup placeholder text events
             SetupPlaceholders();
+            SwitchTab(Tab.Profile);
         }
 
         private void UC_Settings_Resize(object sender, EventArgs e)
@@ -224,12 +503,11 @@ namespace ExpenseManager.App.Views.User.UC
 
         private void AdjustLayout()
         {
-            int availableWidth = this.Width - 60;
+            int availableWidth = this.Width - (this.mainPanel.Padding.Horizontal + 40);
             int panelSpacing = 20;
 
             headerPanel.Width = availableWidth;
             breadcrumbPanel.Left = availableWidth - breadcrumbPanel.Width;
-
             tabPanel.Width = availableWidth;
 
             topPanel.Width = availableWidth;
@@ -238,29 +516,57 @@ namespace ExpenseManager.App.Views.User.UC
             passwordPanel.Width = halfWidth;
             passwordPanel.Left = halfWidth + panelSpacing;
 
-            txtFullName.Width = profilePanel.Width - 50;
-            txtCurrentEmail.Width = profilePanel.Width - 50;
+            txtFullName.Width = profilePanel.Width - 60;
+            txtCurrentEmail.Width = profilePanel.Width - 60;
 
-            txtNewEmail.Width = passwordPanel.Width - 50;
-            txtCurrentPassword.Width = passwordPanel.Width - 90;
-            btnTogglePassword.Left = passwordPanel.Width - 60;
-            txtNewPassword.Width = passwordPanel.Width - 50;
-            txtConfirmPassword.Width = passwordPanel.Width - 50;
+            txtNewEmail.Width = passwordPanel.Width - 60;
+            txtCurrentPassword.Width = passwordPanel.Width - 100;
+            btnTogglePassword.Left = txtCurrentPassword.Right + 5;
+            txtNewPassword.Width = passwordPanel.Width - 60;
+            txtConfirmPassword.Width = passwordPanel.Width - 60;
 
             personalInfoPanel.Width = availableWidth;
-            int fieldWidth = (availableWidth - 90) / 2;
+            int fieldWidth = (availableWidth - (panelSpacing * 3)) / 2;
             txtAddress.Width = fieldWidth;
-            txtCity.Width = fieldWidth;
-            txtCity.Left = fieldWidth + 50;
-            lblCity.Left = fieldWidth + 50;
-
             dtpBirthDate.Width = fieldWidth;
-            cmbCountry.Width = fieldWidth;
-            cmbCountry.Left = fieldWidth + 50;
-            lblCountry.Left = fieldWidth + 50;
 
-            ApplyRoundedCorners();
+            lblCity.Left = fieldWidth + panelSpacing * 2;
+            txtCity.Left = lblCity.Left;
+            txtCity.Width = fieldWidth;
+
+            lblCountry.Left = lblCity.Left;
+            cmbCountry.Left = lblCity.Left;
+            cmbCountry.Width = fieldWidth;
+
+            if (categoriesPanel.Visible)
+            {
+                categoriesPanel.Width = availableWidth;
+                createCategoryPanel.Height = categoriesPanel.Height;
+                pnlCategoryLists.Height = categoriesPanel.Height;
+
+                pnlCategoryLists.Width = categoriesPanel.Width - createCategoryPanel.Width - panelSpacing;
+                pnlCategoryLists.Left = createCategoryPanel.Width + panelSpacing;
+
+                // ===== BẮT ĐẦU SỬA (LỖI "HỎN") =====
+                int listWidth = pnlCategoryLists.ClientSize.Width;
+                flpIncomeCategories.Width = listWidth;
+                flpExpenseCategories.Width = listWidth;
+
+                int itemWidth = flpIncomeCategories.ClientSize.Width;
+                foreach (Control item in flpIncomeCategories.Controls)
+                {
+                    item.Width = itemWidth;
+                }
+
+                // Dùng chung itemWidth (vì 2 FLP đã bằng nhau)
+                foreach (Control item in flpExpenseCategories.Controls)
+                {
+                    item.Width = itemWidth;
+                }
+                // ===== KẾT THÚC SỬA =====
+            }
         }
+
 
         private void ApplyRoundedCorners()
         {
@@ -278,6 +584,9 @@ namespace ExpenseManager.App.Views.User.UC
             ApplyRoundedCorner(btnSavePassword, 8);
             ApplyRoundedCorner(btnSavePersonal, 8);
             ApplyRoundedCorner(btnBrowse, 8);
+
+            ApplyRoundedCorner(txtCategoryName, 10);
+            ApplyRoundedCorner(btnSaveCategory, 8);
         }
 
         private void ApplyRoundedCorner(Control control, int radius)
@@ -301,6 +610,7 @@ namespace ExpenseManager.App.Views.User.UC
         private void SetupProfilePicture()
         {
             GraphicsPath path = new GraphicsPath();
+            picProfile.Size = new Size(60, 60);
             path.AddEllipse(0, 0, picProfile.Width, picProfile.Height);
             picProfile.Region = new Region(path);
             picProfile.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -337,41 +647,11 @@ namespace ExpenseManager.App.Views.User.UC
             };
         }
 
-        private void BtnBrowse_Click(object sender, EventArgs e)
+        private void LoadContent(UserControl uc)
         {
-            using (OpenFileDialog ofd = new OpenFileDialog())
-            {
-                ofd.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
-                ofd.Title = "Select Profile Picture";
-
-                if (ofd.ShowDialog() == DialogResult.OK)
-                {
-                    FileInfo fileInfo = new FileInfo(ofd.FileName);
-                    if (fileInfo.Length > 20 * 1024 * 1024)
-                    {
-                        MessageBox.Show("File size must be less than 20MB", "Error",
-                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-
-                    selectedImagePath = ofd.FileName;
-                    picProfile.Image = Image.FromFile(ofd.FileName);
-                }
-            }
-        }
-
-        private void BtnTogglePassword_Click(object sender, EventArgs e)
-        {
-            if (txtCurrentPassword.UseSystemPasswordChar)
-            {
-                txtCurrentPassword.UseSystemPasswordChar = false;
-                btnTogglePassword.Text = "🙈";
-            }
-            else
-            {
-                txtCurrentPassword.UseSystemPasswordChar = true;
-                btnTogglePassword.Text = "👁";
-            }
+            this.Controls.Clear();
+            uc.Dock = DockStyle.Fill;
+            this.Controls.Add(uc);
         }
 
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
@@ -379,15 +659,5 @@ namespace ExpenseManager.App.Views.User.UC
             int nLeftRect, int nTopRect, int nRightRect, int nBottomRect,
             int nWidthEllipse, int nHeightEllipse
         );
-        private void LoadContent(UserControl uc)
-        {
-            this.Controls.Clear();
-            uc.Dock = DockStyle.Fill;
-            this.Controls.Add(uc);
-        }
-        private void lblTabSupport_Click(object sender, EventArgs e)
-        {
-            LoadContent(new UC_TicketUser());
-        }
     }
 }

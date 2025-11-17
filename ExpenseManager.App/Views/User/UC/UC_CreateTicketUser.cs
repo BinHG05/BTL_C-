@@ -43,28 +43,11 @@ namespace ExpenseManager.App.Views.User.UC
         private void InitializeComboBox()
         {
             cmbType.Items.Clear();
-
-            // Mục mặc định (placeholder)
             cmbType.Items.Add("-- Choose Type --");
-
-            // Các mục chung
-            cmbType.Items.Add("General"); // Mục chung
-            cmbType.Items.Add("Bug Report"); // Báo lỗi
-            cmbType.Items.Add("Feature Request"); // Yêu cầu tính năng mới
-
-            // Các mục cụ thể cho ứng dụng Expense Manager
-            cmbType.Items.Add("Account & Login"); // Vấn đề tài khoản & đăng nhập
-            cmbType.Items.Add("Transaction Issue"); // Lỗi liên quan đến giao dịch
-            cmbType.Items.Add("Budget & Goals"); // Vấn đề về ngân sách/mục tiêu
-            cmbType.Items.Add("Data & Backup"); // Vấn đề về dữ liệu & sao lưu
-            cmbType.Items.Add("Payment & Subscription"); // Vấn đề thanh toán & gói dịch vụ
-            cmbType.Items.Add("Withdrawals"); // Vấn đề rút tiền
-            cmbType.Items.Add("Earning"); // Hỏi đáp về ghi nhận thu nhập
-
-            // Mục cuối cùng
-            cmbType.Items.Add("Others"); // Khác
-
-            // Đặt mục "-- Choose Type --" làm mục được chọn mặc định
+            cmbType.Items.Add("General");
+            cmbType.Items.Add("Bug Report");
+            cmbType.Items.Add("Feature Request");
+            cmbType.Items.Add("Others");
             cmbType.SelectedIndex = 0;
         }
 

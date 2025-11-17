@@ -71,7 +71,6 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
         {
             ActivateButton(btnSupport);
             // TODO: Load Support/Ticket content here
-            LoadContent(new UC.UC_TicketAD());
         }
 
         private void ProfilePanel_Click(object sender, EventArgs e)
@@ -126,12 +125,6 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
         {
             // Activate Dashboard by default
             ActivateButton(btnDashboard);
-        }
-        private void LoadContent(UserControl uc)
-        {
-            contentPanel.Controls.Clear();
-            uc.Dock = DockStyle.Fill;
-            contentPanel.Controls.Add(uc);
         }
     }
 }
