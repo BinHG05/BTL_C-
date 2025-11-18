@@ -5,26 +5,19 @@ using ExpenseManager.App.Repositories;
 using ExpenseManager.App.Repositories.Interfaces;
 using ExpenseManager.App.Services;
 using ExpenseManager.App.Services.Interfaces;
-using ExpenseManager.App.Session; // Dùng cho UserId
+using ExpenseManager.App.Session;
 using ExpenseManager.App.Views.User.UC;
 using FontAwesome.Sharp;
-//using FontAwesome.Sharp.Fonts; // <<< THÊM DÒNG NÀY
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Drawing; // Giữ nguyên
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using System.Windows.Forms.DataVisualization.Charting; // Dùng cho Chart
-using System.Windows.Media;
-
-
-// ===== THÊM ALIAS NÀY =====
-using DbColor = ExpenseManager.App.Models.Entities.Color;
-
-namespace ExpenseManager.App.Views.Admin.UC // Đảm bảo namespace này đúng
+using System.Windows.Forms.DataVisualization.Charting;
+using Color = System.Drawing.Color;
+namespace ExpenseManager.App.Views.Admin.UC
 {
     public partial class UC_Wallet : UserControl, IWalletView
     {
@@ -60,13 +53,10 @@ namespace ExpenseManager.App.Views.Admin.UC // Đảm bảo namespace này đún
 
         private void UC_Wallet_Load(object sender, EventArgs e)
         {
-            // Kích hoạt Presenter tải dữ liệu
             LoadView?.Invoke(this, EventArgs.Empty);
         }
 
-        // ===========================================
-        // === Triển khai IWalletView
-        // ===========================================
+        // --- IWalletView Implementation ---
 
         public string UserId => CurrentUserSession.CurrentUser?.UserId;
         public int? SelectedWalletId
@@ -92,13 +82,10 @@ namespace ExpenseManager.App.Views.Admin.UC // Đảm bảo namespace này đún
         {
             flpWallets.Controls.Clear();
 
-            // ===== SỬA LOGIC MẶC ĐỊNH =====
-            // Nếu chưa có ví nào được chọn (lần đầu load), chọn ví đầu tiên
             if (_selectedWalletId == null && wallets.Any())
             {
                 _selectedWalletId = wallets.First().WalletId;
             }
-            // ===== KẾT THÚC SỬA =====
 
             foreach (var wallet in wallets)
             {
@@ -106,7 +93,6 @@ namespace ExpenseManager.App.Views.Admin.UC // Đảm bảo namespace này đún
                 item.Click += OnWalletItem_Click;
                 flpWallets.Controls.Add(item);
 
-                // Cập nhật trạng thái selected
                 if (wallet.WalletId == _selectedWalletId)
                 {
                     item.SetSelected(true);
@@ -119,13 +105,10 @@ namespace ExpenseManager.App.Views.Admin.UC // Đảm bảo namespace này đún
             var selectedItem = (UC_WalletItem)sender;
             _selectedWalletId = selectedItem.WalletId;
 
-            // Cập nhật lại UI (highlight)
             foreach (UC_WalletItem item in flpWallets.Controls)
             {
                 item.SetSelected(item.WalletId == _selectedWalletId);
             }
-
-            // Báo cho Presenter
             SelectWallet?.Invoke(this, EventArgs.Empty);
         }
 
@@ -136,18 +119,18 @@ namespace ExpenseManager.App.Views.Admin.UC // Đảm bảo namespace này đún
             lblMonthlyExpensesAmount.Text = monthlyExpenses.ToString("N0", new CultureInfo("vi-VN")) + "đ";
         }
 
+        // ===== SỬA ĐỔI CHÍNH Ở ĐÂY: HIỂN THỊ ICON BẰNG HÌNH ẢNH =====
         public void DisplayTransactions(List<Transaction> transactions, int totalRecords, int pageSize)
         {
             _totalRecords = totalRecords;
             _pageSize = pageSize;
             _totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
 
-            // Cập nhật DataGridView
             dgvTransactions.Rows.Clear();
 
-            // ===== SỬA LỖI HIỂN THỊ "CHƯA CÓ GIAO DỊCH" =====
             if (totalRecords == 0)
             {
+                ShowEmptyState(false);
                 lblNoTransactions.Visible = true;
                 dgvTransactions.Visible = false;
                 lblPageInfo.Visible = false;
@@ -164,45 +147,71 @@ namespace ExpenseManager.App.Views.Admin.UC // Đảm bảo namespace này đún
 
                 foreach (var tran in transactions)
                 {
-                    string categoryDisplay = (tran.Category?.Icon != null)
-                        ? $"{tran.Category.Icon.IconName}"
-                        : tran.Category?.CategoryName ?? "N/A";
+                    // 1. Xử lý Icon -> Bitmap
+                    Bitmap iconBitmap = null;
+                    if (tran.Category?.Icon != null)
+                    {
+                        IconChar iconChar = ConvertIconClassToIconChar(tran.Category.Icon.IconClass);
+                        Color iconColor = Color.Gray;
+                        try
+                        {
+                            // Kiểm tra Color có null không trước khi lấy HexCode
+                            if (tran.Category.Color != null && !string.IsNullOrEmpty(tran.Category.Color.HexCode))
+                                iconColor = ColorTranslator.FromHtml(tran.Category.Color.HexCode);
+                        }
+                        catch { }
 
+                        iconBitmap = iconChar.ToBitmap(iconColor, 32);
+                    }
+
+                    // 2. Xử lý Text & Màu sắc số tiền
+                    string categoryName = tran.Category?.CategoryName ?? "Unknown";
                     string amountString = (tran.Type == "Expense" ? "-" : "+") + tran.Amount.ToString("N0", new CultureInfo("vi-VN")) + "đ";
-                    System.Drawing.Color amountColor = (tran.Type == "Expense") ? System.Drawing.Color.FromArgb(239, 68, 68) : System.Drawing.Color.FromArgb(34, 197, 94);
 
+                    // Màu sắc: Đỏ cho chi tiêu, Xanh lá cho thu nhập
+                    Color amountColor = (tran.Type == "Expense") ? Color.FromArgb(239, 68, 68) : Color.FromArgb(34, 197, 94);
+
+                    // 3. Thêm dòng vào Grid
                     int rowIndex = dgvTransactions.Rows.Add(
-                        categoryDisplay,
+                        iconBitmap,
+                        categoryName,
                         tran.TransactionDate.ToString("dd/MM/yyyy"),
                         tran.Description,
                         amountString
                     );
 
-                    dgvTransactions.Rows[rowIndex].Cells["Amount"].Style.ForeColor = amountColor;
-                    dgvTransactions.Rows[rowIndex].Cells["Amount"].Style.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-                    dgvTransactions.Rows[rowIndex].Cells["Category"].Tag = tran.Category;
+                    // 4. Format màu số tiền (QUAN TRỌNG)
+                    var cell = dgvTransactions.Rows[rowIndex].Cells["Amount"];
+                    cell.Style.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+
+                    // Set màu chữ bình thường
+                    cell.Style.ForeColor = amountColor;
+
+                    // 👇 FIX LỖI MẤT MÀU KHI CHỌN DÒNG: Set màu chữ khi được chọn giống hệt màu bình thường
+                    cell.Style.SelectionForeColor = amountColor;
                 }
             }
-            // ===== KẾT THÚC SỬA =====
 
-            // Cập nhật thông tin phân trang
             lblPageInfo.Text = $"Page {_currentPage} of {_totalPages}";
             btnPrevPage.Enabled = _currentPage > 1;
             btnNextPage.Enabled = _currentPage < _totalPages;
+
+            // Bỏ chọn dòng đầu tiên để nhìn thoáng hơn (Tùy chọn)
+            dgvTransactions.ClearSelection();
         }
+        // ===========================================================
 
         public void DisplayCategoryChart(List<CategoryExpense> categoryExpenses)
         {
             pieChart.Series.Clear();
             pieChart.Legends.Clear();
-            pieChart.Titles.Clear(); // Xóa title cũ
+            pieChart.Titles.Clear();
 
             if (!categoryExpenses.Any())
             {
-                // Hiển thị thông báo không có dữ liệu
                 pieChart.Titles.Add("Không có dữ liệu chi tiêu tháng này.");
                 pieChart.Titles[0].Font = new Font("Segoe UI", 12F);
-                pieChart.Titles[0].ForeColor = System.Drawing.Color.FromArgb(100, 116, 139);
+                pieChart.Titles[0].ForeColor = Color.FromArgb(100, 116, 139);
                 return;
             }
 
@@ -225,16 +234,15 @@ namespace ExpenseManager.App.Views.Admin.UC // Đảm bảo namespace này đún
                 point.SetValueY(Convert.ToDouble(expense.Amount));
                 series.Points.Add(point);
 
-                point.Color = System.Drawing.ColorTranslator.FromHtml(expense.ColorHex);
+                point.Color = ColorTranslator.FromHtml(expense.ColorHex);
                 point.LegendText = $"{expense.CategoryName} ({expense.Amount:N0}đ)";
                 point.Label = $"{Math.Round((double)(expense.Amount / categoryExpenses.Sum(c => c.Amount)) * 100)}%";
-                point.LabelForeColor = System.Drawing.Color.White;
+                point.LabelForeColor = Color.White;
                 point.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             }
 
             series["PieLabelStyle"] = "Outside";
             series["PieLineColor"] = "Black";
-
             pieChart.Series.Add(series);
         }
 
@@ -242,8 +250,6 @@ namespace ExpenseManager.App.Views.Admin.UC // Đảm bảo namespace này đún
         {
             pnlEmptyState.Visible = show;
             pnlEmptyState.BringToFront();
-
-            // Ẩn các panel nội dung
             pnlBIDVHeader.Visible = !show;
             pnlTotalBalance.Visible = !show;
             pnlMonthlyExpenses.Visible = !show;
@@ -253,117 +259,87 @@ namespace ExpenseManager.App.Views.Admin.UC // Đảm bảo namespace này đún
 
         public void ShowMessage(string message, string title, bool isError = false)
         {
-            MessageBox.Show(message, title, MessageBoxButtons.OK,
-                isError ? MessageBoxIcon.Warning : MessageBoxIcon.Information);
+            MessageBox.Show(message, title, MessageBoxButtons.OK, isError ? MessageBoxIcon.Warning : MessageBoxIcon.Information);
         }
 
-        // ===========================================
-        // === Cài đặt giao diện
-        // ===========================================
-
+        // ===== CÀI ĐẶT DATAGRIDVIEW MỚI (CÓ CỘT ẢNH) =====
         private void SetupDataGridView()
         {
-            dgvTransactions.ColumnHeadersDefaultCellStyle.BackColor = System.Drawing.Color.White;
-            dgvTransactions.ColumnHeadersDefaultCellStyle.ForeColor = System.Drawing.ColorTranslator.FromHtml("#1E293B");
+            // Style chung
+            dgvTransactions.ColumnHeadersDefaultCellStyle.BackColor = Color.White;
+            dgvTransactions.ColumnHeadersDefaultCellStyle.ForeColor = ColorTranslator.FromHtml("#1E293B");
             dgvTransactions.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-            dgvTransactions.ColumnHeadersDefaultCellStyle.SelectionBackColor = System.Drawing.Color.White;
+            dgvTransactions.ColumnHeadersDefaultCellStyle.SelectionBackColor = Color.White;
             dgvTransactions.EnableHeadersVisualStyles = false;
 
-            dgvTransactions.DefaultCellStyle.BackColor = System.Drawing.Color.White;
-            dgvTransactions.DefaultCellStyle.ForeColor = System.Drawing.ColorTranslator.FromHtml("#1E293B");
+            dgvTransactions.DefaultCellStyle.BackColor = Color.White;
+            dgvTransactions.DefaultCellStyle.ForeColor = ColorTranslator.FromHtml("#1E293B");
             dgvTransactions.DefaultCellStyle.Font = new Font("Segoe UI", 10F);
-            dgvTransactions.DefaultCellStyle.SelectionBackColor = System.Drawing.ColorTranslator.FromHtml("#F1F5F9");
-            dgvTransactions.DefaultCellStyle.SelectionForeColor = System.Drawing.ColorTranslator.FromHtml("#1E293B");
+            dgvTransactions.DefaultCellStyle.SelectionBackColor = ColorTranslator.FromHtml("#F1F5F9");
+            dgvTransactions.DefaultCellStyle.SelectionForeColor = ColorTranslator.FromHtml("#1E293B");
             dgvTransactions.DefaultCellStyle.Padding = new Padding(5);
+            dgvTransactions.RowTemplate.Height = 50; // Tăng chiều cao dòng để chứa icon
+            dgvTransactions.AlternatingRowsDefaultCellStyle.BackColor = ColorTranslator.FromHtml("#FAFAFA");
+            dgvTransactions.BorderStyle = BorderStyle.None;
+            dgvTransactions.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dgvTransactions.GridColor = Color.FromArgb(240, 240, 240);
+            dgvTransactions.RowHeadersVisible = false;
+            dgvTransactions.AllowUserToAddRows = false;
+            dgvTransactions.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
-            dgvTransactions.AlternatingRowsDefaultCellStyle.BackColor = System.Drawing.ColorTranslator.FromHtml("#FAFAFA");
-
+            // Xóa cột cũ
             dgvTransactions.Columns.Clear();
-            dgvTransactions.Columns.Add("Category", "Category");
-            dgvTransactions.Columns.Add("Date", "Date");
-            dgvTransactions.Columns.Add("Description", "Description");
-            dgvTransactions.Columns.Add("Amount", "Amount");
 
-            dgvTransactions.Columns["Category"].Width = 200;
-            dgvTransactions.Columns["Date"].Width = 150;
-            dgvTransactions.Columns["Description"].Width = 530;
-            dgvTransactions.Columns["Amount"].Width = 180;
+            // 1. Cột Icon (Hình ảnh)
+            DataGridViewImageColumn iconCol = new DataGridViewImageColumn();
+            iconCol.Name = "Icon";
+            iconCol.HeaderText = ""; // Không cần tiêu đề
+            iconCol.Width = 50;
+            iconCol.ImageLayout = DataGridViewImageCellLayout.Zoom; // Icon tự co giãn
+            dgvTransactions.Columns.Add(iconCol);
+
+            // 2. Cột Tên Category
+            dgvTransactions.Columns.Add("CategoryName", "Category");
+            dgvTransactions.Columns["CategoryName"].Width = 180;
+
+            // 3. Cột Ngày
+            dgvTransactions.Columns.Add("Date", "Date");
+            dgvTransactions.Columns["Date"].Width = 120;
+
+            // 4. Cột Mô tả (Tự giãn)
+            dgvTransactions.Columns.Add("Description", "Description");
+            dgvTransactions.Columns["Description"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+            // 5. Cột Số tiền
+            dgvTransactions.Columns.Add("Amount", "Amount");
+            dgvTransactions.Columns["Amount"].Width = 150;
             dgvTransactions.Columns["Amount"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
 
-            dgvTransactions.CellPainting += DgvTransactions_CellPainting;
-        }
-
-        private void DgvTransactions_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
-        {
-            if (e.RowIndex < 0 || e.ColumnIndex != dgvTransactions.Columns["Category"].Index)
-                return;
-
-            e.PaintBackground(e.CellBounds, true);
-
-            if (dgvTransactions.Rows[e.RowIndex].Cells["Category"].Tag is Category category && category.Icon != null)
-            {
-                IconChar iconChar = ConvertIconClassToIconChar(category.Icon.IconClass);
-                System.Drawing.Color iconColor;
-
-                // Kiểm tra null cho Color
-                if (category.Color != null && !string.IsNullOrWhiteSpace(category.Color.HexCode))
-                {
-                    try { iconColor = System.Drawing.ColorTranslator.FromHtml(category.Color.HexCode); }
-                    catch { iconColor = System.Drawing.Color.FromArgb(30, 41, 59); } // Màu mặc định
-                }
-                else
-                {
-                    iconColor = System.Drawing.Color.FromArgb(30, 41, 59); // Màu mặc định
-                }
-
-
-                // Vẽ icon
-                try
-                {
-                    using (var iconFont = new Font("Font Awesome 6 Free Solid", 14F, FontStyle.Regular, GraphicsUnit.Point))
-                    {
-                        string iconGlyph = char.ToString((char)iconChar);
-                        RectangleF iconBounds = new RectangleF(e.CellBounds.Left + 10, e.CellBounds.Top, 30, e.CellBounds.Height);
-                        TextRenderer.DrawText(e.Graphics, iconGlyph, iconFont, Point.Round(iconBounds.Location), iconColor);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Debug.WriteLine($"Font error: {ex.Message}");
-                }
-
-                // Vẽ text
-                Rectangle textBounds = new Rectangle(e.CellBounds.Left + 45, e.CellBounds.Top, e.CellBounds.Width - 50, e.CellBounds.Height);
-                TextRenderer.DrawText(e.Graphics, category.CategoryName, e.CellStyle.Font, textBounds, e.CellStyle.ForeColor, TextFormatFlags.VerticalCenter);
-            }
-            else
-            {
-                e.PaintContent(e.CellBounds);
-            }
-            e.Handled = true;
+            // Không cần CellPainting nữa vì đã dùng cột ảnh thật
         }
 
         private IconChar ConvertIconClassToIconChar(string iconClass)
         {
-            if (string.IsNullOrWhiteSpace(iconClass))
-                return IconChar.CircleQuestion;
+            if (string.IsNullOrWhiteSpace(iconClass)) return IconChar.QuestionCircle;
 
-            string name = iconClass.Split(' ').Last();
-            name = name.Replace("fa-", "");
-
-            string[] parts = name.Split('-');
-            StringBuilder pascalCaseName = new StringBuilder();
-            foreach (string part in parts)
+            try
             {
-                pascalCaseName.Append(char.ToUpper(part[0]) + part.Substring(1));
-            }
+                var parts = iconClass.Split(' ');
+                var iconName = parts.Length > 0 ? parts[parts.Length - 1] : iconClass;
+                if (iconName.StartsWith("fa-")) iconName = iconName.Substring(3);
 
-            if (Enum.TryParse<IconChar>(pascalCaseName.ToString(), true, out IconChar result))
-            {
-                return result;
-            }
+                var words = iconName.Split('-');
+                for (int i = 0; i < words.Length; i++)
+                {
+                    if (words[i].Length > 0) words[i] = char.ToUpper(words[i][0]) + words[i].Substring(1);
+                }
+                var enumString = string.Join("", words);
 
-            return IconChar.CircleQuestion;
+                if (Enum.TryParse(enumString, true, out IconChar result))
+                    return result;
+            }
+            catch { }
+            return IconChar.QuestionCircle;
         }
 
         private void SetupChart()
@@ -371,7 +347,6 @@ namespace ExpenseManager.App.Views.Admin.UC // Đảm bảo namespace này đún
             pieChart.Legends[0].Docking = Docking.Right;
             pieChart.Legends[0].Alignment = StringAlignment.Center;
             pieChart.Legends[0].Font = new Font("Segoe UI", 10F);
-
             pieChart.ChartAreas[0].Area3DStyle.Enable3D = false;
         }
     }
