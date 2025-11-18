@@ -1,4 +1,5 @@
 ﻿using ExpenseManager.App.Presenters;
+using ExpenseManager.App.Session;
 using ExpenseManager.App.Views.Admin.Sidebar;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -51,6 +52,7 @@ namespace ExpenseManager.App.Views
 
             if (loginSuccess && user != null)
             {
+                CurrentUserSession.SetUser(user);
                 // *** PHÂN QUYỀN DỰA TRÊN ROLE ***
                 if (user.Role == "Admin")
                 {

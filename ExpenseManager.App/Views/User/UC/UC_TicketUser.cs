@@ -259,5 +259,10 @@ namespace ExpenseManager.App.Views.User.UC
         {
             LoadContent(new UC_Settings());
         }
+
+        private void btnCategories_Click(object sender, EventArgs e)
+        {
+            LoadContent(new UC_Settings());
+        }
     }
 }
