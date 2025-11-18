@@ -132,6 +132,7 @@ namespace ExpenseManager.App.Views.User.UC
             btnCategories.TabIndex = 1;
             btnCategories.Text = "Categories";
             btnCategories.UseVisualStyleBackColor = false;
+            btnCategories.Click += btnCategories_Click;
             // 
             // btnProfile
             // 
