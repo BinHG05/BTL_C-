@@ -1,7 +1,7 @@
 ﻿using ExpenseManager.App.Views.Admin.UC;
 using ExpenseManager.App.Views.User.UC;
-using ExpenseManager.App.Session; // ✅ THÊM
-using Microsoft.Extensions.DependencyInjection; // ✅ THÊM
+using ExpenseManager.App.Session;
+using Microsoft.Extensions.DependencyInjection;
 using FontAwesome.Sharp;
 using System;
 using System.Collections.Generic;
@@ -14,6 +14,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ExpenseManager.App.Views.User.Forms; // <--- 1. THÊM DÒNG NÀY
 
 namespace ExpenseManager.App.Views.Admin.Sidebar
 {
@@ -47,18 +48,45 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
                 MessageBox.Show("Cannot load logo: " + ex.Message);
             }
 
-            // Apply rounded corners to buttons
+            // Apply rounded corners
             ApplyRoundedCorners();
 
-            // Setup sidebar buttons hover effects
+            // Setup hover effects
             SetupButtonHoverEffects();
 
-            // Center the center panel
+            // Center panel
             CenterPanelInHeader();
             headerPanel.Resize += (s, e) => CenterPanelInHeader();
 
             // Round profile button
             RoundProfileButton();
+
+            // <--- 2. ĐĂNG KÝ SỰ KIỆN CLICK CHO NÚT ADD TRANSACTION --->
+            this.btnAddTransaction.Click += new System.EventHandler(this.BtnAddTransaction_Click);
+        }
+
+        // <--- 3. VIẾT HÀM XỬ LÝ SỰ KIỆN --->
+        private void BtnAddTransaction_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Lấy Form từ DI Container (để nó tự inject Service/Repository vào)
+                var addForm = Program.ServiceProvider.GetRequiredService<AddTransactionForm>();
+
+                // Hiển thị form dạng Dialog (cửa sổ popup)
+                if (addForm.ShowDialog() == DialogResult.OK)
+                {
+                    // Nếu thêm thành công (DialogResult.OK), reload lại trang hiện tại để thấy dữ liệu mới
+                    if (currentButton == btnDashboard) BtnDashboard_Click(null, null);
+                    else if (currentButton == btnWallet) BtnWallet_Click(null, null);
+                    else if (currentButton == btnBudget) BtnBudget_Click(null, null);
+                    // Các trang khác tương tự...
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Không thể mở form thêm giao dịch: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void ApplyRoundedCorners()
@@ -81,7 +109,6 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
 
         private void RoundProfileButton()
         {
-            // Make profile button circular
             System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
             path.AddEllipse(0, 0, btnProfileTop.Width, btnProfileTop.Height);
             btnProfileTop.Region = new Region(path);
@@ -122,7 +149,6 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             if (btn == currentButton)
                 return;
 
-            // Reset previous button
             if (currentButton != null)
             {
                 currentButton.BackColor = defaultBg;
@@ -130,10 +156,8 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
                 currentButton.IconColor = Color.White;
             }
 
-            // Set current button
             currentButton = btn;
 
-            // Highlight selected button with active color
             btn.BackColor = activeColor;
             btn.ForeColor = Color.White;
             btn.IconColor = Color.White;
@@ -185,31 +209,22 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
 
         private void LayoutAdmin_Load(object sender, EventArgs e)
         {
-            // Load Dashboard by default
             BtnDashboard_Click(btnDashboard, EventArgs.Empty);
         }
 
-        // ✅✅✅ THÊM CÁC METHOD MỚI CHO PROFILE DROPDOWN ✅✅✅
-
-        // Hiển thị dropdown khi click vào profile button
+        // Profile Dropdown Events
         private void BtnProfileTop_Click(object sender, EventArgs e)
         {
-            // Cập nhật thông tin user trước khi hiển thị
             UpdateProfileMenu();
-
-            // Hiển thị menu ở vị trí dưới button
             Point menuLocation = btnProfileTop.PointToScreen(new Point(-200, btnProfileTop.Height));
             profileContextMenu.Show(menuLocation);
         }
 
-        // Cập nhật thông tin user trong menu
         private void UpdateProfileMenu()
         {
             if (CurrentUserSession.CurrentUser != null)
             {
                 var user = CurrentUserSession.CurrentUser;
-
-                // Hiển thị tên và email
                 profileNameLabel.Text = user.FullName ?? "User";
                 profileEmailLabel.Text = user.Email ?? "";
             }
@@ -220,14 +235,12 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             }
         }
 
-        // Chuyển đến Settings
         private void SettingsMenuItem_Click(object sender, EventArgs e)
         {
             ActivateButton(btnSettings);
             LoadContent(new UC_Settings());
         }
 
-        // Đăng xuất
         private void LogoutMenuItem_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show(
@@ -239,17 +252,14 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
 
             if (result == DialogResult.Yes)
             {
-                // Xóa session
                 CurrentUserSession.ClearUser();
-
-                // Quay về LoginForm
                 var loginForm = Program.ServiceProvider.GetRequiredService<LoginForm>();
                 loginForm.Show();
                 this.Close();
             }
         }
 
-        // Custom Renderer để làm đẹp menu
+        // Menu Renderer Classes
         public class CustomMenuRenderer : ToolStripProfessionalRenderer
         {
             public CustomMenuRenderer() : base(new CustomColorTable()) { }
@@ -282,7 +292,6 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             public override Color MenuItemBorder => Color.Transparent;
         }
 
-        // Win32 API for rounded corners
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
         private static extern IntPtr CreateRoundRectRgn(
             int nLeftRect, int nTopRect, int nRightRect, int nBottomRect,

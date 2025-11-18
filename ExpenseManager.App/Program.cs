@@ -1,11 +1,14 @@
 ﻿using ExpenseManager.App.Models.EF;
 using ExpenseManager.App.Presenters;
-using ExpenseManager.App.Services;
 using ExpenseManager.App.Repositories;
+using ExpenseManager.App.Repositories.Interfaces;
+using ExpenseManager.App.Services;
+using ExpenseManager.App.Services.Interfaces;
 using ExpenseManager.App.Views;
-using ExpenseManager.App.Views.Admin.Sidebar; // LayoutUser
+using ExpenseManager.App.Views.Admin.Sidebar;
+using ExpenseManager.App.Views.User.Forms;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection; // Thư viện DI quan trọng
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Configuration;
 using System.Windows.Forms;
@@ -14,16 +17,13 @@ namespace ExpenseManager.App
 {
     internal static class Program
     {
-        // 1. Tạo một ServiceProvider toàn cục
         public static IServiceProvider ServiceProvider { get; private set; }
 
         [STAThread]
         static void Main()
         {
-            // Giữ lại hàm Initialize() gốc của bạn
             ApplicationConfiguration.Initialize();
 
-            // Lấy connection string từ App.config
             string connectionString = ConfigurationManager.ConnectionStrings["ExpenseDB"]?.ConnectionString;
 
             if (string.IsNullOrEmpty(connectionString))
@@ -32,16 +32,10 @@ namespace ExpenseManager.App
                 return;
             }
 
-            // 2. Tạo một bộ sưu tập dịch vụ
             var services = new ServiceCollection();
-
-            // 3. Gọi hàm để đăng ký các dịch vụ
             ConfigureServices(services, connectionString);
-
-            // 4. Xây dựng ServiceProvider
             ServiceProvider = services.BuildServiceProvider();
 
-            // 5. Khởi chạy ứng dụng
             try
             {
                 var loginForm = ServiceProvider.GetRequiredService<LoginForm>();
@@ -53,42 +47,48 @@ namespace ExpenseManager.App
             }
         }
 
-        // 6. Đây là hàm đăng ký DI (Dependency Injection)
         private static void ConfigureServices(IServiceCollection services, string connectionString)
         {
-            // 6.1. Đăng ký DbContext
-            
+            // 1. DB Context
             services.AddDbContext<ExpenseDbContext>(options =>
                 options.UseSqlServer(connectionString)
             );
 
-            // 6.2. Đăng ký Repositories
-       
+            // 2. Repositories (Đăng ký đủ User, Wallet, Category, Icon, Color, Transaction)
             services.AddTransient<IUserRepository, UserRepository>();
-         
+            services.AddScoped<IWalletRepository, WalletRepository>();
+            services.AddScoped<ITransactionRepository, TransactionRepository>();
 
-            // 6.3. Đăng ký Services
-           
+            // --- CÁC DÒNG BẠN ĐANG THIẾU ---
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IIconRepository, IconRepository>();
+            services.AddScoped<IColorRepository, ColorRepository>();
+            // -------------------------------
+
+            // 3. Services (Đăng ký đủ Auth, Wallet, Category, Transaction)
             services.AddTransient<IAuthService, AuthService>();
- 
+            services.AddTransient<IGoogleAuthService, GoogleAuthService>();
 
-            // 6.4. Đăng ký Presenters
-            
+            // --- CÁC DÒNG BẠN ĐANG THIẾU ---
+            services.AddScoped<IWalletService, WalletService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ITransactionService, TransactionService>();
+            // -------------------------------
+
+            // 4. Presenters
             services.AddTransient<LoginPresenter>();
             services.AddTransient<RegisterPresenter>();
             services.AddTransient<ForgotPasswordPresenter>();
-    
 
-            // 6.5. Đăng ký Forms/Views
-            // Quan trọng: Đăng ký các Form để chúng có thể nhận Presenter
+            // 5. Forms
             services.AddTransient<LoginForm>();
             services.AddTransient<RegisterForm>();
             services.AddTransient<ForgotPasswordForm>();
             services.AddTransient<LayoutUser>();
             services.AddTransient<LayoutAdmin>();
-            // 6.6. Đăng ký Google Auth Service
-            services.AddTransient<IGoogleAuthService, GoogleAuthService>();
-       
+
+            // Form thêm giao dịch
+            services.AddTransient<AddTransactionForm>();
         }
     }
 }
