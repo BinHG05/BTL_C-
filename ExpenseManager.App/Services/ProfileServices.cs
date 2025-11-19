@@ -6,6 +6,7 @@ using System.Text;
 using ExpenseManager.App.Models.Entities;
 using ExpenseManager.App.Repositories.Interfaces;
 using ExpenseManager.App.Services.Interfaces;
+using BCrypt.Net;
 
 namespace ExpenseManager.App.Services
 {
@@ -100,8 +101,12 @@ namespace ExpenseManager.App.Services
                 return (false, "Không tìm thấy thông tin người dùng");
 
             // Xác thực mật khẩu hiện tại
-            if (!VerifyPassword(currentPassword, user.PasswordHash))
-                return (false, "Mật khẩu hiện tại không đúng");
+            bool isCurrentPasswordValid = BCrypt.Net.BCrypt.Verify(currentPassword, user.PasswordHash);
+            if (!isCurrentPasswordValid)
+            {
+                // Đây là lý do bạn thấy thông báo này
+                return (false, "Sai mật khẩu hiện tại");
+            }
 
             // Validate email mới nếu có
             if (!string.IsNullOrWhiteSpace(newEmail))
@@ -121,7 +126,7 @@ namespace ExpenseManager.App.Services
                 if (newPassword.Length < 6)
                     return (false, "Mật khẩu mới phải có ít nhất 6 ký tự");
 
-                newPasswordHash = HashPassword(newPassword);
+                newPasswordHash = BCrypt.Net.BCrypt.HashPassword(newPassword);
             }
 
             // Cập nhật vào database

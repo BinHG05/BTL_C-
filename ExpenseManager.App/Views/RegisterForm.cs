@@ -1,5 +1,7 @@
 ﻿using ExpenseManager.App.Presenters;
-using Microsoft.Extensions.DependencyInjection; // Thêm
+using ExpenseManager.App.Session;
+using ExpenseManager.App.Views.Admin.Sidebar;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -11,16 +13,12 @@ namespace ExpenseManager.App.Views
         private Color focusColor = Color.FromArgb(0, 123, 255);
         private Color blurColor = Color.LightGray;
 
-        // 1. Khai báo Presenter
         private readonly RegisterPresenter _presenter;
 
-        // 2. SỬA LẠI CONSTRUCTOR:
-        // Xóa hàm public RegisterForm() cũ
-        // Constructor này sẽ nhận RegisterPresenter (do Program.cs "tiêm" vào)
         public RegisterForm(RegisterPresenter presenter)
         {
             InitializeComponent();
-            _presenter = presenter; // Gán Presenter
+            _presenter = presenter;
 
             this.lblError.Text = string.Empty;
             pnlFullNameLine.BackColor = blurColor;
@@ -36,12 +34,11 @@ namespace ExpenseManager.App.Views
             txtFullName.Focus();
         }
 
-        // 3. SỬA LẠI HÀM REGISTER_CLICK:
-        // Hàm này giờ sẽ gọi Presenter
+        // Đăng ký bình thường
         private async void btnRegister_Click(object sender, EventArgs e)
         {
             string fullName = txtFullName.Text;
-            string email = txtUsername.Text; // txtUsername đang được dùng cho Email
+            string email = txtUsername.Text;
             string password = txtPassword.Text;
 
             lblError.Text = string.Empty;
@@ -52,24 +49,88 @@ namespace ExpenseManager.App.Views
                 return;
             }
 
-            // 4. GỬI DỮ LIỆU CHO PRESENTER
             var (success, errorMessage) = await _presenter.RegisterAsync(fullName, email, password);
 
-            // 5. XỬ LÝ KẾT QUẢ TỪ PRESENTER
             if (success)
             {
                 MessageBox.Show("Đăng ký thành công! Vui lòng đăng nhập.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                // Đăng ký xong thì quay lại Login
                 lnkLogin_LinkClicked(sender, null);
             }
             else
             {
-                // Hiển thị lỗi (vd: "Email đã tồn tại")
                 ShowErrorMessage(errorMessage);
             }
         }
 
-        // --- (Các hàm gạch chân giữ nguyên) ---
+        // ✅ THÊM - Đăng ký bằng Google
+        // ✅ SỬA - Đăng ký bằng Google (Xử lý khi user hủy)
+        // ✅ SỬA LẠI HOÀN TOÀN - Đăng ký bằng Google
+        private async void btnGoogleRegister_Click(object sender, EventArgs e)
+        {
+            bool shouldNavigate = false; // Flag để check có chuyển trang không
+
+            try
+            {
+                btnGoogleRegister.Enabled = false;
+                lblError.Text = string.Empty;
+
+                // Gọi Presenter
+                var (success, errorMessage) = await _presenter.RegisterWithGoogleAsync();
+
+                if (success)
+                {
+                    // Đăng ký thành công -> Vào luôn giao diện
+                    var user = CurrentUserSession.CurrentUser;
+
+                    if (user != null)
+                    {
+                        shouldNavigate = true; // Đánh dấu sẽ chuyển trang
+
+                        if (user.Role == "Admin")
+                        {
+                            var layoutAdmin = Program.ServiceProvider.GetRequiredService<LayoutAdmin>();
+                            layoutAdmin.Show();
+                            this.Hide();
+                        }
+                        else if (user.Role == "User")
+                        {
+                            var layoutUser = Program.ServiceProvider.GetRequiredService<LayoutUser>();
+                            layoutUser.Show();
+                            this.Hide();
+                        }
+                    }
+                    else
+                    {
+                        ShowErrorMessage("Không thể lấy thông tin tài khoản.");
+                    }
+                }
+                else
+                {
+                    // Thất bại (bao gồm cả khi user hủy)
+                    if (!string.IsNullOrEmpty(errorMessage))
+                    {
+                        ShowErrorMessage(errorMessage);
+                    }
+                    else
+                    {
+                        ShowErrorMessage("Đăng ký Google thất bại.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowErrorMessage($"Lỗi: {ex.Message}");
+            }
+            finally
+            {
+                // ✅ QUAN TRỌNG: CHỈ ENABLE LẠI NẾU KHÔNG CHUYỂN TRANG
+                if (!shouldNavigate)
+                {
+                    btnGoogleRegister.Enabled = true;
+                }
+            }
+        }
+
         private void txtFullName_Enter(object sender, EventArgs e)
         {
             pnlFullNameLine.BackColor = focusColor;
@@ -100,7 +161,6 @@ namespace ExpenseManager.App.Views
             pnlPasswordLine.BackColor = blurColor;
         }
 
-        // --- (Các hàm xử lý sự kiện khác) ---
         private void btnShowHidePassword_Click(object sender, EventArgs e)
         {
             if (txtPassword.PasswordChar == '•')
@@ -115,14 +175,9 @@ namespace ExpenseManager.App.Views
             }
         }
 
-        // 6. SỬA LẠI HÀM LINK CLICK:
-        // Dùng ServiceProvider để lấy LoginForm
         private void lnkLogin_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            // Lấy Form từ DI (Dependency Injection)
-            // KHÔNG DÙNG: new LoginForm();
             var loginForm = Program.ServiceProvider.GetRequiredService<LoginForm>();
-
             loginForm.Show();
             this.Hide();
         }

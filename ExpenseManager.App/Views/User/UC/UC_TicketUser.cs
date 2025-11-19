@@ -143,7 +143,7 @@ namespace ExpenseManager.App.Views.User.UC
                 Text = ticket.Status,
                 Font = new Font("Segoe UI", 9F, FontStyle.Bold),
                 ForeColor = ticket.Status == "Open" ? System.Drawing.Color.Orange : System.Drawing.Color.Green,
-                Location = new Point(120, 15),
+                //Location = new Point(120, 15),
                 AutoSize = true
             };
 
@@ -200,6 +200,7 @@ namespace ExpenseManager.App.Views.User.UC
             };
 
             itemPanel.Controls.Add(lblType);
+            lblStatus.Location = new Point(lblType.Right + 10, 15);
             itemPanel.Controls.Add(lblStatus);
             itemPanel.Controls.Add(lblDescription);
             itemPanel.Controls.Add(lblDate);
@@ -255,6 +256,11 @@ namespace ExpenseManager.App.Views.User.UC
         }
 
         private void btnProfile_Click(object sender, EventArgs e)
+        {
+            LoadContent(new UC_Settings());
+        }
+
+        private void btnCategories_Click(object sender, EventArgs e)
         {
             LoadContent(new UC_Settings());
         }

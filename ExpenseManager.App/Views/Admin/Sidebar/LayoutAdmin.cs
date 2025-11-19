@@ -1,4 +1,8 @@
-﻿using System;
+﻿using ExpenseManager.App.Models.EF;
+using ExpenseManager.App.Views.Admin.UC;
+using FontAwesome.Sharp;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,7 +11,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using FontAwesome.Sharp;
 
 namespace ExpenseManager.App.Views.Admin.Sidebar
 {
@@ -21,9 +24,13 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
         private Color logoutHoverColor = Color.FromArgb(200, 35, 51);
         private Color hoverColor = Color.FromArgb(20, 60, 100);
 
+        private readonly DbContext _dbContext = new ExpenseDbContext();
+
         public LayoutAdmin()
         {
             InitializeComponent();
+            LoadContent(new UC_DashboardAD());
+            ActivateButton(btnDashboard);
         }
 
         private void ActivateButton(IconButton selectedButton)
@@ -52,7 +59,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
         private void BtnDashboard_Click(object sender, EventArgs e)
         {
             ActivateButton(btnDashboard);
-            // TODO: Load Dashboard content here
+            LoadContent(new UC.UC_DashboardAD());
         }
 
         private void BtnUsers_Click(object sender, EventArgs e)
@@ -71,6 +78,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
         {
             ActivateButton(btnSupport);
             // TODO: Load Support/Ticket content here
+            LoadContent(new UC.UC_TicketAD());
         }
 
         private void ProfilePanel_Click(object sender, EventArgs e)
@@ -125,6 +133,27 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
         {
             // Activate Dashboard by default
             ActivateButton(btnDashboard);
+        }
+        private void LoadContent(UserControl uc)
+        {
+            contentPanel.Controls.Clear();
+            uc.Dock = DockStyle.Fill;
+            contentPanel.Controls.Add(uc);
+
+            // Kiểm tra và khởi tạo Presenter cho Dashboard AD
+            if (uc is UC_DashboardAD dashboardUc)
+            {
+                try
+                {
+                    // === GỌI KHỞI TẠO TẠI ĐÂY ===
+                    dashboardUc.InitializePresenter(_dbContext);
+                }
+                catch (Exception ex)
+                {
+                    // Xử lý lỗi nếu có vấn đề về DbContext hoặc Presenter
+                    MessageBox.Show($"Lỗi khởi tạo Dashboard: {ex.Message}", "Lỗi Khởi Tạo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
     }
 }

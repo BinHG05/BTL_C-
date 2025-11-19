@@ -9,23 +9,23 @@ namespace ExpenseManager.App.Presenters
     public class LoginPresenter
     {
         private readonly IAuthService _authService;
+        private readonly IGoogleAuthService _googleAuthService; // ✅ THÊM
 
-        public LoginPresenter(IAuthService authService)
+        // ✅ SỬA CONSTRUCTOR
+        public LoginPresenter(IAuthService authService, IGoogleAuthService googleAuthService)
         {
             _authService = authService;
+            _googleAuthService = googleAuthService;
         }
 
-        // Sửa lại để trả về cả User (để lấy Role)
         public async Task<(bool Success, User User)> LoginAsync(string email, string password)
         {
             try
             {
-                // Gọi Service
                 var user = await _authService.LoginAsync(email, password);
 
                 if (user != null)
                 {
-                    // Lưu vào Session
                     CurrentUserSession.SetUser(user);
                     return (true, user);
                 }
@@ -36,8 +36,39 @@ namespace ExpenseManager.App.Presenters
             }
             catch (Exception ex)
             {
-                // Log lỗi nếu cần
                 return (false, null);
+            }
+        }
+
+        // ✅ THÊM METHOD MỚI
+        public async Task<(bool Success, User User, string Error)> LoginWithGoogleAsync()
+        {
+            try
+            {
+                // Gọi Google Auth
+                var (success, email, fullName, error) = await _googleAuthService.AuthenticateAsync();
+
+                if (!success)
+                {
+                    return (false, null, error ?? "Đăng nhập Google thất bại.");
+                }
+
+                // Đăng nhập hoặc tạo user mới
+                var user = await _authService.LoginWithGoogleAsync(email, fullName);
+
+                if (user != null)
+                {
+                    CurrentUserSession.SetUser(user);
+                    return (true, user, null);
+                }
+                else
+                {
+                    return (false, null, "Không thể tạo tài khoản.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return (false, null, ex.Message);
             }
         }
     }
