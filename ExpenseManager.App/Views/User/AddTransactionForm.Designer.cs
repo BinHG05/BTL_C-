@@ -130,7 +130,6 @@ namespace ExpenseManager.App.Views.User.Forms
             btnSubmit.TabIndex = 11;
             btnSubmit.Text = "✅  Thêm giao dịch";
             btnSubmit.UseVisualStyleBackColor = false;
-            //btnSubmit.Click += BtnSubmit_Click;
             // 
             // txtDescription
             // 
@@ -176,25 +175,15 @@ namespace ExpenseManager.App.Views.User.Forms
             // 
             // cmbWallet
             // 
-            this.cmbWallet.BackColor = System.Drawing.Color.WhiteSmoke; // ✅ Mới thêm: Màu nền xám nhạt để dễ nhìn
-            this.cmbWallet.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbWallet.FlatStyle = System.Windows.Forms.FlatStyle.Standard; // ✅ Mới sửa: Đổi sang Standard để hiện viền 3D
-            this.cmbWallet.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.cmbWallet.FormattingEnabled = true;
-            this.cmbWallet.Location = new System.Drawing.Point(34, 560);
-            this.cmbWallet.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.cmbWallet.Name = "cmbWallet";
-            this.cmbWallet.Size = new System.Drawing.Size(674, 33);
-            this.cmbWallet.TabIndex = 6;
-            //cmbWallet.DropDownStyle = ComboBoxStyle.DropDownList;
-            //cmbWallet.FlatStyle = FlatStyle.Flat;
-            //cmbWallet.Font = new Font("Segoe UI", 11F);
-            //cmbWallet.FormattingEnabled = true;
-            //cmbWallet.Location = new Point(34, 560);
-            //cmbWallet.Margin = new Padding(3, 4, 3, 4);
-            //cmbWallet.Name = "cmbWallet";
-            //cmbWallet.Size = new Size(674, 33);
-            //cmbWallet.TabIndex = 6;
+            cmbWallet.BackColor = Color.WhiteSmoke;
+            cmbWallet.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbWallet.Font = new Font("Segoe UI", 11F);
+            cmbWallet.FormattingEnabled = true;
+            cmbWallet.Location = new Point(34, 560);
+            cmbWallet.Margin = new Padding(3, 4, 3, 4);
+            cmbWallet.Name = "cmbWallet";
+            cmbWallet.Size = new Size(674, 33);
+            cmbWallet.TabIndex = 6;
             // 
             // lblWallet
             // 
@@ -327,7 +316,6 @@ namespace ExpenseManager.App.Views.User.Forms
             Name = "AddTransactionForm";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Thêm giao dịch";
-            //Load += AddTransactionForm_Load;
             headerPanel.ResumeLayout(false);
             headerPanel.PerformLayout();
             contentPanel.ResumeLayout(false);
