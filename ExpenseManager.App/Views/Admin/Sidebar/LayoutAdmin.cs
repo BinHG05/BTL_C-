@@ -3,13 +3,7 @@ using ExpenseManager.App.Views.Admin.UC;
 using FontAwesome.Sharp;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ExpenseManager.App.Views.Admin.Sidebar
@@ -22,9 +16,9 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
         private Color defaultBg = Color.Transparent;
         private Color logoutDefaultColor = Color.FromArgb(220, 53, 69);
         private Color logoutHoverColor = Color.FromArgb(200, 35, 51);
-        private Color hoverColor = Color.FromArgb(20, 60, 100);
 
-        private readonly DbContext _dbContext = new ExpenseDbContext();
+        // KHAI BÁO KIỂU CỤ THỂ ExpenseDbContext
+        private readonly ExpenseDbContext _dbContext = new ExpenseDbContext();
 
         public LayoutAdmin()
         {
@@ -49,7 +43,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             // Set current button
             currentButton = selectedButton;
 
-            // Highlight selected button with active color
+            // Highlight selected button
             selectedButton.BackColor = activeColor;
             selectedButton.ForeColor = Color.White;
             selectedButton.IconColor = Color.White;
@@ -59,37 +53,30 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
         private void BtnDashboard_Click(object sender, EventArgs e)
         {
             ActivateButton(btnDashboard);
-            LoadContent(new UC.UC_DashboardAD());
+            LoadContent(new UC_DashboardAD());
         }
 
         private void BtnUsers_Click(object sender, EventArgs e)
         {
             ActivateButton(btnUsers);
-            // TODO: Load Users content here
+            LoadContent(new UC_UserAD());
         }
 
         private void BtnCategory_Click(object sender, EventArgs e)
         {
             ActivateButton(btnCategory);
-            // TODO: Load Category content here
+            // TODO: Load Category content
+            MessageBox.Show("Category management coming soon!", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void BtnSupport_Click(object sender, EventArgs e)
         {
             ActivateButton(btnSupport);
-            // TODO: Load Support/Ticket content here
-            LoadContent(new UC.UC_TicketAD());
-        }
-
-        private void ProfilePanel_Click(object sender, EventArgs e)
-        {
-            // Show context menu at cursor position
-            profileMenu.Show(Cursor.Position);
+            LoadContent(new UC_TicketAD());
         }
 
         private void BtnProfileAvatar_Click(object sender, EventArgs e)
         {
-            // Show context menu at cursor position
             profileMenu.Show(Cursor.Position);
         }
 
@@ -104,14 +91,8 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
 
             if (result == DialogResult.Yes)
             {
-                // TODO: Add logout logic here
-                // For example: Navigate to Login form
-                // this.Hide();
-                // LoginForm loginForm = new LoginForm();
-                // loginForm.ShowDialog();
-                // this.Close();
-
                 MessageBox.Show("Đăng xuất thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // TODO: Navigate to login form
             }
         }
 
@@ -129,30 +110,44 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
         {
             BtnLogout_Click(sender, e);
         }
+
         private void LayoutAdmin_Load(object sender, EventArgs e)
         {
-            // Activate Dashboard by default
             ActivateButton(btnDashboard);
         }
+
         private void LoadContent(UserControl uc)
         {
             contentPanel.Controls.Clear();
             uc.Dock = DockStyle.Fill;
             contentPanel.Controls.Add(uc);
 
-            // Kiểm tra và khởi tạo Presenter cho Dashboard AD
-            if (uc is UC_DashboardAD dashboardUc)
+            try
             {
-                try
+                // Initialize presenters based on UserControl type
+                if (uc is UC_DashboardAD dashboardUc)
                 {
-                    // === GỌI KHỞI TẠO TẠI ĐÂY ===
+                    // Truyền ExpenseDbContext
                     dashboardUc.InitializePresenter(_dbContext);
                 }
-                catch (Exception ex)
+                else if (uc is UC_UserAD userUc)
                 {
-                    // Xử lý lỗi nếu có vấn đề về DbContext hoặc Presenter
-                    MessageBox.Show($"Lỗi khởi tạo Dashboard: {ex.Message}", "Lỗi Khởi Tạo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    // ĐÃ SỬA LỖI CS1503: Truyền ExpenseDbContext
+                    userUc.InitializePresenter(_dbContext);
                 }
+                else if (uc is UC_TicketAD ticketUc)
+                {
+                    // ticketUc.InitializePresenter(_dbContext);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Lỗi khởi tạo: {ex.Message}",
+                    "Lỗi",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
             }
         }
     }
