@@ -112,7 +112,7 @@
             // 
             this.pnlLeftSidebar.BackColor = System.Drawing.Color.Transparent;
             this.pnlLeftSidebar.Controls.Add(this.flpWallets);
-            this.pnlLeftSidebar.Controls.Add(this.btnAddWallet);
+            // ❌ ĐÃ XÓA DÒNG btnAddWallet Ở ĐÂY ĐỂ TRÁNH NÓ BỊ DOCK
             this.pnlLeftSidebar.Location = new System.Drawing.Point(30, 160);
             this.pnlLeftSidebar.Name = "pnlLeftSidebar";
             this.pnlLeftSidebar.Size = new System.Drawing.Size(350, 700);
@@ -125,8 +125,8 @@
             this.flpWallets.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flpWallets.Location = new System.Drawing.Point(0, 0);
             this.flpWallets.Name = "flpWallets";
-            this.flpWallets.Padding = new System.Windows.Forms.Padding(0, 0, 0, 60);
-            this.flpWallets.Size = new System.Drawing.Size(350, 645);
+            this.flpWallets.Padding = new System.Windows.Forms.Padding(0, 0, 0, 20);
+            this.flpWallets.Size = new System.Drawing.Size(350, 700);
             this.flpWallets.TabIndex = 3;
             this.flpWallets.WrapContents = false;
             // 
@@ -134,19 +134,20 @@
             // 
             this.btnAddWallet.BackColor = System.Drawing.Color.White;
             this.btnAddWallet.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnAddWallet.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btnAddWallet.Dock = System.Windows.Forms.DockStyle.None; // ✅ Đã sửa thành None
             this.btnAddWallet.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
             this.btnAddWallet.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddWallet.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
             this.btnAddWallet.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.btnAddWallet.Location = new System.Drawing.Point(0, 645);
+            this.btnAddWallet.Location = new System.Drawing.Point(0, 0);
             this.btnAddWallet.Name = "btnAddWallet";
             this.btnAddWallet.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
-            this.btnAddWallet.Size = new System.Drawing.Size(350, 55);
+            this.btnAddWallet.Size = new System.Drawing.Size(330, 55); // ✅ Chỉnh Width 330 để vừa vặn
             this.btnAddWallet.TabIndex = 2;
             this.btnAddWallet.Text = "⊕  Add new wallet";
             this.btnAddWallet.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnAddWallet.UseVisualStyleBackColor = false;
+            this.btnAddWallet.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0); // ✅ Thêm khoảng cách top
             // 
             // pnlBIDVHeader
             // 
@@ -341,7 +342,7 @@
             this.pnlTransactionHistory.Location = new System.Drawing.Point(410, 800);
             this.pnlTransactionHistory.Name = "pnlTransactionHistory";
             this.pnlTransactionHistory.Padding = new System.Windows.Forms.Padding(30);
-            this.pnlTransactionHistory.Size = new System.Drawing.Size(1160, 750); // ✅ Đã tăng chiều cao
+            this.pnlTransactionHistory.Size = new System.Drawing.Size(1160, 750);
             this.pnlTransactionHistory.TabIndex = 6;
             // 
             // lblNoTransactions
@@ -365,7 +366,7 @@
             this.lblPageInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblPageInfo.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lblPageInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
-            this.lblPageInfo.Location = new System.Drawing.Point(900, 680); // ✅ Đã dời xuống dưới
+            this.lblPageInfo.Location = new System.Drawing.Point(900, 680);
             this.lblPageInfo.Name = "lblPageInfo";
             this.lblPageInfo.Size = new System.Drawing.Size(100, 30);
             this.lblPageInfo.TabIndex = 4;
@@ -377,7 +378,7 @@
             this.btnNextPage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnNextPage.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnNextPage.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnNextPage.Location = new System.Drawing.Point(1010, 680); // ✅ Đã dời xuống dưới
+            this.btnNextPage.Location = new System.Drawing.Point(1010, 680);
             this.btnNextPage.Name = "btnNextPage";
             this.btnNextPage.Size = new System.Drawing.Size(120, 30);
             this.btnNextPage.TabIndex = 3;
@@ -389,7 +390,7 @@
             this.btnPrevPage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnPrevPage.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnPrevPage.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnPrevPage.Location = new System.Drawing.Point(770, 680); // ✅ Đã dời xuống dưới
+            this.btnPrevPage.Location = new System.Drawing.Point(770, 680);
             this.btnPrevPage.Name = "btnPrevPage";
             this.btnPrevPage.Size = new System.Drawing.Size(120, 30);
             this.btnPrevPage.TabIndex = 2;
@@ -426,7 +427,7 @@
             this.dgvTransactions.RowHeadersWidth = 51;
             this.dgvTransactions.RowTemplate.Height = 50;
             this.dgvTransactions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvTransactions.Size = new System.Drawing.Size(1100, 550); // ✅ Đã tăng chiều cao bảng
+            this.dgvTransactions.Size = new System.Drawing.Size(1100, 550);
             this.dgvTransactions.TabIndex = 1;
             // 
             // pnlEmptyState
@@ -469,7 +470,7 @@
             this.Controls.Add(this.pnlHeader);
             this.Controls.Add(this.pnlEmptyState);
             this.Name = "UC_Wallet";
-            this.Size = new System.Drawing.Size(1600, 1600); // ✅ Tăng chiều cao tổng thể
+            this.Size = new System.Drawing.Size(1600, 1600);
             this.Load += new System.EventHandler(this.UC_Wallet_Load);
             this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();

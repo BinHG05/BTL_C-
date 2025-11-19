@@ -64,7 +64,10 @@ namespace ExpenseManager.App.Repositories
         {
             var query = _context.Transactions
                 .Include(t => t.Category)
+
                 .ThenInclude(c => c.Icon)
+                .Include(t => t.Category)
+                .ThenInclude(c => c.Color)
                 .Where(t => t.WalletId == walletId)
                 .OrderByDescending(t => t.TransactionDate)
                 .ThenByDescending(t => t.CreatedAt)
