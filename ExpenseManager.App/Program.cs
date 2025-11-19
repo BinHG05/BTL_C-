@@ -67,6 +67,8 @@ namespace ExpenseManager.App
             // 6.2. Đăng ký Repositories
             // Khi ai đó "hỏi" IUserRepository, DI sẽ "tiêm" vào một UserRepository
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IBudgetRepository, BudgetRepository>();
+
             // ... (Thêm các Repositories khác của bạn ở đây)
             // services.AddTransient<IWalletRepository, WalletRepository>();
             // services.AddTransient<ITransactionRepository, TransactionRepository>();
