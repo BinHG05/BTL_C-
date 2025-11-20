@@ -17,8 +17,8 @@ namespace ExpenseManager.App.Repositories.Interfaces
         Task<List<Wallet>> GetWalletsByUserIdAsync(string userId);
         Task<Wallet> GetWalletByIdAsync(int walletId);
         Task AddWalletAsync(Wallet wallet);
-        void UpdateWallet(Wallet wallet);
-        void DeleteWallet(Wallet wallet);
+        Task UpdateWallet(Wallet wallet);
+        Task DeleteWallet(Wallet wallet);
         Task<decimal> GetMonthlyExpensesAsync(int walletId, int month, int year);
         Task<PaginatedResult<Transaction>> GetTransactionsByWalletIdAsync(int walletId, int pageNumber, int pageSize);
         Task<List<CategoryExpense>> GetMonthlyExpenseByCategoryAsync(int walletId, int month, int year);

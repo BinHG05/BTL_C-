@@ -35,18 +35,32 @@ namespace ExpenseManager.App.Repositories
         }
 
         public async Task AddWalletAsync(Wallet wallet)
-        {
+        {   
             await _context.Wallets.AddAsync(wallet);
         }
 
-        public void UpdateWallet(Wallet wallet)
+        public async Task UpdateWallet(Wallet wallet)
         {
-            _context.Wallets.Update(wallet);
+            // Lấy wallet đang được EF tracking
+            var existing = await _context.Wallets
+                .FirstOrDefaultAsync(w => w.WalletId == wallet.WalletId);
+
+            if (existing == null)
+                return;
+
+            // Cập nhật giá trị
+            existing.WalletName = wallet.WalletName;
+            existing.Balance = wallet.Balance;
+            existing.UpdatedAt = DateTime.Now;
+
+            await _context.SaveChangesAsync();
         }
 
-        public void DeleteWallet(Wallet wallet)
+
+        public async Task DeleteWallet(Wallet wallet)
         {
             _context.Wallets.Remove(wallet);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<decimal> GetMonthlyExpensesAsync(int walletId, int month, int year)
