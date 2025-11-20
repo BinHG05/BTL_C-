@@ -25,7 +25,6 @@ namespace ExpenseManager.App
             ApplicationConfiguration.Initialize();
 
             string connectionString = ConfigurationManager.ConnectionStrings["ExpenseDB"]?.ConnectionString;
-
             if (string.IsNullOrEmpty(connectionString))
             {
                 MessageBox.Show("Không tìm thấy connection string 'ExpenseDB' trong App.config", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -54,26 +53,26 @@ namespace ExpenseManager.App
                 options.UseSqlServer(connectionString)
             );
 
-            // 2. Repositories (Đăng ký đủ User, Wallet, Category, Icon, Color, Transaction)
+            // 2. Repositories
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddScoped<IWalletRepository, WalletRepository>();
             services.AddScoped<ITransactionRepository, TransactionRepository>();
-
-            // --- CÁC DÒNG BẠN ĐANG THIẾU ---
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IIconRepository, IconRepository>();
             services.AddScoped<IColorRepository, ColorRepository>();
-            // -------------------------------
 
-            // 3. Services (Đăng ký đủ Auth, Wallet, Category, Transaction)
+            // *** THÊM ANALYTICS REPOSITORY ***
+            services.AddScoped<IAnalyticsRepository, AnalyticsRepository>();
+
+            // 3. Services
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IGoogleAuthService, GoogleAuthService>();
-
-            // --- CÁC DÒNG BẠN ĐANG THIẾU ---
             services.AddScoped<IWalletService, WalletService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ITransactionService, TransactionService>();
-            // -------------------------------
+
+            // *** THÊM ANALYTICS SERVICE ***
+            services.AddScoped<IAnalyticsService, AnalyticsService>();
 
             // 4. Presenters
             services.AddTransient<LoginPresenter>();
@@ -86,9 +85,15 @@ namespace ExpenseManager.App
             services.AddTransient<ForgotPasswordForm>();
             services.AddTransient<LayoutUser>();
             services.AddTransient<LayoutAdmin>();
-
-            // Form thêm giao dịch
             services.AddTransient<AddTransactionForm>();
+        }
+
+        /// <summary>
+        /// Helper method để lấy service từ bất kỳ đâu trong app
+        /// </summary>
+        public static T GetService<T>()
+        {
+            return ServiceProvider.GetRequiredService<T>();
         }
     }
 }
