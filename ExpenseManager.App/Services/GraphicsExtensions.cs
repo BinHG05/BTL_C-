@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Drawing.Drawing2D;
 
-namespace ExpenseManager.App.Utilities // Đặt nó vào namespace chung như Utilities
+namespace ExpenseManager.App.Utilities 
 {
     public static class GraphicsExtensions
     {

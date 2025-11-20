@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using ExpenseManager.App.Models.DTOs;
+﻿using ExpenseManager.App.Models.DTOs;
 using ExpenseManager.App.Presenters;
 using ExpenseManager.App.Repositories;
 using ExpenseManager.App.Services;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Globalization;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ExpenseManager.App.Views.Admin.UC
 {
@@ -28,6 +29,7 @@ namespace ExpenseManager.App.Views.Admin.UC
         public UC_DashboardAD()
         {
             InitializeComponent();
+            lblDateTime.Text = "📅 " + DateTime.Now.ToString("dddd, dd MMMM, yyyy", new CultureInfo("vi-VN"));
             SetupLoadingPanel();
             SetupCardShadows();
 

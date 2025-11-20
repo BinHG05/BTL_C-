@@ -50,6 +50,7 @@ namespace ExpenseManager.App.Views.Admin.UC
             this.cmbRole = new System.Windows.Forms.ComboBox();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.headerPanel = new System.Windows.Forms.Panel();
+            this.lblDateTime = new System.Windows.Forms.Label(); // <--- 1. Khởi tạo Label ngày
             this.lblSubtitle = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
             this.loadingPanel = new System.Windows.Forms.Panel();
@@ -426,6 +427,7 @@ namespace ExpenseManager.App.Views.Admin.UC
             // headerPanel
             // 
             this.headerPanel.BackColor = System.Drawing.Color.Transparent;
+            this.headerPanel.Controls.Add(this.lblDateTime); // <--- 2. Thêm vào panel
             this.headerPanel.Controls.Add(this.lblSubtitle);
             this.headerPanel.Controls.Add(this.lblTitle);
             this.headerPanel.Dock = System.Windows.Forms.DockStyle.Top;
@@ -433,6 +435,18 @@ namespace ExpenseManager.App.Views.Admin.UC
             this.headerPanel.Name = "headerPanel";
             this.headerPanel.Size = new System.Drawing.Size(1320, 80);
             this.headerPanel.TabIndex = 1;
+            // 
+            // lblDateTime
+            // 
+            this.lblDateTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblDateTime.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lblDateTime.ForeColor = System.Drawing.Color.Gray;
+            this.lblDateTime.Location = new System.Drawing.Point(1000, 15); // Vị trí góc phải
+            this.lblDateTime.Name = "lblDateTime";
+            this.lblDateTime.Size = new System.Drawing.Size(300, 23);
+            this.lblDateTime.TabIndex = 2;
+            this.lblDateTime.Text = "📅 ...";
+            this.lblDateTime.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // lblSubtitle
             // 
@@ -514,6 +528,7 @@ namespace ExpenseManager.App.Views.Admin.UC
         private System.Windows.Forms.Panel headerPanel;
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Label lblSubtitle;
+        private System.Windows.Forms.Label lblDateTime; // <--- 3. Khai báo biến
         private System.Windows.Forms.Panel searchPanel;
         private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.ComboBox cmbRole;

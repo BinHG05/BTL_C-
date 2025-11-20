@@ -25,7 +25,8 @@ namespace ExpenseManager.App.Repositories
                 .Where(g => g.UserId == userId)
                 .Include(g => g.GoalDeposits)
                 .Include(g => g.Wallet)
-                .OrderByDescending(g => g.CreatedAt)
+                // 👇 ĐÃ SỬA: OrderBy (Tăng dần) -> Cũ trên, Mới dưới
+                .OrderBy(g => g.CreatedAt)
                 .ToListAsync();
         }
 
@@ -43,7 +44,7 @@ namespace ExpenseManager.App.Repositories
             goal.CreatedAt = DateTime.Now;
             goal.UpdatedAt = DateTime.Now;
             goal.CurrentAmount = 0;
-            goal.Status = "Active"; // Active, Completed, Cancelled
+            goal.Status = "Active";
 
             _context.Goals.Add(goal);
             await _context.SaveChangesAsync();
@@ -52,46 +53,31 @@ namespace ExpenseManager.App.Repositories
 
         public async Task<bool> UpdateGoalAsync(Goal goal)
         {
-            // Lấy entity gốc đang được EF tracking
             var existing = await _context.Goals
                 .FirstOrDefaultAsync(g => g.GoalId == goal.GoalId);
 
-            if (existing == null)
-                return false;
+            if (existing == null) return false;
 
-            // Cập nhật giá trị
             existing.GoalName = goal.GoalName;
             existing.TargetAmount = goal.TargetAmount;
             existing.WalletId = goal.WalletId;
             existing.CurrentAmount = goal.CurrentAmount;
             existing.Status = goal.Status;
             existing.UpdatedAt = DateTime.Now;
-
-            // Nếu cập nhật CompletedDate
             existing.CompletionDate = goal.CompletionDate;
 
-            // Lưu vào DB
             return await _context.SaveChangesAsync() > 0;
         }
 
-
         public async Task<bool> DeleteGoalAsync(int goalId)
         {
-            // 1. Tìm mục tiêu cần xóa
             var goal = await _context.Goals.FindAsync(goalId);
             if (goal == null) return false;
 
-            // 2. --- BƯỚC QUAN TRỌNG: XÓA LỊCH SỬ NẠP TIỀN TRƯỚC ---
-            // Tìm tất cả các lần nạp tiền của mục tiêu này
             var relatedDeposits = _context.GoalDeposits.Where(x => x.GoalId == goalId);
-
-            // Xóa chúng đi
             _context.GoalDeposits.RemoveRange(relatedDeposits);
 
-            // 3. Sau đó mới xóa Mục tiêu
             _context.Goals.Remove(goal);
-
-            // 4. Lưu thay đổi
             await _context.SaveChangesAsync();
             return true;
         }
@@ -102,13 +88,11 @@ namespace ExpenseManager.App.Repositories
             var startOfLastMonth = new DateTime(lastMonth.Year, lastMonth.Month, 1);
             var endOfLastMonth = startOfLastMonth.AddMonths(1).AddDays(-1);
 
-            var deposits = await _context.GoalDeposits
+            return await _context.GoalDeposits
                 .Where(gd => gd.GoalId == goalId
                     && gd.DepositDate >= startOfLastMonth
                     && gd.DepositDate <= endOfLastMonth)
                 .SumAsync(d => d.Amount);
-
-            return deposits;
         }
 
         public async Task<IEnumerable<GoalDeposit>> GetGoalDepositHistoryAsync(int goalId)
@@ -136,7 +120,6 @@ namespace ExpenseManager.App.Repositories
             goal.CurrentAmount = newAmount;
             goal.UpdatedAt = DateTime.Now;
 
-            // Check if goal is completed
             if (goal.CurrentAmount >= goal.TargetAmount && goal.Status != "Completed")
             {
                 goal.Status = "Completed";
@@ -153,7 +136,7 @@ namespace ExpenseManager.App.Repositories
 
         public async Task<IEnumerable<GoalContributionDTO>> GetWalletContributionsAsync(int goalId)
         {
-            var contributions = await _context.GoalDeposits
+            return await _context.GoalDeposits
             .Where(d => d.GoalId == goalId)
             .Include(d => d.Wallet)
             .GroupBy(d => d.Wallet.WalletName)
@@ -163,8 +146,6 @@ namespace ExpenseManager.App.Repositories
                 ContributedAmount = g.Sum(d => d.Amount)
             })
             .ToListAsync();
-
-                return contributions;
         }
     }
 }
