@@ -240,8 +240,6 @@ namespace ExpenseManager.App.Views.User.UC
         }
 
         // Methods cho ICategoryView
-
-        // ===== BẮT ĐẦU SỬA (LỖI BIÊN DỊCH) =====
         public void DisplayCategories(List<Category> incomeCategories, List<Category> expenseCategories)
         {
             // Tạm dừng layout
@@ -253,14 +251,14 @@ namespace ExpenseManager.App.Views.User.UC
             flpExpenseCategories.Controls.Clear();
 
             // 1. Lấy chiều rộng CHUẨN từ panel cha (pnlCategoryLists).
+            // Đảm bảo các FLP có chiều rộng bằng panel cha (đã được resize trong AdjustLayout)
             int panelWidth = pnlCategoryLists.ClientSize.Width;
 
             // 2. Set width cho cả 2 FlowLayoutPanel
             flpIncomeCategories.Width = panelWidth;
             flpExpenseCategories.Width = panelWidth;
 
-            // 3. Lấy chiều rộng item (CHỈ 1 LẦN)
-            // Đã xóa dòng khai báo "int itemWidth" bị lặp lại
+            // 3. Lấy chiều rộng item (CHỈ 1 LẦN) - Lấy sau khi FLP đã có chiều rộng đúng
             int itemWidth = flpIncomeCategories.ClientSize.Width;
 
             // 4. Thêm vào list Income
@@ -288,7 +286,6 @@ namespace ExpenseManager.App.Views.User.UC
             flpExpenseCategories.ResumeLayout(false);
             pnlCategoryLists.ResumeLayout(true);
         }
-        // ===== KẾT THÚC SỬA =====
 
 
         public void PopulateDropdowns(List<DbIcon> icons, List<DbColor> colors)
@@ -526,51 +523,126 @@ namespace ExpenseManager.App.Views.User.UC
 
         private void AdjustLayout()
         {
-            int availableWidth = this.Width - (this.mainPanel.Padding.Horizontal + 40);
+            // Lấy chiều rộng khả dụng (Available Width)
+            int availableWidth = this.Width - (this.mainPanel.Padding.Horizontal);
+            int mainPanelPadding = this.mainPanel.Padding.Left; // 30
             int panelSpacing = 20;
 
-            headerPanel.Width = availableWidth;
-            breadcrumbPanel.Left = availableWidth - breadcrumbPanel.Width;
-            tabPanel.Width = availableWidth;
+            // 1. HEADER & TAB PANEL
+            headerPanel.Width = availableWidth - mainPanelPadding * 2;
+            tabPanel.Width = availableWidth - mainPanelPadding * 2;
 
-            topPanel.Width = availableWidth;
-            int halfWidth = (availableWidth - panelSpacing) / 2;
+            headerPanel.Left = mainPanelPadding;
+            tabPanel.Left = mainPanelPadding;
+
+            breadcrumbPanel.Left = headerPanel.Width - breadcrumbPanel.Width;
+
+            // 2. TOP PANEL (Profile & Password) - FIXED HEIGHT
+            topPanel.Width = availableWidth - mainPanelPadding * 2;
+            topPanel.Left = mainPanelPadding;
+            topPanel.Height = 565; // Cố định chiều cao cho đồng nhất
+
+            int halfWidth = (topPanel.Width - panelSpacing) / 2;
+
+            // Profile Panel và Password Panel có chiều cao bằng nhau
             profilePanel.Width = halfWidth;
+            profilePanel.Height = 565;
+
             passwordPanel.Width = halfWidth;
+            passwordPanel.Height = 565;
             passwordPanel.Left = halfWidth + panelSpacing;
 
-            txtFullName.Width = profilePanel.Width - 60;
-            txtCurrentEmail.Width = profilePanel.Width - 60;
+            // Căn chỉnh các control trong profilePanel với padding 30px
+            int profileContentWidth = profilePanel.Width - 60;
 
-            txtNewEmail.Width = passwordPanel.Width - 60;
-            txtCurrentPassword.Width = passwordPanel.Width - 100;
-            btnTogglePassword.Left = txtCurrentPassword.Right + 5;
-            txtNewPassword.Width = passwordPanel.Width - 60;
-            txtConfirmPassword.Width = passwordPanel.Width - 60;
+            txtFullName.Left = 33;
+            txtFullName.Width = profileContentWidth;
+            txtFullName.Height = 30;
 
-            personalInfoPanel.Width = availableWidth;
-            int fieldWidth = (availableWidth - (panelSpacing * 3)) / 2;
+            txtCurrentEmail.Left = 33;
+            txtCurrentEmail.Width = profileContentWidth;
+            txtCurrentEmail.Height = 30;
+
+            // Căn chỉnh các control trong passwordPanel với padding 30px
+            int passwordContentWidth = passwordPanel.Width - 60;
+
+            txtNewEmail.Left = 33;
+            txtNewEmail.Width = passwordContentWidth;
+            txtNewEmail.Height = 30;
+
+            txtNewPassword.Left = 33;
+            txtNewPassword.Width = passwordContentWidth;
+            txtNewPassword.Height = 30;
+
+            txtConfirmPassword.Left = 33;
+            txtConfirmPassword.Width = passwordContentWidth;
+            txtConfirmPassword.Height = 30;
+
+            // Current Password với nút Toggle - căn chỉnh chính xác
+            txtCurrentPassword.Left = 33;
+            txtCurrentPassword.Width = passwordContentWidth - btnTogglePassword.Width - 5;
+            txtCurrentPassword.Height = 30;
+            btnTogglePassword.Left = txtCurrentPassword.Left + txtCurrentPassword.Width - 170;
+            btnTogglePassword.Top = txtCurrentPassword.Top;
+
+            // 3. PERSONAL INFO PANEL - FIXED HEIGHT
+            personalInfoPanel.Width = availableWidth - mainPanelPadding * 2;
+            personalInfoPanel.Left = mainPanelPadding;
+            personalInfoPanel.Height = 389; // Cố định chiều cao
+
+            // Điều chỉnh các control trong personalInfoPanel với padding 40px
+            int personalContentWidth = personalInfoPanel.Width - 80;
+            int fieldWidth = (personalContentWidth - panelSpacing) / 2;
+
+            // Cột trái - đồng nhất chiều cao và vị trí
+            txtAddress.Left = 40;
             txtAddress.Width = fieldWidth;
+            txtAddress.Height = 30;
+
+            dtpBirthDate.Left = 40;
             dtpBirthDate.Width = fieldWidth;
+            dtpBirthDate.Height = 30;
 
-            lblCity.Left = fieldWidth + panelSpacing * 2;
-            txtCity.Left = lblCity.Left;
+            // Cột phải - đồng nhất chiều cao và vị trí
+            int rightColumnLeft = 40 + fieldWidth + panelSpacing;
+
+            lblCity.Left = rightColumnLeft;
+            txtCity.Left = rightColumnLeft;
             txtCity.Width = fieldWidth;
+            txtCity.Height = 30;
 
-            lblCountry.Left = lblCity.Left;
-            cmbCountry.Left = lblCity.Left;
-            cmbCountry.Width = fieldWidth;
+            lblCountry.Left = rightColumnLeft;
+            cmbCountry.Left = rightColumnLeft;
+            cmbCountry.Width = 604;
+            cmbCountry.Height = 30;
 
+            // 4. CATEGORIES PANEL
             if (categoriesPanel.Visible)
             {
-                categoriesPanel.Width = availableWidth;
+                categoriesPanel.Width = availableWidth - mainPanelPadding * 2;
+                categoriesPanel.Left = mainPanelPadding;
+
                 createCategoryPanel.Height = categoriesPanel.Height;
                 pnlCategoryLists.Height = categoriesPanel.Height;
 
                 pnlCategoryLists.Width = categoriesPanel.Width - createCategoryPanel.Width - panelSpacing;
                 pnlCategoryLists.Left = createCategoryPanel.Width + panelSpacing;
 
-                // ===== BẮT ĐẦU SỬA (LỖI "HỎN") =====
+                // Căn chỉnh các control trong createCategoryPanel
+                int categoryContentWidth = createCategoryPanel.Width - 48; // 24px padding mỗi bên
+                txtCategoryName.Width = categoryContentWidth;
+                txtCategoryName.Height = 30;
+
+                cmbCategoryType.Width = categoryContentWidth;
+                cmbCategoryType.Height = 31;
+
+                cmbIcon.Width = categoryContentWidth;
+                cmbIcon.Height = 31;
+
+                cmbColor.Width = categoryContentWidth;
+                cmbColor.Height = 31;
+
+                // Căn chỉnh lại các item trong FlowLayoutPanel
                 int listWidth = pnlCategoryLists.ClientSize.Width;
                 flpIncomeCategories.Width = listWidth;
                 flpExpenseCategories.Width = listWidth;
@@ -581,12 +653,10 @@ namespace ExpenseManager.App.Views.User.UC
                     item.Width = itemWidth;
                 }
 
-                // Dùng chung itemWidth (vì 2 FLP đã bằng nhau)
                 foreach (Control item in flpExpenseCategories.Controls)
                 {
                     item.Width = itemWidth;
                 }
-                // ===== KẾT THÚC SỬA =====
             }
         }
 
@@ -610,6 +680,11 @@ namespace ExpenseManager.App.Views.User.UC
 
             ApplyRoundedCorner(txtCategoryName, 10);
             ApplyRoundedCorner(btnSaveCategory, 8);
+
+            btnTogglePassword.FlatStyle = FlatStyle.Flat;
+            btnTogglePassword.FlatAppearance.BorderSize = 1;
+            btnTogglePassword.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            ApplyRoundedCorner(btnTogglePassword, 8); 
         }
 
         private void ApplyRoundedCorner(Control control, int radius)
