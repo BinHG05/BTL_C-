@@ -86,6 +86,10 @@ namespace ExpenseManager.App
             services.AddTransient<LayoutUser>();
             services.AddTransient<LayoutAdmin>();
             services.AddTransient<AddTransactionForm>();
+
+            // Đăng ký Search services
+            services.AddScoped<ISearchRepository, SearchRepository>();
+            services.AddScoped<ISearchServices, SearchServices>();
         }
 
         /// <summary>
