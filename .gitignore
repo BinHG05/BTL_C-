@@ -14,3 +14,4 @@ Release/
 *.userosscache
 *.sln.docstates
 appsettings.json
+/ExpenseManager.App/appsetting.json

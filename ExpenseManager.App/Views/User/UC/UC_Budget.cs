@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ExpenseManager.App.Presenters; 
+using ExpenseManager.App.Services;
+using ExpenseManager.App.Views.User.UC;
 
 namespace ExpenseManager.App.Views.Admin.UC
 {

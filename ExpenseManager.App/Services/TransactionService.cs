@@ -1,9 +1,12 @@
-﻿using ExpenseManager.App.Models.EF;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using ExpenseManager.App.Models.EF;
 using ExpenseManager.App.Models.Entities;
 using ExpenseManager.App.Repositories.Interfaces;
 using ExpenseManager.App.Services.Interfaces;
-using System;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace ExpenseManager.App.Services
 {
