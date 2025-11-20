@@ -68,12 +68,11 @@ namespace ExpenseManager.App.Services
                 if (string.IsNullOrWhiteSpace(userId))
                     throw new ArgumentException("User ID cannot be empty");
 
-                // Check if user exists
+               
                 var user = await _repository.GetUserByIdAsync(userId);
                 if (user == null)
                     throw new Exception("User not found");
 
-                // Prevent deleting admin if they're the last admin
                 if (user.Role == "Admin")
                 {
                     var stats = await _repository.GetStatisticsAsync();
