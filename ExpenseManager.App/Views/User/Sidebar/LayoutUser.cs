@@ -251,7 +251,6 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
         {
             BtnDashboard_Click(btnDashboard, EventArgs.Empty);
         }
-
         // Profile Dropdown Events
         private void BtnProfileTop_Click(object sender, EventArgs e)
         {
@@ -337,5 +336,10 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             int nLeftRect, int nTopRect, int nRightRect, int nBottomRect,
             int nWidthEllipse, int nHeightEllipse
         );
+
+        private void btnSearchInside_Click_1(object sender, EventArgs e)
+        {
+            LoadContent(new UC_Search());
+        }
     }
 }

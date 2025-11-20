@@ -97,6 +97,10 @@ namespace ExpenseManager.App
 
             // Form thêm giao dịch
             services.AddTransient<AddTransactionForm>();
+
+            // Đăng ký Search services
+            services.AddScoped<ISearchRepository, SearchRepository>();
+            services.AddScoped<ISearchServices, SearchServices>();
         }
 
         /// <summary>

@@ -28,8 +28,9 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             // Load mặc định
             LoadContent(new UC_DashboardAD());
             ActivateButton(btnDashboard);
+            DisplayNameAdmin();
 
-            
+
             if (CurrentUserSession.CurrentUser != null)
             {
                 lblAdminName.Text = CurrentUserSession.CurrentUser.FullName;
@@ -37,7 +38,29 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             }
         
         }
+        private void DisplayNameAdmin()
+        {
+            string userName = "Admin";
 
+            var currentUser = CurrentUserSession.CurrentUser;
+
+            if (currentUser != null)
+            {
+                // Giả định đối tượng CurrentUser có thuộc tính FullName
+                // Nếu bạn lưu tên ở thuộc tính khác 
+                if (!string.IsNullOrEmpty(currentUser.FullName))
+                {
+                    userName = currentUser.FullName;
+                }
+                else if (!string.IsNullOrEmpty(currentUser.FullName))
+                {
+                    userName = currentUser.FullName;
+                }
+            }
+
+            // 2. Gán giá trị vào Label
+            lblAdminName.Text = $"Welcome back, {userName} !";
+        }
         private void ActivateButton(IconButton selectedButton)
         {
             if (selectedButton == currentButton)
