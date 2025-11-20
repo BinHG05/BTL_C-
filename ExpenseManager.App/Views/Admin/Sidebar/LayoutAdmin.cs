@@ -1,7 +1,9 @@
 ﻿using ExpenseManager.App.Models.EF;
+using ExpenseManager.App.Session; // Namespace chứa CurrentUserSession
 using ExpenseManager.App.Views.Admin.UC;
 using FontAwesome.Sharp;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection; // Namespace cho DI
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -17,22 +19,53 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
         private Color logoutDefaultColor = Color.FromArgb(220, 53, 69);
         private Color logoutHoverColor = Color.FromArgb(200, 35, 51);
 
-        // KHAI BÁO KIỂU CỤ THỂ ExpenseDbContext
         private readonly ExpenseDbContext _dbContext = new ExpenseDbContext();
 
         public LayoutAdmin()
         {
             InitializeComponent();
+
+            // Load mặc định
             LoadContent(new UC_DashboardAD());
             ActivateButton(btnDashboard);
-        }
+            DisplayNameAdmin();
 
+
+            if (CurrentUserSession.CurrentUser != null)
+            {
+                lblAdminName.Text = CurrentUserSession.CurrentUser.FullName;
+             
+            }
+        
+        }
+        private void DisplayNameAdmin()
+        {
+            string userName = "Admin";
+
+            var currentUser = CurrentUserSession.CurrentUser;
+
+            if (currentUser != null)
+            {
+                // Giả định đối tượng CurrentUser có thuộc tính FullName
+                // Nếu bạn lưu tên ở thuộc tính khác 
+                if (!string.IsNullOrEmpty(currentUser.FullName))
+                {
+                    userName = currentUser.FullName;
+                }
+                else if (!string.IsNullOrEmpty(currentUser.FullName))
+                {
+                    userName = currentUser.FullName;
+                }
+            }
+
+            // 2. Gán giá trị vào Label
+            lblAdminName.Text = $"Welcome back, {userName} !";
+        }
         private void ActivateButton(IconButton selectedButton)
         {
             if (selectedButton == currentButton)
                 return;
 
-            // Reset previous button
             if (currentButton != null)
             {
                 currentButton.BackColor = defaultBg;
@@ -40,16 +73,15 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
                 currentButton.IconColor = Color.White;
             }
 
-            // Set current button
             currentButton = selectedButton;
 
-            // Highlight selected button
             selectedButton.BackColor = activeColor;
             selectedButton.ForeColor = Color.White;
             selectedButton.IconColor = Color.White;
         }
 
-        // Button Click Events
+        // --- EVENTS CLICK ---
+
         private void BtnDashboard_Click(object sender, EventArgs e)
         {
             ActivateButton(btnDashboard);
@@ -65,8 +97,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
         private void BtnCategory_Click(object sender, EventArgs e)
         {
             ActivateButton(btnCategory);
-            // TODO: Load Category content
-            MessageBox.Show("Category management coming soon!", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            LoadContent(new UC_CategoryAD());
         }
 
         private void BtnSupport_Click(object sender, EventArgs e)
@@ -80,6 +111,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             profileMenu.Show(Cursor.Position);
         }
 
+        // --- LOGIC ĐĂNG XUẤT (ĐÃ SỬA) ---
         private void BtnLogout_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show(
@@ -91,8 +123,15 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
 
             if (result == DialogResult.Yes)
             {
-                MessageBox.Show("Đăng xuất thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                // TODO: Navigate to login form
+                // 1. Xóa session (Sử dụng hàm ClearUser của bạn)
+                CurrentUserSession.ClearUser();
+
+                // 2. Mở lại form đăng nhập
+                var loginForm = Program.ServiceProvider.GetRequiredService<LoginForm>();
+                loginForm.Show();
+
+                // 3. Đóng form Admin
+                this.Close();
             }
         }
 
@@ -113,9 +152,10 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
 
         private void LayoutAdmin_Load(object sender, EventArgs e)
         {
-            ActivateButton(btnDashboard);
+            // Không cần làm gì thêm nếu đã load ở Constructor
         }
 
+        // --- HÀM LOAD CONTENT ---
         private void LoadContent(UserControl uc)
         {
             contentPanel.Controls.Clear();
@@ -124,20 +164,21 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
 
             try
             {
-                // Initialize presenters based on UserControl type
                 if (uc is UC_DashboardAD dashboardUc)
                 {
-                    // Truyền ExpenseDbContext
                     dashboardUc.InitializePresenter(_dbContext);
                 }
                 else if (uc is UC_UserAD userUc)
                 {
-                    // ĐÃ SỬA LỖI CS1503: Truyền ExpenseDbContext
                     userUc.InitializePresenter(_dbContext);
+                }
+                else if (uc is UC_CategoryAD categoryUc)
+                {
+                    categoryUc.InitializePresenter(_dbContext);
                 }
                 else if (uc is UC_TicketAD ticketUc)
                 {
-                    // ticketUc.InitializePresenter(_dbContext);
+                    // ticketUc.InitializePresenter(_dbContext); 
                 }
             }
             catch (Exception ex)

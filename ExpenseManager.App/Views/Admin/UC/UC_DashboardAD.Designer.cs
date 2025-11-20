@@ -1,6 +1,5 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
-using FontAwesome.Sharp;
 
 namespace ExpenseManager.App.Views.Admin.UC
 {
@@ -48,6 +47,7 @@ namespace ExpenseManager.App.Views.Admin.UC
             headerPanel = new Panel();
             lblWelcome = new Label();
             lblDashboard = new Label();
+            lblDateTime = new Label(); // <--- 1. Khởi tạo Label ngày tháng
             mainPanel.SuspendLayout();
             chartPanel.SuspendLayout();
             filterPanel.SuspendLayout();
@@ -331,6 +331,7 @@ namespace ExpenseManager.App.Views.Admin.UC
             // 
             // headerPanel
             // 
+            headerPanel.Controls.Add(lblDateTime); // <--- 2. Thêm label vào header
             headerPanel.Controls.Add(lblWelcome);
             headerPanel.Controls.Add(lblDashboard);
             headerPanel.Dock = DockStyle.Top;
@@ -361,6 +362,18 @@ namespace ExpenseManager.App.Views.Admin.UC
             lblDashboard.TabIndex = 0;
             lblDashboard.Text = "Dashboard";
             // 
+            // lblDateTime
+            // 
+            // <--- 3. Cấu hình properties cho label
+            lblDateTime.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            lblDateTime.Font = new Font("Segoe UI", 9F);
+            lblDateTime.ForeColor = Color.Gray;
+            lblDateTime.Location = new Point(800, 15); // Căn phải
+            lblDateTime.Name = "lblDateTime";
+            lblDateTime.Size = new Size(290, 20);
+            lblDateTime.TextAlign = ContentAlignment.TopRight;
+            lblDateTime.Text = "📅 ...";
+            // 
             // UC_DashboardAD
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -390,7 +403,7 @@ namespace ExpenseManager.App.Views.Admin.UC
         private System.Windows.Forms.Panel headerPanel;
         private System.Windows.Forms.Label lblDashboard;
         private System.Windows.Forms.Label lblWelcome;
-        private System.Windows.Forms.Label lblDateTime;
+        private System.Windows.Forms.Label lblDateTime; // Đã có sẵn
         private System.Windows.Forms.Panel kpiPanel;
         private System.Windows.Forms.Panel cardUsers;
         private System.Windows.Forms.Panel iconUsers;

@@ -9,7 +9,9 @@ using ExpenseManager.App.Services;
 using ExpenseManager.App.Services.Interfaces;
 using ExpenseManager.App.Views;
 using ExpenseManager.App.Views.Admin.Sidebar;
+
 using ExpenseManager.App.Views.Admin.UC;
+using ExpenseManager.App.Views.User;
 using ExpenseManager.App.Views.User.Forms;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -58,6 +60,10 @@ namespace ExpenseManager.App
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddScoped<IWalletRepository, WalletRepository>();
             services.AddScoped<ITransactionRepository, TransactionRepository>();
+
+            services.AddScoped<IGoalRepository, GoalRepository>();
+
+
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IIconRepository, IconRepository>();
             services.AddScoped<IColorRepository, ColorRepository>();
@@ -72,7 +78,11 @@ namespace ExpenseManager.App
             services.AddScoped<IWalletService, WalletService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ITransactionService, TransactionService>();
+
             services.AddScoped<IBudgetService, BudgetService>();
+
+            services.AddScoped<IGoalService, GoalService>();
+
 
             // *** THÊM ANALYTICS SERVICE ***
             services.AddScoped<IAnalyticsService, AnalyticsService>();
@@ -83,13 +93,25 @@ namespace ExpenseManager.App
             services.AddTransient<ForgotPasswordPresenter>();
             services.AddScoped<BudgetPresenter>();
 
+            services.AddTransient<GoalsPresenter>();
+
+
             // 5. Forms
             services.AddTransient<LoginForm>();
             services.AddTransient<RegisterForm>();
             services.AddTransient<ForgotPasswordForm>();
             services.AddTransient<LayoutUser>();
             services.AddTransient<LayoutAdmin>();
+            services.AddTransient<UC_Goals>();
+            services.AddScoped<UC_Budget>();
+
+
+            // Form thêm giao dịch
             services.AddTransient<AddTransactionForm>();
+
+            // Đăng ký Search services
+            services.AddScoped<ISearchRepository, SearchRepository>();
+            services.AddScoped<ISearchServices, SearchServices>();
         }
 
         /// <summary>

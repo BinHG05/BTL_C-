@@ -22,474 +22,426 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
 
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.sidebarPanel = new System.Windows.Forms.Panel();
-            this.btnSettings = new FontAwesome.Sharp.IconButton();
-            this.btnAnalytics = new FontAwesome.Sharp.IconButton();
-            this.btnGoals = new FontAwesome.Sharp.IconButton();
-            this.btnBudget = new FontAwesome.Sharp.IconButton();
-            this.btnWallet = new FontAwesome.Sharp.IconButton();
-            this.btnDashboard = new FontAwesome.Sharp.IconButton();
-            this.logoPanel = new System.Windows.Forms.Panel();
-            this.logoPic = new System.Windows.Forms.PictureBox();
-            this.headerPanel = new System.Windows.Forms.Panel();
-            this.rightPanel = new System.Windows.Forms.Panel();
-            this.btnToggleTheme = new FontAwesome.Sharp.IconButton();
-            this.btnNotification = new FontAwesome.Sharp.IconButton();
-            this.btnProfileTop = new FontAwesome.Sharp.IconButton();
-            this.centerPanel = new System.Windows.Forms.Panel();
-            this.btnAddTransaction = new FontAwesome.Sharp.IconButton();
-            this.searchBox = new System.Windows.Forms.Panel();
-            this.btnSearchInside = new FontAwesome.Sharp.IconButton();
-            this.txtSearch = new System.Windows.Forms.TextBox();
-            this.contentPanel = new System.Windows.Forms.Panel();
-
-            // ✅ THÊM CÁC CONTROLS MỚI CHO DROPDOWN
-            this.profileContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.profileInfoPanel = new System.Windows.Forms.ToolStripControlHost(this.CreateProfileInfoPanel());
-            this.separator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.settingsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.logoutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-
-            this.sidebarPanel.SuspendLayout();
-            this.logoPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.logoPic)).BeginInit();
-            this.headerPanel.SuspendLayout();
-            this.rightPanel.SuspendLayout();
-            this.centerPanel.SuspendLayout();
-            this.searchBox.SuspendLayout();
-            this.profileContextMenu.SuspendLayout();
-            this.SuspendLayout();
-
+            components = new System.ComponentModel.Container();
+            sidebarPanel = new Panel();
+            btnSettings = new IconButton();
+            btnAnalytics = new IconButton();
+            btnGoals = new IconButton();
+            btnBudget = new IconButton();
+            btnWallet = new IconButton();
+            btnDashboard = new IconButton();
+            logoPanel = new Panel();
+            logoPic = new PictureBox();
+            headerPanel = new Panel();
+            rightPanel = new Panel();
+            btnToggleTheme = new IconButton();
+            btnNotification = new IconButton();
+            btnProfileTop = new IconButton();
+            centerPanel = new Panel();
+            btnAddTransaction = new IconButton();
+            searchBox = new Panel();
+            btnSearchInside = new IconButton();
+            txtSearch = new TextBox();
+            contentPanel = new Panel();
+            profileContextMenu = new ContextMenuStrip(components);
+            separator1 = new ToolStripSeparator();
+            settingsMenuItem = new ToolStripMenuItem();
+            logoutMenuItem = new ToolStripMenuItem();
+            sidebarPanel.SuspendLayout();
+            logoPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)logoPic).BeginInit();
+            headerPanel.SuspendLayout();
+            rightPanel.SuspendLayout();
+            centerPanel.SuspendLayout();
+            searchBox.SuspendLayout();
+            profileContextMenu.SuspendLayout();
+            SuspendLayout();
             // 
             // sidebarPanel
             // 
-            this.sidebarPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(224)))));
-            this.sidebarPanel.Controls.Add(this.btnSettings);
-            this.sidebarPanel.Controls.Add(this.btnAnalytics);
-            this.sidebarPanel.Controls.Add(this.btnGoals);
-            this.sidebarPanel.Controls.Add(this.btnBudget);
-            this.sidebarPanel.Controls.Add(this.btnWallet);
-            this.sidebarPanel.Controls.Add(this.btnDashboard);
-            this.sidebarPanel.Controls.Add(this.logoPanel);
-            this.sidebarPanel.Dock = System.Windows.Forms.DockStyle.Left;
-            this.sidebarPanel.Location = new System.Drawing.Point(0, 0);
-            this.sidebarPanel.Name = "sidebarPanel";
-            this.sidebarPanel.Size = new System.Drawing.Size(80, 768);
-            this.sidebarPanel.TabIndex = 0;
-
+            sidebarPanel.BackColor = Color.FromArgb(31, 31, 224);
+            sidebarPanel.Controls.Add(btnSettings);
+            sidebarPanel.Controls.Add(btnAnalytics);
+            sidebarPanel.Controls.Add(btnGoals);
+            sidebarPanel.Controls.Add(btnBudget);
+            sidebarPanel.Controls.Add(btnWallet);
+            sidebarPanel.Controls.Add(btnDashboard);
+            sidebarPanel.Controls.Add(logoPanel);
+            sidebarPanel.Dock = DockStyle.Left;
+            sidebarPanel.Location = new Point(0, 0);
+            sidebarPanel.Margin = new Padding(3, 4, 3, 4);
+            sidebarPanel.Name = "sidebarPanel";
+            sidebarPanel.Size = new Size(91, 1024);
+            sidebarPanel.TabIndex = 0;
             // 
             // btnSettings
             // 
-            this.btnSettings.BackColor = System.Drawing.Color.Transparent;
-            this.btnSettings.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btnSettings.FlatAppearance.BorderSize = 0;
-            this.btnSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSettings.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnSettings.ForeColor = System.Drawing.Color.White;
-            this.btnSettings.IconChar = FontAwesome.Sharp.IconChar.Gear;
-            this.btnSettings.IconColor = System.Drawing.Color.White;
-            this.btnSettings.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnSettings.IconSize = 32;
-            this.btnSettings.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnSettings.Location = new System.Drawing.Point(0, 698);
-            this.btnSettings.Name = "btnSettings";
-            this.btnSettings.Padding = new System.Windows.Forms.Padding(0);
-            this.btnSettings.Size = new System.Drawing.Size(80, 70);
-            this.btnSettings.TabIndex = 6;
-            this.btnSettings.Tag = "Settings";
-            this.btnSettings.Text = "";
-            this.btnSettings.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnSettings.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
-            this.btnSettings.UseVisualStyleBackColor = false;
-            this.btnSettings.Click += new System.EventHandler(this.BtnSettings_Click);
-
-            // (Các button còn lại giữ nguyên như code cũ...)
-            // btnAnalytics, btnGoals, btnBudget, btnWallet, btnDashboard, logoPanel, logoPic
-            // headerPanel, rightPanel, btnToggleTheme, btnNotification
-            // (Copy từ code cũ - tôi bỏ qua để tiết kiệm chỗ)
+            btnSettings.BackColor = Color.Transparent;
+            btnSettings.Dock = DockStyle.Bottom;
+            btnSettings.FlatAppearance.BorderSize = 0;
+            btnSettings.FlatStyle = FlatStyle.Flat;
+            btnSettings.Font = new Font("Segoe UI", 10F);
+            btnSettings.ForeColor = Color.White;
+            btnSettings.IconChar = IconChar.Cog;
+            btnSettings.IconColor = Color.White;
+            btnSettings.IconFont = IconFont.Auto;
+            btnSettings.IconSize = 32;
+            btnSettings.Location = new Point(0, 931);
+            btnSettings.Margin = new Padding(3, 4, 3, 4);
+            btnSettings.Name = "btnSettings";
+            btnSettings.Size = new Size(91, 93);
+            btnSettings.TabIndex = 6;
+            btnSettings.Tag = "Settings";
+            btnSettings.UseVisualStyleBackColor = false;
+            btnSettings.Click += BtnSettings_Click;
             // 
             // btnAnalytics
             // 
-            this.btnAnalytics.BackColor = System.Drawing.Color.Transparent;
-            this.btnAnalytics.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnAnalytics.FlatAppearance.BorderSize = 0;
-            this.btnAnalytics.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAnalytics.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnAnalytics.ForeColor = System.Drawing.Color.White;
-            this.btnAnalytics.IconChar = FontAwesome.Sharp.IconChar.ChartLine;
-            this.btnAnalytics.IconColor = System.Drawing.Color.White;
-            this.btnAnalytics.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnAnalytics.IconSize = 32;
-            this.btnAnalytics.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnAnalytics.Location = new System.Drawing.Point(0, 440);
-            this.btnAnalytics.Name = "btnAnalytics";
-            this.btnAnalytics.Padding = new System.Windows.Forms.Padding(0);
-            this.btnAnalytics.Size = new System.Drawing.Size(80, 70);
-            this.btnAnalytics.TabIndex = 5;
-            this.btnAnalytics.Tag = "Analytics";
-            this.btnAnalytics.Text = "";
-            this.btnAnalytics.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnAnalytics.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
-            this.btnAnalytics.UseVisualStyleBackColor = false;
-            this.btnAnalytics.Click += new System.EventHandler(this.BtnAnalytics_Click);
-
+            btnAnalytics.BackColor = Color.Transparent;
+            btnAnalytics.Dock = DockStyle.Top;
+            btnAnalytics.FlatAppearance.BorderSize = 0;
+            btnAnalytics.FlatStyle = FlatStyle.Flat;
+            btnAnalytics.Font = new Font("Segoe UI", 10F);
+            btnAnalytics.ForeColor = Color.White;
+            btnAnalytics.IconChar = IconChar.ChartLine;
+            btnAnalytics.IconColor = Color.White;
+            btnAnalytics.IconFont = IconFont.Auto;
+            btnAnalytics.IconSize = 32;
+            btnAnalytics.Location = new Point(0, 585);
+            btnAnalytics.Margin = new Padding(3, 4, 3, 4);
+            btnAnalytics.Name = "btnAnalytics";
+            btnAnalytics.Size = new Size(91, 93);
+            btnAnalytics.TabIndex = 5;
+            btnAnalytics.Tag = "Analytics";
+            btnAnalytics.UseVisualStyleBackColor = false;
+            btnAnalytics.Click += BtnAnalytics_Click;
             // 
             // btnGoals
             // 
-            this.btnGoals.BackColor = System.Drawing.Color.Transparent;
-            this.btnGoals.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnGoals.FlatAppearance.BorderSize = 0;
-            this.btnGoals.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGoals.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnGoals.ForeColor = System.Drawing.Color.White;
-            this.btnGoals.IconChar = FontAwesome.Sharp.IconChar.Bullseye;
-            this.btnGoals.IconColor = System.Drawing.Color.White;
-            this.btnGoals.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnGoals.IconSize = 32;
-            this.btnGoals.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnGoals.Location = new System.Drawing.Point(0, 370);
-            this.btnGoals.Name = "btnGoals";
-            this.btnGoals.Padding = new System.Windows.Forms.Padding(0);
-            this.btnGoals.Size = new System.Drawing.Size(80, 70);
-            this.btnGoals.TabIndex = 4;
-            this.btnGoals.Tag = "Goals";
-            this.btnGoals.Text = "";
-            this.btnGoals.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnGoals.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
-            this.btnGoals.UseVisualStyleBackColor = false;
-            this.btnGoals.Click += new System.EventHandler(this.BtnGoals_Click);
-
+            btnGoals.BackColor = Color.Transparent;
+            btnGoals.Dock = DockStyle.Top;
+            btnGoals.FlatAppearance.BorderSize = 0;
+            btnGoals.FlatStyle = FlatStyle.Flat;
+            btnGoals.Font = new Font("Segoe UI", 10F);
+            btnGoals.ForeColor = Color.White;
+            btnGoals.IconChar = IconChar.Bullseye;
+            btnGoals.IconColor = Color.White;
+            btnGoals.IconFont = IconFont.Auto;
+            btnGoals.IconSize = 32;
+            btnGoals.Location = new Point(0, 492);
+            btnGoals.Margin = new Padding(3, 4, 3, 4);
+            btnGoals.Name = "btnGoals";
+            btnGoals.Size = new Size(91, 93);
+            btnGoals.TabIndex = 4;
+            btnGoals.Tag = "Goals";
+            btnGoals.UseVisualStyleBackColor = false;
+            btnGoals.Click += BtnGoals_Click;
             // 
             // btnBudget
             // 
-            this.btnBudget.BackColor = System.Drawing.Color.Transparent;
-            this.btnBudget.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnBudget.FlatAppearance.BorderSize = 0;
-            this.btnBudget.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBudget.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnBudget.ForeColor = System.Drawing.Color.White;
-            this.btnBudget.IconChar = FontAwesome.Sharp.IconChar.Coins;
-            this.btnBudget.IconColor = System.Drawing.Color.White;
-            this.btnBudget.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnBudget.IconSize = 32;
-            this.btnBudget.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnBudget.Location = new System.Drawing.Point(0, 300);
-            this.btnBudget.Name = "btnBudget";
-            this.btnBudget.Padding = new System.Windows.Forms.Padding(0);
-            this.btnBudget.Size = new System.Drawing.Size(80, 70);
-            this.btnBudget.TabIndex = 3;
-            this.btnBudget.Tag = "Budget";
-            this.btnBudget.Text = "";
-            this.btnBudget.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnBudget.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
-            this.btnBudget.UseVisualStyleBackColor = false;
-            this.btnBudget.Click += new System.EventHandler(this.BtnBudget_Click);
-
+            btnBudget.BackColor = Color.Transparent;
+            btnBudget.Dock = DockStyle.Top;
+            btnBudget.FlatAppearance.BorderSize = 0;
+            btnBudget.FlatStyle = FlatStyle.Flat;
+            btnBudget.Font = new Font("Segoe UI", 10F);
+            btnBudget.ForeColor = Color.White;
+            btnBudget.IconChar = IconChar.Coins;
+            btnBudget.IconColor = Color.White;
+            btnBudget.IconFont = IconFont.Auto;
+            btnBudget.IconSize = 32;
+            btnBudget.Location = new Point(0, 399);
+            btnBudget.Margin = new Padding(3, 4, 3, 4);
+            btnBudget.Name = "btnBudget";
+            btnBudget.Size = new Size(91, 93);
+            btnBudget.TabIndex = 3;
+            btnBudget.Tag = "Budget";
+            btnBudget.UseVisualStyleBackColor = false;
+            btnBudget.Click += BtnBudget_Click;
             // 
             // btnWallet
             // 
-            this.btnWallet.BackColor = System.Drawing.Color.Transparent;
-            this.btnWallet.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnWallet.FlatAppearance.BorderSize = 0;
-            this.btnWallet.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnWallet.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnWallet.ForeColor = System.Drawing.Color.White;
-            this.btnWallet.IconChar = FontAwesome.Sharp.IconChar.CreditCard;
-            this.btnWallet.IconColor = System.Drawing.Color.White;
-            this.btnWallet.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnWallet.IconSize = 32;
-            this.btnWallet.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnWallet.Location = new System.Drawing.Point(0, 230);
-            this.btnWallet.Name = "btnWallet";
-            this.btnWallet.Padding = new System.Windows.Forms.Padding(0);
-            this.btnWallet.Size = new System.Drawing.Size(80, 70);
-            this.btnWallet.TabIndex = 2;
-            this.btnWallet.Tag = "Wallet";
-            this.btnWallet.Text = "";
-            this.btnWallet.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnWallet.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
-            this.btnWallet.UseVisualStyleBackColor = false;
-            this.btnWallet.Click += new System.EventHandler(this.BtnWallet_Click);
-
+            btnWallet.BackColor = Color.Transparent;
+            btnWallet.Dock = DockStyle.Top;
+            btnWallet.FlatAppearance.BorderSize = 0;
+            btnWallet.FlatStyle = FlatStyle.Flat;
+            btnWallet.Font = new Font("Segoe UI", 10F);
+            btnWallet.ForeColor = Color.White;
+            btnWallet.IconChar = IconChar.CreditCard;
+            btnWallet.IconColor = Color.White;
+            btnWallet.IconFont = IconFont.Auto;
+            btnWallet.IconSize = 32;
+            btnWallet.Location = new Point(0, 306);
+            btnWallet.Margin = new Padding(3, 4, 3, 4);
+            btnWallet.Name = "btnWallet";
+            btnWallet.Size = new Size(91, 93);
+            btnWallet.TabIndex = 2;
+            btnWallet.Tag = "Wallet";
+            btnWallet.UseVisualStyleBackColor = false;
+            btnWallet.Click += BtnWallet_Click;
             // 
             // btnDashboard
             // 
-            this.btnDashboard.BackColor = System.Drawing.Color.Transparent;
-            this.btnDashboard.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnDashboard.FlatAppearance.BorderSize = 0;
-            this.btnDashboard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDashboard.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnDashboard.ForeColor = System.Drawing.Color.White;
-            this.btnDashboard.IconChar = FontAwesome.Sharp.IconChar.ChartPie;
-            this.btnDashboard.IconColor = System.Drawing.Color.White;
-            this.btnDashboard.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnDashboard.IconSize = 32;
-            this.btnDashboard.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnDashboard.Location = new System.Drawing.Point(0, 160);
-            this.btnDashboard.Name = "btnDashboard";
-            this.btnDashboard.Padding = new System.Windows.Forms.Padding(0);
-            this.btnDashboard.Size = new System.Drawing.Size(80, 70);
-            this.btnDashboard.TabIndex = 1;
-            this.btnDashboard.Tag = "Dashboard";
-            this.btnDashboard.Text = "";
-            this.btnDashboard.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnDashboard.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
-            this.btnDashboard.UseVisualStyleBackColor = false;
-            this.btnDashboard.Click += new System.EventHandler(this.BtnDashboard_Click);
-
+            btnDashboard.BackColor = Color.Transparent;
+            btnDashboard.Dock = DockStyle.Top;
+            btnDashboard.FlatAppearance.BorderSize = 0;
+            btnDashboard.FlatStyle = FlatStyle.Flat;
+            btnDashboard.Font = new Font("Segoe UI", 10F);
+            btnDashboard.ForeColor = Color.White;
+            btnDashboard.IconChar = IconChar.PieChart;
+            btnDashboard.IconColor = Color.White;
+            btnDashboard.IconFont = IconFont.Auto;
+            btnDashboard.IconSize = 32;
+            btnDashboard.Location = new Point(0, 213);
+            btnDashboard.Margin = new Padding(3, 4, 3, 4);
+            btnDashboard.Name = "btnDashboard";
+            btnDashboard.Size = new Size(91, 93);
+            btnDashboard.TabIndex = 1;
+            btnDashboard.Tag = "Dashboard";
+            btnDashboard.UseVisualStyleBackColor = false;
+            btnDashboard.Click += BtnDashboard_Click;
             // 
             // logoPanel
             // 
-            this.logoPanel.BackColor = System.Drawing.Color.Transparent;
-            this.logoPanel.Controls.Add(this.logoPic);
-            this.logoPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.logoPanel.Location = new System.Drawing.Point(0, 0);
-            this.logoPanel.Name = "logoPanel";
-            this.logoPanel.Size = new System.Drawing.Size(80, 160);
-            this.logoPanel.TabIndex = 0;
-
+            logoPanel.BackColor = Color.Transparent;
+            logoPanel.Controls.Add(logoPic);
+            logoPanel.Dock = DockStyle.Top;
+            logoPanel.Location = new Point(0, 0);
+            logoPanel.Margin = new Padding(3, 4, 3, 4);
+            logoPanel.Name = "logoPanel";
+            logoPanel.Size = new Size(91, 213);
+            logoPanel.TabIndex = 0;
             // 
             // logoPic
             // 
-            this.logoPic.BackColor = System.Drawing.Color.Transparent;
-            this.logoPic.Location = new System.Drawing.Point(10, 50);
-            this.logoPic.Name = "logoPic";
-            this.logoPic.Size = new System.Drawing.Size(60, 60);
-            this.logoPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.logoPic.TabIndex = 0;
-            this.logoPic.TabStop = false;
-
+            logoPic.BackColor = Color.Transparent;
+            logoPic.Location = new Point(11, 67);
+            logoPic.Margin = new Padding(3, 4, 3, 4);
+            logoPic.Name = "logoPic";
+            logoPic.Size = new Size(69, 80);
+            logoPic.SizeMode = PictureBoxSizeMode.Zoom;
+            logoPic.TabIndex = 0;
+            logoPic.TabStop = false;
             // 
             // headerPanel
             // 
-            this.headerPanel.BackColor = System.Drawing.Color.White;
-            this.headerPanel.Controls.Add(this.rightPanel);
-            this.headerPanel.Controls.Add(this.centerPanel);
-            this.headerPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.headerPanel.Location = new System.Drawing.Point(80, 0);
-            this.headerPanel.Name = "headerPanel";
-            this.headerPanel.Padding = new System.Windows.Forms.Padding(30, 15, 30, 15);
-            this.headerPanel.Size = new System.Drawing.Size(1344, 70);
-            this.headerPanel.TabIndex = 1;
-
+            headerPanel.BackColor = Color.White;
+            headerPanel.Controls.Add(rightPanel);
+            headerPanel.Controls.Add(centerPanel);
+            headerPanel.Dock = DockStyle.Top;
+            headerPanel.Location = new Point(91, 0);
+            headerPanel.Margin = new Padding(3, 4, 3, 4);
+            headerPanel.Name = "headerPanel";
+            headerPanel.Padding = new Padding(34, 20, 34, 20);
+            headerPanel.Size = new Size(1536, 93);
+            headerPanel.TabIndex = 1;
             // 
             // rightPanel
             // 
-            this.rightPanel.BackColor = System.Drawing.Color.White;
-            this.rightPanel.Controls.Add(this.btnToggleTheme);
-            this.rightPanel.Controls.Add(this.btnNotification);
-            this.rightPanel.Controls.Add(this.btnProfileTop);
-            this.rightPanel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.rightPanel.Location = new System.Drawing.Point(1134, 15);
-            this.rightPanel.Name = "rightPanel";
-            this.rightPanel.Padding = new System.Windows.Forms.Padding(0, 10, 20, 10);
-            this.rightPanel.Size = new System.Drawing.Size(180, 40);
-            this.rightPanel.TabIndex = 1;
-
+            rightPanel.BackColor = Color.White;
+            rightPanel.Controls.Add(btnToggleTheme);
+            rightPanel.Controls.Add(btnNotification);
+            rightPanel.Controls.Add(btnProfileTop);
+            rightPanel.Dock = DockStyle.Right;
+            rightPanel.Location = new Point(1296, 20);
+            rightPanel.Margin = new Padding(3, 4, 3, 4);
+            rightPanel.Name = "rightPanel";
+            rightPanel.Padding = new Padding(0, 13, 23, 13);
+            rightPanel.Size = new Size(206, 53);
+            rightPanel.TabIndex = 1;
             // 
             // btnToggleTheme
             // 
-            this.btnToggleTheme.BackColor = System.Drawing.Color.Transparent;
-            this.btnToggleTheme.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnToggleTheme.FlatAppearance.BorderSize = 0;
-            this.btnToggleTheme.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnToggleTheme.ForeColor = System.Drawing.Color.Black;
-            this.btnToggleTheme.IconChar = FontAwesome.Sharp.IconChar.Sun;
-            this.btnToggleTheme.IconColor = System.Drawing.Color.Black;
-            this.btnToggleTheme.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnToggleTheme.IconSize = 22;
-            this.btnToggleTheme.Location = new System.Drawing.Point(40, 10);
-            this.btnToggleTheme.Name = "btnToggleTheme";
-            this.btnToggleTheme.Size = new System.Drawing.Size(40, 20);
-            this.btnToggleTheme.TabIndex = 2;
-            this.btnToggleTheme.UseVisualStyleBackColor = false;
-
+            btnToggleTheme.BackColor = Color.Transparent;
+            btnToggleTheme.Dock = DockStyle.Right;
+            btnToggleTheme.FlatAppearance.BorderSize = 0;
+            btnToggleTheme.FlatStyle = FlatStyle.Flat;
+            btnToggleTheme.ForeColor = Color.Black;
+            btnToggleTheme.IconChar = IconChar.Sun;
+            btnToggleTheme.IconColor = Color.Black;
+            btnToggleTheme.IconFont = IconFont.Auto;
+            btnToggleTheme.IconSize = 22;
+            btnToggleTheme.Location = new Point(45, 13);
+            btnToggleTheme.Margin = new Padding(3, 4, 3, 4);
+            btnToggleTheme.Name = "btnToggleTheme";
+            btnToggleTheme.Size = new Size(46, 27);
+            btnToggleTheme.TabIndex = 2;
+            btnToggleTheme.UseVisualStyleBackColor = false;
             // 
             // btnNotification
             // 
-            this.btnNotification.BackColor = System.Drawing.Color.Transparent;
-            this.btnNotification.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnNotification.FlatAppearance.BorderSize = 0;
-            this.btnNotification.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNotification.ForeColor = System.Drawing.Color.Black;
-            this.btnNotification.IconChar = FontAwesome.Sharp.IconChar.Bell;
-            this.btnNotification.IconColor = System.Drawing.Color.Black;
-            this.btnNotification.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnNotification.IconSize = 22;
-            this.btnNotification.Location = new System.Drawing.Point(80, 10);
-            this.btnNotification.Name = "btnNotification";
-            this.btnNotification.Size = new System.Drawing.Size(40, 20);
-            this.btnNotification.TabIndex = 1;
-            this.btnNotification.UseVisualStyleBackColor = false;
-
+            btnNotification.BackColor = Color.Transparent;
+            btnNotification.Dock = DockStyle.Right;
+            btnNotification.FlatAppearance.BorderSize = 0;
+            btnNotification.FlatStyle = FlatStyle.Flat;
+            btnNotification.ForeColor = Color.Black;
+            btnNotification.IconChar = IconChar.Bell;
+            btnNotification.IconColor = Color.Black;
+            btnNotification.IconFont = IconFont.Auto;
+            btnNotification.IconSize = 22;
+            btnNotification.Location = new Point(91, 13);
+            btnNotification.Margin = new Padding(3, 4, 3, 4);
+            btnNotification.Name = "btnNotification";
+            btnNotification.Size = new Size(46, 27);
+            btnNotification.TabIndex = 1;
+            btnNotification.UseVisualStyleBackColor = false;
             // 
             // btnProfileTop
             // 
-            this.btnProfileTop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(224)))));
-            this.btnProfileTop.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnProfileTop.FlatAppearance.BorderSize = 0;
-            this.btnProfileTop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnProfileTop.ForeColor = System.Drawing.Color.White;
-            this.btnProfileTop.IconChar = FontAwesome.Sharp.IconChar.User;
-            this.btnProfileTop.IconColor = System.Drawing.Color.White;
-            this.btnProfileTop.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnProfileTop.IconSize = 20;
-            this.btnProfileTop.Location = new System.Drawing.Point(120, 10);
-            this.btnProfileTop.Name = "btnProfileTop";
-            this.btnProfileTop.Size = new System.Drawing.Size(40, 20);
-            this.btnProfileTop.TabIndex = 0;
-            this.btnProfileTop.UseVisualStyleBackColor = false;
-            this.btnProfileTop.Click += new System.EventHandler(this.BtnProfileTop_Click); // ✅ THÊM EVENT
-
+            btnProfileTop.BackColor = Color.FromArgb(31, 31, 224);
+            btnProfileTop.Dock = DockStyle.Right;
+            btnProfileTop.FlatAppearance.BorderSize = 0;
+            btnProfileTop.FlatStyle = FlatStyle.Flat;
+            btnProfileTop.ForeColor = Color.White;
+            btnProfileTop.IconChar = IconChar.User;
+            btnProfileTop.IconColor = Color.White;
+            btnProfileTop.IconFont = IconFont.Auto;
+            btnProfileTop.IconSize = 20;
+            btnProfileTop.Location = new Point(137, 13);
+            btnProfileTop.Margin = new Padding(3, 4, 3, 4);
+            btnProfileTop.Name = "btnProfileTop";
+            btnProfileTop.Size = new Size(46, 27);
+            btnProfileTop.TabIndex = 0;
+            btnProfileTop.UseVisualStyleBackColor = false;
+            btnProfileTop.Click += BtnProfileTop_Click;
             // 
             // centerPanel
             // 
-            this.centerPanel.Controls.Add(this.btnAddTransaction);
-            this.centerPanel.Controls.Add(this.searchBox);
-            this.centerPanel.Location = new System.Drawing.Point(350, 10);
-            this.centerPanel.Name = "centerPanel";
-            this.centerPanel.Size = new System.Drawing.Size(500, 50);
-            this.centerPanel.TabIndex = 0;
-
+            centerPanel.Controls.Add(btnAddTransaction);
+            centerPanel.Controls.Add(searchBox);
+            centerPanel.Location = new Point(400, 13);
+            centerPanel.Margin = new Padding(3, 4, 3, 4);
+            centerPanel.Name = "centerPanel";
+            centerPanel.Size = new Size(571, 67);
+            centerPanel.TabIndex = 0;
             // 
             // btnAddTransaction
             // 
-            this.btnAddTransaction.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(101)))), ((int)(((byte)(109)))), ((int)(((byte)(255)))));
-            this.btnAddTransaction.FlatAppearance.BorderSize = 0;
-            this.btnAddTransaction.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddTransaction.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnAddTransaction.ForeColor = System.Drawing.Color.White;
-            this.btnAddTransaction.IconChar = FontAwesome.Sharp.IconChar.Plus;
-            this.btnAddTransaction.IconColor = System.Drawing.Color.White;
-            this.btnAddTransaction.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnAddTransaction.IconSize = 18;
-            this.btnAddTransaction.Location = new System.Drawing.Point(310, 5);
-            this.btnAddTransaction.Name = "btnAddTransaction";
-            this.btnAddTransaction.Size = new System.Drawing.Size(170, 40);
-            this.btnAddTransaction.TabIndex = 1;
-            this.btnAddTransaction.Text = "Thêm giao dịch";
-            this.btnAddTransaction.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnAddTransaction.UseVisualStyleBackColor = false;
-
+            btnAddTransaction.BackColor = Color.FromArgb(101, 109, 255);
+            btnAddTransaction.FlatAppearance.BorderSize = 0;
+            btnAddTransaction.FlatStyle = FlatStyle.Flat;
+            btnAddTransaction.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            btnAddTransaction.ForeColor = Color.White;
+            btnAddTransaction.IconChar = IconChar.Add;
+            btnAddTransaction.IconColor = Color.White;
+            btnAddTransaction.IconFont = IconFont.Auto;
+            btnAddTransaction.IconSize = 18;
+            btnAddTransaction.Location = new Point(354, 7);
+            btnAddTransaction.Margin = new Padding(3, 4, 3, 4);
+            btnAddTransaction.Name = "btnAddTransaction";
+            btnAddTransaction.Size = new Size(194, 53);
+            btnAddTransaction.TabIndex = 1;
+            btnAddTransaction.Text = "Thêm giao dịch";
+            btnAddTransaction.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnAddTransaction.UseVisualStyleBackColor = false;
             // 
             // searchBox
             // 
-            this.searchBox.BackColor = System.Drawing.Color.White;
-            this.searchBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.searchBox.Controls.Add(this.btnSearchInside);
-            this.searchBox.Controls.Add(this.txtSearch);
-            this.searchBox.Location = new System.Drawing.Point(0, 5);
-            this.searchBox.Name = "searchBox";
-            this.searchBox.Size = new System.Drawing.Size(300, 40);
-            this.searchBox.TabIndex = 0;
-
+            searchBox.BackColor = Color.White;
+            searchBox.BorderStyle = BorderStyle.FixedSingle;
+            searchBox.Controls.Add(btnSearchInside);
+            searchBox.Controls.Add(txtSearch);
+            searchBox.Location = new Point(0, 7);
+            searchBox.Margin = new Padding(3, 4, 3, 4);
+            searchBox.Name = "searchBox";
+            searchBox.Size = new Size(343, 53);
+            searchBox.TabIndex = 0;
             // 
             // btnSearchInside
             // 
-            this.btnSearchInside.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(224)))));
-            this.btnSearchInside.FlatAppearance.BorderSize = 0;
-            this.btnSearchInside.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSearchInside.IconChar = FontAwesome.Sharp.IconChar.MagnifyingGlass;
-            this.btnSearchInside.IconColor = System.Drawing.Color.White;
-            this.btnSearchInside.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnSearchInside.IconSize = 18;
-            this.btnSearchInside.Location = new System.Drawing.Point(255, 3);
-            this.btnSearchInside.Name = "btnSearchInside";
-            this.btnSearchInside.Size = new System.Drawing.Size(40, 32);
-            this.btnSearchInside.TabIndex = 1;
-            this.btnSearchInside.UseVisualStyleBackColor = false;
-
+            btnSearchInside.BackColor = Color.FromArgb(31, 31, 224);
+            btnSearchInside.FlatAppearance.BorderSize = 0;
+            btnSearchInside.FlatStyle = FlatStyle.Flat;
+            btnSearchInside.IconChar = IconChar.Search;
+            btnSearchInside.IconColor = Color.White;
+            btnSearchInside.IconFont = IconFont.Auto;
+            btnSearchInside.IconSize = 18;
+            btnSearchInside.Location = new Point(291, 4);
+            btnSearchInside.Margin = new Padding(3, 4, 3, 4);
+            btnSearchInside.Name = "btnSearchInside";
+            btnSearchInside.Size = new Size(46, 43);
+            btnSearchInside.TabIndex = 1;
+            btnSearchInside.UseVisualStyleBackColor = false;
+            btnSearchInside.Click += btnSearchInside_Click_1;
             // 
             // txtSearch
             // 
-            this.txtSearch.BackColor = System.Drawing.Color.White;
-            this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtSearch.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtSearch.ForeColor = System.Drawing.Color.Black;
-            this.txtSearch.Location = new System.Drawing.Point(15, 11);
-            this.txtSearch.Name = "txtSearch";
-            this.txtSearch.PlaceholderText = "Tìm giao dịch... (VD: cafe, ăn sáng)";
-            this.txtSearch.Size = new System.Drawing.Size(235, 18);
-            this.txtSearch.TabIndex = 0;
-
+            txtSearch.BackColor = Color.White;
+            txtSearch.BorderStyle = BorderStyle.None;
+            txtSearch.Font = new Font("Segoe UI", 10F);
+            txtSearch.ForeColor = Color.Black;
+            txtSearch.Location = new Point(17, 15);
+            txtSearch.Margin = new Padding(3, 4, 3, 4);
+            txtSearch.Name = "txtSearch";
+            txtSearch.PlaceholderText = "Tìm giao dịch... (VD: cafe, ăn sáng)";
+            txtSearch.Size = new Size(269, 23);
+            txtSearch.TabIndex = 0;
             // 
             // contentPanel
             // 
-            this.contentPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(245)))));
-            this.contentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.contentPanel.Location = new System.Drawing.Point(80, 70);
-            this.contentPanel.Name = "contentPanel";
-            this.contentPanel.Size = new System.Drawing.Size(1344, 698);
-            this.contentPanel.TabIndex = 2;
-
-            // ✅✅✅ PHẦN MỚI: PROFILE CONTEXT MENU ✅✅✅
-
+            contentPanel.BackColor = Color.FromArgb(245, 245, 245);
+            contentPanel.Dock = DockStyle.Fill;
+            contentPanel.Location = new Point(91, 93);
+            contentPanel.Margin = new Padding(3, 4, 3, 4);
+            contentPanel.Name = "contentPanel";
+            contentPanel.Size = new Size(1536, 931);
+            contentPanel.TabIndex = 2;
             // 
             // profileContextMenu
             // 
-            this.profileContextMenu.BackColor = System.Drawing.Color.White;
-            this.profileContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-                this.profileInfoPanel,
-                this.separator1,
-                this.settingsMenuItem,
-                this.logoutMenuItem
-            });
-            this.profileContextMenu.Name = "profileContextMenu";
-            this.profileContextMenu.Size = new System.Drawing.Size(250, 140);
-            this.profileContextMenu.Renderer = new CustomMenuRenderer();
-
+            profileContextMenu.BackColor = Color.White;
+            profileContextMenu.ImageScalingSize = new Size(20, 20);
+            profileContextMenu.Items.AddRange(new ToolStripItem[] { separator1, settingsMenuItem, logoutMenuItem });
+            profileContextMenu.Name = "profileContextMenu";
+            profileContextMenu.Size = new Size(174, 94);
             // 
             // separator1
             // 
-            this.separator1.Name = "separator1";
-            this.separator1.Size = new System.Drawing.Size(246, 6);
-
+            separator1.Name = "separator1";
+            separator1.Size = new Size(170, 6);
             // 
             // settingsMenuItem
             // 
-            this.settingsMenuItem.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.settingsMenuItem.Name = "settingsMenuItem";
-            this.settingsMenuItem.Padding = new System.Windows.Forms.Padding(10, 8, 10, 8);
-            this.settingsMenuItem.Size = new System.Drawing.Size(249, 36);
-            this.settingsMenuItem.Text = "⚙️  Settings";
-            this.settingsMenuItem.Click += new System.EventHandler(this.SettingsMenuItem_Click);
-
+            settingsMenuItem.Font = new Font("Segoe UI", 10F);
+            settingsMenuItem.Name = "settingsMenuItem";
+            settingsMenuItem.Padding = new Padding(10, 8, 10, 8);
+            settingsMenuItem.Size = new Size(193, 42);
+            settingsMenuItem.Text = "⚙️  Settings";
+            //settingsMenuItem.Click += SettingsMenuItem_Click;
             // 
             // logoutMenuItem
             // 
-            this.logoutMenuItem.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.logoutMenuItem.ForeColor = System.Drawing.Color.FromArgb(220, 53, 69);
-            this.logoutMenuItem.Name = "logoutMenuItem";
-            this.logoutMenuItem.Padding = new System.Windows.Forms.Padding(10, 8, 10, 8);
-            this.logoutMenuItem.Size = new System.Drawing.Size(249, 36);
-            this.logoutMenuItem.Text = "🚪  Logout";
-            this.logoutMenuItem.Click += new System.EventHandler(this.LogoutMenuItem_Click);
-
+            logoutMenuItem.Font = new Font("Segoe UI", 10F);
+            logoutMenuItem.ForeColor = Color.FromArgb(220, 53, 69);
+            logoutMenuItem.Name = "logoutMenuItem";
+            logoutMenuItem.Padding = new Padding(10, 8, 10, 8);
+            logoutMenuItem.Size = new Size(193, 42);
+            logoutMenuItem.Text = "🚪  Logout";
+            logoutMenuItem.Click += LogoutMenuItem_Click;
             // 
-            // LayoutAdmin
+            // LayoutUser
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1424, 768);
-            this.Controls.Add(this.contentPanel);
-            this.Controls.Add(this.headerPanel);
-            this.Controls.Add(this.sidebarPanel);
-            this.Name = "LayoutAdmin";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "ExpenseManager - User";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.Load += new System.EventHandler(this.LayoutAdmin_Load);
-            this.sidebarPanel.ResumeLayout(false);
-            this.logoPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.logoPic)).EndInit();
-            this.headerPanel.ResumeLayout(false);
-            this.rightPanel.ResumeLayout(false);
-            this.centerPanel.ResumeLayout(false);
-            this.searchBox.ResumeLayout(false);
-            this.searchBox.PerformLayout();
-            this.profileContextMenu.ResumeLayout(false);
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1627, 1024);
+            Controls.Add(contentPanel);
+            Controls.Add(headerPanel);
+            Controls.Add(sidebarPanel);
+            Margin = new Padding(3, 4, 3, 4);
+            Name = "LayoutUser";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "ExpenseManager - User";
+            WindowState = FormWindowState.Maximized;
+            Load += LayoutAdmin_Load;
+            sidebarPanel.ResumeLayout(false);
+            logoPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)logoPic).EndInit();
+            headerPanel.ResumeLayout(false);
+            rightPanel.ResumeLayout(false);
+            centerPanel.ResumeLayout(false);
+            searchBox.ResumeLayout(false);
+            searchBox.PerformLayout();
+            profileContextMenu.ResumeLayout(false);
+            ResumeLayout(false);
         }
 
         // ✅ THÊM METHOD TẠO PROFILE INFO PANEL

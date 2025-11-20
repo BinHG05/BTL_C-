@@ -1,7 +1,9 @@
 ﻿using ExpenseManager.App.Presenters;
+using ExpenseManager.App.Services;
 using ExpenseManager.App.Services.Interfaces;
 using ExpenseManager.App.Session;
 using ExpenseManager.App.Views.Admin.UC;
+using ExpenseManager.App.Views.User;
 using ExpenseManager.App.Views.User.Forms;
 using ExpenseManager.App.Views.User.UC;
 using FontAwesome.Sharp;
@@ -17,8 +19,6 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ExpenseManager.App.Presenters;
-using ExpenseManager.App.Views.User;
 
 namespace ExpenseManager.App.Views.Admin.Sidebar
 {
@@ -30,12 +30,19 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
         private Color hoverColor = Color.FromArgb(61, 61, 244);
         private Color defaultBg = Color.Transparent;
         private string _currentUserId;
+
+        private ContextMenuStrip profileMenu;
+        private ToolStripMenuItem itemSettings;
+        private ToolStripMenuItem itemLogout;
+
         public LayoutUser()
         {
             InitializeComponent();
             InitializeCustomComponents();
             InitializeUserSession();
+            InitializeProfileMenu();
         }
+
         private void InitializeUserSession()
         {
             if (CurrentUserSession.CurrentUser != null)
@@ -45,18 +52,12 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             else
             {
                 MessageBox.Show("Phiên đăng nhập đã hết hạn hoặc không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                // Đóng form hiện tại
                 this.Close();
-
-                // Tùy chọn: Nếu muốn kỹ hơn, có thể mở lại LoginForm tại đây
-                // Program.ServiceProvider.GetRequiredService<LoginForm>().Show();
             }
         }
 
         private void InitializeCustomComponents()
         {
-            // Load logo
             try
             {
                 string logoPath = Path.Combine(Application.StartupPath, "image", "logo.png");
@@ -70,39 +71,84 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
                 MessageBox.Show("Cannot load logo: " + ex.Message);
             }
 
-            // Apply rounded corners
             ApplyRoundedCorners();
-
-            // Setup hover effects
             SetupButtonHoverEffects();
-
-            // Center panel
             CenterPanelInHeader();
             headerPanel.Resize += (s, e) => CenterPanelInHeader();
-
-            // Round profile button
             RoundProfileButton();
 
-            // <--- 2. ĐĂNG KÝ SỰ KIỆN CLICK CHO NÚT ADD TRANSACTION --->
             this.btnAddTransaction.Click += new System.EventHandler(this.BtnAddTransaction_Click);
         }
 
-        // <--- 3. VIẾT HÀM XỬ LÝ SỰ KIỆN --->
+        private void InitializeProfileMenu()
+        {
+            profileMenu = new ContextMenuStrip();
+            profileMenu.Font = new Font("Segoe UI", 10F);
+            profileMenu.RenderMode = ToolStripRenderMode.Professional;
+            profileMenu.Renderer = new CustomMenuRenderer();
+
+            string userName = CurrentUserSession.CurrentUser?.FullName ?? "User";
+            string userEmail = CurrentUserSession.CurrentUser?.Email ?? "Email";
+
+            var headerItem = new ToolStripMenuItem();
+            headerItem.Text = $"{userName}\n{userEmail}";
+            headerItem.Enabled = false;
+            headerItem.ForeColor = Color.Gray;
+            headerItem.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+
+            itemSettings = new ToolStripMenuItem("Settings", GetIconBitmap(IconChar.Gear, 16, Color.Black));
+            itemSettings.Click += BtnSettings_Click;
+
+            itemLogout = new ToolStripMenuItem("Logout", GetIconBitmap(IconChar.SignOutAlt, 16, Color.Red));
+            itemLogout.ForeColor = Color.Red;
+            itemLogout.Click += LogoutMenuItem_Click;
+
+            profileMenu.Items.Add(headerItem);
+            profileMenu.Items.Add(new ToolStripSeparator());
+            profileMenu.Items.Add(itemSettings);
+            profileMenu.Items.Add(new ToolStripSeparator());
+            profileMenu.Items.Add(itemLogout);
+        }
+
+        private Bitmap GetIconBitmap(IconChar icon, int size, Color color)
+        {
+            using (var iconPic = new IconPictureBox())
+            {
+                iconPic.IconChar = icon;
+                iconPic.IconSize = size;
+                iconPic.IconColor = color;
+                iconPic.BackColor = Color.Transparent;
+                iconPic.Size = new Size(size, size);
+                iconPic.SizeMode = PictureBoxSizeMode.CenterImage;
+
+                var bmp = new Bitmap(size, size);
+                iconPic.DrawToBitmap(bmp, new Rectangle(0, 0, size, size));
+                return bmp;
+            }
+        }
+
+        private void BtnProfileTop_Click(object sender, EventArgs e)
+        {
+            if (profileMenu.Items.Count > 0)
+            {
+                string userName = CurrentUserSession.CurrentUser?.FullName ?? "User";
+                string userEmail = CurrentUserSession.CurrentUser?.Email ?? "Email";
+                profileMenu.Items[0].Text = $"{userName}\n{userEmail}";
+            }
+            Point menuLocation = btnProfileTop.PointToScreen(new Point(-150, btnProfileTop.Height + 5));
+            profileMenu.Show(menuLocation);
+        }
+
         private void BtnAddTransaction_Click(object sender, EventArgs e)
         {
             try
             {
-                // Lấy Form từ DI Container (để nó tự inject Service/Repository vào)
                 var addForm = Program.ServiceProvider.GetRequiredService<AddTransactionForm>();
-
-                // Hiển thị form dạng Dialog (cửa sổ popup)
                 if (addForm.ShowDialog() == DialogResult.OK)
                 {
-                    // Nếu thêm thành công (DialogResult.OK), reload lại trang hiện tại để thấy dữ liệu mới
                     if (currentButton == btnDashboard) BtnDashboard_Click(null, null);
                     else if (currentButton == btnWallet) BtnWallet_Click(null, null);
                     else if (currentButton == btnBudget) BtnBudget_Click(null, null);
-                    // Các trang khác tương tự...
                 }
             }
             catch (Exception ex)
@@ -113,20 +159,9 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
 
         private void ApplyRoundedCorners()
         {
-            // Round add transaction button
-            btnAddTransaction.Region = Region.FromHrgn(
-                CreateRoundRectRgn(0, 0, btnAddTransaction.Width, btnAddTransaction.Height, 10, 10)
-            );
-
-            // Round search box
-            searchBox.Region = Region.FromHrgn(
-                CreateRoundRectRgn(0, 0, searchBox.Width, searchBox.Height, 10, 10)
-            );
-
-            // Round search button inside
-            btnSearchInside.Region = Region.FromHrgn(
-                CreateRoundRectRgn(0, 0, btnSearchInside.Width, btnSearchInside.Height, 8, 8)
-            );
+            btnAddTransaction.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, btnAddTransaction.Width, btnAddTransaction.Height, 10, 10));
+            searchBox.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, searchBox.Width, searchBox.Height, 10, 10));
+            btnSearchInside.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, btnSearchInside.Width, btnSearchInside.Height, 8, 8));
         }
 
         private void RoundProfileButton()
@@ -142,21 +177,8 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
 
             foreach (var btn in buttons)
             {
-                btn.MouseEnter += (s, e) =>
-                {
-                    if (btn != currentButton)
-                    {
-                        btn.BackColor = hoverColor;
-                    }
-                };
-
-                btn.MouseLeave += (s, e) =>
-                {
-                    if (btn != currentButton)
-                    {
-                        btn.BackColor = defaultBg;
-                    }
-                };
+                btn.MouseEnter += (s, e) => { if (btn != currentButton) btn.BackColor = hoverColor; };
+                btn.MouseLeave += (s, e) => { if (btn != currentButton) btn.BackColor = defaultBg; };
             }
         }
 
@@ -168,8 +190,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
 
         private void ActivateButton(IconButton btn)
         {
-            if (btn == currentButton)
-                return;
+            if (btn == currentButton) return;
 
             if (currentButton != null)
             {
@@ -179,7 +200,6 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             }
 
             currentButton = btn;
-
             btn.BackColor = activeColor;
             btn.ForeColor = Color.White;
             btn.IconColor = Color.White;
@@ -192,7 +212,8 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             contentPanel.Controls.Add(uc);
         }
 
-        // Button Click Events
+        // ============== BUTTON CLICK EVENTS ==============
+
         private void BtnDashboard_Click(object sender, EventArgs e)
         {
             ActivateButton(btnDashboard);
@@ -205,51 +226,49 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             LoadContent(new UC_Wallet());
         }
 
+        // ✅ SỬA LẠI HOÀN TOÀN - DÙNG DI CONTAINER
         private void BtnBudget_Click(object sender, EventArgs e)
         {
             ActivateButton(btnBudget);
 
             try
             {
-                // Resolve required services from the DI container
-                var budgetService = Program.ServiceProvider.GetRequiredService<IBudgetService>();
-                var categoryService = Program.ServiceProvider.GetRequiredService<ICategoryService>();
-
-                // Create the view (no DI for the view) and then the presenter with the view instance
-                var uc = new UC_Budget();
-var presenterFactory = Program.ServiceProvider.GetRequiredService<Func<IBudgetView, BudgetPresenter>>();
-var presenter = presenterFactory(uc);
-uc.SetPresenter(presenter);
+                // ✅ LẤY UC_Budget TỪ DI CONTAINER (đã có Presenter sẵn)
+                var uc = Program.GetService<UC_Budget>();
                 LoadContent(uc);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Không thể mở trang Budget: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lỗi khi tải trang Ngân sách: " + ex.Message + "\n" + ex.StackTrace,
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void BtnGoals_Click(object sender, EventArgs e)
         {
-            // 1. Lấy Service
-            var goalService = Program.ServiceProvider.GetRequiredService<IGoalService>();
-
-            // 2. Tạo Presenter
-            var goalsPresenter = new GoalsPresenter(goalService);
-
-            // 3. TRUYỀN USER ID VÀO PRESENTER (QUAN TRỌNG)
-            if (!string.IsNullOrEmpty(_currentUserId))
-            {
-                goalsPresenter.SetUserId(_currentUserId);
-            }
-            else
-            {
-                MessageBox.Show("Lỗi: Không tìm thấy thông tin người dùng.");
-                return;
-            }
-
-            // 4. Hiển thị UserControl
             ActivateButton(btnGoals);
-            LoadContent(new UC_Goals(goalsPresenter));
+
+            try
+            {
+                var goalService = Program.ServiceProvider.GetRequiredService<IGoalService>();
+                var goalsPresenter = new GoalsPresenter(goalService);
+
+                if (!string.IsNullOrEmpty(_currentUserId))
+                {
+                    goalsPresenter.SetUserId(_currentUserId);
+                }
+                else
+                {
+                    MessageBox.Show("Lỗi: Không tìm thấy thông tin người dùng.");
+                    return;
+                }
+
+                LoadContent(new UC_Goals(goalsPresenter));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi tải trang Mục tiêu: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void BtnAnalytics_Click(object sender, EventArgs e)
@@ -268,45 +287,11 @@ uc.SetPresenter(presenter);
         {
             BtnDashboard_Click(btnDashboard, EventArgs.Empty);
         }
-        // Profile Dropdown Events
-        private void BtnProfileTop_Click(object sender, EventArgs e)
-        {
-            UpdateProfileMenu();
-            Point menuLocation = btnProfileTop.PointToScreen(new Point(-200, btnProfileTop.Height));
-            profileContextMenu.Show(menuLocation);
-        }
-
-        private void UpdateProfileMenu()
-        {
-            if (CurrentUserSession.CurrentUser != null)
-            {
-                var user = CurrentUserSession.CurrentUser;
-                profileNameLabel.Text = user.FullName ?? "User";
-                profileEmailLabel.Text = user.Email ?? "";
-            }
-            else
-            {
-                profileNameLabel.Text = "Guest";
-                profileEmailLabel.Text = "";
-            }
-        }
-
-        private void SettingsMenuItem_Click(object sender, EventArgs e)
-        {
-            ActivateButton(btnSettings);
-            LoadContent(new UC_Settings());
-        }
 
         private void LogoutMenuItem_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show(
-                "Bạn có chắc chắn muốn đăng xuất?",
-                "Xác nhận đăng xuất",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question
-            );
-
-            if (result == DialogResult.Yes)
+            if (MessageBox.Show("Bạn có chắc chắn muốn đăng xuất?", "Xác nhận đăng xuất",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 CurrentUserSession.ClearUser();
                 var loginForm = Program.ServiceProvider.GetRequiredService<LoginForm>();
@@ -315,7 +300,13 @@ uc.SetPresenter(presenter);
             }
         }
 
-        // Menu Renderer Classes
+        private void btnSearchInside_Click_1(object sender, EventArgs e)
+        {
+            LoadContent(new UC_Search());
+        }
+
+        // ============== MENU RENDERER CLASSES ==============
+
         public class CustomMenuRenderer : ToolStripProfessionalRenderer
         {
             public CustomMenuRenderer() : base(new CustomColorTable()) { }
@@ -349,14 +340,6 @@ uc.SetPresenter(presenter);
         }
 
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
-        private static extern IntPtr CreateRoundRectRgn(
-            int nLeftRect, int nTopRect, int nRightRect, int nBottomRect,
-            int nWidthEllipse, int nHeightEllipse
-        );
-
-        private void btnSearchInside_Click_1(object sender, EventArgs e)
-        {
-            LoadContent(new UC_Search());
-        }
+        private static extern IntPtr CreateRoundRectRgn(int nLeftRect, int nTopRect, int nRightRect, int nBottomRect, int nWidthEllipse, int nHeightEllipse);
     }
 }

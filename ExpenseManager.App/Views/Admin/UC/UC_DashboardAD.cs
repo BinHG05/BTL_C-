@@ -1,15 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using ExpenseManager.App.Models.DTOs;
+﻿using ExpenseManager.App.Models.DTOs;
 using ExpenseManager.App.Presenters;
 using ExpenseManager.App.Repositories;
 using ExpenseManager.App.Services;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Globalization;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using ExpenseManager.App.Session;
 
 namespace ExpenseManager.App.Views.Admin.UC
 {
@@ -28,14 +30,39 @@ namespace ExpenseManager.App.Views.Admin.UC
         public UC_DashboardAD()
         {
             InitializeComponent();
+            lblDateTime.Text = "📅 " + DateTime.Now.ToString("dddd, dd MMMM, yyyy", new CultureInfo("vi-VN"));
             SetupLoadingPanel();
             SetupCardShadows();
-
+            DisplayWelcomeMessage();
             // Set default filter
             cmbFilter.SelectedIndex = 1; // Theo tháng
             cmbFilter.SelectedIndexChanged += CmbFilter_SelectedIndexChanged;
         }
+        private void DisplayWelcomeMessage()
+        {
+            string userName = "Admin"; 
 
+            // 1. Kiểm tra Session để lấy thông tin người dùng
+            var currentUser = CurrentUserSession.CurrentUser;
+
+            if (currentUser != null)
+            {
+                // Giả định đối tượng CurrentUser có thuộc tính FullName
+                // Nếu bạn lưu tên ở thuộc tính khác 
+                if (!string.IsNullOrEmpty(currentUser.FullName))
+                {
+                    userName = currentUser.FullName;
+                }
+                else if (!string.IsNullOrEmpty(currentUser.FullName))
+                {
+                    userName = currentUser.FullName;
+                }
+            }
+
+            // 2. Gán giá trị vào Label
+            // Cú pháp cũ trong Designer là: lblWelcome.Text = "Welcome back, Âu Dương Tấn AD!";
+            lblWelcome.Text = $"Welcome back, {userName} !";
+        }
         /// <summary>
         /// Khởi tạo Presenter với Dependency Injection
         /// Phương thức này nên được gọi từ bên ngoài sau khi tạo UC
