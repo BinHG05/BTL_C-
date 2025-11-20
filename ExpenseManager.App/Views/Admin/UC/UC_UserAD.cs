@@ -3,12 +3,13 @@ using ExpenseManager.App.Models.EF;
 using ExpenseManager.App.Presenters;
 using ExpenseManager.App.Repositories;
 using ExpenseManager.App.Services;
+using ExpenseManager.App.Utilities; 
 using FontAwesome.Sharp;
 using System;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
-using ExpenseManager.App.Utilities; // Đảm bảo bạn đã có file GraphicsExtensions.cs
 
 namespace ExpenseManager.App.Views.Admin.UC
 {
@@ -21,30 +22,29 @@ namespace ExpenseManager.App.Views.Admin.UC
         public UC_UserAD()
         {
             InitializeComponent();
+            lblDateTime.Text = "📅 " + DateTime.Now.ToString("dddd, dd MMMM, yyyy", new CultureInfo("vi-VN"));
             InitializeDataGridView();
             InitializeDefaults();
             FixLayoutUI();
 
-            // Gán sự kiện vẽ
+          
             dgvUsers.CellPainting += DgvUsers_CellPainting;
             dgvUsers.CellClick += DgvUsers_CellClick;
 
-            // Gán sự kiện vẽ nền bo tròn cho KPI Cards
+           
             cardTotal.Paint += CardPanel_Paint;
             cardActive.Paint += CardPanel_Paint;
             cardBlocked.Paint += CardPanel_Paint;
             cardAdmins.Paint += CardPanel_Paint;
 
-            // Gán sự kiện vẽ Icon dùng Bitmap (Đã fix lỗi nền)
+            
             iconTotal.Paint += (s, e) => DrawIconFromBitmap(s, e, IconChar.Users, Color.FromArgb(229, 243, 255), Color.FromArgb(0, 123, 255));
             iconActive.Paint += (s, e) => DrawIconFromBitmap(s, e, IconChar.CheckCircle, Color.FromArgb(220, 252, 231), Color.FromArgb(22, 163, 74));
             iconBlocked.Paint += (s, e) => DrawIconFromBitmap(s, e, IconChar.TimesCircle, Color.FromArgb(254, 226, 226), Color.FromArgb(220, 38, 38));
             iconAdmins.Paint += (s, e) => DrawIconFromBitmap(s, e, IconChar.UserShield, Color.FromArgb(224, 242, 254), Color.FromArgb(14, 165, 233));
         }
 
-        // =========================================================================================
-        // HÀM VẼ ICON DÙNG BITMAP (ĐÃ KHẮC PHỤC LỖI NỀN VUÔNG)
-        // =========================================================================================
+   
         private void DrawIconFromBitmap(object sender, PaintEventArgs e, IconChar icon, Color circleBgColor, Color iconColor)
         {
             Panel pnl = sender as Panel;
@@ -61,8 +61,7 @@ namespace ExpenseManager.App.Views.Admin.UC
             }
 
             // 2. Vẽ Icon
-            // Mẹo Fix lỗi nền vuông: Tạo IconPictureBox với BackColor trùng với màu nền tròn (circleBgColor)
-            // Thay vì Transparent (vốn hay lỗi trên WinForms)
+
             int iconSize = (int)(circleSize * 0.55f);
 
             using (var iconPic = new IconPictureBox())
@@ -70,7 +69,7 @@ namespace ExpenseManager.App.Views.Admin.UC
                 iconPic.IconChar = icon;
                 iconPic.IconSize = iconSize;
                 iconPic.IconColor = iconColor;
-                // QUAN TRỌNG: Đặt màu nền trùng với màu hình tròn để che đi viền vuông
+             
                 iconPic.BackColor = circleBgColor;
                 iconPic.Size = new Size(iconSize, iconSize);
                 iconPic.SizeMode = PictureBoxSizeMode.CenterImage;
@@ -87,9 +86,7 @@ namespace ExpenseManager.App.Views.Admin.UC
             }
         }
 
-        // =========================================================================================
-        // CÁC HÀM KHÁC GIỮ NGUYÊN
-        // =========================================================================================
+       
 
         private void FixLayoutUI()
         {
@@ -310,7 +307,7 @@ namespace ExpenseManager.App.Views.Admin.UC
         private void ToggleUserStatus(string userId, string userName) { if (MessageBox.Show($"Toggle status of '{userName}'?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) _ = _presenter?.ToggleUserStatusAsync(userId, userName); }
         private void DeleteUser(string userId, string userName) { if (MessageBox.Show($"Delete '{userName}'? Cannot undo!", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes) _ = _presenter?.DeleteUserAsync(userId, userName); }
 
-        // Hàm tạo Bitmap cho Menu (Vẫn dùng phương pháp cũ vì menu nền trắng không bị lộ lỗi)
+      
         private Bitmap GetMenuIconBitmap(IconChar icon, int size, Color color)
         {
             using (var iconPic = new IconPictureBox())

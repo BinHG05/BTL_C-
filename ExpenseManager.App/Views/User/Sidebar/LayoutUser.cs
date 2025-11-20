@@ -1,8 +1,11 @@
-﻿using ExpenseManager.App.Views.Admin.UC;
-using ExpenseManager.App.Views.User.UC;
+﻿using ExpenseManager.App.Presenters;
+using ExpenseManager.App.Services.Interfaces;
 using ExpenseManager.App.Session;
-using Microsoft.Extensions.DependencyInjection;
+using ExpenseManager.App.Views.Admin.UC;
+using ExpenseManager.App.Views.User.Forms; 
+using ExpenseManager.App.Views.User.UC;
 using FontAwesome.Sharp;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,7 +17,8 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ExpenseManager.App.Views.User.Forms; // <--- 1. THÊM DÒNG NÀY
+using ExpenseManager.App.Presenters;
+using ExpenseManager.App.Views.User;
 
 namespace ExpenseManager.App.Views.Admin.Sidebar
 {
@@ -25,11 +29,29 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
         private Color activeColor = Color.FromArgb(51, 51, 255);
         private Color hoverColor = Color.FromArgb(61, 61, 244);
         private Color defaultBg = Color.Transparent;
-
+        private string _currentUserId;
         public LayoutUser()
         {
             InitializeComponent();
             InitializeCustomComponents();
+            InitializeUserSession();
+        }
+        private void InitializeUserSession()
+        {
+            if (CurrentUserSession.CurrentUser != null)
+            {
+                _currentUserId = CurrentUserSession.CurrentUser.UserId;
+            }
+            else
+            {
+                MessageBox.Show("Phiên đăng nhập đã hết hạn hoặc không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                // Đóng form hiện tại
+                this.Close();
+
+                // Tùy chọn: Nếu muốn kỹ hơn, có thể mở lại LoginForm tại đây
+                // Program.ServiceProvider.GetRequiredService<LoginForm>().Show();
+            }
         }
 
         private void InitializeCustomComponents()
@@ -191,8 +213,26 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
 
         private void BtnGoals_Click(object sender, EventArgs e)
         {
+            // 1. Lấy Service
+            var goalService = Program.ServiceProvider.GetRequiredService<IGoalService>();
+
+            // 2. Tạo Presenter
+            var goalsPresenter = new GoalsPresenter(goalService);
+
+            // 3. TRUYỀN USER ID VÀO PRESENTER (QUAN TRỌNG)
+            if (!string.IsNullOrEmpty(_currentUserId))
+            {
+                goalsPresenter.SetUserId(_currentUserId);
+            }
+            else
+            {
+                MessageBox.Show("Lỗi: Không tìm thấy thông tin người dùng.");
+                return;
+            }
+
+            // 4. Hiển thị UserControl
             ActivateButton(btnGoals);
-            LoadContent(new UC_Goals());
+            LoadContent(new UC_Goals(goalsPresenter));
         }
 
         private void BtnAnalytics_Click(object sender, EventArgs e)
