@@ -406,7 +406,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             settingsMenuItem.Padding = new Padding(10, 8, 10, 8);
             settingsMenuItem.Size = new Size(193, 42);
             settingsMenuItem.Text = "⚙️  Settings";
-            settingsMenuItem.Click += SettingsMenuItem_Click;
+            //settingsMenuItem.Click += SettingsMenuItem_Click;
             // 
             // logoutMenuItem
             // 
