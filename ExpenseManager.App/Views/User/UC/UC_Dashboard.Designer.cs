@@ -47,29 +47,29 @@ namespace ExpenseManager.App.Views.Admin.UC
             this.pnlExpensesList = new Panel();
 
             // 
-            // pnlHeader
+            // pnlHeader - ĐÃ SỬA
             // 
             this.pnlHeader.Dock = DockStyle.Top;
-            this.pnlHeader.Padding = new Padding(30, 25, 30, 15);
-            this.pnlHeader.Size = new System.Drawing.Size(1400, 100);
+            this.pnlHeader.Padding = new System.Windows.Forms.Padding(30, 30, 30, 20); // ← ĐÃ SỬA: Giảm padding top từ 70 → 30
+            this.pnlHeader.Size = new System.Drawing.Size(1400, 140); // ← ĐÃ SỬA: Tăng height từ 130 → 140
             this.pnlHeader.Controls.Add(this.lblWelcome);
             this.pnlHeader.Controls.Add(this.lblSubtitle);
 
             // 
-            // lblWelcome (TIÊU ĐỀ LỚN)
+            // lblWelcome (TIÊU ĐỀ LỚN) - ĐÃ SỬA
             // 
-            this.lblWelcome.Text = "Tổng quan"; // Đã Việt hóa
+            this.lblWelcome.Text = "Tổng quan";
             this.lblWelcome.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Bold);
-            this.lblWelcome.Location = new System.Drawing.Point(30, 25);
+            this.lblWelcome.Location = new System.Drawing.Point(30, 30); // ← ĐÃ SỬA: Từ (30, 25) → (30, 30)
             this.lblWelcome.AutoSize = true;
 
             // 
-            // lblSubtitle (LỜI CHÀO)
+            // lblSubtitle (LỜI CHÀO) - ĐÃ SỬA
             // 
-            this.lblSubtitle.Text = "Chào mừng bạn đến với Ekash"; // Đã Việt hóa
+            this.lblSubtitle.Text = "Chào mừng bạn đến với Ekash";
             this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lblSubtitle.ForeColor = System.Drawing.Color.Gray;
-            this.lblSubtitle.Location = new System.Drawing.Point(30, 66);
+            this.lblSubtitle.Location = new System.Drawing.Point(30, 75); // ← ĐÃ SỬA: Từ (30, 66) → (30, 75)
             this.lblSubtitle.AutoSize = true;
 
             // 
@@ -79,9 +79,9 @@ namespace ExpenseManager.App.Views.Admin.UC
             this.pnlStatCards.Size = new System.Drawing.Size(1400, 180);
             this.pnlStatCards.Padding = new Padding(20, 10, 20, 20);
             this.pnlStatCards.Controls.Add(this.pnlTotalBalance);
-            this.pnlStatCards.Controls.Add(this.pnlPeriodIncome);  // Đảo thứ tự cho đúng logic bạn muốn
+            this.pnlStatCards.Controls.Add(this.pnlPeriodIncome);
             this.pnlStatCards.Controls.Add(this.pnlPeriodExpenses);
-            this.pnlStatCards.Controls.Add(this.pnlPeriodChange);  // Ô này giờ là Ngân sách
+            this.pnlStatCards.Controls.Add(this.pnlPeriodChange);
 
             // 
             // Ô 1: TỔNG SỐ DƯ (pnlTotalBalance)
@@ -93,7 +93,7 @@ namespace ExpenseManager.App.Views.Admin.UC
             this.pnlTotalBalance.Controls.Add(this.lblTotalBalanceAmount);
             this.pnlTotalBalance.Controls.Add(this.lblTotalBalanceChange);
 
-            this.lblTotalBalanceTitle.Text = "Tổng Số Dư"; // Đã Việt hóa
+            this.lblTotalBalanceTitle.Text = "Tổng Số Dư";
             this.lblTotalBalanceTitle.Location = new System.Drawing.Point(20, 20);
             this.lblTotalBalanceTitle.AutoSize = true;
             this.lblTotalBalanceTitle.ForeColor = System.Drawing.Color.Gray;
@@ -117,7 +117,7 @@ namespace ExpenseManager.App.Views.Admin.UC
             this.pnlPeriodIncome.Controls.Add(this.lblPeriodIncomeAmount);
             this.pnlPeriodIncome.Controls.Add(this.lblPeriodIncomePercent);
 
-            this.lblPeriodIncomeTitle.Text = "Thu Nhập (Tháng Này)"; // Đã Việt hóa
+            this.lblPeriodIncomeTitle.Text = "Thu Nhập (Tháng Này)";
             this.lblPeriodIncomeTitle.Location = new System.Drawing.Point(20, 20);
             this.lblPeriodIncomeTitle.AutoSize = true;
             this.lblPeriodIncomeTitle.ForeColor = System.Drawing.Color.Gray;
@@ -126,7 +126,7 @@ namespace ExpenseManager.App.Views.Admin.UC
             this.lblPeriodIncomeAmount.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
             this.lblPeriodIncomeAmount.Location = new System.Drawing.Point(15, 50);
             this.lblPeriodIncomeAmount.AutoSize = true;
-            this.lblPeriodIncomeAmount.ForeColor = System.Drawing.Color.FromArgb(34, 197, 94); // Xanh lá
+            this.lblPeriodIncomeAmount.ForeColor = System.Drawing.Color.FromArgb(34, 197, 94);
 
             this.lblPeriodIncomePercent.Text = "Chào mừng bạn!";
             this.lblPeriodIncomePercent.Location = new System.Drawing.Point(20, 105);
@@ -142,7 +142,7 @@ namespace ExpenseManager.App.Views.Admin.UC
             this.pnlPeriodExpenses.Controls.Add(this.lblPeriodExpensesAmount);
             this.pnlPeriodExpenses.Controls.Add(this.lblPeriodExpensesPercent);
 
-            this.lblPeriodExpensesTitle.Text = "Chi Tiêu (Tháng Này)"; // Đã Việt hóa
+            this.lblPeriodExpensesTitle.Text = "Chi Tiêu (Tháng Này)";
             this.lblPeriodExpensesTitle.Location = new System.Drawing.Point(20, 20);
             this.lblPeriodExpensesTitle.AutoSize = true;
             this.lblPeriodExpensesTitle.ForeColor = System.Drawing.Color.Gray;
@@ -151,14 +151,14 @@ namespace ExpenseManager.App.Views.Admin.UC
             this.lblPeriodExpensesAmount.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
             this.lblPeriodExpensesAmount.Location = new System.Drawing.Point(15, 50);
             this.lblPeriodExpensesAmount.AutoSize = true;
-            this.lblPeriodExpensesAmount.ForeColor = System.Drawing.Color.FromArgb(239, 68, 68); // Đỏ
+            this.lblPeriodExpensesAmount.ForeColor = System.Drawing.Color.FromArgb(239, 68, 68);
 
             this.lblPeriodExpensesPercent.Text = "Chào mừng bạn!";
             this.lblPeriodExpensesPercent.Location = new System.Drawing.Point(20, 105);
             this.lblPeriodExpensesPercent.AutoSize = true;
 
             // 
-            // Ô 4: NGÂN SÁCH (pnlPeriodChange - Tái sử dụng panel cũ)
+            // Ô 4: NGÂN SÁCH (pnlPeriodChange)
             // 
             this.pnlPeriodChange.BackColor = System.Drawing.Color.White;
             this.pnlPeriodChange.Size = new System.Drawing.Size(310, 135);
@@ -167,7 +167,7 @@ namespace ExpenseManager.App.Views.Admin.UC
             this.pnlPeriodChange.Controls.Add(this.lblPeriodChangeAmount);
             this.pnlPeriodChange.Controls.Add(this.lblPeriodChangePercent);
 
-            this.lblPeriodChangeTitle.Text = "Ngân Sách"; // Đã Việt hóa
+            this.lblPeriodChangeTitle.Text = "Ngân Sách";
             this.lblPeriodChangeTitle.Location = new System.Drawing.Point(20, 20);
             this.lblPeriodChangeTitle.AutoSize = true;
             this.lblPeriodChangeTitle.ForeColor = System.Drawing.Color.Gray;
@@ -202,7 +202,7 @@ namespace ExpenseManager.App.Views.Admin.UC
             this.pnlBalanceTrends.Controls.Add(this.lblBalanceTrendsChange);
             this.pnlBalanceTrends.Controls.Add(this.pnlBalanceChart);
 
-            this.lblBalanceTrendsTitle.Text = "Chênh Lệch Thu - Chi"; // Đã Việt hóa
+            this.lblBalanceTrendsTitle.Text = "Chênh Lệch Thu - Chi";
             this.lblBalanceTrendsTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
             this.lblBalanceTrendsTitle.Location = new System.Drawing.Point(25, 25);
             this.lblBalanceTrendsTitle.AutoSize = true;
@@ -225,7 +225,7 @@ namespace ExpenseManager.App.Views.Admin.UC
             this.pnlExpensesBreakdown.Controls.Add(this.lblExpensesTitle);
             this.pnlExpensesBreakdown.Controls.Add(this.pnlExpensesList);
 
-            this.lblExpensesTitle.Text = "Chi Tiêu Tháng Này"; // Đã Việt hóa
+            this.lblExpensesTitle.Text = "Chi Tiêu Tháng Này";
             this.lblExpensesTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
             this.lblExpensesTitle.Location = new System.Drawing.Point(25, 25);
             this.lblExpensesTitle.AutoSize = true;
