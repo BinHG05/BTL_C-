@@ -32,6 +32,7 @@ namespace ExpenseManager.App.Views.Admin.UC
         public UC_Wallet()
         {
             InitializeComponent();
+            this.BackColor = Color.FromArgb(238, 242, 247);
             InitializePresenter();
             SetupDataGridView();
             SetupChart();

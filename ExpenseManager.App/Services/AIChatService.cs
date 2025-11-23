@@ -1,0 +1,357 @@
+﻿using ExpenseManager.App.Models.DTOs;
+using ExpenseManager.App.Models.Entities;
+using ExpenseManager.App.Services.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
+
+namespace ExpenseManager.App.Services
+{
+    public class AIChatService : IAIChatService
+    {
+        private readonly IGoalService _goalService;
+        private readonly ICategoryService _categoryService;
+        private readonly ITransactionService _transactionService;
+        private readonly IWalletService _walletService;
+        private readonly List<ChatMessage> _history;
+        private readonly HttpClient _httpClient;
+
+        // Lưu trạng thái chờ user chọn ví
+        private string _pendingAction = null;
+        private string _pendingGoalName = null;
+        private decimal _pendingAmount = 0;
+
+        // API Key
+        private const string API_KEY = "AIzaSyBwcBAxz0uZJkx0YCENOiZTOnBl23_CAeQ";
+        // Sử dụng model gemini-2.0-flash (theo danh sách hỗ trợ của key)
+        private const string API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
+
+        public AIChatService(
+            IGoalService goalService,
+            ICategoryService categoryService,
+            ITransactionService transactionService,
+            IWalletService walletService)
+        {
+            _goalService = goalService;
+            _categoryService = categoryService;
+            _transactionService = transactionService;
+            _walletService = walletService;
+            _history = new List<ChatMessage>();
+            _httpClient = new HttpClient();
+        }
+
+        public List<ChatMessage> GetHistory()
+        {
+            return _history;
+        }
+
+        public void ClearHistory()
+        {
+            _history.Clear();
+        }
+
+        public async Task<string> SendMessageAsync(string userMessage)
+        {
+            // 1. Add user message to history
+            _history.Add(new ChatMessage(userMessage, true));
+
+            // 2. Kiểm tra xem có pending action không (user đang trả lời câu hỏi chọn ví)
+            if (_pendingAction == "choose_wallet_for_deposit")
+            {
+                string userId = ExpenseManager.App.Session.CurrentUserSession.CurrentUser?.UserId;
+                var allWallets = await _walletService.GetWalletsByUserIdAsync(userId);
+                var selectedWallet = allWallets.FirstOrDefault(w => w.WalletName.Equals(userMessage.Trim(), StringComparison.OrdinalIgnoreCase));
+
+                if (selectedWallet != null && selectedWallet.Balance >= _pendingAmount)
+                {
+                    var goals = await _goalService.GetUserGoalsAsync(userId);
+                    var targetGoal = goals.FirstOrDefault(g => g.GoalName.Equals(_pendingGoalName, StringComparison.OrdinalIgnoreCase));
+
+                    var depositDto = new GoalDepositDTO
+                    {
+                        GoalId = targetGoal.GoalId,
+                        UserId = userId,
+                        WalletId = selectedWallet.WalletId,
+                        Amount = _pendingAmount,
+                        Note = "Nạp tiền tự động qua AI",
+                        Status = "Completed"
+                    };
+                    await _goalService.DepositToGoalAsync(depositDto);
+
+                    // Reset pending state
+                    _pendingAction = null;
+                    _pendingGoalName = null;
+                    _pendingAmount = 0;
+
+                    string response = $"✅ Đã nạp {_pendingAmount:N0} VND vào mục tiêu '{targetGoal.GoalName}' từ ví '{selectedWallet.WalletName}'!";
+                    _history.Add(new ChatMessage(response, false));
+                    return response;
+                }
+                else
+                {
+                    string response = $"❌ Ví '{userMessage}' không hợp lệ hoặc không đủ tiền. Vui lòng chọn lại.";
+                    _history.Add(new ChatMessage(response, false));
+                    return response;
+                }
+            }
+
+            // 3. Gather Context
+            string context = await GetFinancialContextAsync();
+
+            // 4. Construct Prompt with Command Instructions
+            var prompt = $"Bạn là trợ lý tài chính trong ứng dụng ExpenseManager. " +
+                         $"Dữ liệu hiện tại:\n{context}\n\n" +
+                         $"Người dùng: \"{userMessage}\"\n" +
+                         $"HƯỚNG DẪN ĐẶC BIỆT (QUAN TRỌNG):\n" +
+                         $"Nếu người dùng yêu cầu thực hiện hành động (tạo mục tiêu, tạo ví, nạp tiền), bạn KHÔNG được trả lời bằng lời nói. " +
+                         $"Thay vào đó, hãy trả về MỘT chuỗi JSON duy nhất theo định dạng sau:\n" +
+                         $"- Tạo mục tiêu: {{ \"action\": \"create_goal\", \"name\": \"Tên mục tiêu\", \"amount\": 500000, \"deadline\": \"yyyy-MM-dd\" }}\n" +
+                         $"- Tạo ví: {{ \"action\": \"create_wallet\", \"name\": \"Tên ví\", \"balance\": 1000000 }}\n" +
+                         $"- Nạp tiền vào mục tiêu: {{ \"action\": \"deposit_goal\", \"goal_name\": \"Tên mục tiêu\", \"wallet_name\": \"Tên ví (để trống nếu user không chọn)\", \"amount\": 50000 }}\n" +
+                         $"- Nạp tiền vào ví: {{ \"action\": \"deposit_wallet\", \"wallet_name\": \"Tên ví\", \"amount\": 100000 }}\n" +
+                         $"Nếu không phải hành động, hãy trả lời bình thường bằng tiếng Việt ngắn gọn.";
+
+            // 5. Call API
+            string aiResponseRaw = await CallGeminiApiAsync(prompt);
+            string finalResponse = aiResponseRaw;
+
+            // 6. Process Command if JSON is detected
+            if (aiResponseRaw.Trim().StartsWith("{") && aiResponseRaw.Trim().EndsWith("}"))
+            {
+                try
+                {
+                    finalResponse = await ProcessAICommandAsync(aiResponseRaw);
+                }
+                catch (Exception ex)
+                {
+                    finalResponse = $"Lỗi khi thực hiện lệnh: {ex.Message}";
+                }
+            }
+
+            // 7. Add AI response to history
+            _history.Add(new ChatMessage(finalResponse, false));
+
+            return finalResponse;
+        }
+
+        private async Task<string> ProcessAICommandAsync(string jsonResponse)
+        {
+            using var doc = JsonDocument.Parse(jsonResponse);
+            var root = doc.RootElement;
+            string action = root.GetProperty("action").GetString();
+            string userId = ExpenseManager.App.Session.CurrentUserSession.CurrentUser?.UserId;
+
+            if (string.IsNullOrEmpty(userId)) return "Lỗi: Không tìm thấy người dùng.";
+
+            switch (action)
+            {
+                case "create_goal":
+                    var goalDto = new CreateGoalDTO
+                    {
+                        UserId = userId,
+                        GoalName = root.GetProperty("name").GetString(),
+                        TargetAmount = root.GetProperty("amount").GetDecimal(),
+                        CompletionDate = DateTime.Parse(root.GetProperty("deadline").GetString())
+                    };
+                    await _goalService.CreateGoalAsync(goalDto);
+                    return $"✅ Đã tạo mục tiêu '{goalDto.GoalName}' thành công!";
+
+                case "create_wallet":
+                    var wallet = new Wallet
+                    {
+                        UserId = userId,
+                        WalletName = root.GetProperty("name").GetString(),
+                        Balance = root.GetProperty("balance").GetDecimal(),
+                        InitialBalance = root.GetProperty("balance").GetDecimal(),
+                        WalletType = "General", // Mặc định
+                        Icon = "wallet", // Mặc định
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
+                    };
+                    await _walletService.CreateWalletAsync(wallet);
+                    return $"✅ Đã tạo ví '{wallet.WalletName}' thành công!";
+
+                case "deposit_goal":
+                    string goalName = root.GetProperty("goal_name").GetString();
+                    // Cho phép wallet_name null hoặc rỗng
+                    string walletNameRaw = root.TryGetProperty("wallet_name", out var wElem) ? wElem.GetString() : null;
+                    decimal amount = root.GetProperty("amount").GetDecimal();
+
+                    // Lấy dữ liệu
+                    var goals = await _goalService.GetUserGoalsAsync(userId);
+                    var targetGoal = goals.FirstOrDefault(g => g.GoalName.Equals(goalName, StringComparison.OrdinalIgnoreCase));
+                    if (targetGoal == null) return $"❌ Không tìm thấy mục tiêu tên '{goalName}'.";
+
+                    var allWallets = await _walletService.GetWalletsByUserIdAsync(userId);
+                    Wallet selectedWallet = null;
+                    string autoMsg = "";
+
+                    // LOGIC CHỌN VÍ THÔNG MINH
+                    if (!string.IsNullOrEmpty(walletNameRaw))
+                    {
+                        // 1. User chỉ định ví cụ thể
+                        selectedWallet = allWallets.FirstOrDefault(w => w.WalletName.Equals(walletNameRaw, StringComparison.OrdinalIgnoreCase));
+
+                        if (selectedWallet == null)
+                        {
+                            var existingNames = string.Join(", ", allWallets.Select(w => w.WalletName));
+                            return $"❌ Không tìm thấy ví '{walletNameRaw}'. Các ví hiện có: {existingNames}. Vui lòng chọn lại.";
+                        }
+
+                        if (selectedWallet.Balance < amount)
+                        {
+                            var otherAffordable = allWallets.Where(w => w.Balance >= amount).Select(w => w.WalletName).ToList();
+                            string suggestion = otherAffordable.Any()
+                                ? $"Các ví đủ tiền: {string.Join(", ", otherAffordable)}"
+                                : "Không có ví nào đủ tiền.";
+                            return $"⚠️ Ví '{selectedWallet.WalletName}' không đủ tiền (Dư: {selectedWallet.Balance:N0}). {suggestion}";
+                        }
+                    }
+                    else
+                    {
+                        // 2. User KHÔNG chỉ định ví -> Tự động tìm
+                        var affordableWallets = allWallets.Where(w => w.Balance >= amount).ToList();
+
+                        if (!affordableWallets.Any())
+                        {
+                            return $"❌ Bạn muốn nạp {amount:N0} nhưng không có ví nào đủ số dư.";
+                        }
+                        else if (affordableWallets.Count == 1)
+                        {
+                            selectedWallet = affordableWallets.First();
+                            autoMsg = $"(Tự động chọn ví '{selectedWallet.WalletName}') ";
+                        }
+                        else
+                        {
+                            // Nhiều ví đủ tiền -> Hỏi user
+                            string listW = string.Join(", ", affordableWallets.Select(w => w.WalletName));
+                            return $"❓ Bạn muốn dùng ví nào? Có nhiều ví đủ tiền: {listW}.";
+                        }
+                    }
+
+                    // Thực hiện nạp
+                    var depositDto = new GoalDepositDTO
+                    {
+                        GoalId = targetGoal.GoalId,
+                        UserId = userId,
+                        WalletId = selectedWallet.WalletId,
+                        Amount = amount,
+                        Note = "Nạp tiền tự động qua AI",
+                        Status = "Completed"
+                    };
+                    await _goalService.DepositToGoalAsync(depositDto);
+                    return $"✅ {autoMsg}Đã nạp {amount:N0} VND vào mục tiêu '{goalName}' từ ví '{selectedWallet.WalletName}'!";
+
+                case "deposit_wallet":
+                    string targetWalletName = root.GetProperty("wallet_name").GetString();
+                    decimal depositAmount = root.GetProperty("amount").GetDecimal();
+
+                    var userWallets = await _walletService.GetWalletsByUserIdAsync(userId);
+                    var targetWallet = userWallets.FirstOrDefault(w => w.WalletName.Equals(targetWalletName, StringComparison.OrdinalIgnoreCase));
+
+                    if (targetWallet == null) return $"❌ Không tìm thấy ví tên '{targetWalletName}'.";
+
+                    targetWallet.Balance += depositAmount;
+                    await _walletService.UpdateWalletAsync(targetWallet);
+
+                    return $"✅ Đã nạp {depositAmount:N0} VND vào ví '{targetWalletName}'. Số dư mới: {targetWallet.Balance:N0} VND.";
+
+                default:
+                    return "⚠️ AI gửi lệnh không xác định.";
+            }
+        }
+
+        private async Task<string> GetFinancialContextAsync()
+        {
+            var sb = new StringBuilder();
+
+            try
+            {
+                string userId = ExpenseManager.App.Session.CurrentUserSession.CurrentUser?.UserId ?? "";
+                if (string.IsNullOrEmpty(userId)) return "Không tìm thấy thông tin người dùng.";
+
+                // Goals
+                var goals = await _goalService.GetUserGoalsAsync(userId);
+                sb.AppendLine("--- MỤC TIÊU (GOALS) ---");
+                foreach (var g in goals)
+                {
+                    sb.AppendLine($"- {g.GoalName}: {g.CurrentAmount}/{g.TargetAmount} (Hạn: {g.CompletionDate:dd/MM/yyyy})");
+                }
+
+                // Wallets
+                var wallets = await _walletService.GetWalletsByUserIdAsync(userId);
+                sb.AppendLine("\n--- VÍ (WALLETS) ---");
+                foreach (var w in wallets)
+                {
+                    sb.AppendLine($"- {w.WalletName}: {w.Balance} VND");
+                }
+            }
+            catch (Exception ex)
+            {
+                sb.AppendLine($"Lỗi khi lấy dữ liệu: {ex.Message}");
+            }
+
+            return sb.ToString();
+        }
+
+        private async Task<string> CallGeminiApiAsync(string prompt)
+        {
+            try
+            {
+                var requestBody = new
+                {
+                    contents = new[]
+                    {
+                        new
+                        {
+                            parts = new[]
+                            {
+                                new { text = prompt }
+                            }
+                        }
+                    }
+                };
+
+                var json = JsonSerializer.Serialize(requestBody);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PostAsync($"{API_URL}?key={API_KEY}", content);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    return $"Lỗi API ({response.StatusCode}): {errorContent}";
+                }
+
+                var responseString = await response.Content.ReadAsStringAsync();
+
+                using var doc = JsonDocument.Parse(responseString);
+                var root = doc.RootElement;
+
+                if (root.TryGetProperty("candidates", out var candidates) && candidates.GetArrayLength() > 0)
+                {
+                    var firstCandidate = candidates[0];
+                    if (firstCandidate.TryGetProperty("content", out var contentElem) &&
+                        contentElem.TryGetProperty("parts", out var parts) &&
+                        parts.GetArrayLength() > 0)
+                    {
+                        string text = parts[0].GetProperty("text").GetString();
+                        // Clean up JSON markdown if present (```json ... ```)
+                        text = text.Replace("```json", "").Replace("```", "").Trim();
+                        return text;
+                    }
+                }
+
+                return "Không nhận được phản hồi từ AI.";
+            }
+            catch (Exception ex)
+            {
+                return $"Lỗi kết nối AI: {ex.Message}";
+            }
+        }
+    }
+}

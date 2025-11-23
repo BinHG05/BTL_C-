@@ -1,10 +1,11 @@
-﻿using ExpenseManager.App.Models.EF;
-using ExpenseManager.App.Models.Entities;
-using ExpenseManager.App.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore; // Cần dòng này
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ExpenseManager.App.Models.EF;
+using ExpenseManager.App.Models.Entities;
+using ExpenseManager.App.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore; // Cần dòng này
 
 namespace ExpenseManager.App.Repositories
 {
@@ -47,6 +48,20 @@ namespace ExpenseManager.App.Repositories
                 Items = transactions,
                 TotalRecords = totalRecords
             };
+        }
+
+        public async Task<IEnumerable<Transaction>> GetByCategoryAndDateRangeAsync(
+           string userId, int categoryId, DateTime startDate, DateTime endDate)
+        {
+            return await _context.Transactions
+                .Where(t => t.UserId == userId
+                    && t.CategoryId == categoryId
+                    && t.TransactionDate >= startDate
+                    && t.TransactionDate <= endDate)
+                .Include(t => t.Category)
+                .Include(t => t.Wallet)
+                .OrderByDescending(t => t.TransactionDate)
+                .ToListAsync();
         }
     }
 }
