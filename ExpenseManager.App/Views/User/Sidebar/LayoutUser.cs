@@ -26,6 +26,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
     {
         private IconButton currentButton;
         private IconButton btnChatbot;
+
         // =========================================================
         // ✅ CẬP NHẬT MÀU SẮC (Đã sửa lại màu chữ mặc định)
         // =========================================================
