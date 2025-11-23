@@ -112,6 +112,9 @@ namespace ExpenseManager.App
             // Đăng ký Search services
             services.AddScoped<ISearchRepository, SearchRepository>();
             services.AddScoped<ISearchServices, SearchServices>();
+            // Đăng ký Dashboard Repository & Service 
+            services.AddScoped<IDashboardRepository, DashboardRepository>();
+            services.AddScoped<IDashboardService, DashboardService>();
         }
 
         /// <summary>

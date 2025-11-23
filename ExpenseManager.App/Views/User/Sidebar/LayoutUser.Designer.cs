@@ -94,7 +94,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             btnSettings.Size = new Size(240, 80);
             btnSettings.TabIndex = 6;
             btnSettings.Tag = "Settings";
-            btnSettings.Text = "  Settings";
+            btnSettings.Text = "  Cài đặt";
             btnSettings.TextAlign = ContentAlignment.MiddleLeft;
             btnSettings.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnSettings.UseVisualStyleBackColor = false;
@@ -120,7 +120,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             btnAnalytics.Size = new Size(240, 65);
             btnAnalytics.TabIndex = 5;
             btnAnalytics.Tag = "Analytics";
-            btnAnalytics.Text = "  Analytics";
+            btnAnalytics.Text = "  Phân tích";
             btnAnalytics.TextAlign = ContentAlignment.MiddleLeft;
             btnAnalytics.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnAnalytics.UseVisualStyleBackColor = false;
@@ -146,7 +146,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             btnGoals.Size = new Size(240, 65);
             btnGoals.TabIndex = 4;
             btnGoals.Tag = "Goals";
-            btnGoals.Text = "  Goals";
+            btnGoals.Text = "  Mục tiêu";
             btnGoals.TextAlign = ContentAlignment.MiddleLeft;
             btnGoals.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnGoals.UseVisualStyleBackColor = false;
@@ -172,7 +172,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             btnBudget.Size = new Size(240, 65);
             btnBudget.TabIndex = 3;
             btnBudget.Tag = "Budget";
-            btnBudget.Text = "  Budget";
+            btnBudget.Text = "  Ngân sách";
             btnBudget.TextAlign = ContentAlignment.MiddleLeft;
             btnBudget.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnBudget.UseVisualStyleBackColor = false;
@@ -198,7 +198,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             btnWallet.Size = new Size(240, 65);
             btnWallet.TabIndex = 2;
             btnWallet.Tag = "Wallet";
-            btnWallet.Text = "  Wallet";
+            btnWallet.Text = "  Ví của bạn";
             btnWallet.TextAlign = ContentAlignment.MiddleLeft;
             btnWallet.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnWallet.UseVisualStyleBackColor = false;
@@ -224,7 +224,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             btnDashboard.Size = new Size(240, 65);
             btnDashboard.TabIndex = 1;
             btnDashboard.Tag = "Dashboard";
-            btnDashboard.Text = "  Dashboard";
+            btnDashboard.Text = "  Tổng quan";
             btnDashboard.TextAlign = ContentAlignment.MiddleLeft;
             btnDashboard.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnDashboard.UseVisualStyleBackColor = false;
@@ -435,7 +435,11 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             settingsMenuItem.Name = "settingsMenuItem";
             settingsMenuItem.Padding = new Padding(10, 8, 10, 8);
             settingsMenuItem.Size = new Size(193, 42);
-            settingsMenuItem.Text = "⚙️  Settings";
+            settingsMenuItem.Text = "⚙️  Cài đặt";
+
+            //settingsMenuItem.Click += SettingsMenuItem_Click;
+
+
             // 
             // logoutMenuItem
             // 
@@ -444,7 +448,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             logoutMenuItem.Name = "logoutMenuItem";
             logoutMenuItem.Padding = new Padding(10, 8, 10, 8);
             logoutMenuItem.Size = new Size(193, 42);
-            logoutMenuItem.Text = "🚪  Logout";
+            logoutMenuItem.Text = "🚪  Đăng xuất";
             logoutMenuItem.Click += LogoutMenuItem_Click;
             // 
             // LayoutUser

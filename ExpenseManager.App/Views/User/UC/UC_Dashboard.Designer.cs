@@ -8,10 +8,7 @@ namespace ExpenseManager.App.Views.Admin.UC
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
+            if (disposing && (components != null)) components.Dispose();
             base.Dispose(disposing);
         }
 
@@ -19,412 +16,250 @@ namespace ExpenseManager.App.Views.Admin.UC
 
         private void InitializeComponent()
         {
-            pnlHeader = new Panel();
-            lblWelcome = new Label();
-            lblSubtitle = new Label();
-            pnlStatCards = new FlowLayoutPanel();
-            pnlTotalBalance = new Panel();
-            lblTotalBalanceTitle = new Label();
-            lblTotalBalanceAmount = new Label();
-            lblTotalBalanceChange = new Label();
-            pnlPeriodChange = new Panel();
-            lblPeriodChangeTitle = new Label();
-            lblPeriodChangeAmount = new Label();
-            lblPeriodChangePercent = new Label();
-            pnlPeriodExpenses = new Panel();
-            lblPeriodExpensesTitle = new Label();
-            lblPeriodExpensesAmount = new Label();
-            lblPeriodExpensesPercent = new Label();
-            pnlPeriodIncome = new Panel();
-            lblPeriodIncomeTitle = new Label();
-            lblPeriodIncomeAmount = new Label();
-            lblPeriodIncomePercent = new Label();
-            pnlMainContent = new TableLayoutPanel();
-            pnlBalanceTrends = new Panel();
-            lblBalanceTrendsTitle = new Label();
-            lblBalanceTrendsAmount = new Label();
-            lblBalanceTrendsChange = new Label();
-            pnlBalanceChart = new Panel();
-            pnlExpensesBreakdown = new Panel();
-            lblExpensesTitle = new Label();
-            pnlExpensesList = new Panel();
-            pnlHeader.SuspendLayout();
-            pnlStatCards.SuspendLayout();
-            pnlTotalBalance.SuspendLayout();
-            pnlPeriodChange.SuspendLayout();
-            pnlPeriodExpenses.SuspendLayout();
-            pnlPeriodIncome.SuspendLayout();
-            pnlMainContent.SuspendLayout();
-            pnlBalanceTrends.SuspendLayout();
-            pnlExpensesBreakdown.SuspendLayout();
-            SuspendLayout();
+            this.pnlHeader = new Panel();
+            this.lblWelcome = new Label();
+            this.lblSubtitle = new Label();
+            this.pnlStatCards = new FlowLayoutPanel();
+            this.pnlTotalBalance = new Panel();
+            this.lblTotalBalanceTitle = new Label();
+            this.lblTotalBalanceAmount = new Label();
+            this.lblTotalBalanceChange = new Label();
+            this.pnlPeriodChange = new Panel();
+            this.lblPeriodChangeTitle = new Label();
+            this.lblPeriodChangeAmount = new Label();
+            this.lblPeriodChangePercent = new Label();
+            this.pnlPeriodExpenses = new Panel();
+            this.lblPeriodExpensesTitle = new Label();
+            this.lblPeriodExpensesAmount = new Label();
+            this.lblPeriodExpensesPercent = new Label();
+            this.pnlPeriodIncome = new Panel();
+            this.lblPeriodIncomeTitle = new Label();
+            this.lblPeriodIncomeAmount = new Label();
+            this.lblPeriodIncomePercent = new Label();
+            this.pnlMainContent = new TableLayoutPanel();
+            this.pnlBalanceTrends = new Panel();
+            this.lblBalanceTrendsTitle = new Label();
+            this.lblBalanceTrendsAmount = new Label();
+            this.lblBalanceTrendsChange = new Label();
+            this.pnlBalanceChart = new Panel();
+            this.pnlExpensesBreakdown = new Panel();
+            this.lblExpensesTitle = new Label();
+            this.pnlExpensesList = new Panel();
+
             // 
-            // pnlHeader
+            // pnlHeader - ĐÃ SỬA
             // 
-            pnlHeader.BackColor = System.Drawing.Color.FromArgb(249, 250, 251);
-            pnlHeader.Controls.Add(lblWelcome);
-            pnlHeader.Controls.Add(lblSubtitle);
-            pnlHeader.Dock = DockStyle.Top;
-            pnlHeader.Location = new System.Drawing.Point(0, 0);
-            pnlHeader.Name = "pnlHeader";
-            pnlHeader.Padding = new Padding(30, 25, 30, 15);
-            pnlHeader.Size = new System.Drawing.Size(1400, 100);
-            pnlHeader.TabIndex = 0;
+            this.pnlHeader.Dock = DockStyle.Top;
+            this.pnlHeader.Padding = new System.Windows.Forms.Padding(30, 30, 30, 20); // ← ĐÃ SỬA: Giảm padding top từ 70 → 30
+            this.pnlHeader.Size = new System.Drawing.Size(1400, 140); // ← ĐÃ SỬA: Tăng height từ 130 → 140
+            this.pnlHeader.Controls.Add(this.lblWelcome);
+            this.pnlHeader.Controls.Add(this.lblSubtitle);
+
             // 
-            // lblWelcome
+            // lblWelcome (TIÊU ĐỀ LỚN) - ĐÃ SỬA
             // 
-            lblWelcome.AutoSize = true;
-            lblWelcome.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Bold);
-            lblWelcome.ForeColor = System.Drawing.Color.FromArgb(31, 41, 55);
-            lblWelcome.Location = new System.Drawing.Point(30, 25);
-            lblWelcome.Name = "lblWelcome";
-            lblWelcome.Size = new System.Drawing.Size(178, 41);
-            lblWelcome.TabIndex = 0;
-            lblWelcome.Text = "Dashboard";
+            this.lblWelcome.Text = "Tổng quan";
+            this.lblWelcome.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Bold);
+            this.lblWelcome.Location = new System.Drawing.Point(30, 30); // ← ĐÃ SỬA: Từ (30, 25) → (30, 30)
+            this.lblWelcome.AutoSize = true;
+
             // 
-            // lblSubtitle
+            // lblSubtitle (LỜI CHÀO) - ĐÃ SỬA
             // 
-            lblSubtitle.AutoSize = true;
-            lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 10F);
-            lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(107, 114, 128);
-            lblSubtitle.Location = new System.Drawing.Point(30, 66);
-            lblSubtitle.Name = "lblSubtitle";
-            lblSubtitle.Size = new System.Drawing.Size(291, 19);
-            lblSubtitle.TabIndex = 1;
-            lblSubtitle.Text = "Welcome Ekash Finance Management";
+            this.lblSubtitle.Text = "Chào mừng bạn đến với Ekash";
+            this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.lblSubtitle.ForeColor = System.Drawing.Color.Gray;
+            this.lblSubtitle.Location = new System.Drawing.Point(30, 75); // ← ĐÃ SỬA: Từ (30, 66) → (30, 75)
+            this.lblSubtitle.AutoSize = true;
+
             // 
-            // pnlStatCards
+            // pnlStatCards (CONTAINER 4 Ô)
             // 
-            pnlStatCards.BackColor = System.Drawing.Color.FromArgb(249, 250, 251);
-            pnlStatCards.Controls.Add(pnlTotalBalance);
-            pnlStatCards.Controls.Add(pnlPeriodChange);
-            pnlStatCards.Controls.Add(pnlPeriodExpenses);
-            pnlStatCards.Controls.Add(pnlPeriodIncome);
-            pnlStatCards.Dock = DockStyle.Top;
-            pnlStatCards.Location = new System.Drawing.Point(0, 100);
-            pnlStatCards.Name = "pnlStatCards";
-            pnlStatCards.Padding = new Padding(20, 10, 20, 20);
-            pnlStatCards.Size = new System.Drawing.Size(1400, 180);
-            pnlStatCards.TabIndex = 1;
+            this.pnlStatCards.Dock = DockStyle.Top;
+            this.pnlStatCards.Size = new System.Drawing.Size(1400, 180);
+            this.pnlStatCards.Padding = new Padding(20, 10, 20, 20);
+            this.pnlStatCards.Controls.Add(this.pnlTotalBalance);
+            this.pnlStatCards.Controls.Add(this.pnlPeriodIncome);
+            this.pnlStatCards.Controls.Add(this.pnlPeriodExpenses);
+            this.pnlStatCards.Controls.Add(this.pnlPeriodChange);
+
             // 
-            // pnlTotalBalance
+            // Ô 1: TỔNG SỐ DƯ (pnlTotalBalance)
             // 
-            pnlTotalBalance.BackColor = System.Drawing.Color.White;
-            pnlTotalBalance.Controls.Add(lblTotalBalanceTitle);
-            pnlTotalBalance.Controls.Add(lblTotalBalanceAmount);
-            pnlTotalBalance.Controls.Add(lblTotalBalanceChange);
-            pnlTotalBalance.Location = new System.Drawing.Point(30, 20);
-            pnlTotalBalance.Margin = new Padding(10);
-            pnlTotalBalance.Name = "pnlTotalBalance";
-            pnlTotalBalance.Padding = new Padding(20);
-            pnlTotalBalance.Size = new System.Drawing.Size(310, 135);
-            pnlTotalBalance.TabIndex = 0;
+            this.pnlTotalBalance.BackColor = System.Drawing.Color.White;
+            this.pnlTotalBalance.Size = new System.Drawing.Size(310, 135);
+            this.pnlTotalBalance.Margin = new Padding(10);
+            this.pnlTotalBalance.Controls.Add(this.lblTotalBalanceTitle);
+            this.pnlTotalBalance.Controls.Add(this.lblTotalBalanceAmount);
+            this.pnlTotalBalance.Controls.Add(this.lblTotalBalanceChange);
+
+            this.lblTotalBalanceTitle.Text = "Tổng Số Dư";
+            this.lblTotalBalanceTitle.Location = new System.Drawing.Point(20, 20);
+            this.lblTotalBalanceTitle.AutoSize = true;
+            this.lblTotalBalanceTitle.ForeColor = System.Drawing.Color.Gray;
+
+            this.lblTotalBalanceAmount.Text = "0đ";
+            this.lblTotalBalanceAmount.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
+            this.lblTotalBalanceAmount.Location = new System.Drawing.Point(15, 50);
+            this.lblTotalBalanceAmount.AutoSize = true;
+
+            this.lblTotalBalanceChange.Text = "---";
+            this.lblTotalBalanceChange.Location = new System.Drawing.Point(20, 105);
+            this.lblTotalBalanceChange.AutoSize = true;
+
             // 
-            // lblTotalBalanceTitle
+            // Ô 2: THU NHẬP (pnlPeriodIncome)
             // 
-            lblTotalBalanceTitle.AutoSize = true;
-            lblTotalBalanceTitle.Font = new System.Drawing.Font("Segoe UI", 10F);
-            lblTotalBalanceTitle.ForeColor = System.Drawing.Color.FromArgb(107, 114, 128);
-            lblTotalBalanceTitle.Location = new System.Drawing.Point(20, 20);
-            lblTotalBalanceTitle.Name = "lblTotalBalanceTitle";
-            lblTotalBalanceTitle.Size = new System.Drawing.Size(91, 19);
-            lblTotalBalanceTitle.TabIndex = 0;
-            lblTotalBalanceTitle.Text = "Total Balance";
+            this.pnlPeriodIncome.BackColor = System.Drawing.Color.White;
+            this.pnlPeriodIncome.Size = new System.Drawing.Size(310, 135);
+            this.pnlPeriodIncome.Margin = new Padding(10);
+            this.pnlPeriodIncome.Controls.Add(this.lblPeriodIncomeTitle);
+            this.pnlPeriodIncome.Controls.Add(this.lblPeriodIncomeAmount);
+            this.pnlPeriodIncome.Controls.Add(this.lblPeriodIncomePercent);
+
+            this.lblPeriodIncomeTitle.Text = "Thu Nhập (Tháng Này)";
+            this.lblPeriodIncomeTitle.Location = new System.Drawing.Point(20, 20);
+            this.lblPeriodIncomeTitle.AutoSize = true;
+            this.lblPeriodIncomeTitle.ForeColor = System.Drawing.Color.Gray;
+
+            this.lblPeriodIncomeAmount.Text = "0đ";
+            this.lblPeriodIncomeAmount.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
+            this.lblPeriodIncomeAmount.Location = new System.Drawing.Point(15, 50);
+            this.lblPeriodIncomeAmount.AutoSize = true;
+            this.lblPeriodIncomeAmount.ForeColor = System.Drawing.Color.FromArgb(34, 197, 94);
+
+            this.lblPeriodIncomePercent.Text = "Chào mừng bạn!";
+            this.lblPeriodIncomePercent.Location = new System.Drawing.Point(20, 105);
+            this.lblPeriodIncomePercent.AutoSize = true;
+
             // 
-            // lblTotalBalanceAmount
+            // Ô 3: CHI TIÊU (pnlPeriodExpenses)
             // 
-            lblTotalBalanceAmount.AutoSize = true;
-            lblTotalBalanceAmount.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
-            lblTotalBalanceAmount.ForeColor = System.Drawing.Color.FromArgb(31, 41, 55);
-            lblTotalBalanceAmount.Location = new System.Drawing.Point(15, 50);
-            lblTotalBalanceAmount.Name = "lblTotalBalanceAmount";
-            lblTotalBalanceAmount.Size = new System.Drawing.Size(200, 45);
-            lblTotalBalanceAmount.TabIndex = 1;
-            lblTotalBalanceAmount.Text = "$ 432568";
+            this.pnlPeriodExpenses.BackColor = System.Drawing.Color.White;
+            this.pnlPeriodExpenses.Size = new System.Drawing.Size(310, 135);
+            this.pnlPeriodExpenses.Margin = new Padding(10);
+            this.pnlPeriodExpenses.Controls.Add(this.lblPeriodExpensesTitle);
+            this.pnlPeriodExpenses.Controls.Add(this.lblPeriodExpensesAmount);
+            this.pnlPeriodExpenses.Controls.Add(this.lblPeriodExpensesPercent);
+
+            this.lblPeriodExpensesTitle.Text = "Chi Tiêu (Tháng Này)";
+            this.lblPeriodExpensesTitle.Location = new System.Drawing.Point(20, 20);
+            this.lblPeriodExpensesTitle.AutoSize = true;
+            this.lblPeriodExpensesTitle.ForeColor = System.Drawing.Color.Gray;
+
+            this.lblPeriodExpensesAmount.Text = "0đ";
+            this.lblPeriodExpensesAmount.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
+            this.lblPeriodExpensesAmount.Location = new System.Drawing.Point(15, 50);
+            this.lblPeriodExpensesAmount.AutoSize = true;
+            this.lblPeriodExpensesAmount.ForeColor = System.Drawing.Color.FromArgb(239, 68, 68);
+
+            this.lblPeriodExpensesPercent.Text = "Chào mừng bạn!";
+            this.lblPeriodExpensesPercent.Location = new System.Drawing.Point(20, 105);
+            this.lblPeriodExpensesPercent.AutoSize = true;
+
             // 
-            // lblTotalBalanceChange
+            // Ô 4: NGÂN SÁCH (pnlPeriodChange)
             // 
-            lblTotalBalanceChange.AutoSize = true;
-            lblTotalBalanceChange.Font = new System.Drawing.Font("Segoe UI", 9F);
-            lblTotalBalanceChange.ForeColor = System.Drawing.Color.FromArgb(34, 197, 94);
-            lblTotalBalanceChange.Location = new System.Drawing.Point(20, 105);
-            lblTotalBalanceChange.Name = "lblTotalBalanceChange";
-            lblTotalBalanceChange.Size = new System.Drawing.Size(180, 15);
-            lblTotalBalanceChange.TabIndex = 2;
-            lblTotalBalanceChange.Text = "↗ 2.47% Last month $24,478";
+            this.pnlPeriodChange.BackColor = System.Drawing.Color.White;
+            this.pnlPeriodChange.Size = new System.Drawing.Size(310, 135);
+            this.pnlPeriodChange.Margin = new Padding(10);
+            this.pnlPeriodChange.Controls.Add(this.lblPeriodChangeTitle);
+            this.pnlPeriodChange.Controls.Add(this.lblPeriodChangeAmount);
+            this.pnlPeriodChange.Controls.Add(this.lblPeriodChangePercent);
+
+            this.lblPeriodChangeTitle.Text = "Ngân Sách";
+            this.lblPeriodChangeTitle.Location = new System.Drawing.Point(20, 20);
+            this.lblPeriodChangeTitle.AutoSize = true;
+            this.lblPeriodChangeTitle.ForeColor = System.Drawing.Color.Gray;
+
+            this.lblPeriodChangeAmount.Text = "0đ / 0đ";
+            this.lblPeriodChangeAmount.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
+            this.lblPeriodChangeAmount.Location = new System.Drawing.Point(15, 50);
+            this.lblPeriodChangeAmount.AutoSize = true;
+
+            this.lblPeriodChangePercent.Text = "Đã dùng 0%";
+            this.lblPeriodChangePercent.Location = new System.Drawing.Point(20, 105);
+            this.lblPeriodChangePercent.AutoSize = true;
+
             // 
-            // pnlPeriodChange
+            // pnlMainContent (BIỂU ĐỒ & DANH SÁCH)
             // 
-            pnlPeriodChange.BackColor = System.Drawing.Color.White;
-            pnlPeriodChange.Controls.Add(lblPeriodChangeTitle);
-            pnlPeriodChange.Controls.Add(lblPeriodChangeAmount);
-            pnlPeriodChange.Controls.Add(lblPeriodChangePercent);
-            pnlPeriodChange.Location = new System.Drawing.Point(360, 20);
-            pnlPeriodChange.Margin = new Padding(10);
-            pnlPeriodChange.Name = "pnlPeriodChange";
-            pnlPeriodChange.Padding = new Padding(20);
-            pnlPeriodChange.Size = new System.Drawing.Size(310, 135);
-            pnlPeriodChange.TabIndex = 1;
-            // 
-            // lblPeriodChangeTitle
-            // 
-            lblPeriodChangeTitle.AutoSize = true;
-            lblPeriodChangeTitle.Font = new System.Drawing.Font("Segoe UI", 10F);
-            lblPeriodChangeTitle.ForeColor = System.Drawing.Color.FromArgb(107, 114, 128);
-            lblPeriodChangeTitle.Location = new System.Drawing.Point(20, 20);
-            lblPeriodChangeTitle.Name = "lblPeriodChangeTitle";
-            lblPeriodChangeTitle.Size = new System.Drawing.Size(136, 19);
-            lblPeriodChangeTitle.TabIndex = 0;
-            lblPeriodChangeTitle.Text = "Total Period Change";
-            // 
-            // lblPeriodChangeAmount
-            // 
-            lblPeriodChangeAmount.AutoSize = true;
-            lblPeriodChangeAmount.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
-            lblPeriodChangeAmount.ForeColor = System.Drawing.Color.FromArgb(31, 41, 55);
-            lblPeriodChangeAmount.Location = new System.Drawing.Point(15, 50);
-            lblPeriodChangeAmount.Name = "lblPeriodChangeAmount";
-            lblPeriodChangeAmount.Size = new System.Drawing.Size(200, 45);
-            lblPeriodChangeAmount.TabIndex = 1;
-            lblPeriodChangeAmount.Text = "$ 245860";
-            // 
-            // lblPeriodChangePercent
-            // 
-            lblPeriodChangePercent.AutoSize = true;
-            lblPeriodChangePercent.Font = new System.Drawing.Font("Segoe UI", 9F);
-            lblPeriodChangePercent.ForeColor = System.Drawing.Color.FromArgb(34, 197, 94);
-            lblPeriodChangePercent.Location = new System.Drawing.Point(20, 105);
-            lblPeriodChangePercent.Name = "lblPeriodChangePercent";
-            lblPeriodChangePercent.Size = new System.Drawing.Size(180, 15);
-            lblPeriodChangePercent.TabIndex = 2;
-            lblPeriodChangePercent.Text = "↗ 2.47% Last month $24,478";
-            // 
-            // pnlPeriodExpenses
-            // 
-            pnlPeriodExpenses.BackColor = System.Drawing.Color.White;
-            pnlPeriodExpenses.Controls.Add(lblPeriodExpensesTitle);
-            pnlPeriodExpenses.Controls.Add(lblPeriodExpensesAmount);
-            pnlPeriodExpenses.Controls.Add(lblPeriodExpensesPercent);
-            pnlPeriodExpenses.Location = new System.Drawing.Point(690, 20);
-            pnlPeriodExpenses.Margin = new Padding(10);
-            pnlPeriodExpenses.Name = "pnlPeriodExpenses";
-            pnlPeriodExpenses.Padding = new Padding(20);
-            pnlPeriodExpenses.Size = new System.Drawing.Size(310, 135);
-            pnlPeriodExpenses.TabIndex = 2;
-            // 
-            // lblPeriodExpensesTitle
-            // 
-            lblPeriodExpensesTitle.AutoSize = true;
-            lblPeriodExpensesTitle.Font = new System.Drawing.Font("Segoe UI", 10F);
-            lblPeriodExpensesTitle.ForeColor = System.Drawing.Color.FromArgb(107, 114, 128);
-            lblPeriodExpensesTitle.Location = new System.Drawing.Point(20, 20);
-            lblPeriodExpensesTitle.Name = "lblPeriodExpensesTitle";
-            lblPeriodExpensesTitle.Size = new System.Drawing.Size(146, 19);
-            lblPeriodExpensesTitle.TabIndex = 0;
-            lblPeriodExpensesTitle.Text = "Total Period Expenses";
-            // 
-            // lblPeriodExpensesAmount
-            // 
-            lblPeriodExpensesAmount.AutoSize = true;
-            lblPeriodExpensesAmount.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
-            lblPeriodExpensesAmount.ForeColor = System.Drawing.Color.FromArgb(31, 41, 55);
-            lblPeriodExpensesAmount.Location = new System.Drawing.Point(15, 50);
-            lblPeriodExpensesAmount.Name = "lblPeriodExpensesAmount";
-            lblPeriodExpensesAmount.Size = new System.Drawing.Size(155, 45);
-            lblPeriodExpensesAmount.TabIndex = 1;
-            lblPeriodExpensesAmount.Text = "$ 25.35";
-            // 
-            // lblPeriodExpensesPercent
-            // 
-            lblPeriodExpensesPercent.AutoSize = true;
-            lblPeriodExpensesPercent.Font = new System.Drawing.Font("Segoe UI", 9F);
-            lblPeriodExpensesPercent.ForeColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            lblPeriodExpensesPercent.Location = new System.Drawing.Point(20, 105);
-            lblPeriodExpensesPercent.Name = "lblPeriodExpensesPercent";
-            lblPeriodExpensesPercent.Size = new System.Drawing.Size(180, 15);
-            lblPeriodExpensesPercent.TabIndex = 2;
-            lblPeriodExpensesPercent.Text = "↘ 2.47% Last month $24,478";
-            // 
-            // pnlPeriodIncome
-            // 
-            pnlPeriodIncome.BackColor = System.Drawing.Color.White;
-            pnlPeriodIncome.Controls.Add(lblPeriodIncomeTitle);
-            pnlPeriodIncome.Controls.Add(lblPeriodIncomeAmount);
-            pnlPeriodIncome.Controls.Add(lblPeriodIncomePercent);
-            pnlPeriodIncome.Location = new System.Drawing.Point(1020, 20);
-            pnlPeriodIncome.Margin = new Padding(10);
-            pnlPeriodIncome.Name = "pnlPeriodIncome";
-            pnlPeriodIncome.Padding = new Padding(20);
-            pnlPeriodIncome.Size = new System.Drawing.Size(310, 135);
-            pnlPeriodIncome.TabIndex = 3;
-            // 
-            // lblPeriodIncomeTitle
-            // 
-            lblPeriodIncomeTitle.AutoSize = true;
-            lblPeriodIncomeTitle.Font = new System.Drawing.Font("Segoe UI", 10F);
-            lblPeriodIncomeTitle.ForeColor = System.Drawing.Color.FromArgb(107, 114, 128);
-            lblPeriodIncomeTitle.Location = new System.Drawing.Point(20, 20);
-            lblPeriodIncomeTitle.Name = "lblPeriodIncomeTitle";
-            lblPeriodIncomeTitle.Size = new System.Drawing.Size(137, 19);
-            lblPeriodIncomeTitle.TabIndex = 0;
-            lblPeriodIncomeTitle.Text = "Total Period Income";
-            // 
-            // lblPeriodIncomeAmount
-            // 
-            lblPeriodIncomeAmount.AutoSize = true;
-            lblPeriodIncomeAmount.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
-            lblPeriodIncomeAmount.ForeColor = System.Drawing.Color.FromArgb(31, 41, 55);
-            lblPeriodIncomeAmount.Location = new System.Drawing.Point(15, 50);
-            lblPeriodIncomeAmount.Name = "lblPeriodIncomeAmount";
-            lblPeriodIncomeAmount.Size = new System.Drawing.Size(155, 45);
-            lblPeriodIncomeAmount.TabIndex = 1;
-            lblPeriodIncomeAmount.Text = "$ 22.56";
-            // 
-            // lblPeriodIncomePercent
-            // 
-            lblPeriodIncomePercent.AutoSize = true;
-            lblPeriodIncomePercent.Font = new System.Drawing.Font("Segoe UI", 9F);
-            lblPeriodIncomePercent.ForeColor = System.Drawing.Color.FromArgb(34, 197, 94);
-            lblPeriodIncomePercent.Location = new System.Drawing.Point(20, 105);
-            lblPeriodIncomePercent.Name = "lblPeriodIncomePercent";
-            lblPeriodIncomePercent.Size = new System.Drawing.Size(180, 15);
-            lblPeriodIncomePercent.TabIndex = 2;
-            lblPeriodIncomePercent.Text = "↗ 2.47% Last month $24,478";
-            // 
-            // pnlMainContent
-            // 
-            pnlMainContent.BackColor = System.Drawing.Color.FromArgb(249, 250, 251);
-            pnlMainContent.ColumnCount = 2;
-            pnlMainContent.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 60F));
-            pnlMainContent.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40F));
-            pnlMainContent.Controls.Add(pnlBalanceTrends, 0, 0);
-            pnlMainContent.Controls.Add(pnlExpensesBreakdown, 1, 0);
-            pnlMainContent.Dock = DockStyle.Fill;
-            pnlMainContent.Location = new System.Drawing.Point(0, 280);
-            pnlMainContent.Name = "pnlMainContent";
-            pnlMainContent.Padding = new Padding(20);
-            pnlMainContent.RowCount = 1;
-            pnlMainContent.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            pnlMainContent.Size = new System.Drawing.Size(1400, 520);
-            pnlMainContent.TabIndex = 2;
+            this.pnlMainContent.Dock = DockStyle.Fill;
+            this.pnlMainContent.ColumnCount = 2;
+            this.pnlMainContent.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 60F));
+            this.pnlMainContent.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40F));
+            this.pnlMainContent.Controls.Add(this.pnlBalanceTrends, 0, 0);
+            this.pnlMainContent.Controls.Add(this.pnlExpensesBreakdown, 1, 0);
+
             // 
             // pnlBalanceTrends
             // 
-            pnlBalanceTrends.BackColor = System.Drawing.Color.White;
-            pnlBalanceTrends.Controls.Add(lblBalanceTrendsTitle);
-            pnlBalanceTrends.Controls.Add(lblBalanceTrendsAmount);
-            pnlBalanceTrends.Controls.Add(lblBalanceTrendsChange);
-            pnlBalanceTrends.Controls.Add(pnlBalanceChart);
-            pnlBalanceTrends.Dock = DockStyle.Fill;
-            pnlBalanceTrends.Location = new System.Drawing.Point(30, 30);
-            pnlBalanceTrends.Margin = new Padding(10);
-            pnlBalanceTrends.Name = "pnlBalanceTrends";
-            pnlBalanceTrends.Padding = new Padding(25);
-            pnlBalanceTrends.Size = new System.Drawing.Size(804, 460);
-            pnlBalanceTrends.TabIndex = 0;
-            // 
-            // lblBalanceTrendsTitle
-            // 
-            lblBalanceTrendsTitle.AutoSize = true;
-            lblBalanceTrendsTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            lblBalanceTrendsTitle.ForeColor = System.Drawing.Color.FromArgb(31, 41, 55);
-            lblBalanceTrendsTitle.Location = new System.Drawing.Point(25, 25);
-            lblBalanceTrendsTitle.Name = "lblBalanceTrendsTitle";
-            lblBalanceTrendsTitle.Size = new System.Drawing.Size(151, 25);
-            lblBalanceTrendsTitle.TabIndex = 0;
-            lblBalanceTrendsTitle.Text = "Balance Trends";
-            // 
-            // lblBalanceTrendsAmount
-            // 
-            lblBalanceTrendsAmount.AutoSize = true;
-            lblBalanceTrendsAmount.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
-            lblBalanceTrendsAmount.ForeColor = System.Drawing.Color.FromArgb(31, 41, 55);
-            lblBalanceTrendsAmount.Location = new System.Drawing.Point(25, 65);
-            lblBalanceTrendsAmount.Name = "lblBalanceTrendsAmount";
-            lblBalanceTrendsAmount.Size = new System.Drawing.Size(181, 37);
-            lblBalanceTrendsAmount.TabIndex = 1;
-            lblBalanceTrendsAmount.Text = "$221,478";
-            // 
-            // lblBalanceTrendsChange
-            // 
-            lblBalanceTrendsChange.AutoSize = true;
-            lblBalanceTrendsChange.Font = new System.Drawing.Font("Segoe UI", 10F);
-            lblBalanceTrendsChange.ForeColor = System.Drawing.Color.FromArgb(34, 197, 94);
-            lblBalanceTrendsChange.Location = new System.Drawing.Point(700, 30);
-            lblBalanceTrendsChange.Name = "lblBalanceTrendsChange";
-            lblBalanceTrendsChange.Size = new System.Drawing.Size(79, 19);
-            lblBalanceTrendsChange.TabIndex = 2;
-            lblBalanceTrendsChange.Text = "↗ 12.25%";
-            lblBalanceTrendsChange.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // pnlBalanceChart
-            // 
-            pnlBalanceChart.BackColor = System.Drawing.Color.FromArgb(249, 250, 251);
-            pnlBalanceChart.Location = new System.Drawing.Point(25, 120);
-            pnlBalanceChart.Name = "pnlBalanceChart";
-            pnlBalanceChart.Size = new System.Drawing.Size(754, 315);
-            pnlBalanceChart.TabIndex = 3;
+            this.pnlBalanceTrends.BackColor = System.Drawing.Color.White;
+            this.pnlBalanceTrends.Dock = DockStyle.Fill;
+            this.pnlBalanceTrends.Margin = new Padding(30, 10, 10, 30);
+            this.pnlBalanceTrends.Controls.Add(this.lblBalanceTrendsTitle);
+            this.pnlBalanceTrends.Controls.Add(this.lblBalanceTrendsAmount);
+            this.pnlBalanceTrends.Controls.Add(this.lblBalanceTrendsChange);
+            this.pnlBalanceTrends.Controls.Add(this.pnlBalanceChart);
+
+            this.lblBalanceTrendsTitle.Text = "Chênh Lệch Thu - Chi";
+            this.lblBalanceTrendsTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            this.lblBalanceTrendsTitle.Location = new System.Drawing.Point(25, 25);
+            this.lblBalanceTrendsTitle.AutoSize = true;
+
+            this.lblBalanceTrendsAmount.Text = "0đ";
+            this.lblBalanceTrendsAmount.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
+            this.lblBalanceTrendsAmount.Location = new System.Drawing.Point(25, 60);
+            this.lblBalanceTrendsAmount.AutoSize = true;
+
+            this.pnlBalanceChart.Location = new System.Drawing.Point(25, 110);
+            this.pnlBalanceChart.Size = new System.Drawing.Size(700, 300);
+            this.pnlBalanceChart.BackColor = System.Drawing.Color.White;
+
             // 
             // pnlExpensesBreakdown
             // 
-            pnlExpensesBreakdown.BackColor = System.Drawing.Color.White;
-            pnlExpensesBreakdown.Controls.Add(lblExpensesTitle);
-            pnlExpensesBreakdown.Controls.Add(pnlExpensesList);
-            pnlExpensesBreakdown.Dock = DockStyle.Fill;
-            pnlExpensesBreakdown.Location = new System.Drawing.Point(854, 30);
-            pnlExpensesBreakdown.Margin = new Padding(10);
-            pnlExpensesBreakdown.Name = "pnlExpensesBreakdown";
-            pnlExpensesBreakdown.Padding = new Padding(25);
-            pnlExpensesBreakdown.Size = new System.Drawing.Size(516, 460);
-            pnlExpensesBreakdown.TabIndex = 1;
-            // 
-            // lblExpensesTitle
-            // 
-            lblExpensesTitle.AutoSize = true;
-            lblExpensesTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            lblExpensesTitle.ForeColor = System.Drawing.Color.FromArgb(31, 41, 55);
-            lblExpensesTitle.Location = new System.Drawing.Point(25, 25);
-            lblExpensesTitle.Name = "lblExpensesTitle";
-            lblExpensesTitle.Size = new System.Drawing.Size(269, 25);
-            lblExpensesTitle.TabIndex = 0;
-            lblExpensesTitle.Text = "Monthly Expenses Breakdown";
-            // 
-            // pnlExpensesList
-            // 
-            pnlExpensesList.AutoScroll = true;
-            pnlExpensesList.Location = new System.Drawing.Point(25, 70);
-            pnlExpensesList.Name = "pnlExpensesList";
-            pnlExpensesList.Size = new System.Drawing.Size(466, 365);
-            pnlExpensesList.TabIndex = 1;
+            this.pnlExpensesBreakdown.BackColor = System.Drawing.Color.White;
+            this.pnlExpensesBreakdown.Dock = DockStyle.Fill;
+            this.pnlExpensesBreakdown.Margin = new Padding(10, 10, 30, 30);
+            this.pnlExpensesBreakdown.Controls.Add(this.lblExpensesTitle);
+            this.pnlExpensesBreakdown.Controls.Add(this.pnlExpensesList);
+
+            this.lblExpensesTitle.Text = "Chi Tiêu Tháng Này";
+            this.lblExpensesTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            this.lblExpensesTitle.Location = new System.Drawing.Point(25, 25);
+            this.lblExpensesTitle.AutoSize = true;
+
+            this.pnlExpensesList.Location = new System.Drawing.Point(25, 70);
+            this.pnlExpensesList.Size = new System.Drawing.Size(460, 350);
+            this.pnlExpensesList.AutoScroll = true;
+
             // 
             // UC_Dashboard
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            AutoScroll = true;
-            BackColor = System.Drawing.Color.FromArgb(249, 250, 251);
-            Controls.Add(pnlMainContent);
-            Controls.Add(pnlStatCards);
-            Controls.Add(pnlHeader);
-            Name = "UC_Dashboard";
-            Size = new System.Drawing.Size(1400, 800);
-            pnlHeader.ResumeLayout(false);
-            pnlHeader.PerformLayout();
-            pnlStatCards.ResumeLayout(false);
-            pnlTotalBalance.ResumeLayout(false);
-            pnlTotalBalance.PerformLayout();
-            pnlPeriodChange.ResumeLayout(false);
-            pnlPeriodChange.PerformLayout();
-            pnlPeriodExpenses.ResumeLayout(false);
-            pnlPeriodExpenses.PerformLayout();
-            pnlPeriodIncome.ResumeLayout(false);
-            pnlPeriodIncome.PerformLayout();
-            pnlMainContent.ResumeLayout(false);
-            pnlBalanceTrends.ResumeLayout(false);
-            pnlBalanceTrends.PerformLayout();
-            pnlExpensesBreakdown.ResumeLayout(false);
-            pnlExpensesBreakdown.PerformLayout();
-            ResumeLayout(false);
+            this.Controls.Add(this.pnlMainContent);
+            this.Controls.Add(this.pnlStatCards);
+            this.Controls.Add(this.pnlHeader);
+            this.Name = "UC_Dashboard";
+            this.Size = new System.Drawing.Size(1400, 800);
+
+            this.pnlHeader.ResumeLayout(false);
+            this.pnlHeader.PerformLayout();
+            this.pnlStatCards.ResumeLayout(false);
+            this.pnlTotalBalance.ResumeLayout(false);
+            this.pnlTotalBalance.PerformLayout();
+            this.pnlPeriodIncome.ResumeLayout(false);
+            this.pnlPeriodIncome.PerformLayout();
+            this.pnlPeriodExpenses.ResumeLayout(false);
+            this.pnlPeriodExpenses.PerformLayout();
+            this.pnlPeriodChange.ResumeLayout(false);
+            this.pnlPeriodChange.PerformLayout();
+            this.pnlMainContent.ResumeLayout(false);
+            this.pnlBalanceTrends.ResumeLayout(false);
+            this.pnlBalanceTrends.PerformLayout();
+            this.pnlExpensesBreakdown.ResumeLayout(false);
+            this.pnlExpensesBreakdown.PerformLayout();
+            this.ResumeLayout(false);
         }
 
         #endregion

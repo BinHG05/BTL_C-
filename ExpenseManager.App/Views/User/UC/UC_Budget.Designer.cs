@@ -130,7 +130,7 @@
             btnAddBudgetSidebar.Name = "btnAddBudgetSidebar";
             btnAddBudgetSidebar.Size = new System.Drawing.Size(330, 55);
             btnAddBudgetSidebar.TabIndex = 2;
-            btnAddBudgetSidebar.Text = "⊕  Add new budget";
+            btnAddBudgetSidebar.Text = "⊕  Thêm ngân sách mới";
             btnAddBudgetSidebar.UseVisualStyleBackColor = false;
             // 
             // pnlMainContent

@@ -2,23 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ExpenseManager.App.Models.Entities;
 using ExpenseManager.App.Models.ViewModels;
 using ExpenseManager.App.Repositories;
 
 namespace ExpenseManager.App.Services
 {
-    /// <summary>
-    /// Interface cho Dashboard Service
-    /// </summary>
     public interface IDashboardService
     {
         Task<DashboardStats> GetDashboardStatsAsync(string userId);
     }
 
-    /// <summary>
-    /// Service xử lý business logic cho Dashboard
-    /// </summary>
     public class DashboardService : IDashboardService
     {
         private readonly IDashboardRepository _repository;
@@ -28,228 +21,146 @@ namespace ExpenseManager.App.Services
             _repository = repository;
         }
 
-        /// <summary>
-        /// Lấy toàn bộ dữ liệu thống kê cho Dashboard
-        /// </summary>
         public async Task<DashboardStats> GetDashboardStatsAsync(string userId)
         {
             var now = DateTime.Now;
             var currentMonth = now.Month;
             var currentYear = now.Year;
-
-            // Tháng trước
             var lastMonth = currentMonth == 1 ? 12 : currentMonth - 1;
             var lastMonthYear = currentMonth == 1 ? currentYear - 1 : currentYear;
 
-            // 1. Lấy tổng số dư tất cả ví
+            // 1. Dữ liệu cơ bản
             var totalBalance = await _repository.GetTotalBalanceAsync(userId);
-
-            // 2. Lấy thu nhập tháng này
             var monthlyIncome = await _repository.GetMonthlyIncomeAsync(userId, currentMonth, currentYear);
-
-            // 3. Lấy chi tiêu tháng này
             var monthlyExpense = await _repository.GetMonthlyExpenseAsync(userId, currentMonth, currentYear);
 
-            // 4. Lấy budget đang hoạt động
-            var currentBudget = await GetCurrentBudgetInfoAsync(userId);
+            var firstBudget = await _repository.GetFirstActiveBudgetAsync(userId);
+            var budgetInfo = await CalculateBudgetInfo(userId, firstBudget);
+            var comparison = await CalculateComparison(userId, currentMonth, currentYear, lastMonth, lastMonthYear, monthlyIncome, monthlyExpense);
+            var trends = await CalculateBalanceTrends(userId);
+            var breakdown = await CalculateExpenseBreakdown(userId, currentMonth, currentYear);
 
-            // 5. Tính toán so sánh với tháng trước
-            var comparison = await CalculateComparisonAsync(userId, currentMonth, currentYear,
-                lastMonth, lastMonthYear, totalBalance, monthlyIncome, monthlyExpense);
+            // 2. Dữ liệu mở rộng (Grid 2x2)
 
-            // 6. Lấy dữ liệu biểu đồ Balance Trends (theo tuần trong tháng)
-            var balanceTrends = await CalculateBalanceTrendsAsync(userId, currentMonth, currentYear);
+            // A. Ngân sách
+            var activeBudgets = await _repository.GetActiveBudgetsAsync(userId);
+            var budgetDtos = new List<BudgetDto>();
+            foreach (var b in activeBudgets)
+            {
+                var txs = await _repository.GetTransactionsByDateRangeAsync(userId, b.StartDate, b.EndDate);
+                var spent = txs.Where(t => t.CategoryId == b.CategoryId && t.Type == "Expense").Sum(t => t.Amount);
+                budgetDtos.Add(new BudgetDto
+                {
+                    Name = b.Category.CategoryName,
+                    CategoryIcon = b.Category.Icon?.IconClass ?? "QuestionCircle",
+                    Limit = b.BudgetAmount,
+                    Spent = spent,
+                    Percent = b.BudgetAmount > 0 ? Math.Round((double)(spent / b.BudgetAmount * 100), 1) : 0,
+                    ColorHex = b.Category.Color?.HexCode ?? "#6366F1"
+                });
+            }
 
-            // 7. Lấy phân tích chi tiêu theo danh mục
-            var expenseBreakdown = await CalculateExpenseBreakdownAsync(userId, currentMonth, currentYear);
+            // B. Giao dịch gần đây (QUAN TRỌNG: LẤY ICON CLASS)
+            var recentTxs = await _repository.GetRecentTransactionsAsync(userId, 5);
+            var recentDtos = recentTxs.Select(t => new RecentTransactionDto
+            {
+                CategoryName = t.Category.CategoryName,
+                // Lấy IconClass (vd: "fa-solid fa-mug-hot") thay vì IconName
+                CategoryIcon = t.Category.Icon?.IconClass ?? "fa-circle-question",
+                ColorHex = t.Category.Color?.HexCode ?? "#9CA3AF",
+                Date = t.TransactionDate,
+                Note = t.Description,
+                Amount = t.Amount,
+                Type = t.Type
+            }).ToList();
+
+            // C. Biểu đồ cột
+            var sevenDaysAgo = DateTime.Now.Date.AddDays(-6);
+            var weekTxs = await _repository.GetTransactionsByDateRangeAsync(userId, sevenDaysAgo, DateTime.Now.Date.AddDays(1));
+            var dailyAnalysis = new List<DailyAnalysisDto>();
+            for (var date = sevenDaysAgo; date <= DateTime.Now.Date; date = date.AddDays(1))
+            {
+                var dayTxs = weekTxs.Where(t => t.TransactionDate.Date == date).ToList();
+                dailyAnalysis.Add(new DailyAnalysisDto
+                {
+                    Date = date,
+                    Label = date.ToString("dd/MM"),
+                    Income = dayTxs.Where(t => t.Type == "Income").Sum(t => t.Amount),
+                    Expense = dayTxs.Where(t => t.Type == "Expense").Sum(t => t.Amount)
+                });
+            }
+
+            // D. Mục tiêu
+            // D. Mục Tiêu Tiết Kiệm
+            var goals = await _repository.GetGoalsAsync(userId);
+            var goalDtos = goals.Select(g => new GoalDto
+            {
+                Name = g.GoalName,
+                Saved = g.CurrentAmount,
+                Target = g.TargetAmount,
+
+            
+                Percent = g.TargetAmount > 0
+         ? Math.Round((double)g.CurrentAmount / (double)g.TargetAmount * 100, 2)
+         : 0
+            }).ToList();
 
             return new DashboardStats
             {
                 TotalBalance = totalBalance,
                 MonthlyIncome = monthlyIncome,
                 MonthlyExpense = monthlyExpense,
-                CurrentBudget = currentBudget,
+                CurrentBudget = budgetInfo,
                 Comparison = comparison,
-                BalanceTrends = balanceTrends,
-                ExpenseBreakdown = expenseBreakdown
+                BalanceTrends = trends,
+                ExpenseBreakdown = breakdown,
+                Budgets = budgetDtos,
+                RecentTransactions = recentDtos,
+                DailyAnalysis = dailyAnalysis,
+                Goals = goalDtos
             };
         }
 
-        /// <summary>
-        /// Lấy thông tin budget hiện tại
-        /// </summary>
-        private async Task<BudgetInfo> GetCurrentBudgetInfoAsync(string userId)
+        // --- Helper Methods ---
+        private async Task<BudgetInfo> CalculateBudgetInfo(string userId, ExpenseManager.App.Models.Entities.Budget budget)
         {
-            var budget = await _repository.GetFirstActiveBudgetAsync(userId);
-
-            if (budget == null)
-            {
-                return new BudgetInfo
-                {
-                    BudgetName = "Chưa có ngân sách",
-                    BudgetAmount = 0,
-                    SpentAmount = 0,
-                    RemainingAmount = 0,
-                    UsagePercent = 0
-                };
-            }
-
-            // Tính tổng chi tiêu cho category này trong khoảng thời gian budget
-            var spent = await _repository.GetTransactionsByDateRangeAsync(userId,
-                budget.StartDate, budget.EndDate);
-
-            var spentAmount = spent
-                .Where(t => t.CategoryId == budget.CategoryId && t.Type == "Expense")
-                .Sum(t => t.Amount);
-
-            var remaining = budget.BudgetAmount - spentAmount;
-            var usagePercent = budget.BudgetAmount > 0
-                ? (double)(spentAmount / budget.BudgetAmount * 100)
-                : 0;
-
-            return new BudgetInfo
-            {
-                BudgetName = budget.Category?.CategoryName ?? "Ngân sách",
-                BudgetAmount = budget.BudgetAmount,
-                SpentAmount = spentAmount,
-                RemainingAmount = remaining,
-                UsagePercent = Math.Round(usagePercent, 2)
-            };
+            if (budget == null) return null;
+            var transactions = await _repository.GetTransactionsByDateRangeAsync(userId, budget.StartDate, budget.EndDate);
+            var spent = transactions.Where(t => t.CategoryId == budget.CategoryId && t.Type == "Expense").Sum(t => t.Amount);
+            var percent = budget.BudgetAmount > 0 ? (double)(spent / budget.BudgetAmount * 100) : 0;
+            return new BudgetInfo { BudgetName = budget.Category?.CategoryName ?? "Ngân sách", BudgetAmount = budget.BudgetAmount, SpentAmount = spent, RemainingAmount = budget.BudgetAmount - spent, UsagePercent = Math.Round(percent, 1) };
         }
 
-        /// <summary>
-        /// Tính toán số liệu so sánh với tháng trước
-        /// </summary>
-        private async Task<ComparisonStats> CalculateComparisonAsync(string userId,
-            int currentMonth, int currentYear, int lastMonth, int lastMonthYear,
-            decimal currentBalance, decimal currentIncome, decimal currentExpense)
+        private async Task<ComparisonStats> CalculateComparison(string userId, int curM, int curY, int lastM, int lastY, decimal curInc, decimal curExp)
         {
-            // Kiểm tra xem có phải tháng đầu tiên không (không có dữ liệu tháng trước)
-            var lastMonthIncome = await _repository.GetMonthlyIncomeAsync(userId, lastMonth, lastMonthYear);
-            var lastMonthExpense = await _repository.GetMonthlyExpenseAsync(userId, lastMonth, lastMonthYear);
-
-            var isFirstMonth = lastMonthIncome == 0 && lastMonthExpense == 0;
-
-            if (isFirstMonth)
-            {
-                return new ComparisonStats
-                {
-                    IsFirstMonth = true,
-                    BalanceChangePercent = 0,
-                    BalanceChangeAmount = 0,
-                    IncomeChangePercent = 0,
-                    IncomeChangeAmount = 0,
-                    ExpenseChangePercent = 0,
-                    ExpenseChangeAmount = 0
-                };
-            }
-
-            // Tính % thay đổi
-            var lastMonthBalance = currentBalance - (currentIncome - currentExpense) + (lastMonthIncome - lastMonthExpense);
-
-            var balanceChange = currentBalance - lastMonthBalance;
-            var balanceChangePercent = lastMonthBalance != 0
-                ? (balanceChange / lastMonthBalance * 100)
-                : 0;
-
-            var incomeChange = currentIncome - lastMonthIncome;
-            var incomeChangePercent = lastMonthIncome != 0
-                ? (incomeChange / lastMonthIncome * 100)
-                : 0;
-
-            var expenseChange = currentExpense - lastMonthExpense;
-            var expenseChangePercent = lastMonthExpense != 0
-                ? (expenseChange / lastMonthExpense * 100)
-                : 0;
-
-            return new ComparisonStats
-            {
-                IsFirstMonth = false,
-                BalanceChangePercent = Math.Round(balanceChangePercent, 2),
-                BalanceChangeAmount = balanceChange,
-                IncomeChangePercent = Math.Round(incomeChangePercent, 2),
-                IncomeChangeAmount = incomeChange,
-                ExpenseChangePercent = Math.Round(expenseChangePercent, 2),
-                ExpenseChangeAmount = expenseChange
-            };
+            var lastInc = await _repository.GetMonthlyIncomeAsync(userId, lastM, lastY);
+            var lastExp = await _repository.GetMonthlyExpenseAsync(userId, lastM, lastY);
+            if (lastInc == 0 && lastExp == 0) return new ComparisonStats { IsFirstMonth = true };
+            return new ComparisonStats { IsFirstMonth = false, IncomeChangePercent = lastInc != 0 ? Math.Round((curInc - lastInc) / lastInc * 100, 1) : 100, ExpenseChangePercent = lastExp != 0 ? Math.Round((curExp - lastExp) / lastExp * 100, 1) : 100, BalanceChangePercent = (lastInc - lastExp) != 0 ? Math.Round(((curInc - curExp) - (lastInc - lastExp)) / Math.Abs(lastInc - lastExp) * 100, 1) : 0 };
         }
 
-        /// <summary>
-        /// Tính toán dữ liệu cho biểu đồ Balance Trends theo tuần
-        /// </summary>
-        private async Task<List<BalanceTrendPoint>> CalculateBalanceTrendsAsync(string userId,
-            int month, int year)
+        private async Task<List<BalanceTrendPoint>> CalculateBalanceTrends(string userId)
         {
-            var transactions = await _repository.GetMonthlyTransactionsAsync(userId, month, year);
-
-            if (!transactions.Any())
+            var end = DateTime.Now.Date;
+            var start = end.AddDays(-6);
+            var txs = await _repository.GetTransactionsByDateRangeAsync(userId, start, end.AddDays(1));
+            var result = new List<BalanceTrendPoint>();
+            for (var d = start; d <= end; d = d.AddDays(1))
             {
-                return new List<BalanceTrendPoint>();
+                var dayTxs = txs.Where(t => t.TransactionDate.Date == d).ToList();
+                result.Add(new BalanceTrendPoint { Date = d, Label = d.ToString("dd/MM"), NetAmount = dayTxs.Where(t => t.Type == "Income").Sum(t => t.Amount) - dayTxs.Where(t => t.Type == "Expense").Sum(t => t.Amount) });
             }
-
-            // Nhóm giao dịch theo tuần
-            var weeklyData = transactions
-                .GroupBy(t => GetWeekOfMonth(t.TransactionDate))
-                .Select(g => new BalanceTrendPoint
-                {
-                    Date = g.First().TransactionDate,
-                    NetAmount = g.Where(t => t.Type == "Income").Sum(t => t.Amount) -
-                               g.Where(t => t.Type == "Expense").Sum(t => t.Amount),
-                    Label = $"Tuần {g.Key}"
-                })
-                .OrderBy(p => p.Date)
-                .ToList();
-
-            return weeklyData;
+            return result;
         }
 
-        /// <summary>
-        /// Tính toán phân tích chi tiêu theo danh mục
-        /// </summary>
-        private async Task<List<ExpenseCategoryBreakdown>> CalculateExpenseBreakdownAsync(
-            string userId, int month, int year)
+        private async Task<List<ExpenseCategoryBreakdown>> CalculateExpenseBreakdown(string userId, int month, int year)
         {
-            var transactions = await _repository.GetMonthlyTransactionsAsync(userId, month, year);
-            var expenses = transactions.Where(t => t.Type == "Expense").ToList();
-
-            if (!expenses.Any())
-            {
-                return new List<ExpenseCategoryBreakdown>();
-            }
-
-            var totalExpense = expenses.Sum(t => t.Amount);
-
-            var breakdown = expenses
-                .GroupBy(t => new
-                {
-                    t.Category.CategoryName,
-                    ColorHex = t.Category.Color?.HexCode ?? "#6366F1"  // Sửa ColorHex thành HexCode
-                })
-                .Select(g => new ExpenseCategoryBreakdown
-                {
-                    CategoryName = g.Key.CategoryName,
-                    Amount = g.Sum(t => t.Amount),
-                    Percentage = totalExpense > 0
-                        ? Math.Round((double)(g.Sum(t => t.Amount) / totalExpense * 100), 2)
-                        : 0,
-                    ColorHex = g.Key.ColorHex
-                })
-                .OrderByDescending(c => c.Amount)
-                .ToList();
-
-            return breakdown;
-        }
-
-        /// <summary>
-        /// Tính tuần thứ mấy trong tháng
-        /// </summary>
-        private int GetWeekOfMonth(DateTime date)
-        {
-            var firstDayOfMonth = new DateTime(date.Year, date.Month, 1);
-            var dayOfMonth = date.Day;
-            var firstWeekday = (int)firstDayOfMonth.DayOfWeek;
-
-            return (dayOfMonth + firstWeekday - 1) / 7 + 1;
+            var txs = await _repository.GetMonthlyTransactionsAsync(userId, month, year);
+            var expenses = txs.Where(t => t.Type == "Expense").ToList();
+            var total = expenses.Sum(t => t.Amount);
+            if (total == 0) return new List<ExpenseCategoryBreakdown>();
+            return expenses.GroupBy(t => new { t.Category.CategoryName, Hex = t.Category.Color?.HexCode ?? "#9CA3AF" })
+                           .Select(g => new ExpenseCategoryBreakdown { CategoryName = g.Key.CategoryName, Amount = g.Sum(t => t.Amount), Percentage = Math.Round((double)(g.Sum(t => t.Amount) / total * 100), 1), ColorHex = g.Key.Hex }).OrderByDescending(x => x.Amount).ToList();
         }
     }
 }
