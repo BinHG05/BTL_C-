@@ -9,12 +9,13 @@ using ExpenseManager.App.Services;
 using ExpenseManager.App.Services.Interfaces;
 using ExpenseManager.App.Views;
 using ExpenseManager.App.Views.Admin.Sidebar;
-
 using ExpenseManager.App.Views.Admin.UC;
 using ExpenseManager.App.Views.User;
 using ExpenseManager.App.Views.User.Forms;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace ExpenseManager.App
 {
@@ -27,7 +28,7 @@ namespace ExpenseManager.App
         {
             ApplicationConfiguration.Initialize();
 
-            string connectionString = ConfigurationManager.ConnectionStrings["ExpenseDB"]?.ConnectionString;
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ExpenseDB"]?.ConnectionString;
             if (string.IsNullOrEmpty(connectionString))
             {
                 MessageBox.Show("Không tìm thấy connection string 'ExpenseDB' trong App.config", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -35,6 +36,14 @@ namespace ExpenseManager.App
             }
 
             var services = new ServiceCollection();
+
+            // Build Configuration
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+            IConfiguration configuration = builder.Build();
+            services.AddSingleton<IConfiguration>(configuration);
+
             ConfigureServices(services, connectionString);
             ServiceProvider = services.BuildServiceProvider();
 

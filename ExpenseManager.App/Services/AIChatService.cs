@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace ExpenseManager.App.Services
 {
@@ -19,6 +20,7 @@ namespace ExpenseManager.App.Services
         private readonly IWalletService _walletService;
         private readonly List<ChatMessage> _history;
         private readonly HttpClient _httpClient;
+        private readonly IConfiguration _configuration;
 
         // Lưu trạng thái chờ user chọn ví
         private string _pendingAction = null;
@@ -26,7 +28,7 @@ namespace ExpenseManager.App.Services
         private decimal _pendingAmount = 0;
 
         // API Key
-        private const string API_KEY = "AIzaSyBwcBAxz0uZJkx0YCENOiZTOnBl23_CAeQ";
+        // private const string API_KEY = "AIzaSyBwcBAxz0uZJkx0YCENOiZTOnBl23_CAeQ";
         // Sử dụng model gemini-2.0-flash (theo danh sách hỗ trợ của key)
         private const string API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
 
@@ -34,12 +36,14 @@ namespace ExpenseManager.App.Services
             IGoalService goalService,
             ICategoryService categoryService,
             ITransactionService transactionService,
-            IWalletService walletService)
+            IWalletService walletService,
+            IConfiguration configuration)
         {
             _goalService = goalService;
             _categoryService = categoryService;
             _transactionService = transactionService;
             _walletService = walletService;
+            _configuration = configuration;
             _history = new List<ChatMessage>();
             _httpClient = new HttpClient();
         }
@@ -82,12 +86,14 @@ namespace ExpenseManager.App.Services
                     };
                     await _goalService.DepositToGoalAsync(depositDto);
 
+                    decimal amountDeposited = _pendingAmount;
+
                     // Reset pending state
                     _pendingAction = null;
                     _pendingGoalName = null;
                     _pendingAmount = 0;
 
-                    string response = $"✅ Đã nạp {_pendingAmount:N0} VND vào mục tiêu '{targetGoal.GoalName}' từ ví '{selectedWallet.WalletName}'!";
+                    string response = $"✅ Đã nạp {amountDeposited:N0} VND vào mục tiêu '{targetGoal.GoalName}' từ ví '{selectedWallet.WalletName}'!";
                     _history.Add(new ChatMessage(response, false));
                     return response;
                 }
@@ -148,12 +154,21 @@ namespace ExpenseManager.App.Services
             switch (action)
             {
                 case "create_goal":
+                    string deadlineStr = root.GetProperty("deadline").GetString();
+                    DateTime completionDate;
+                    
+                    // Nếu AI trả về format thay vì ngày thực, dùng ngày mặc định
+                    if (!DateTime.TryParse(deadlineStr, out completionDate))
+                    {
+                        completionDate = DateTime.Now.AddMonths(1); // Mặc định 1 tháng sau
+                    }
+                    
                     var goalDto = new CreateGoalDTO
                     {
                         UserId = userId,
                         GoalName = root.GetProperty("name").GetString(),
                         TargetAmount = root.GetProperty("amount").GetDecimal(),
-                        CompletionDate = DateTime.Parse(root.GetProperty("deadline").GetString())
+                        CompletionDate = completionDate
                     };
                     await _goalService.CreateGoalAsync(goalDto);
                     return $"✅ Đã tạo mục tiêu '{goalDto.GoalName}' thành công!";
@@ -276,7 +291,8 @@ namespace ExpenseManager.App.Services
                 sb.AppendLine("--- MỤC TIÊU (GOALS) ---");
                 foreach (var g in goals)
                 {
-                    sb.AppendLine($"- {g.GoalName}: {g.CurrentAmount}/{g.TargetAmount} (Hạn: {g.CompletionDate:dd/MM/yyyy})");
+                    string status = g.CurrentAmount >= g.TargetAmount ? "Đã hoàn thành" : "Đang thực hiện";
+                    sb.AppendLine($"- {g.GoalName}: {g.CurrentAmount}/{g.TargetAmount} ({status}) (Hạn: {g.CompletionDate:dd/MM/yyyy})");
                 }
 
                 // Wallets
@@ -316,7 +332,17 @@ namespace ExpenseManager.App.Services
                 var json = JsonSerializer.Serialize(requestBody);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                var response = await _httpClient.PostAsync($"{API_URL}?key={API_KEY}", content);
+                var apiKey = _configuration["Gemini:ApiKey"];
+
+                if (string.IsNullOrEmpty(apiKey))
+                {
+                    return "❌ Lỗi: Không tìm thấy API key trong appsettings.json. Vui lòng kiểm tra cấu hình.";
+                }
+
+                // Debug log để kiểm tra key (chỉ hiện 5 ký tự đầu)
+                System.Diagnostics.Debug.WriteLine($"API Key used: {apiKey?.Substring(0, Math.Min(5, apiKey?.Length ?? 0))}...");
+
+                var response = await _httpClient.PostAsync($"{API_URL}?key={apiKey}", content);
 
                 if (!response.IsSuccessStatusCode)
                 {
