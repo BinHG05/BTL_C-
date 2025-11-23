@@ -37,6 +37,7 @@ namespace ExpenseManager.App.Presenters
         void ShowMessage(string message, string title, MessageBoxIcon icon);
         void ShowLoading(bool isLoading);
         void ClearBudgetDetail();
+        void SetChartDateRange(DateTime startDate, DateTime endDate);
     }
 
     public class BudgetPresenter
@@ -155,24 +156,35 @@ namespace ExpenseManager.App.Presenters
         }
 
         // SỬA: Chỉ load lại chart khi thay đổi loại, không load lại detail
-        private async void OnChartTypeChanged(object sender, string chartType)
+        //private async void OnChartTypeChanged(object sender, string chartType)
+        //{
+        //    if (_selectedBudgetId > 0)
+        //    {
+        //        try
+        //        {
+        //            using (var scope = _serviceProvider.CreateScope())
+        //            {
+        //                var budgetService = scope.ServiceProvider.GetRequiredService<IBudgetService>();
+        //                var breakdown = await budgetService.GetExpenseBreakdownAsync(_selectedBudgetId, _view.CurrentUserId);
+        //                _view.DisplayExpenseChart(breakdown ?? Enumerable.Empty<ExpenseBreakdownDto>());
+        //            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Debug.WriteLine($"OnChartTypeChanged Error: {ex.Message}");
+        //        }
+        //    }
+        //}
+
+        private void OnChartTypeChanged(object sender, string chartType)
         {
-            if (_selectedBudgetId > 0)
-            {
-                try
-                {
-                    using (var scope = _serviceProvider.CreateScope())
-                    {
-                        var budgetService = scope.ServiceProvider.GetRequiredService<IBudgetService>();
-                        var breakdown = await budgetService.GetExpenseBreakdownAsync(_selectedBudgetId, _view.CurrentUserId);
-                        _view.DisplayExpenseChart(breakdown ?? Enumerable.Empty<ExpenseBreakdownDto>());
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine($"OnChartTypeChanged Error: {ex.Message}");
-                }
-            }
+            // Không làm gì cả.
+            // Khi View đổi loại chart -> View sẽ tự update lại DatePicker 
+            // -> DatePicker kích hoạt sự kiện ChartDateRangeChanged 
+            // -> ChartDateRangeChanged sẽ gọi LoadExpenseChartAsync.
+
+            // Nếu bạn load dữ liệu ở đây mà không có ngày bắt đầu/kết thúc cụ thể, 
+            // biểu đồ sẽ bị sai lệch.
         }
 
         public async Task LoadBudgetsAsync()
@@ -222,8 +234,12 @@ namespace ExpenseManager.App.Presenters
                     {
                         _view.DisplayBudgetDetail(detail);
 
-                        // Load chart theo range của budget
-                        var breakdown = await budgetService.GetExpenseBreakdownAsync(budgetId, _view.CurrentUserId);
+                        // ✅ CẬP NHẬT DATEPICKER TRƯỚC KHI LOAD CHART
+                        _view.SetChartDateRange(detail.StartDate, detail.EndDate);
+
+                        // ✅ Load chart theo range của budget
+                        var breakdown = await budgetService.GetExpenseBreakdownAsync(
+                            budgetId, _view.CurrentUserId, detail.StartDate, detail.EndDate);
                         _view.DisplayExpenseChart(breakdown ?? Enumerable.Empty<ExpenseBreakdownDto>());
                     }
                 }
@@ -243,16 +259,12 @@ namespace ExpenseManager.App.Presenters
                 {
                     var budgetService = scope.ServiceProvider.GetRequiredService<IBudgetService>();
 
-                    // Lấy tất cả breakdown của budget
-                    var breakdown = await budgetService.GetExpenseBreakdownAsync(budgetId, _view.CurrentUserId);
+                    // ✅ Truyền đúng startDate và endDate vào Service
+                    var breakdown = await budgetService.GetExpenseBreakdownAsync(
+                        budgetId, _view.CurrentUserId, start, end);
 
-                    // Lọc theo date range
-                    var filtered = breakdown?
-                        .Where(b => b.Date.Date >= start.Date && b.Date.Date <= end.Date)
-                        .OrderBy(b => b.Date)
-                        ?? Enumerable.Empty<ExpenseBreakdownDto>();
-
-                    _view.DisplayExpenseChart(filtered);
+                    // ✅ Service đã lọc và group rồi, không cần filter lại ở đây
+                    _view.DisplayExpenseChart(breakdown ?? Enumerable.Empty<ExpenseBreakdownDto>());
                 }
             }
             catch (Exception ex)

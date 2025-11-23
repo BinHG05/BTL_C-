@@ -9,6 +9,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using ExpenseManager.App.CustomControls;
 
 namespace ExpenseManager.App.Views.Admin.UC
 {
@@ -18,7 +19,6 @@ namespace ExpenseManager.App.Views.Admin.UC
         private Chart _expenseChart;
         private Button _btnAddCache;
 
-        // THÊM: Lưu ID budget đã cảnh báo
         private HashSet<int> _warnedBudgetIds = new HashSet<int>();
 
         public string CurrentUserId
@@ -51,17 +51,44 @@ namespace ExpenseManager.App.Views.Admin.UC
             if (dtpChartTo != null) dtpChartTo.ValueChanged += DateRange_Changed;
         }
 
+        // --- CẬP NHẬT HÀM KHỞI TẠO CHART ---
         private void InitializeChart()
         {
             _expenseChart = new Chart { Dock = DockStyle.Fill, BackColor = Color.White };
             var chartArea = new ChartArea("MainArea") { BackColor = Color.White };
-            chartArea.AxisX.MajorGrid.LineColor = Color.LightGray;
-            chartArea.AxisX.MajorGrid.LineDashStyle = ChartDashStyle.Dot;
-            chartArea.AxisY.MajorGrid.LineColor = Color.LightGray;
-            chartArea.AxisY.MajorGrid.LineDashStyle = ChartDashStyle.Dot;
+
+            // Grid lines mờ nhạt cho đẹp
+            chartArea.AxisX.MajorGrid.LineColor = Color.FromArgb(240, 240, 240);
+            chartArea.AxisY.MajorGrid.LineColor = Color.FromArgb(240, 240, 240);
+            chartArea.AxisX.LineColor = Color.LightGray;
+            chartArea.AxisY.LineColor = Color.LightGray;
+
             _expenseChart.ChartAreas.Add(chartArea);
-            _expenseChart.Series.Add(new Series("Expense") { ChartType = SeriesChartType.Column, Color = Color.FromArgb(99, 102, 241), IsValueShownAsLabel = true });
-            if (pnlChartArea != null) { pnlChartArea.Controls.Clear(); pnlChartArea.Controls.Add(_expenseChart); }
+
+            var series = new Series("Expense")
+            {
+                ChartType = SeriesChartType.Column,
+                Color = Color.FromArgb(99, 102, 241), // Màu tím xanh
+                IsValueShownAsLabel = true,
+                Font = new Font("Segoe UI", 8f) // Font chữ label nhỏ gọn
+            };
+
+            // --- CẤU HÌNH ĐỘ RỘNG CỘT TẠI ĐÂY ---
+            // 1. PointWidth = 0.5: Cột chiếm 50% khoảng không gian, 50% còn lại là khe hở.
+            //    Điều này giúp cột tự động nhỏ lại khi dữ liệu nhiều.
+            series["PointWidth"] = "0.5";
+
+            // 2. MaxPixelPointWidth = 60: Dù có ít dữ liệu (ví dụ 1 cột), 
+            //    nó cũng không bao giờ to quá 60 pixel. Tránh tình trạng cột to bằng cả màn hình.
+            series["MaxPixelPointWidth"] = "60";
+
+            _expenseChart.Series.Add(series);
+
+            if (pnlChartArea != null)
+            {
+                pnlChartArea.Controls.Clear();
+                pnlChartArea.Controls.Add(_expenseChart);
+            }
         }
 
         private void UC_Budget_Load(object sender, EventArgs e)
@@ -241,8 +268,6 @@ namespace ExpenseManager.App.Views.Admin.UC
             if (cmbChartType.SelectedItem != null)
             {
                 string chartType = cmbChartType.SelectedItem.ToString();
-
-                // Thay đổi format DateTimePicker theo loại chart
                 switch (chartType)
                 {
                     case "Theo Ngày":
@@ -266,7 +291,6 @@ namespace ExpenseManager.App.Views.Admin.UC
                         dtpChartTo.ShowUpDown = true;
                         break;
                 }
-
                 ChartTypeChanged?.Invoke(this, chartType);
             }
         }
@@ -301,30 +325,9 @@ namespace ExpenseManager.App.Views.Admin.UC
             lblConLaiStatsValue.Text = detail.FormattedRemaining;
             lblNgayBatDauValue.Text = detail.FormattedStartDate;
             lblNgayKetThucValue.Text = detail.FormattedEndDate;
-
-            // SỬA: ProgressBar tối đa 100%, màu đỏ khi vượt
-            int percent = (int)Math.Min(100, Math.Max(0, detail.PercentageUsed));
-            pbBudgetProgress.Value = percent;
             lblProgressPercent.Text = $"{detail.PercentageUsed:F1}%";
+            pbBudgetProgress.Percentage = (double)detail.PercentageUsed;
 
-            if (detail.IsOverBudget)
-            {
-                pbBudgetProgress.ForeColor = Color.FromArgb(239, 68, 68); // Đỏ
-            }
-            else if (percent >= 90)
-            {
-                pbBudgetProgress.ForeColor = Color.FromArgb(239, 68, 68); // Đỏ
-            }
-            else if (percent >= 70)
-            {
-                pbBudgetProgress.ForeColor = Color.FromArgb(245, 158, 11); // Cam
-            }
-            else
-            {
-                pbBudgetProgress.ForeColor = Color.FromArgb(34, 197, 94); // Xanh
-            }
-
-            // SỬA: Chỉ cảnh báo 1 lần khi chưa cảnh báo budget này
             if (detail.IsOverBudget && !_warnedBudgetIds.Contains(detail.BudgetId))
             {
                 _warnedBudgetIds.Add(detail.BudgetId);
@@ -340,11 +343,66 @@ namespace ExpenseManager.App.Views.Admin.UC
         public void DisplayExpenseChart(IEnumerable<ExpenseBreakdownDto> breakdown)
         {
             if (_expenseChart == null || _expenseChart.Series.Count == 0) return;
+
             var series = _expenseChart.Series[0];
             series.Points.Clear();
-            if (breakdown == null) return;
+
+            if (breakdown == null || !breakdown.Any())
+            {
+                _expenseChart.Invalidate();
+                return;
+            }
+
+
+            _expenseChart.ChartAreas[0].AxisX.LabelStyle.Format = "";
+            _expenseChart.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Auto;
+
+
+            series.XValueType = ChartValueType.DateTime;
+
             foreach (var item in breakdown)
-                series.Points.AddXY(item.FormattedDate, (double)item.TotalAmount);
+            {
+
+                int pointIndex = series.Points.AddXY(item.Date, (double)item.TotalAmount);
+                series.Points[pointIndex].Label = item.TotalAmount.ToString("N0");
+
+                // ✅ Set ToolTip để hiển thị ngày rõ ràng khi hover
+                series.Points[pointIndex].ToolTip = $"{item.Date:dd/MM/yyyy}\n{item.TotalAmount:N0}đ";
+            }
+
+
+            var chartArea = _expenseChart.ChartAreas[0];
+
+            if (breakdown.Count() > 10)
+            {
+                chartArea.AxisX.LabelStyle.Format = "dd/MM";
+                chartArea.AxisX.LabelStyle.Angle = -45;
+                chartArea.AxisX.IntervalType = DateTimeIntervalType.Days;
+                chartArea.AxisX.Interval = 1;
+            }
+            else if (breakdown.Count() > 1)
+            {
+                chartArea.AxisX.LabelStyle.Format = "dd/MM/yyyy";
+                chartArea.AxisX.LabelStyle.Angle = 0;
+                chartArea.AxisX.IntervalType = DateTimeIntervalType.Days;
+
+                // ✅ Tính khoảng cách ngày để set interval hợp lý
+                var dates = breakdown.Select(b => b.Date).OrderBy(d => d).ToList();
+                var dayRange = (dates.Last() - dates.First()).Days;
+
+                if (dayRange > 30)
+                    chartArea.AxisX.Interval = 7; // Hiển thị mỗi tuần
+                else if (dayRange > 7)
+                    chartArea.AxisX.Interval = 3; // Hiển thị mỗi 3 ngày
+                else
+                    chartArea.AxisX.Interval = 1; // Hiển thị mỗi ngày
+            }
+            else
+            {
+                chartArea.AxisX.LabelStyle.Format = "dd/MM/yyyy";
+                chartArea.AxisX.LabelStyle.Angle = 0;
+            }
+
             _expenseChart.Invalidate();
         }
 
@@ -361,6 +419,24 @@ namespace ExpenseManager.App.Views.Admin.UC
         {
             lblBudgetName.Text = "Chọn ngân sách";
             lblNganSachAmount.Text = "0đ";
+            pbBudgetProgress.Percentage = 0;
+        }
+
+        public void SetChartDateRange(DateTime startDate, DateTime endDate)
+        {
+            if (dtpChartFrom != null && dtpChartTo != null)
+            {
+                // Tạm thời unsubscribe event để tránh trigger ChartDateRangeChanged
+                dtpChartFrom.ValueChanged -= DateRange_Changed;
+                dtpChartTo.ValueChanged -= DateRange_Changed;
+
+                dtpChartFrom.Value = startDate;
+                dtpChartTo.Value = endDate;
+
+                // Subscribe lại
+                dtpChartFrom.ValueChanged += DateRange_Changed;
+                dtpChartTo.ValueChanged += DateRange_Changed;
+            }
         }
     }
 }

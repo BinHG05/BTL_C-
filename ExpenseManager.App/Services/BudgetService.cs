@@ -84,12 +84,31 @@ namespace ExpenseManager.App.Services
             };
         }
 
-        public async Task<IEnumerable<ExpenseBreakdownDto>> GetExpenseBreakdownAsync(int budgetId, string userId)
+        public async Task<IEnumerable<ExpenseBreakdownDto>> GetExpenseBreakdownAsync(
+            int budgetId, string userId, DateTime? startDate = null, DateTime? endDate = null)
         {
             var budget = await _budgetRepo.GetByIdAsync(budgetId);
-            if (budget == null || budget.UserId != userId) return new List<ExpenseBreakdownDto>();
-            var transactions = await _transactionRepo.GetByCategoryAndDateRangeAsync(userId, budget.CategoryId, budget.StartDate, budget.EndDate);
-            return transactions.Where(t => t.Type == "Expense").GroupBy(t => t.TransactionDate.Date).Select(g => new ExpenseBreakdownDto { Date = g.Key, TotalAmount = g.Sum(t => t.Amount), TransactionCount = g.Count() }).OrderBy(e => e.Date).ToList();
+            if (budget == null || budget.UserId != userId)
+                return new List<ExpenseBreakdownDto>();
+
+            // ✅ Nếu không truyền date range, dùng range của budget
+            var effectiveStartDate = startDate ?? budget.StartDate;
+            var effectiveEndDate = endDate ?? budget.EndDate;
+
+            var transactions = await _transactionRepo.GetByCategoryAndDateRangeAsync(
+                userId, budget.CategoryId, effectiveStartDate, effectiveEndDate);
+
+            return transactions
+                .Where(t => t.Type == "Expense")
+                .GroupBy(t => t.TransactionDate.Date)
+                .Select(g => new ExpenseBreakdownDto
+                {
+                    Date = g.Key,
+                    TotalAmount = g.Sum(t => t.Amount),
+                    TransactionCount = g.Count()
+                })
+                .OrderBy(e => e.Date)
+                .ToList();
         }
 
         public async Task<Budget> CreateBudgetAsync(BudgetCreateDto dto, string userId)
