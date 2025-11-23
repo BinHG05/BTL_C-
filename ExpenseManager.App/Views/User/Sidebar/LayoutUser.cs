@@ -107,10 +107,10 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             headerItem.ForeColor = Color.Gray;
             headerItem.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
 
-            itemSettings = new ToolStripMenuItem("Settings", GetIconBitmap(IconChar.Gear, 16, Color.Black));
+            itemSettings = new ToolStripMenuItem("Cài đặt", GetIconBitmap(IconChar.Gear, 16, Color.Black));
             itemSettings.Click += BtnSettings_Click;
 
-            itemLogout = new ToolStripMenuItem("Logout", GetIconBitmap(IconChar.SignOutAlt, 16, Color.Red));
+            itemLogout = new ToolStripMenuItem("Đăng xuất", GetIconBitmap(IconChar.SignOutAlt, 16, Color.Red));
             itemLogout.ForeColor = Color.Red;
             itemLogout.Click += LogoutMenuItem_Click;
 

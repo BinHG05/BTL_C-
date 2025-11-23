@@ -106,7 +106,7 @@
             this.lblSubtitle.Name = "lblSubtitle";
             this.lblSubtitle.Size = new System.Drawing.Size(336, 25);
             this.lblSubtitle.TabIndex = 1;
-            this.lblSubtitle.Text = "Welcome Ekash Finance Management";
+            this.lblSubtitle.Text = "Chào mừng bạn đến với Ekash!";
             // 
             // pnlLeftSidebar
             // 
@@ -144,7 +144,7 @@
             this.btnAddWallet.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
             this.btnAddWallet.Size = new System.Drawing.Size(330, 55); // ✅ Chỉnh Width 330 để vừa vặn
             this.btnAddWallet.TabIndex = 2;
-            this.btnAddWallet.Text = "⊕  Add new wallet";
+            this.btnAddWallet.Text = "⊕  Thêm ví mới";
             this.btnAddWallet.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnAddWallet.UseVisualStyleBackColor = false;
             this.btnAddWallet.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0); // ✅ Thêm khoảng cách top
@@ -226,7 +226,7 @@
             this.lblTotalBalanceTitle.Name = "lblTotalBalanceTitle";
             this.lblTotalBalanceTitle.Size = new System.Drawing.Size(123, 25);
             this.lblTotalBalanceTitle.TabIndex = 0;
-            this.lblTotalBalanceTitle.Text = "Total Balance";
+            this.lblTotalBalanceTitle.Text = "Tổng tiền";
             // 
             // lblTotalBalanceAmount
             // 
@@ -261,7 +261,7 @@
             this.lblMonthlyExpensesTitle.Name = "lblMonthlyExpensesTitle";
             this.lblMonthlyExpensesTitle.Size = new System.Drawing.Size(159, 25);
             this.lblMonthlyExpensesTitle.TabIndex = 0;
-            this.lblMonthlyExpensesTitle.Text = "Monthly Expenses";
+            this.lblMonthlyExpensesTitle.Text = "Chi tiêu hàng tháng";
             // 
             // lblMonthlyExpensesAmount
             // 
@@ -406,7 +406,7 @@
             this.lblTransactionTitle.Name = "lblTransactionTitle";
             this.lblTransactionTitle.Size = new System.Drawing.Size(238, 37);
             this.lblTransactionTitle.TabIndex = 0;
-            this.lblTransactionTitle.Text = "Transaction History";
+            this.lblTransactionTitle.Text = "Lịch sử giao dịch";
             // 
             // dgvTransactions
             // 
@@ -452,7 +452,7 @@
             this.lblEmptyMessage.Name = "lblEmptyMessage";
             this.lblEmptyMessage.Size = new System.Drawing.Size(600, 80);
             this.lblEmptyMessage.TabIndex = 0;
-            this.lblEmptyMessage.Text = "Bạn chưa có ví nào.\r\nHãy bấm \"Add new wallet\" để tạo ví đầu tiên!";
+            this.lblEmptyMessage.Text = "Bạn chưa có ví nào.\r\nHãy bấm \"Thêm ví mới\" để tạo ví đầu tiên!";
             this.lblEmptyMessage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // UC_Wallet
