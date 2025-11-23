@@ -144,9 +144,7 @@ namespace ExpenseManager.App.Services
             var root = doc.RootElement;
             string action = root.GetProperty("action").GetString();
             string userId = ExpenseManager.App.Session.CurrentUserSession.CurrentUser?.UserId;
-
             if (string.IsNullOrEmpty(userId)) return "Lỗi: Không tìm thấy người dùng.";
-
             switch (action)
             {
                 case "create_goal":
@@ -159,41 +157,39 @@ namespace ExpenseManager.App.Services
                     };
                     await _goalService.CreateGoalAsync(goalDto);
                     return $"✅ Đã tạo mục tiêu '{goalDto.GoalName}' thành công!";
-
                 case "create_wallet":
+                    var allWalletsCheck = await _walletService.GetWalletsByUserIdAsync(userId);
+                    string newWalletName = root.GetProperty("name").GetString();
+
+                    if (allWalletsCheck.Any(w => w.WalletName.Equals(newWalletName, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        return $"❌ Ví '{newWalletName}' đã tồn tại. Vui lòng đặt tên khác.";
+                    }
                     var wallet = new Wallet
                     {
                         UserId = userId,
-                        WalletName = root.GetProperty("name").GetString(),
+                        WalletName = newWalletName,
                         Balance = root.GetProperty("balance").GetDecimal(),
                         InitialBalance = root.GetProperty("balance").GetDecimal(),
-                        WalletType = "General", // Mặc định
-                        Icon = "wallet", // Mặc định
+                        WalletType = "General",
+                        Icon = "wallet",
                         CreatedAt = DateTime.Now,
                         UpdatedAt = DateTime.Now
                     };
                     await _walletService.CreateWalletAsync(wallet);
                     return $"✅ Đã tạo ví '{wallet.WalletName}' thành công!";
-
                 case "deposit_goal":
                     string goalName = root.GetProperty("goal_name").GetString();
-                    // Cho phép wallet_name null hoặc rỗng
                     string walletNameRaw = root.TryGetProperty("wallet_name", out var wElem) ? wElem.GetString() : null;
                     decimal amount = root.GetProperty("amount").GetDecimal();
-
-                    // Lấy dữ liệu
                     var goals = await _goalService.GetUserGoalsAsync(userId);
                     var targetGoal = goals.FirstOrDefault(g => g.GoalName.Equals(goalName, StringComparison.OrdinalIgnoreCase));
                     if (targetGoal == null) return $"❌ Không tìm thấy mục tiêu tên '{goalName}'.";
-
                     var allWallets = await _walletService.GetWalletsByUserIdAsync(userId);
                     Wallet selectedWallet = null;
                     string autoMsg = "";
-
-                    // LOGIC CHỌN VÍ THÔNG MINH
                     if (!string.IsNullOrEmpty(walletNameRaw))
                     {
-                        // 1. User chỉ định ví cụ thể
                         selectedWallet = allWallets.FirstOrDefault(w => w.WalletName.Equals(walletNameRaw, StringComparison.OrdinalIgnoreCase));
 
                         if (selectedWallet == null)
@@ -201,7 +197,6 @@ namespace ExpenseManager.App.Services
                             var existingNames = string.Join(", ", allWallets.Select(w => w.WalletName));
                             return $"❌ Không tìm thấy ví '{walletNameRaw}'. Các ví hiện có: {existingNames}. Vui lòng chọn lại.";
                         }
-
                         if (selectedWallet.Balance < amount)
                         {
                             var otherAffordable = allWallets.Where(w => w.Balance >= amount).Select(w => w.WalletName).ToList();
@@ -213,9 +208,7 @@ namespace ExpenseManager.App.Services
                     }
                     else
                     {
-                        // 2. User KHÔNG chỉ định ví -> Tự động tìm
                         var affordableWallets = allWallets.Where(w => w.Balance >= amount).ToList();
-
                         if (!affordableWallets.Any())
                         {
                             return $"❌ Bạn muốn nạp {amount:N0} nhưng không có ví nào đủ số dư.";
@@ -227,13 +220,14 @@ namespace ExpenseManager.App.Services
                         }
                         else
                         {
-                            // Nhiều ví đủ tiền -> Hỏi user
+                            _pendingAction = "choose_wallet_for_deposit";
+                            _pendingGoalName = goalName;
+                            _pendingAmount = amount;
+
                             string listW = string.Join(", ", affordableWallets.Select(w => w.WalletName));
-                            return $"❓ Bạn muốn dùng ví nào? Có nhiều ví đủ tiền: {listW}.";
+                            return $"❓ Bạn muốn dùng ví nào? Có nhiều ví đủ tiền: {listW}.\n(Vui lòng trả lời tên ví)";
                         }
                     }
-
-                    // Thực hiện nạp
                     var depositDto = new GoalDepositDTO
                     {
                         GoalId = targetGoal.GoalId,
@@ -245,21 +239,24 @@ namespace ExpenseManager.App.Services
                     };
                     await _goalService.DepositToGoalAsync(depositDto);
                     return $"✅ {autoMsg}Đã nạp {amount:N0} VND vào mục tiêu '{goalName}' từ ví '{selectedWallet.WalletName}'!";
-
                 case "deposit_wallet":
                     string targetWalletName = root.GetProperty("wallet_name").GetString();
                     decimal depositAmount = root.GetProperty("amount").GetDecimal();
-
                     var userWallets = await _walletService.GetWalletsByUserIdAsync(userId);
                     var targetWallet = userWallets.FirstOrDefault(w => w.WalletName.Equals(targetWalletName, StringComparison.OrdinalIgnoreCase));
-
                     if (targetWallet == null) return $"❌ Không tìm thấy ví tên '{targetWalletName}'.";
-
                     targetWallet.Balance += depositAmount;
-                    await _walletService.UpdateWalletAsync(targetWallet);
+                    targetWallet.UpdatedAt = DateTime.Now;
 
-                    return $"✅ Đã nạp {depositAmount:N0} VND vào ví '{targetWalletName}'. Số dư mới: {targetWallet.Balance:N0} VND.";
-
+                    try
+                    {
+                        await _walletService.UpdateWalletAsync(targetWallet);
+                        return $"✅ Đã nạp {depositAmount:N0} VND vào ví '{targetWalletName}'. Số dư mới: {targetWallet.Balance:N0} VND.";
+                    }
+                    catch (Exception ex)
+                    {
+                        return $"❌ Lỗi khi nạp tiền: {ex.Message}";
+                    }
                 default:
                     return "⚠️ AI gửi lệnh không xác định.";
             }
