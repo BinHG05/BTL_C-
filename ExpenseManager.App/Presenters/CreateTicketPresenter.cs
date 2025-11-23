@@ -44,7 +44,7 @@ namespace ExpenseManager.App.Presenters
                 // Validate selected index
                 if (_view.SelectedQuestionTypeIndex == 0)
                 {
-                    _view.ShowError("Vui lòng chọn loại ticket!");
+                    _view.ShowError("Vui lòng chọn loại yêu cầu!");
                     return;
                 }
 
@@ -53,7 +53,7 @@ namespace ExpenseManager.App.Presenters
 
                 if (success)
                 {
-                    _view.ShowSuccess("Ticket đã được tạo thành công!");
+                    _view.ShowSuccess("Yêu cầu đã được tạo thành công!");
                     _view.NavigateBackToList();
                 }
                 else

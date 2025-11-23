@@ -146,9 +146,9 @@ namespace ExpenseManager.App.Views.Admin.UC
             lblSubtitle.ForeColor = Color.Gray;
             lblSubtitle.Location = new Point(82, 69);
             lblSubtitle.Name = "lblSubtitle";
-            lblSubtitle.Size = new Size(242, 23);
+            lblSubtitle.Size = new Size(311, 23);
             lblSubtitle.TabIndex = 1;
-            lblSubtitle.Text = "Manage user support requests";
+            lblSubtitle.Text = "Quản lý yêu cầu hỗ trợ của người dùng";
             // 
             // lblTitle
             // 
@@ -157,9 +157,9 @@ namespace ExpenseManager.App.Views.Admin.UC
             lblTitle.ForeColor = Color.FromArgb(33, 37, 41);
             lblTitle.Location = new Point(75, 29);
             lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(271, 46);
+            lblTitle.Size = new Size(254, 46);
             lblTitle.TabIndex = 0;
-            lblTitle.Text = "Support Tickets";
+            lblTitle.Text = "Hỗ trợ yêu cầu";
             // 
             // statsPanel
             // 
@@ -207,9 +207,9 @@ namespace ExpenseManager.App.Views.Admin.UC
             lblResolved.ForeColor = Color.Gray;
             lblResolved.Location = new Point(103, 80);
             lblResolved.Name = "lblResolved";
-            lblResolved.Size = new Size(77, 23);
+            lblResolved.Size = new Size(67, 23);
             lblResolved.TabIndex = 1;
-            lblResolved.Text = "Resolved";
+            lblResolved.Text = "Đã xử lí";
             // 
             // iconResolved
             // 
@@ -257,9 +257,9 @@ namespace ExpenseManager.App.Views.Admin.UC
             lblPending.ForeColor = Color.Gray;
             lblPending.Location = new Point(103, 80);
             lblPending.Name = "lblPending";
-            lblPending.Size = new Size(72, 23);
+            lblPending.Size = new Size(87, 23);
             lblPending.TabIndex = 1;
-            lblPending.Text = "Pending";
+            lblPending.Text = "Đang xử lí";
             // 
             // iconPending
             // 
@@ -307,9 +307,9 @@ namespace ExpenseManager.App.Views.Admin.UC
             lblOpen.ForeColor = Color.Gray;
             lblOpen.Location = new Point(103, 80);
             lblOpen.Name = "lblOpen";
-            lblOpen.Size = new Size(52, 23);
+            lblOpen.Size = new Size(35, 23);
             lblOpen.TabIndex = 1;
-            lblOpen.Text = "Open";
+            lblOpen.Text = "Mở";
             // 
             // iconOpen
             // 
@@ -357,9 +357,9 @@ namespace ExpenseManager.App.Views.Admin.UC
             lblTotal.ForeColor = Color.Gray;
             lblTotal.Location = new Point(103, 80);
             lblTotal.Name = "lblTotal";
-            lblTotal.Size = new Size(102, 23);
+            lblTotal.Size = new Size(113, 23);
             lblTotal.TabIndex = 1;
-            lblTotal.Text = "Total Tickets";
+            lblTotal.Text = "Tổng yêu cầu";
             // 
             // iconTotal
             // 
@@ -443,7 +443,7 @@ namespace ExpenseManager.App.Views.Admin.UC
             // colID
             // 
             colID.FillWeight = 60F;
-            colID.HeaderText = "ID";
+            colID.HeaderText = "MÃ SỐ";
             colID.MinimumWidth = 6;
             colID.Name = "colID";
             colID.ReadOnly = true;
@@ -451,7 +451,7 @@ namespace ExpenseManager.App.Views.Admin.UC
             // colUser
             // 
             colUser.FillWeight = 120F;
-            colUser.HeaderText = "User";
+            colUser.HeaderText = "NGƯỜI DÙNG";
             colUser.MinimumWidth = 6;
             colUser.Name = "colUser";
             colUser.ReadOnly = true;
@@ -459,7 +459,7 @@ namespace ExpenseManager.App.Views.Admin.UC
             // colEmail
             // 
             colEmail.FillWeight = 150F;
-            colEmail.HeaderText = "Email";
+            colEmail.HeaderText = "EMAIL";
             colEmail.MinimumWidth = 6;
             colEmail.Name = "colEmail";
             colEmail.ReadOnly = true;
@@ -467,7 +467,7 @@ namespace ExpenseManager.App.Views.Admin.UC
             // colType
             // 
             colType.FillWeight = 90F;
-            colType.HeaderText = "Type";
+            colType.HeaderText = "LOẠI";
             colType.MinimumWidth = 6;
             colType.Name = "colType";
             colType.ReadOnly = true;
@@ -475,7 +475,7 @@ namespace ExpenseManager.App.Views.Admin.UC
             // colStatus
             // 
             colStatus.FillWeight = 80F;
-            colStatus.HeaderText = "Status";
+            colStatus.HeaderText = "TRẠNG THÁI";
             colStatus.MinimumWidth = 6;
             colStatus.Name = "colStatus";
             colStatus.ReadOnly = true;
@@ -483,7 +483,7 @@ namespace ExpenseManager.App.Views.Admin.UC
             // colCreated
             // 
             colCreated.FillWeight = 110F;
-            colCreated.HeaderText = "Created";
+            colCreated.HeaderText = "NGÀY TẠO";
             colCreated.MinimumWidth = 6;
             colCreated.Name = "colCreated";
             colCreated.ReadOnly = true;
@@ -491,7 +491,7 @@ namespace ExpenseManager.App.Views.Admin.UC
             // colNote
             // 
             colNote.FillWeight = 80F;
-            colNote.HeaderText = "Note";
+            colNote.HeaderText = "GHI CHÚ";
             colNote.MinimumWidth = 6;
             colNote.Name = "colNote";
             colNote.ReadOnly = true;
@@ -499,21 +499,21 @@ namespace ExpenseManager.App.Views.Admin.UC
             // colView
             // 
             colView.FillWeight = 70F;
-            colView.HeaderText = "";
+            colView.HeaderText = "XEM";
             colView.MinimumWidth = 6;
             colView.Name = "colView";
             colView.ReadOnly = true;
-            colView.Text = "👁 View";
+            colView.Text = "👁 Xem";
             colView.UseColumnTextForButtonValue = true;
             // 
             // colDelete
             // 
             colDelete.FillWeight = 70F;
-            colDelete.HeaderText = "";
+            colDelete.HeaderText = "XOÁ";
             colDelete.MinimumWidth = 6;
             colDelete.Name = "colDelete";
             colDelete.ReadOnly = true;
-            colDelete.Text = "🗑 Delete";
+            colDelete.Text = "🗑 Xoá";
             colDelete.UseColumnTextForButtonValue = true;
             // 
             // toolbarPanel
@@ -585,9 +585,9 @@ namespace ExpenseManager.App.Views.Admin.UC
             lblTableTitle.ForeColor = Color.FromArgb(33, 37, 41);
             lblTableTitle.Location = new Point(37, 12);
             lblTableTitle.Name = "lblTableTitle";
-            lblTableTitle.Size = new Size(193, 28);
+            lblTableTitle.Size = new Size(214, 28);
             lblTableTitle.TabIndex = 0;
-            lblTableTitle.Text = "All Support Tickets";
+            lblTableTitle.Text = "Tất cả yêu cầu hỗ trợ";
             // 
             // paginationPanel
             // 
@@ -657,9 +657,9 @@ namespace ExpenseManager.App.Views.Admin.UC
             lblPaginationInfo.ForeColor = Color.FromArgb(108, 117, 125);
             lblPaginationInfo.Location = new Point(6, 23);
             lblPaginationInfo.Name = "lblPaginationInfo";
-            lblPaginationInfo.Size = new Size(279, 21);
+            lblPaginationInfo.Size = new Size(288, 21);
             lblPaginationInfo.TabIndex = 0;
-            lblPaginationInfo.Text = "Hiển thị 1 đến 6 trong tổng số 6 tickets";
+            lblPaginationInfo.Text = "Hiển thị 1 đến 6 trong tổng số 6 yêu cầu";
             // 
             // UC_TicketAD
             // 

@@ -21,247 +21,283 @@ namespace ExpenseManager.App.Views.Admin.UC
 
         private void InitializeComponent()
         {
-            this.pnlHeader = new Panel();
-            this.lblWelcome = new Label();
-            this.lblDate = new Label();
-            this.lblTitle = new Label();
-            this.pnlTabs = new Panel();
-            this.btnIconsTab = new Button();
-            this.btnColorsTab = new Button();
-            this.pnlIconsList = new Panel();
-            this.pnlIconsHeader = new Panel();
-            this.lblIconsTitle = new Label();
-            this.lblIconCount = new Label();
-            this.btnAddIcon = new Button();
-            this.flpIcons = new FlowLayoutPanel();
-            this.pnlColorsList = new Panel();
-            this.pnlColorsHeader = new Panel();
-            this.lblColorsTitle = new Label();
-            this.lblColorCount = new Label();
-            this.btnAddColor = new Button();
-            this.flpColors = new FlowLayoutPanel();
-            this.pnlHeader.SuspendLayout();
-            this.pnlTabs.SuspendLayout();
-            this.pnlIconsList.SuspendLayout();
-            this.pnlIconsHeader.SuspendLayout();
-            this.pnlColorsList.SuspendLayout();
-            this.pnlColorsHeader.SuspendLayout();
-            this.SuspendLayout();
+            pnlHeader = new Panel();
+            lblDate = new Label();
+            lblWelcome = new Label();
+            lblTitle = new Label();
+            pnlTabs = new Panel();
+            btnIconsTab = new Button();
+            btnColorsTab = new Button();
+            pnlIconsList = new Panel();
+            flpIcons = new FlowLayoutPanel();
+            pnlIconsHeader = new Panel();
+            lblIconsTitle = new Label();
+            lblIconCount = new Label();
+            btnAddIcon = new Button();
+            pnlColorsList = new Panel();
+            flpColors = new FlowLayoutPanel();
+            pnlColorsHeader = new Panel();
+            lblColorsTitle = new Label();
+            lblColorCount = new Label();
+            btnAddColor = new Button();
+            pnlHeader.SuspendLayout();
+            pnlTabs.SuspendLayout();
+            pnlIconsList.SuspendLayout();
+            pnlIconsHeader.SuspendLayout();
+            pnlColorsList.SuspendLayout();
+            pnlColorsHeader.SuspendLayout();
+            SuspendLayout();
             // 
             // pnlHeader
             // 
-            this.pnlHeader.BackColor = Color.White;
-            this.pnlHeader.Controls.Add(this.lblDate);
-            this.pnlHeader.Controls.Add(this.lblWelcome);
-            this.pnlHeader.Controls.Add(this.lblTitle);
-            this.pnlHeader.Dock = DockStyle.Top;
-            this.pnlHeader.Location = new Point(0, 0);
-            this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Padding = new Padding(30, 20, 30, 20);
-            this.pnlHeader.Size = new Size(1200, 100);
-            this.pnlHeader.TabIndex = 0;
-            // 
-            // lblTitle
-            // 
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
-            this.lblTitle.ForeColor = Color.FromArgb(33, 37, 41);
-            this.lblTitle.Location = new Point(30, 20);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new Size(180, 32);
-            this.lblTitle.Text = "⚙ Category";
-            // 
-            // lblWelcome
-            // 
-            this.lblWelcome.AutoSize = true;
-            this.lblWelcome.Font = new Font("Segoe UI", 10F);
-            this.lblWelcome.ForeColor = Color.Gray;
-            this.lblWelcome.Location = new Point(30, 55);
-            this.lblWelcome.Name = "lblWelcome";
-            this.lblWelcome.Size = new Size(200, 19);
-            this.lblWelcome.Text = "Manage  categories, icons, and colors.";
+            pnlHeader.BackColor = Color.White;
+            pnlHeader.Controls.Add(lblDate);
+            pnlHeader.Controls.Add(lblWelcome);
+            pnlHeader.Controls.Add(lblTitle);
+            pnlHeader.Dock = DockStyle.Top;
+            pnlHeader.Location = new Point(0, 0);
+            pnlHeader.Margin = new Padding(3, 4, 3, 4);
+            pnlHeader.Name = "pnlHeader";
+            pnlHeader.Padding = new Padding(34, 27, 34, 27);
+            pnlHeader.Size = new Size(1371, 133);
+            pnlHeader.TabIndex = 0;
             // 
             // lblDate
             // 
-            this.lblDate.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            this.lblDate.Font = new Font("Segoe UI", 9F);
-            this.lblDate.ForeColor = Color.Gray;
-            this.lblDate.Location = new Point(900, 30);
-            this.lblDate.Name = "lblDate";
-            this.lblDate.Size = new Size(270, 20);
-            this.lblDate.Text = "📅 Thứ Năm, 20 tháng 11, 2025";
-            this.lblDate.TextAlign = ContentAlignment.TopRight;
+            lblDate.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            lblDate.Font = new Font("Segoe UI", 9F);
+            lblDate.ForeColor = Color.Gray;
+            lblDate.Location = new Point(1029, 40);
+            lblDate.Name = "lblDate";
+            lblDate.Size = new Size(309, 27);
+            lblDate.TabIndex = 0;
+            lblDate.Text = "📅 Thứ Năm, 20 tháng 11, 2025";
+            lblDate.TextAlign = ContentAlignment.TopRight;
+            // 
+            // lblWelcome
+            // 
+            lblWelcome.AutoSize = true;
+            lblWelcome.Font = new Font("Segoe UI", 10F);
+            lblWelcome.ForeColor = Color.Gray;
+            lblWelcome.Location = new Point(34, 73);
+            lblWelcome.Name = "lblWelcome";
+            lblWelcome.Size = new Size(309, 23);
+            lblWelcome.TabIndex = 1;
+            lblWelcome.Text = "Quản lý danh mục, biểu tượng, và màu";
+            // 
+            // lblTitle
+            // 
+            lblTitle.AutoSize = true;
+            lblTitle.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
+            lblTitle.ForeColor = Color.FromArgb(33, 37, 41);
+            lblTitle.Location = new Point(34, 27);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(209, 41);
+            lblTitle.TabIndex = 2;
+            lblTitle.Text = "⚙ Danh mục";
             // 
             // pnlTabs
             // 
-            this.pnlTabs.BackColor = Color.White;
-            this.pnlTabs.Controls.Add(this.btnIconsTab);
-            this.pnlTabs.Controls.Add(this.btnColorsTab);
-            this.pnlTabs.Dock = DockStyle.Top;
-            this.pnlTabs.Location = new Point(0, 100);
-            this.pnlTabs.Name = "pnlTabs";
-            this.pnlTabs.Padding = new Padding(30, 0, 30, 0);
-            this.pnlTabs.Size = new Size(1200, 50);
-            this.pnlTabs.TabIndex = 1;
+            pnlTabs.BackColor = Color.White;
+            pnlTabs.Controls.Add(btnIconsTab);
+            pnlTabs.Controls.Add(btnColorsTab);
+            pnlTabs.Dock = DockStyle.Top;
+            pnlTabs.Location = new Point(0, 133);
+            pnlTabs.Margin = new Padding(3, 4, 3, 4);
+            pnlTabs.Name = "pnlTabs";
+            pnlTabs.Padding = new Padding(34, 0, 34, 0);
+            pnlTabs.Size = new Size(1371, 67);
+            pnlTabs.TabIndex = 1;
             // 
             // btnIconsTab
             // 
-            this.btnIconsTab.FlatStyle = FlatStyle.Flat;
-            this.btnIconsTab.FlatAppearance.BorderSize = 0;
-            this.btnIconsTab.Font = new Font("Segoe UI", 10F);
-            this.btnIconsTab.Location = new Point(30, 10);
-            this.btnIconsTab.Name = "btnIconsTab";
-            this.btnIconsTab.Size = new Size(100, 40);
-            this.btnIconsTab.Text = "🖼 Icons";
-            this.btnIconsTab.BackColor = Color.FromArgb(240, 248, 255);
-            this.btnIconsTab.ForeColor = Color.FromArgb(0, 123, 255);
-            this.btnIconsTab.Cursor = Cursors.Hand;
+            btnIconsTab.BackColor = Color.FromArgb(240, 248, 255);
+            btnIconsTab.Cursor = Cursors.Hand;
+            btnIconsTab.FlatAppearance.BorderSize = 0;
+            btnIconsTab.FlatStyle = FlatStyle.Flat;
+            btnIconsTab.Font = new Font("Segoe UI", 10F);
+            btnIconsTab.ForeColor = Color.FromArgb(0, 123, 255);
+            btnIconsTab.Location = new Point(34, 13);
+            btnIconsTab.Margin = new Padding(3, 4, 3, 4);
+            btnIconsTab.Name = "btnIconsTab";
+            btnIconsTab.Size = new Size(135, 53);
+            btnIconsTab.TabIndex = 0;
+            btnIconsTab.Text = "🖼 Biểu tượng";
+            btnIconsTab.UseVisualStyleBackColor = false;
             // 
             // btnColorsTab
             // 
-            this.btnColorsTab.FlatStyle = FlatStyle.Flat;
-            this.btnColorsTab.FlatAppearance.BorderSize = 0;
-            this.btnColorsTab.Font = new Font("Segoe UI", 10F);
-            this.btnColorsTab.Location = new Point(140, 10);
-            this.btnColorsTab.Name = "btnColorsTab";
-            this.btnColorsTab.Size = new Size(100, 40);
-            this.btnColorsTab.Text = "🎨 Colors";
-            this.btnColorsTab.BackColor = Color.White;
-            this.btnColorsTab.ForeColor = Color.FromArgb(100, 100, 100);
-            this.btnColorsTab.Cursor = Cursors.Hand;
+            btnColorsTab.BackColor = Color.White;
+            btnColorsTab.Cursor = Cursors.Hand;
+            btnColorsTab.FlatAppearance.BorderSize = 0;
+            btnColorsTab.FlatStyle = FlatStyle.Flat;
+            btnColorsTab.Font = new Font("Segoe UI", 10F);
+            btnColorsTab.ForeColor = Color.FromArgb(100, 100, 100);
+            btnColorsTab.Location = new Point(175, 13);
+            btnColorsTab.Margin = new Padding(3, 4, 3, 4);
+            btnColorsTab.Name = "btnColorsTab";
+            btnColorsTab.Size = new Size(99, 53);
+            btnColorsTab.TabIndex = 1;
+            btnColorsTab.Text = "🎨 Màu";
+            btnColorsTab.UseVisualStyleBackColor = false;
             // 
             // pnlIconsList
             // 
-            this.pnlIconsList.BackColor = Color.White;
-            this.pnlIconsList.Controls.Add(this.flpIcons);
-            this.pnlIconsList.Controls.Add(this.pnlIconsHeader);
-            this.pnlIconsList.Dock = DockStyle.Fill;
-            this.pnlIconsList.Location = new Point(0, 150);
-            this.pnlIconsList.Name = "pnlIconsList";
-            this.pnlIconsList.Padding = new Padding(30);
-            this.pnlIconsList.Size = new Size(1200, 650);
-            // 
-            // pnlIconsHeader
-            // 
-            this.pnlIconsHeader.Controls.Add(this.lblIconsTitle);
-            this.pnlIconsHeader.Controls.Add(this.lblIconCount);
-            this.pnlIconsHeader.Dock = DockStyle.Top;
-            this.pnlIconsHeader.Location = new Point(30, 30);
-            this.pnlIconsHeader.Name = "pnlIconsHeader";
-            this.pnlIconsHeader.Size = new Size(1140, 40);
-            // 
-            // lblIconsTitle
-            // 
-            this.lblIconsTitle.AutoSize = true;
-            this.lblIconsTitle.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            this.lblIconsTitle.Location = new Point(0, 5);
-            this.lblIconsTitle.Name = "lblIconsTitle";
-            this.lblIconsTitle.Size = new Size(150, 25);
-            this.lblIconsTitle.Text = "Danh sách Icons";
-            // 
-            // lblIconCount
-            // 
-            this.lblIconCount.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            this.lblIconCount.BackColor = Color.FromArgb(0, 123, 255);
-            this.lblIconCount.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            this.lblIconCount.ForeColor = Color.White;
-            this.lblIconCount.Location = new Point(1000, 5);
-            this.lblIconCount.Name = "lblIconCount";
-            this.lblIconCount.Padding = new Padding(12, 6, 12, 6);
-            this.lblIconCount.Size = new Size(100, 30);
-            this.lblIconCount.Text = "30 icons";
-            this.lblIconCount.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // btnAddIcon
-            // 
-            this.btnAddIcon.Visible = false;
+            pnlIconsList.BackColor = Color.White;
+            pnlIconsList.Controls.Add(flpIcons);
+            pnlIconsList.Controls.Add(pnlIconsHeader);
+            pnlIconsList.Dock = DockStyle.Fill;
+            pnlIconsList.Location = new Point(0, 200);
+            pnlIconsList.Margin = new Padding(3, 4, 3, 4);
+            pnlIconsList.Name = "pnlIconsList";
+            pnlIconsList.Padding = new Padding(34, 40, 34, 40);
+            pnlIconsList.Size = new Size(1371, 867);
+            pnlIconsList.TabIndex = 0;
             // 
             // flpIcons
             // 
-            this.flpIcons.AutoScroll = true;
-            this.flpIcons.Dock = DockStyle.Fill;
-            this.flpIcons.Location = new Point(30, 70);
-            this.flpIcons.Name = "flpIcons";
-            this.flpIcons.Size = new Size(1140, 550);
-            this.flpIcons.Padding = new Padding(10);
+            flpIcons.AutoScroll = true;
+            flpIcons.Dock = DockStyle.Fill;
+            flpIcons.Location = new Point(34, 93);
+            flpIcons.Margin = new Padding(3, 4, 3, 4);
+            flpIcons.Name = "flpIcons";
+            flpIcons.Padding = new Padding(11, 13, 11, 13);
+            flpIcons.Size = new Size(1303, 734);
+            flpIcons.TabIndex = 0;
+            // 
+            // pnlIconsHeader
+            // 
+            pnlIconsHeader.Controls.Add(lblIconsTitle);
+            pnlIconsHeader.Controls.Add(lblIconCount);
+            pnlIconsHeader.Dock = DockStyle.Top;
+            pnlIconsHeader.Location = new Point(34, 40);
+            pnlIconsHeader.Margin = new Padding(3, 4, 3, 4);
+            pnlIconsHeader.Name = "pnlIconsHeader";
+            pnlIconsHeader.Size = new Size(1303, 53);
+            pnlIconsHeader.TabIndex = 1;
+            // 
+            // lblIconsTitle
+            // 
+            lblIconsTitle.AutoSize = true;
+            lblIconsTitle.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            lblIconsTitle.Location = new Point(0, 7);
+            lblIconsTitle.Name = "lblIconsTitle";
+            lblIconsTitle.Size = new Size(265, 32);
+            lblIconsTitle.TabIndex = 0;
+            lblIconsTitle.Text = "Danh sách biểu tượng";
+            // 
+            // lblIconCount
+            // 
+            lblIconCount.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            lblIconCount.BackColor = Color.FromArgb(0, 123, 255);
+            lblIconCount.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblIconCount.ForeColor = Color.White;
+            lblIconCount.Location = new Point(1143, 7);
+            lblIconCount.Name = "lblIconCount";
+            lblIconCount.Padding = new Padding(14, 8, 14, 8);
+            lblIconCount.Size = new Size(145, 40);
+            lblIconCount.TabIndex = 1;
+            lblIconCount.Text = "30 biểu tượng";
+            lblIconCount.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // btnAddIcon
+            // 
+            btnAddIcon.Location = new Point(0, 0);
+            btnAddIcon.Name = "btnAddIcon";
+            btnAddIcon.Size = new Size(75, 23);
+            btnAddIcon.TabIndex = 0;
+            btnAddIcon.Visible = false;
             // 
             // pnlColorsList
             // 
-            this.pnlColorsList.BackColor = Color.White;
-            this.pnlColorsList.Controls.Add(this.flpColors);
-            this.pnlColorsList.Controls.Add(this.pnlColorsHeader);
-            this.pnlColorsList.Dock = DockStyle.Fill;
-            this.pnlColorsList.Location = new Point(0, 150);
-            this.pnlColorsList.Name = "pnlColorsList";
-            this.pnlColorsList.Padding = new Padding(30);
-            this.pnlColorsList.Size = new Size(1200, 650);
-            this.pnlColorsList.Visible = false;
-            // 
-            // pnlColorsHeader
-            // 
-            this.pnlColorsHeader.Controls.Add(this.lblColorsTitle);
-            this.pnlColorsHeader.Controls.Add(this.lblColorCount);
-            this.pnlColorsHeader.Dock = DockStyle.Top;
-            this.pnlColorsHeader.Location = new Point(30, 30);
-            this.pnlColorsHeader.Name = "pnlColorsHeader";
-            this.pnlColorsHeader.Size = new Size(1140, 40);
-            // 
-            // lblColorsTitle
-            // 
-            this.lblColorsTitle.AutoSize = true;
-            this.lblColorsTitle.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            this.lblColorsTitle.Location = new Point(0, 5);
-            this.lblColorsTitle.Name = "lblColorsTitle";
-            this.lblColorsTitle.Size = new Size(150, 25);
-            this.lblColorsTitle.Text = "Danh sách Colors";
-            // 
-            // lblColorCount
-            // 
-            this.lblColorCount.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            this.lblColorCount.BackColor = Color.FromArgb(0, 123, 255);
-            this.lblColorCount.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            this.lblColorCount.ForeColor = Color.White;
-            this.lblColorCount.Location = new Point(1000, 5);
-            this.lblColorCount.Name = "lblColorCount";
-            this.lblColorCount.Padding = new Padding(12, 6, 12, 6);
-            this.lblColorCount.Size = new Size(100, 30);
-            this.lblColorCount.Text = "20 colors";
-            this.lblColorCount.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // btnAddColor
-            // 
-            this.btnAddColor.Visible = false;
+            pnlColorsList.BackColor = Color.White;
+            pnlColorsList.Controls.Add(flpColors);
+            pnlColorsList.Controls.Add(pnlColorsHeader);
+            pnlColorsList.Dock = DockStyle.Fill;
+            pnlColorsList.Location = new Point(0, 200);
+            pnlColorsList.Margin = new Padding(3, 4, 3, 4);
+            pnlColorsList.Name = "pnlColorsList";
+            pnlColorsList.Padding = new Padding(34, 40, 34, 40);
+            pnlColorsList.Size = new Size(1371, 867);
+            pnlColorsList.TabIndex = 1;
+            pnlColorsList.Visible = false;
             // 
             // flpColors
             // 
-            this.flpColors.AutoScroll = true;
-            this.flpColors.Dock = DockStyle.Fill;
-            this.flpColors.Location = new Point(30, 70);
-            this.flpColors.Name = "flpColors";
-            this.flpColors.Size = new Size(1140, 550);
-            this.flpColors.Padding = new Padding(10);
+            flpColors.AutoScroll = true;
+            flpColors.Dock = DockStyle.Fill;
+            flpColors.Location = new Point(34, 93);
+            flpColors.Margin = new Padding(3, 4, 3, 4);
+            flpColors.Name = "flpColors";
+            flpColors.Padding = new Padding(11, 13, 11, 13);
+            flpColors.Size = new Size(1303, 734);
+            flpColors.TabIndex = 0;
+            // 
+            // pnlColorsHeader
+            // 
+            pnlColorsHeader.Controls.Add(lblColorsTitle);
+            pnlColorsHeader.Controls.Add(lblColorCount);
+            pnlColorsHeader.Dock = DockStyle.Top;
+            pnlColorsHeader.Location = new Point(34, 40);
+            pnlColorsHeader.Margin = new Padding(3, 4, 3, 4);
+            pnlColorsHeader.Name = "pnlColorsHeader";
+            pnlColorsHeader.Size = new Size(1303, 53);
+            pnlColorsHeader.TabIndex = 1;
+            // 
+            // lblColorsTitle
+            // 
+            lblColorsTitle.AutoSize = true;
+            lblColorsTitle.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            lblColorsTitle.Location = new Point(0, 7);
+            lblColorsTitle.Name = "lblColorsTitle";
+            lblColorsTitle.Size = new Size(188, 32);
+            lblColorsTitle.TabIndex = 0;
+            lblColorsTitle.Text = "Danh sách màu";
+            // 
+            // lblColorCount
+            // 
+            lblColorCount.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            lblColorCount.BackColor = Color.FromArgb(0, 123, 255);
+            lblColorCount.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblColorCount.ForeColor = Color.White;
+            lblColorCount.Location = new Point(1143, 7);
+            lblColorCount.Name = "lblColorCount";
+            lblColorCount.Padding = new Padding(14, 8, 14, 8);
+            lblColorCount.Size = new Size(114, 40);
+            lblColorCount.TabIndex = 1;
+            lblColorCount.Text = "20 màu";
+            lblColorCount.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // btnAddColor
+            // 
+            btnAddColor.Location = new Point(0, 0);
+            btnAddColor.Name = "btnAddColor";
+            btnAddColor.Size = new Size(75, 23);
+            btnAddColor.TabIndex = 0;
+            btnAddColor.Visible = false;
             // 
             // UC_CategoryAD
             // 
-            this.AutoScaleDimensions = new SizeF(7F, 15F);
-            this.AutoScaleMode = AutoScaleMode.Font;
-            this.BackColor = Color.FromArgb(245, 245, 245);
-            this.Controls.Add(this.pnlIconsList);
-            this.Controls.Add(this.pnlColorsList);
-            this.Controls.Add(this.pnlTabs);
-            this.Controls.Add(this.pnlHeader);
-            this.Name = "UC_CategoryAD";
-            this.Size = new Size(1200, 800);
-            this.pnlHeader.ResumeLayout(false);
-            this.pnlHeader.PerformLayout();
-            this.pnlTabs.ResumeLayout(false);
-            this.pnlIconsList.ResumeLayout(false);
-            this.pnlIconsHeader.ResumeLayout(false);
-            this.pnlIconsHeader.PerformLayout();
-            this.pnlColorsList.ResumeLayout(false);
-            this.pnlColorsHeader.ResumeLayout(false);
-            this.pnlColorsHeader.PerformLayout();
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.FromArgb(245, 245, 245);
+            Controls.Add(pnlIconsList);
+            Controls.Add(pnlColorsList);
+            Controls.Add(pnlTabs);
+            Controls.Add(pnlHeader);
+            Margin = new Padding(3, 4, 3, 4);
+            Name = "UC_CategoryAD";
+            Size = new Size(1371, 1067);
+            pnlHeader.ResumeLayout(false);
+            pnlHeader.PerformLayout();
+            pnlTabs.ResumeLayout(false);
+            pnlIconsList.ResumeLayout(false);
+            pnlIconsHeader.ResumeLayout(false);
+            pnlIconsHeader.PerformLayout();
+            pnlColorsList.ResumeLayout(false);
+            pnlColorsHeader.ResumeLayout(false);
+            pnlColorsHeader.PerformLayout();
+            ResumeLayout(false);
         }
 
         #endregion

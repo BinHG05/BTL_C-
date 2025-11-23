@@ -40,7 +40,7 @@ namespace ExpenseManager.App.Views.Admin.UC
         }
         private void DisplayWelcomeMessage()
         {
-            string userName = "Admin"; 
+            string userName = "Admin";
 
             // 1. Kiểm tra Session để lấy thông tin người dùng
             var currentUser = CurrentUserSession.CurrentUser;
@@ -61,7 +61,7 @@ namespace ExpenseManager.App.Views.Admin.UC
 
             // 2. Gán giá trị vào Label
             // Cú pháp cũ trong Designer là: lblWelcome.Text = "Welcome back, Âu Dương Tấn AD!";
-            lblWelcome.Text = $"Welcome back, {userName} !";
+            lblWelcome.Text = $"Chào mừng trở lại, {userName} !";
         }
         /// <summary>
         /// Khởi tạo Presenter với Dependency Injection
@@ -106,7 +106,7 @@ namespace ExpenseManager.App.Views.Admin.UC
             lblUsersValue.Text = stats.TotalUsers.ToString();
 
             // Hiển thị số users mới và growth rate
-            string usersChangeText = $"+{stats.NewUsersThisMonth} new users this month";
+            string usersChangeText = $"+{stats.NewUsersThisMonth} người dùng mới tháng này";
             if (stats.UserGrowthRate != 0)
             {
                 usersChangeText += $" ({(stats.UserGrowthRate > 0 ? "+" : "")}{stats.UserGrowthRate}%)";
@@ -119,7 +119,7 @@ namespace ExpenseManager.App.Views.Admin.UC
             // ===== TRANSACTIONS CARD =====
             lblTransValue.Text = stats.TotalTrans.ToString();
 
-            string transChangeText = $"+{stats.NewTransThisMonth} new transactions this month";
+            string transChangeText = $"+{stats.NewTransThisMonth} giao dịch mới tháng này";
             if (stats.TransGrowthRate != 0)
             {
                 transChangeText += $" ({(stats.TransGrowthRate > 0 ? "+" : "")}{stats.TransGrowthRate}%)";
@@ -133,15 +133,15 @@ namespace ExpenseManager.App.Views.Admin.UC
             lblTicketsValue.Text = stats.TotalTickets.ToString();
 
             // Pending (Sử dụng lblTicketsChange)
-            lblTicketsChange.Text = $"{stats.PendingTickets} pending";
+            lblTicketsChange.Text = $"{stats.PendingTickets} đang xử lí";
             lblTicketsChange.ForeColor = Color.FromArgb(231, 76, 60); // Đỏ cho Pending
 
             // Open
-            lblTicketsOpen.Text = $"{stats.OpenTickets} open";
+            lblTicketsOpen.Text = $"{stats.OpenTickets} mở";
             lblTicketsOpen.ForeColor = Color.FromArgb(230, 126, 34); // Cam cho Open
 
             // Resolved
-            lblTicketsResolved.Text = $"{stats.ResolvedTickets} resolved";
+            lblTicketsResolved.Text = $"{stats.ResolvedTickets} đã xử lí";
             lblTicketsResolved.ForeColor = Color.FromArgb(46, 204, 113); // Xanh lá cho Resolved
 
             // Cập nhật trạng thái hiển thị của các Label
@@ -150,7 +150,7 @@ namespace ExpenseManager.App.Views.Admin.UC
             lblTicketsResolved.Visible = stats.ResolvedTickets > 0;
 
             // Cập nhật Label chính (Tickets)
-            lblTicketsLabel.Text = (stats.TotalTickets > 0) ? "Tickets" : "No active tickets";
+            lblTicketsLabel.Text = (stats.TotalTickets > 0) ? "Yêu cầu" : "Không có yêu cầu";
         }
 
         /// <summary>
@@ -235,13 +235,13 @@ namespace ExpenseManager.App.Views.Admin.UC
             switch (currentFilter)
             {
                 case "Theo ngày":
-                    lblChartTitle.Text = "Biểu đồ tăng trưởng User theo Ngày";
+                    lblChartTitle.Text = "Biểu đồ tăng trưởng người dùng theo Ngày";
                     break;
                 case "Theo tháng":
-                    lblChartTitle.Text = "Biểu đồ tăng trưởng User theo Tháng";
+                    lblChartTitle.Text = "Biểu đồ tăng trưởng người dùng theo Tháng";
                     break;
                 case "Theo năm":
-                    lblChartTitle.Text = "Biểu đồ tăng trưởng User theo Năm";
+                    lblChartTitle.Text = "Biểu đồ tăng trưởng người dùng theo Năm";
                     break;
             }
         }
@@ -570,7 +570,7 @@ namespace ExpenseManager.App.Views.Admin.UC
                     e.Graphics.FillRectangle(boxBrush, legendX, legendY, 15, 15);
                 }
 
-                e.Graphics.DrawString("Số lượng Users", legendFont, legendBrush,
+                e.Graphics.DrawString("Số lượng người dùng", legendFont, legendBrush,
                     legendX + 20, legendY);
             }
         }

@@ -79,6 +79,16 @@ namespace ExpenseManager.App.Views.Admin.UC
 
         public (DialogResult DialogResult, string Status, string AdminNote) ShowTicketDetailsDialog(Ticket ticket, ExpenseManager.App.Models.Entities.User user)
         {
+            string GetTranslatedStatus(string status)
+            {
+                switch (status)
+                {
+                    case "Open": return "Mở";
+                    case "Pending": return "Đang xử lí";
+                    case "Resolved": return "Đã xử lí";
+                    default: return status;
+                }
+            }
             var ticketDetailsForm = new Forms.TicketDetailsAD
             {
                 TicketID = $"#{ticket.TicketId}",
@@ -127,6 +137,24 @@ namespace ExpenseManager.App.Views.Admin.UC
                 int rowIndex = dgvTickets.Rows.Add();
                 DataGridViewRow row = dgvTickets.Rows[rowIndex];
 
+                // Helper function để dịch status
+                string translatedStatus;
+                switch (ticket.Status) // Sử dụng status từ entity (giả định là Open/Pending/Resolved)
+                {
+                    case "Open":
+                        translatedStatus = "Mở";
+                        break;
+                    case "Pending":
+                        translatedStatus = "Đang xử lí";
+                        break;
+                    case "Resolved":
+                        translatedStatus = "Đã xử lí";
+                        break;
+                    default:
+                        translatedStatus = ticket.Status ?? "Mở";
+                        break;
+                }
+
                 // Lưu TicketId vào Tag để dễ truy xuất
                 row.Tag = ticket.TicketId;
 
@@ -134,12 +162,12 @@ namespace ExpenseManager.App.Views.Admin.UC
                 row.Cells["colUser"].Value = ticket.User?.FullName ?? "N/A";
                 row.Cells["colEmail"].Value = ticket.User?.Email ?? "N/A";
                 row.Cells["colType"].Value = ticket.QuestionType ?? "";
-                row.Cells["colStatus"].Value = ticket.Status ?? "Open";
+                row.Cells["colStatus"].Value = translatedStatus; // CHUYỂN: Gán giá trị đã dịch
                 row.Cells["colCreated"].Value = ticket.CreatedAt.ToString("HH:mm dd/MM/yyyy");
                 row.Cells["colNote"].Value = string.IsNullOrEmpty(ticket.AdminNote) ? "" :
                     (ticket.AdminNote.Length > 30 ? ticket.AdminNote.Substring(0, 30) + "..." : ticket.AdminNote);
 
-                // Set màu cho status cell
+                // Set màu cho status cell (vẫn dùng status tiếng Anh để xác định màu)
                 ApplyStatusColor(row.Cells["colStatus"], ticket.Status);
             }
 

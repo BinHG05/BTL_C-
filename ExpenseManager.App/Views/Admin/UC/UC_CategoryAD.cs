@@ -70,7 +70,7 @@ namespace ExpenseManager.App.Views.Admin.UC
         public void DisplayIcons(System.Collections.Generic.List<IconDTO> icons)
         {
             flpIcons.Controls.Clear();
-            lblIconCount.Text = $"{icons.Count} icons";
+            lblIconCount.Text = $"{icons.Count} biểu tượng";
 
             // Add "Thêm Icon" button
             var addPanel = CreateAddPanel("Icons");
@@ -87,7 +87,7 @@ namespace ExpenseManager.App.Views.Admin.UC
         public void DisplayColors(System.Collections.Generic.List<ColorDTO> colors)
         {
             flpColors.Controls.Clear();
-            lblColorCount.Text = $"{colors.Count} colors";
+            lblColorCount.Text = $"{colors.Count} màu";
 
             // Add "Thêm Color" button
             var addPanel = CreateAddPanel("Colors");
@@ -137,7 +137,7 @@ namespace ExpenseManager.App.Views.Admin.UC
 
             var label = new Label
             {
-                Text = type == "Icons" ? "Thêm\nIcon" : "Thêm\nColor",
+                Text = type == "Icons" ? "Thêm\nbiểu tượng" : "Thêm\nmàu",
                 Location = new Point(0, 100),
                 Size = new Size(130, 40),
                 TextAlign = ContentAlignment.MiddleCenter,

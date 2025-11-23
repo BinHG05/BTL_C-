@@ -49,7 +49,7 @@ namespace ExpenseManager.App.Services
 
             if (ticket == null)
             {
-                throw new Exception($"Không tìm thấy ticket với ID: {ticketId}");
+                throw new Exception($"Không tìm thấy yêu cầu với ID: {ticketId}");
             }
 
             // Cập nhật các trường cơ bản

@@ -30,12 +30,12 @@ namespace ExpenseManager.App.Services
 
             if (string.IsNullOrWhiteSpace(questionType) || questionType == "-- Choose Type --")
             {
-                return (false, "Vui lòng chọn loại ticket!");
+                return (false, "Vui lòng chọn loại yêu cầu!");
             }
 
             if (string.IsNullOrWhiteSpace(userId))
             {
-                return (false, "User ID không hợp lệ!");
+                return (false, "Mã người dùng không hợp lệ!");
             }
 
             try
@@ -48,7 +48,7 @@ namespace ExpenseManager.App.Services
                     QuestionType = questionType,
                     Status = "Open",
                     CreatedAt = DateTime.Now,
-                    AdminNote = "Thank you for your feedback. We are going to consider soon!",
+                    AdminNote = "Cảm ơn bạn đã góp ý. Chúng tôi sẽ xem xét nó trong thời gian sớm nhất!",
                     RespondType = "Email"
                 };
 

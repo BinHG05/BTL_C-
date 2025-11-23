@@ -45,9 +45,9 @@ namespace ExpenseManager.App.Views.Admin.UC
             lblUsersValue = new Label();
             iconUsers = new Panel();
             headerPanel = new Panel();
+            lblDateTime = new Label();
             lblWelcome = new Label();
             lblDashboard = new Label();
-            lblDateTime = new Label(); // <--- 1. Khởi tạo Label ngày tháng
             mainPanel.SuspendLayout();
             chartPanel.SuspendLayout();
             filterPanel.SuspendLayout();
@@ -195,9 +195,9 @@ namespace ExpenseManager.App.Views.Admin.UC
             lblTicketsLabel.ForeColor = Color.FromArgb(149, 165, 166);
             lblTicketsLabel.Location = new Point(20, 83);
             lblTicketsLabel.Name = "lblTicketsLabel";
-            lblTicketsLabel.Size = new Size(54, 20);
+            lblTicketsLabel.Size = new Size(59, 20);
             lblTicketsLabel.TabIndex = 2;
-            lblTicketsLabel.Text = "Tickets";
+            lblTicketsLabel.Text = "Yêu cầu";
             // 
             // lblTicketsValue
             // 
@@ -248,11 +248,11 @@ namespace ExpenseManager.App.Views.Admin.UC
             lblTransLabel.AutoSize = true;
             lblTransLabel.Font = new Font("Segoe UI", 9F);
             lblTransLabel.ForeColor = Color.FromArgb(149, 165, 166);
-            lblTransLabel.Location = new Point(27, 83);
+            lblTransLabel.Location = new Point(10, 83);
             lblTransLabel.Name = "lblTransLabel";
-            lblTransLabel.Size = new Size(43, 20);
+            lblTransLabel.Size = new Size(72, 20);
             lblTransLabel.TabIndex = 2;
-            lblTransLabel.Text = "Trans";
+            lblTransLabel.Text = "Giao dịch";
             // 
             // lblTransValue
             // 
@@ -303,11 +303,11 @@ namespace ExpenseManager.App.Views.Admin.UC
             lblUsersLabel.AutoSize = true;
             lblUsersLabel.Font = new Font("Segoe UI", 9F);
             lblUsersLabel.ForeColor = Color.FromArgb(149, 165, 166);
-            lblUsersLabel.Location = new Point(23, 83);
+            lblUsersLabel.Location = new Point(3, 83);
             lblUsersLabel.Name = "lblUsersLabel";
-            lblUsersLabel.Size = new Size(44, 20);
+            lblUsersLabel.Size = new Size(89, 20);
             lblUsersLabel.TabIndex = 2;
-            lblUsersLabel.Text = "Users";
+            lblUsersLabel.Text = "Người dùng";
             // 
             // lblUsersValue
             // 
@@ -331,7 +331,7 @@ namespace ExpenseManager.App.Views.Admin.UC
             // 
             // headerPanel
             // 
-            headerPanel.Controls.Add(lblDateTime); // <--- 2. Thêm label vào header
+            headerPanel.Controls.Add(lblDateTime);
             headerPanel.Controls.Add(lblWelcome);
             headerPanel.Controls.Add(lblDashboard);
             headerPanel.Dock = DockStyle.Top;
@@ -339,6 +339,18 @@ namespace ExpenseManager.App.Views.Admin.UC
             headerPanel.Name = "headerPanel";
             headerPanel.Size = new Size(1099, 70);
             headerPanel.TabIndex = 0;
+            // 
+            // lblDateTime
+            // 
+            lblDateTime.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            lblDateTime.Font = new Font("Segoe UI", 9F);
+            lblDateTime.ForeColor = Color.Gray;
+            lblDateTime.Location = new Point(800, 15);
+            lblDateTime.Name = "lblDateTime";
+            lblDateTime.Size = new Size(290, 20);
+            lblDateTime.TabIndex = 0;
+            lblDateTime.Text = "📅 ...";
+            lblDateTime.TextAlign = ContentAlignment.TopRight;
             // 
             // lblWelcome
             // 
@@ -358,21 +370,9 @@ namespace ExpenseManager.App.Views.Admin.UC
             lblDashboard.ForeColor = Color.FromArgb(44, 62, 80);
             lblDashboard.Location = new Point(0, 0);
             lblDashboard.Name = "lblDashboard";
-            lblDashboard.Size = new Size(211, 50);
+            lblDashboard.Size = new Size(209, 50);
             lblDashboard.TabIndex = 0;
-            lblDashboard.Text = "Dashboard";
-            // 
-            // lblDateTime
-            // 
-            // <--- 3. Cấu hình properties cho label
-            lblDateTime.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            lblDateTime.Font = new Font("Segoe UI", 9F);
-            lblDateTime.ForeColor = Color.Gray;
-            lblDateTime.Location = new Point(800, 15); // Căn phải
-            lblDateTime.Name = "lblDateTime";
-            lblDateTime.Size = new Size(290, 20);
-            lblDateTime.TextAlign = ContentAlignment.TopRight;
-            lblDateTime.Text = "📅 ...";
+            lblDashboard.Text = "Tổng quan";
             // 
             // UC_DashboardAD
             // 
