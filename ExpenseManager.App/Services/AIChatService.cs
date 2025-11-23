@@ -60,6 +60,18 @@ namespace ExpenseManager.App.Services
 
         public async Task<string> SendMessageAsync(string userMessage)
         {
+            // 0. Xử lý lệnh Reset/Hủy/Xóa
+            if (string.Equals(userMessage, "reset", StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(userMessage, "hủy", StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(userMessage, "clear", StringComparison.OrdinalIgnoreCase))
+            {
+                _pendingAction = null;
+                _pendingGoalName = null;
+                _pendingAmount = 0;
+                _history.Clear();
+                return "🔄 Đã đặt lại cuộc trò chuyện. Tôi có thể giúp gì cho bạn?";
+            }
+
             // 1. Add user message to history
             _history.Add(new ChatMessage(userMessage, true));
 
@@ -68,40 +80,77 @@ namespace ExpenseManager.App.Services
             {
                 string userId = ExpenseManager.App.Session.CurrentUserSession.CurrentUser?.UserId;
                 var allWallets = await _walletService.GetWalletsByUserIdAsync(userId);
-                var selectedWallet = allWallets.FirstOrDefault(w => w.WalletName.Equals(userMessage.Trim(), StringComparison.OrdinalIgnoreCase));
+                
+                // Tìm ví (So sánh không phân biệt hoa thường)
+                var selectedWallet = allWallets.FirstOrDefault(w => w.WalletName.Trim().Equals(userMessage.Trim(), StringComparison.OrdinalIgnoreCase));
 
-                if (selectedWallet != null && selectedWallet.Balance >= _pendingAmount)
+                if (selectedWallet != null)
                 {
-                    var goals = await _goalService.GetUserGoalsAsync(userId);
-                    var targetGoal = goals.FirstOrDefault(g => g.GoalName.Equals(_pendingGoalName, StringComparison.OrdinalIgnoreCase));
-
-                    var depositDto = new GoalDepositDTO
+                    // Đã tìm thấy ví, kiểm tra số dư
+                    if (selectedWallet.Balance >= _pendingAmount)
                     {
-                        GoalId = targetGoal.GoalId,
-                        UserId = userId,
-                        WalletId = selectedWallet.WalletId,
-                        Amount = _pendingAmount,
-                        Note = "Nạp tiền tự động qua AI",
-                        Status = "Completed"
-                    };
-                    await _goalService.DepositToGoalAsync(depositDto);
+                        var goals = await _goalService.GetUserGoalsAsync(userId);
+                        var targetGoal = goals.FirstOrDefault(g => g.GoalName.Equals(_pendingGoalName, StringComparison.OrdinalIgnoreCase));
 
-                    decimal amountDeposited = _pendingAmount;
+                        if (targetGoal == null)
+                        {
+                             _pendingAction = null;
+                             return "❌ Đã xảy ra lỗi: Không tìm thấy mục tiêu này nữa. Vui lòng thử lại.";
+                        }
 
-                    // Reset pending state
-                    _pendingAction = null;
-                    _pendingGoalName = null;
-                    _pendingAmount = 0;
+                        var depositDto = new GoalDepositDTO
+                        {
+                            GoalId = targetGoal.GoalId,
+                            UserId = userId,
+                            WalletId = selectedWallet.WalletId,
+                            Amount = _pendingAmount,
+                            Note = "Nạp tiền tự động qua AI",
+                            Status = "Completed"
+                        };
+                        await _goalService.DepositToGoalAsync(depositDto);
 
-                    string response = $"✅ Đã nạp {amountDeposited:N0} VND vào mục tiêu '{targetGoal.GoalName}' từ ví '{selectedWallet.WalletName}'!";
-                    _history.Add(new ChatMessage(response, false));
-                    return response;
+                        decimal amountDeposited = _pendingAmount;
+
+                        // Reset pending state
+                        _pendingAction = null;
+                        _pendingGoalName = null;
+                        _pendingAmount = 0;
+
+                        string response = $"✅ Đã nạp {amountDeposited:N0} VND vào mục tiêu '{targetGoal.GoalName}' từ ví '{selectedWallet.WalletName}'!";
+                        _history.Add(new ChatMessage(response, false));
+                        return response;
+                    }
+                    else
+                    {
+                        // Tìm thấy ví nhưng không đủ tiền
+                        string response = $"⚠️ Ví '{selectedWallet.WalletName}' chỉ còn {selectedWallet.Balance:N0} VND, không đủ để nạp {_pendingAmount:N0} VND.\n👉 Vui lòng chọn ví khác hoặc gõ 'Hủy'.";
+                        _history.Add(new ChatMessage(response, false));
+                        return response;
+                    }
                 }
                 else
                 {
-                    string response = $"❌ Ví '{userMessage}' không hợp lệ hoặc không đủ tiền. Vui lòng chọn lại.";
-                    _history.Add(new ChatMessage(response, false));
-                    return response;
+                    // KHÔNG TÌM THẤY VÍ
+                    // Kiểm tra xem có phải lệnh mới không (Smart Escape)
+                    string lowerMsg = userMessage.ToLower();
+                    if (userMessage.Length > 20 || 
+                        lowerMsg.StartsWith("nạp") || 
+                        lowerMsg.StartsWith("tạo") || 
+                        lowerMsg.StartsWith("thêm"))
+                    {
+                        _pendingAction = null;
+                        _pendingGoalName = null;
+                        _pendingAmount = 0;
+                        // Code sẽ chạy tiếp xuống phần gọi AI để xử lý lệnh mới
+                    }
+                    else
+                    {
+                        // Không phải lệnh mới, báo lỗi không tìm thấy ví
+                        string availableWallets = string.Join(", ", allWallets.Select(w => w.WalletName));
+                        string response = $"❌ Không tìm thấy ví tên '{userMessage}'.\n📋 Các ví hiện có: {availableWallets}.\n👉 Vui lòng nhập đúng tên ví hoặc gõ 'Hủy'.";
+                        _history.Add(new ChatMessage(response, false));
+                        return response;
+                    }
                 }
             }
 
