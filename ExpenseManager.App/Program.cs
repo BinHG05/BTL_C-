@@ -1,4 +1,7 @@
-﻿using ExpenseManager.App.Models.EF;
+﻿using System;
+using System.Configuration;
+using System.Windows.Forms;
+using ExpenseManager.App.Models.EF;
 using ExpenseManager.App.Presenters;
 using ExpenseManager.App.Repositories;
 using ExpenseManager.App.Repositories.Interfaces;
@@ -6,13 +9,12 @@ using ExpenseManager.App.Services;
 using ExpenseManager.App.Services.Interfaces;
 using ExpenseManager.App.Views;
 using ExpenseManager.App.Views.Admin.Sidebar;
+
+using ExpenseManager.App.Views.Admin.UC;
 using ExpenseManager.App.Views.User;
 using ExpenseManager.App.Views.User.Forms;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Configuration;
-using System.Windows.Forms;
 
 namespace ExpenseManager.App
 {
@@ -65,6 +67,7 @@ namespace ExpenseManager.App
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IIconRepository, IconRepository>();
             services.AddScoped<IColorRepository, ColorRepository>();
+            services.AddScoped<IBudgetRepository, BudgetRepository>();
 
             // *** THÊM ANALYTICS REPOSITORY ***
             services.AddScoped<IAnalyticsRepository, AnalyticsRepository>();
@@ -75,8 +78,11 @@ namespace ExpenseManager.App
             services.AddScoped<IWalletService, WalletService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ITransactionService, TransactionService>();
+
+            services.AddScoped<IBudgetService, BudgetService>();
+
             services.AddScoped<IGoalService, GoalService>();
-            // -------------------------------
+
 
             // *** THÊM ANALYTICS SERVICE ***
             services.AddScoped<IAnalyticsService, AnalyticsService>();
@@ -85,7 +91,10 @@ namespace ExpenseManager.App
             services.AddTransient<LoginPresenter>();
             services.AddTransient<RegisterPresenter>();
             services.AddTransient<ForgotPasswordPresenter>();
+            services.AddScoped<BudgetPresenter>();
+
             services.AddTransient<GoalsPresenter>();
+
 
             // 5. Forms
             services.AddTransient<LoginForm>();
@@ -94,6 +103,8 @@ namespace ExpenseManager.App
             services.AddTransient<LayoutUser>();
             services.AddTransient<LayoutAdmin>();
             services.AddTransient<UC_Goals>();
+            services.AddScoped<UC_Budget>();
+
 
             // Form thêm giao dịch
             services.AddTransient<AddTransactionForm>();
