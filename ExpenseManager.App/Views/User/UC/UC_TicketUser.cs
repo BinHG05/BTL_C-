@@ -54,7 +54,7 @@ namespace ExpenseManager.App.Views.User.UC
             {
                 var noDataLabel = new Label
                 {
-                    Text = "Chưa có ticket nào",
+                    Text = "Chưa có yêu cầu nào",
                     Font = new Font("Segoe UI", 12F, FontStyle.Regular),
                     ForeColor = System.Drawing.Color.Gray,
                     AutoSize = true,
@@ -101,7 +101,16 @@ namespace ExpenseManager.App.Views.User.UC
             };
             btnSupport.Controls.Add(underline);
         }
-
+        private string TranslateStatus(string status)
+        {
+            switch (status)
+            {
+                case "Open": return "Mở";
+                case "Pending": return "Đang chờ";
+                case "Resolved": return "Đã giải quyết";
+                default: return status;
+            }
+        }
         private void SetActiveTab(Button activeButton)
         {
             btnProfile.ForeColor = System.Drawing.Color.Gray;
@@ -140,10 +149,9 @@ namespace ExpenseManager.App.Views.User.UC
             // Status Label
             Label lblStatus = new Label
             {
-                Text = ticket.Status,
+                Text = TranslateStatus(ticket.Status),
                 Font = new Font("Segoe UI", 9F, FontStyle.Bold),
                 ForeColor = ticket.Status == "Open" ? System.Drawing.Color.Orange : System.Drawing.Color.Green,
-                //Location = new Point(120, 15),
                 AutoSize = true
             };
 
@@ -173,7 +181,7 @@ namespace ExpenseManager.App.Views.User.UC
             // View Button
             Button btnView = new Button
             {
-                Text = "View",
+                Text = "Xem",
                 Font = new Font("Segoe UI", 10F, FontStyle.Bold),
                 Size = new Size(100, 40),
                 Location = new Point(itemPanel.Width - 130, 35),

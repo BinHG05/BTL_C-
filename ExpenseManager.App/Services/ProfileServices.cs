@@ -153,15 +153,15 @@ namespace ExpenseManager.App.Services
                 return (false, "User ID không hợp lệ");
 
             // Validate ngày sinh nếu có
-            if (dateOfBirth.HasValue)
-            {
-                if (dateOfBirth.Value > DateTime.Now)
-                    return (false, "Ngày sinh không hợp lệ");
+            //if (dateOfBirth.HasValue)
+            //{
+            //    if (dateOfBirth.Value > DateTime.Now)
+            //        return (false, "Ngày sinh không hợp lệ");
 
-                var age = DateTime.Now.Year - dateOfBirth.Value.Year;
-                if (age < 13)
-                    return (false, "Bạn phải trên 13 tuổi để sử dụng dịch vụ");
-            }
+            //    var age = DateTime.Now.Year - dateOfBirth.Value.Year;
+            //    if (age < 13)
+            //        return (false, "Bạn phải trên 13 tuổi để sử dụng dịch vụ");
+            //}
 
             // Cập nhật vào database
             bool result = await _repository.UpdatePersonalInfoAsync(userId, address, city, dateOfBirth, country);
