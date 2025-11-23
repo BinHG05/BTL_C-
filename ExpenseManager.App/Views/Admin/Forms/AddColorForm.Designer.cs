@@ -49,7 +49,7 @@ namespace ExpenseManager.App.Views.Admin.Forms
             this.lblTitle.Location = new Point(20, 20);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new Size(150, 25);
-            this.lblTitle.Text = "Thêm Color mới";
+            this.lblTitle.Text = "Thêm màu mới";
 
             // lblColorName
             this.lblColorName.AutoSize = true;
@@ -64,7 +64,7 @@ namespace ExpenseManager.App.Views.Admin.Forms
             this.txtColorName.Location = new Point(20, 95);
             this.txtColorName.Name = "txtColorName";
             this.txtColorName.Size = new Size(360, 25);
-            this.txtColorName.PlaceholderText = "VD: Red, Blue, Green...";
+            this.txtColorName.PlaceholderText = "VD: Đỏ, Xanh dương,...";
 
             // lblHexCode
             this.lblHexCode.AutoSize = true;
@@ -152,7 +152,7 @@ namespace ExpenseManager.App.Views.Admin.Forms
             this.MinimizeBox = false;
             this.Name = "AddColorForm";
             this.StartPosition = FormStartPosition.CenterParent;
-            this.Text = "Thêm Color";
+            this.Text = "Thêm Màu";
             this.ResumeLayout(false);
             this.PerformLayout();
         }

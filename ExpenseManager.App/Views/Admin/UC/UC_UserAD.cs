@@ -146,12 +146,12 @@ namespace ExpenseManager.App.Views.Admin.UC
             dgvUsers.RowTemplate.Height = 70;
 
             dgvUsers.Columns.Add(new DataGridViewTextBoxColumn { Name = "colNo", HeaderText = "#", Width = 50, ReadOnly = true });
-            dgvUsers.Columns.Add(new DataGridViewTextBoxColumn { Name = "colUser", HeaderText = "USER", AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill, FillWeight = 150, ReadOnly = true });
+            dgvUsers.Columns.Add(new DataGridViewTextBoxColumn { Name = "colUser", HeaderText = "NGƯỜI DÙNG", AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill, FillWeight = 150, ReadOnly = true }); // CHUYỂN
             dgvUsers.Columns.Add(new DataGridViewTextBoxColumn { Name = "colEmail", HeaderText = "EMAIL", AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill, FillWeight = 120, ReadOnly = true });
-            dgvUsers.Columns.Add(new DataGridViewTextBoxColumn { Name = "colRole", HeaderText = "ROLE", Width = 120, ReadOnly = true });
-            dgvUsers.Columns.Add(new DataGridViewTextBoxColumn { Name = "colCreatedDate", HeaderText = "CREATED DATE", Width = 130, ReadOnly = true });
-            dgvUsers.Columns.Add(new DataGridViewTextBoxColumn { Name = "colLastLogin", HeaderText = "LAST LOGIN", Width = 150, ReadOnly = true });
-            dgvUsers.Columns.Add(new DataGridViewTextBoxColumn { Name = "colStatus", HeaderText = "STATUS", Width = 120, ReadOnly = true });
+            dgvUsers.Columns.Add(new DataGridViewTextBoxColumn { Name = "colRole", HeaderText = "VAI TRÒ", Width = 120, ReadOnly = true }); // CHUYỂN
+            dgvUsers.Columns.Add(new DataGridViewTextBoxColumn { Name = "colCreatedDate", HeaderText = "NGÀY TẠO", Width = 130, ReadOnly = true }); // CHUYỂN
+            dgvUsers.Columns.Add(new DataGridViewTextBoxColumn { Name = "colLastLogin", HeaderText = "ĐĂNG NHẬP CUỐI", Width = 150, ReadOnly = true }); // CHUYỂN
+            dgvUsers.Columns.Add(new DataGridViewTextBoxColumn { Name = "colStatus", HeaderText = "TRẠNG THÁI", Width = 120, ReadOnly = true }); // CHUYỂN
             dgvUsers.Columns.Add(new DataGridViewTextBoxColumn { Name = "colActions", HeaderText = "", Width = 60, ReadOnly = true });
         }
 
@@ -204,10 +204,14 @@ namespace ExpenseManager.App.Views.Admin.UC
                 var role = e.Value?.ToString();
                 if (!string.IsNullOrEmpty(role))
                 {
+                    // Lấy vai trò đã được dịch
+                    string translatedRole = role.Trim() == "Admin" ? "Quản trị viên" : "Người dùng"; // CHUYỂN
                     bool isAdmin = role.Trim() == "Admin";
                     var bgColor = isAdmin ? Color.FromArgb(225, 240, 255) : Color.FromArgb(242, 244, 247);
                     var fgColor = isAdmin ? Color.FromArgb(0, 123, 255) : Color.FromArgb(100, 116, 139);
-                    var textSize = e.Graphics.MeasureString(role, new Font("Segoe UI", 9F, FontStyle.Bold));
+
+                    // Sử dụng translatedRole để tính kích thước và vẽ
+                    var textSize = e.Graphics.MeasureString(translatedRole, new Font("Segoe UI", 9F, FontStyle.Bold));
                     var rect = new Rectangle(e.CellBounds.X + 5, e.CellBounds.Y + (e.CellBounds.Height - 26) / 2, (int)textSize.Width + 20, 26);
 
                     using (var brush = new SolidBrush(bgColor)) e.Graphics.FillRoundedRectangle(brush, rect, 4);
@@ -215,11 +219,12 @@ namespace ExpenseManager.App.Views.Admin.UC
                     using (var brush = new SolidBrush(fgColor))
                     {
                         var sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
-                        e.Graphics.DrawString(role, font, brush, rect, sf);
+                        e.Graphics.DrawString(translatedRole, font, brush, rect, sf); // Sử dụng translatedRole
                     }
                 }
                 e.Handled = true;
             }
+            // Vẽ cột TRẠNG THÁI (colStatus)
             else if (e.ColumnIndex == dgvUsers.Columns["colStatus"].Index)
             {
                 var status = e.Value?.ToString();
@@ -228,8 +233,11 @@ namespace ExpenseManager.App.Views.Admin.UC
                     bool isActive = status.Trim() == "Active";
                     var bgColor = isActive ? Color.FromArgb(220, 252, 231) : Color.FromArgb(254, 226, 226);
                     var fgColor = isActive ? Color.FromArgb(22, 163, 74) : Color.FromArgb(220, 38, 38);
-                    var text = isActive ? "Active" : "Blocked";
-                    var rect = new Rectangle(e.CellBounds.X + 5, e.CellBounds.Y + (e.CellBounds.Height - 26) / 2, 80, 26);
+
+                    // Lấy text hiển thị đã được dịch
+                    var text = isActive ? "Hoạt động" : "Bị chặn"; // CHUYỂN
+
+                    var rect = new Rectangle(e.CellBounds.X + 5, e.CellBounds.Y + (e.CellBounds.Height - 26) / 2, 80, 40);
 
                     using (var brush = new SolidBrush(bgColor)) e.Graphics.FillRoundedRectangle(brush, rect, 4);
                     using (var font = new Font("Segoe UI", 9F, FontStyle.Bold))
@@ -276,16 +284,66 @@ namespace ExpenseManager.App.Views.Admin.UC
             return colors[Math.Abs(name.GetHashCode()) % colors.Length];
         }
 
-        public void DisplayUsers(PagedResult<UserDTO> result) { if (InvokeRequired) { Invoke(new Action(() => DisplayUsers(result))); return; } dgvUsers.Rows.Clear(); int rowNumber = result.StartIndex; foreach (var user in result.Items) { int rowIndex = dgvUsers.Rows.Add(rowNumber++, $"{user.FullName}\nID: {user.DisplayId}", user.Email, user.Role, user.CreatedAt.ToString("dd/MM/yyyy"), user.LastLoginText, user.StatusText, ""); dgvUsers.Rows[rowIndex].Tag = user.UserId; } lblPaginationInfo.Text = $"Page {result.PageNumber} of {result.TotalPages}"; }
+        public void DisplayUsers(PagedResult<UserDTO> result) { if (InvokeRequired) { Invoke(new Action(() => DisplayUsers(result))); return; } dgvUsers.Rows.Clear(); int rowNumber = result.StartIndex; foreach (var user in result.Items) { int rowIndex = dgvUsers.Rows.Add(rowNumber++, $"{user.FullName}\nID: {user.DisplayId}", user.Email, user.Role, user.CreatedAt.ToString("dd/MM/yyyy"), user.LastLoginText, user.StatusText, ""); dgvUsers.Rows[rowIndex].Tag = user.UserId; } lblPaginationInfo.Text = $"Trang {result.PageNumber} của {result.TotalPages}"; }
         public void DisplayStatistics(UserStatisticsDTO stats) { if (InvokeRequired) { Invoke(new Action(() => DisplayStatistics(stats))); return; } lblTotalValue.Text = stats.TotalUsers.ToString(); lblActiveValue.Text = stats.ActiveUsers.ToString(); lblBlockedValue.Text = stats.BlockedUsers.ToString(); lblAdminsValue.Text = stats.Administrators.ToString(); }
         public void ShowMessage(string message, string title, bool isError = false) { MessageBox.Show(message, title, MessageBoxButtons.OK, isError ? MessageBoxIcon.Error : MessageBoxIcon.Information); }
         public void ShowLoading(bool isLoading) { if (InvokeRequired) { Invoke(new Action(() => ShowLoading(isLoading))); return; } loadingPanel.Visible = isLoading; if (isLoading) loadingPanel.BringToFront(); }
-        public void UpdatePaginationInfo(string info) { if (InvokeRequired) { Invoke(new Action(() => UpdatePaginationInfo(info))); return; } if (info.StartsWith("Showing")) lblShowingInfo.Text = info; else if (info.StartsWith("Page")) { lblPaginationInfo.Text = info; var parts = info.Split(' '); if (parts.Length >= 4) { if (int.TryParse(parts[1], out int current)) _currentPage = current; if (int.TryParse(parts[3], out int total)) _totalPages = total; } } }
+        public void UpdatePaginationInfo(string info) { if (InvokeRequired) { Invoke(new Action(() => UpdatePaginationInfo(info))); return; } if (info.StartsWith("Hiển thị")) lblShowingInfo.Text = info; else if (info.StartsWith("trang")) { lblPaginationInfo.Text = info; var parts = info.Split(' '); if (parts.Length >= 4) { if (int.TryParse(parts[1], out int current)) _currentPage = current; if (int.TryParse(parts[3], out int total)) _totalPages = total; } } }
         public void EnablePagination(bool hasPrevious, bool hasNext) { }
         private void BtnSearch_Click(object sender, EventArgs e) => _ = _presenter?.SearchAsync(txtSearch.Text);
         private void TxtSearch_KeyPress(object sender, KeyPressEventArgs e) { if (e.KeyChar == (char)Keys.Enter) { e.Handled = true; BtnSearch_Click(sender, e); } }
-        private void CmbRole_SelectedIndexChanged(object sender, EventArgs e) { if (_presenter != null) _ = _presenter.FilterByRoleAsync(cmbRole.SelectedItem.ToString()); }
-        private void CmbStatus_SelectedIndexChanged(object sender, EventArgs e) { if (_presenter != null) _ = _presenter.FilterByStatusAsync(cmbStatus.SelectedItem.ToString()); }
+        private void CmbRole_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (_presenter == null) return;
+
+            string selectedText = cmbRole.SelectedItem.ToString();
+            string filterValue;
+
+            // Ánh xạ chuỗi tiếng Việt sang giá trị lọc
+            switch (selectedText)
+            {
+                case "Tất cả vai trò":
+                    filterValue = "All Roles";
+                    break;
+                case "Người dùng":
+                    filterValue = "User";
+                    break;
+                case "Quản trị viên":
+                    filterValue = "Admin";
+                    break;
+                default:
+                    filterValue = "All Roles"; // Giá trị mặc định an toàn
+                    break;
+            }
+
+            _ = _presenter.FilterByRoleAsync(filterValue);
+        }
+        private void CmbStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (_presenter == null) return;
+
+            string selectedText = cmbStatus.SelectedItem.ToString();
+            string filterValue;
+
+            // Ánh xạ chuỗi tiếng Việt sang giá trị lọc (giả định là tiếng Anh)
+            switch (selectedText)
+            {
+                case "Tất cả trạng thái":
+                    filterValue = "All Status";
+                    break;
+                case "Hoạt động":
+                    filterValue = "Active";
+                    break;
+                case "Bị chặn":
+                    filterValue = "Blocked";
+                    break;
+                default:
+                    filterValue = "All Status"; // Giá trị mặc định an toàn
+                    break;
+            }
+
+            _ = _presenter.FilterByStatusAsync(filterValue);
+        }
         private void BtnRefresh_Click(object sender, EventArgs e) { txtSearch.Clear(); cmbRole.SelectedIndex = 0; cmbStatus.SelectedIndex = 0; _ = _presenter?.RefreshAsync(); }
         private void LblPaginationInfo_Click(object sender, EventArgs e) { /* Logic phân trang */ }
         private void DgvUsers_CellClick(object sender, DataGridViewCellEventArgs e) { if (e.RowIndex < 0) return; if (e.ColumnIndex == dgvUsers.Columns["colActions"].Index) { var userId = dgvUsers.Rows[e.RowIndex].Tag?.ToString(); var userName = dgvUsers.Rows[e.RowIndex].Cells["colUser"].Value?.ToString()?.Split('\n')[0]; if (!string.IsNullOrEmpty(userId)) ShowActionsMenu(userId, userName, e.RowIndex); } }
@@ -294,9 +352,9 @@ namespace ExpenseManager.App.Views.Admin.UC
         private void ShowActionsMenu(string userId, string userName, int rowIndex)
         {
             var menu = new ContextMenuStrip { Font = new Font("Segoe UI", 10F) };
-            var toggleItem = new ToolStripMenuItem { Text = "Toggle Status", Image = GetMenuIconBitmap(IconChar.PowerOff, 16, Color.FromArgb(52, 152, 219)) };
+            var toggleItem = new ToolStripMenuItem { Text = "Chuyển trạng thái", Image = GetMenuIconBitmap(IconChar.PowerOff, 16, Color.FromArgb(52, 152, 219)) };
             toggleItem.Click += (s, e) => ToggleUserStatus(userId, userName);
-            var deleteItem = new ToolStripMenuItem { Text = "Delete User", Image = GetMenuIconBitmap(IconChar.Trash, 16, Color.FromArgb(231, 76, 60)) };
+            var deleteItem = new ToolStripMenuItem { Text = "Xóa người dùng", Image = GetMenuIconBitmap(IconChar.Trash, 16, Color.FromArgb(231, 76, 60)) };
             deleteItem.Click += (s, e) => DeleteUser(userId, userName);
             menu.Items.AddRange(new ToolStripItem[] { toggleItem, deleteItem });
             var cellRect = dgvUsers.GetCellDisplayRectangle(dgvUsers.Columns["colActions"].Index, rowIndex, true);
@@ -304,10 +362,10 @@ namespace ExpenseManager.App.Views.Admin.UC
             menu.Show(menuLocation);
         }
 
-        private void ToggleUserStatus(string userId, string userName) { if (MessageBox.Show($"Toggle status of '{userName}'?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) _ = _presenter?.ToggleUserStatusAsync(userId, userName); }
-        private void DeleteUser(string userId, string userName) { if (MessageBox.Show($"Delete '{userName}'? Cannot undo!", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes) _ = _presenter?.DeleteUserAsync(userId, userName); }
+        private void ToggleUserStatus(string userId, string userName) { if (MessageBox.Show($"Bạn có muốn đổi trạng thái của người dùng '{userName}' không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) _ = _presenter?.ToggleUserStatusAsync(userId, userName); } 
+        private void DeleteUser(string userId, string userName) { if (MessageBox.Show($"Bạn có chắc chắn muốn xóa người dùng '{userName}' không? Thao tác này không thể hoàn tác!", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes) _ = _presenter?.DeleteUserAsync(userId, userName); }
 
-      
+
         private Bitmap GetMenuIconBitmap(IconChar icon, int size, Color color)
         {
             using (var iconPic = new IconPictureBox())

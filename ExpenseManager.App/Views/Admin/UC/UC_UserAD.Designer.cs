@@ -21,504 +21,497 @@ namespace ExpenseManager.App.Views.Admin.UC
 
         private void InitializeComponent()
         {
-            this.mainPanel = new System.Windows.Forms.Panel();
-            this.dgvUsers = new System.Windows.Forms.DataGridView();
-            this.paginationPanel = new System.Windows.Forms.Panel();
-            this.lblPaginationInfo = new System.Windows.Forms.Label();
-            this.lblShowingInfo = new System.Windows.Forms.Label();
-            this.kpiPanel = new System.Windows.Forms.Panel();
-            this.cardAdmins = new System.Windows.Forms.Panel();
-            this.lblAdminsValue = new System.Windows.Forms.Label();
-            this.lblAdminsLabel = new System.Windows.Forms.Label();
-            this.iconAdmins = new System.Windows.Forms.Panel();
-            this.cardBlocked = new System.Windows.Forms.Panel();
-            this.lblBlockedValue = new System.Windows.Forms.Label();
-            this.lblBlockedLabel = new System.Windows.Forms.Label();
-            this.iconBlocked = new System.Windows.Forms.Panel();
-            this.cardActive = new System.Windows.Forms.Panel();
-            this.lblActiveValue = new System.Windows.Forms.Label();
-            this.lblActiveLabel = new System.Windows.Forms.Label();
-            this.iconActive = new System.Windows.Forms.Panel();
-            this.cardTotal = new System.Windows.Forms.Panel();
-            this.lblTotalValue = new System.Windows.Forms.Label();
-            this.lblTotalLabel = new System.Windows.Forms.Label();
-            this.iconTotal = new System.Windows.Forms.Panel();
-            this.searchPanel = new System.Windows.Forms.Panel();
-            this.btnRefresh = new FontAwesome.Sharp.IconButton();
-            this.btnSearch = new FontAwesome.Sharp.IconButton();
-            this.cmbStatus = new System.Windows.Forms.ComboBox();
-            this.cmbRole = new System.Windows.Forms.ComboBox();
-            this.txtSearch = new System.Windows.Forms.TextBox();
-            this.headerPanel = new System.Windows.Forms.Panel();
-            this.lblDateTime = new System.Windows.Forms.Label(); // <--- 1. Khởi tạo Label ngày
-            this.lblSubtitle = new System.Windows.Forms.Label();
-            this.lblTitle = new System.Windows.Forms.Label();
-            this.loadingPanel = new System.Windows.Forms.Panel();
-            this.lblLoading = new System.Windows.Forms.Label();
-            this.mainPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvUsers)).BeginInit();
-            this.paginationPanel.SuspendLayout();
-            this.kpiPanel.SuspendLayout();
-            this.cardAdmins.SuspendLayout();
-            this.cardBlocked.SuspendLayout();
-            this.cardActive.SuspendLayout();
-            this.cardTotal.SuspendLayout();
-            this.searchPanel.SuspendLayout();
-            this.headerPanel.SuspendLayout();
-            this.loadingPanel.SuspendLayout();
-            this.SuspendLayout();
+            mainPanel = new Panel();
+            dgvUsers = new DataGridView();
+            paginationPanel = new Panel();
+            lblPaginationInfo = new Label();
+            lblShowingInfo = new Label();
+            kpiPanel = new Panel();
+            cardAdmins = new Panel();
+            lblAdminsValue = new Label();
+            lblAdminsLabel = new Label();
+            iconAdmins = new Panel();
+            cardBlocked = new Panel();
+            lblBlockedValue = new Label();
+            lblBlockedLabel = new Label();
+            iconBlocked = new Panel();
+            cardActive = new Panel();
+            lblActiveValue = new Label();
+            lblActiveLabel = new Label();
+            iconActive = new Panel();
+            cardTotal = new Panel();
+            lblTotalValue = new Label();
+            lblTotalLabel = new Label();
+            iconTotal = new Panel();
+            searchPanel = new Panel();
+            btnRefresh = new IconButton();
+            btnSearch = new IconButton();
+            cmbStatus = new ComboBox();
+            cmbRole = new ComboBox();
+            txtSearch = new TextBox();
+            headerPanel = new Panel();
+            lblDateTime = new Label();
+            lblSubtitle = new Label();
+            lblTitle = new Label();
+            loadingPanel = new Panel();
+            lblLoading = new Label();
+            mainPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvUsers).BeginInit();
+            paginationPanel.SuspendLayout();
+            kpiPanel.SuspendLayout();
+            cardAdmins.SuspendLayout();
+            cardBlocked.SuspendLayout();
+            cardActive.SuspendLayout();
+            cardTotal.SuspendLayout();
+            searchPanel.SuspendLayout();
+            headerPanel.SuspendLayout();
+            loadingPanel.SuspendLayout();
+            SuspendLayout();
             // 
             // mainPanel
             // 
-            this.mainPanel.AutoScroll = true;
-            this.mainPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
-            this.mainPanel.Controls.Add(this.dgvUsers);
-            this.mainPanel.Controls.Add(this.paginationPanel);
-            this.mainPanel.Controls.Add(this.kpiPanel);
-            this.mainPanel.Controls.Add(this.searchPanel);
-            this.mainPanel.Controls.Add(this.headerPanel);
-            this.mainPanel.Controls.Add(this.loadingPanel);
-            this.mainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mainPanel.Location = new System.Drawing.Point(0, 0);
-            this.mainPanel.Name = "mainPanel";
-            this.mainPanel.Padding = new System.Windows.Forms.Padding(40, 30, 40, 30);
-            this.mainPanel.Size = new System.Drawing.Size(1400, 900);
-            this.mainPanel.TabIndex = 0;
+            mainPanel.AutoScroll = true;
+            mainPanel.BackColor = Color.FromArgb(248, 249, 250);
+            mainPanel.Controls.Add(dgvUsers);
+            mainPanel.Controls.Add(paginationPanel);
+            mainPanel.Controls.Add(kpiPanel);
+            mainPanel.Controls.Add(searchPanel);
+            mainPanel.Controls.Add(headerPanel);
+            mainPanel.Controls.Add(loadingPanel);
+            mainPanel.Dock = DockStyle.Fill;
+            mainPanel.Location = new Point(0, 0);
+            mainPanel.Name = "mainPanel";
+            mainPanel.Padding = new Padding(40, 30, 40, 30);
+            mainPanel.Size = new Size(1400, 900);
+            mainPanel.TabIndex = 0;
             // 
             // dgvUsers
             // 
-            this.dgvUsers.AllowUserToAddRows = false;
-            this.dgvUsers.AllowUserToDeleteRows = false;
-            this.dgvUsers.AllowUserToResizeRows = false;
-            this.dgvUsers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvUsers.BackgroundColor = System.Drawing.Color.White;
-            this.dgvUsers.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgvUsers.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
-            this.dgvUsers.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            this.dgvUsers.ColumnHeadersHeight = 50;
-            this.dgvUsers.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvUsers.EnableHeadersVisualStyles = false;
-            this.dgvUsers.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.dgvUsers.Location = new System.Drawing.Point(40, 390);
-            this.dgvUsers.MultiSelect = false;
-            this.dgvUsers.Name = "dgvUsers";
-            this.dgvUsers.ReadOnly = true;
-            this.dgvUsers.RowHeadersVisible = false;
-            this.dgvUsers.RowHeadersWidth = 51;
-            this.dgvUsers.RowTemplate.Height = 70;
-            this.dgvUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvUsers.Size = new System.Drawing.Size(1320, 420);
-            this.dgvUsers.TabIndex = 5;
+            dgvUsers.AllowUserToAddRows = false;
+            dgvUsers.AllowUserToDeleteRows = false;
+            dgvUsers.AllowUserToResizeRows = false;
+            dgvUsers.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvUsers.BackgroundColor = Color.White;
+            dgvUsers.BorderStyle = BorderStyle.None;
+            dgvUsers.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dgvUsers.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dgvUsers.ColumnHeadersHeight = 50;
+            dgvUsers.Dock = DockStyle.Fill;
+            dgvUsers.EnableHeadersVisualStyles = false;
+            dgvUsers.GridColor = Color.FromArgb(240, 240, 240);
+            dgvUsers.Location = new Point(40, 390);
+            dgvUsers.MultiSelect = false;
+            dgvUsers.Name = "dgvUsers";
+            dgvUsers.ReadOnly = true;
+            dgvUsers.RowHeadersVisible = false;
+            dgvUsers.RowHeadersWidth = 51;
+            dgvUsers.RowTemplate.Height = 70;
+            dgvUsers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvUsers.Size = new Size(1320, 420);
+            dgvUsers.TabIndex = 5;
             // 
             // paginationPanel
             // 
-            this.paginationPanel.BackColor = System.Drawing.Color.White;
-            this.paginationPanel.Controls.Add(this.lblPaginationInfo);
-            this.paginationPanel.Controls.Add(this.lblShowingInfo);
-            this.paginationPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.paginationPanel.Location = new System.Drawing.Point(40, 810);
-            this.paginationPanel.Name = "paginationPanel";
-            this.paginationPanel.Padding = new System.Windows.Forms.Padding(20);
-            this.paginationPanel.Size = new System.Drawing.Size(1320, 60);
-            this.paginationPanel.TabIndex = 4;
+            paginationPanel.BackColor = Color.White;
+            paginationPanel.Controls.Add(lblPaginationInfo);
+            paginationPanel.Controls.Add(lblShowingInfo);
+            paginationPanel.Dock = DockStyle.Bottom;
+            paginationPanel.Location = new Point(40, 810);
+            paginationPanel.Name = "paginationPanel";
+            paginationPanel.Padding = new Padding(20);
+            paginationPanel.Size = new Size(1320, 60);
+            paginationPanel.TabIndex = 4;
             // 
             // lblPaginationInfo
             // 
-            this.lblPaginationInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblPaginationInfo.AutoSize = true;
-            this.lblPaginationInfo.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lblPaginationInfo.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblPaginationInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-            this.lblPaginationInfo.Location = new System.Drawing.Point(1180, 20);
-            this.lblPaginationInfo.Name = "lblPaginationInfo";
-            this.lblPaginationInfo.Size = new System.Drawing.Size(94, 23);
-            this.lblPaginationInfo.TabIndex = 1;
-            this.lblPaginationInfo.Text = "Page 1 of 1";
-            this.lblPaginationInfo.Click += new System.EventHandler(this.LblPaginationInfo_Click);
+            lblPaginationInfo.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            lblPaginationInfo.AutoSize = true;
+            lblPaginationInfo.Cursor = Cursors.Hand;
+            lblPaginationInfo.Font = new Font("Segoe UI", 10F);
+            lblPaginationInfo.ForeColor = Color.FromArgb(100, 100, 100);
+            lblPaginationInfo.Location = new Point(1180, 20);
+            lblPaginationInfo.Name = "lblPaginationInfo";
+            lblPaginationInfo.Size = new Size(113, 23);
+            lblPaginationInfo.TabIndex = 1;
+            lblPaginationInfo.Text = "Trang 1 của 1";
+            lblPaginationInfo.Click += LblPaginationInfo_Click;
             // 
             // lblShowingInfo
             // 
-            this.lblShowingInfo.AutoSize = true;
-            this.lblShowingInfo.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblShowingInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-            this.lblShowingInfo.Location = new System.Drawing.Point(23, 20);
-            this.lblShowingInfo.Name = "lblShowingInfo";
-            this.lblShowingInfo.Size = new System.Drawing.Size(177, 23);
-            this.lblShowingInfo.TabIndex = 0;
-            this.lblShowingInfo.Text = "Showing 1 to 6 of 6 users";
+            lblShowingInfo.AutoSize = true;
+            lblShowingInfo.Font = new Font("Segoe UI", 10F);
+            lblShowingInfo.ForeColor = Color.FromArgb(100, 100, 100);
+            lblShowingInfo.Location = new Point(23, 20);
+            lblShowingInfo.Name = "lblShowingInfo";
+            lblShowingInfo.Size = new Size(293, 23);
+            lblShowingInfo.TabIndex = 0;
+            lblShowingInfo.Text = "Hiển thị từ 1 đến 6 của 6 người dùng";
             // 
             // kpiPanel
             // 
-            this.kpiPanel.BackColor = System.Drawing.Color.Transparent;
-            this.kpiPanel.Controls.Add(this.cardAdmins);
-            this.kpiPanel.Controls.Add(this.cardBlocked);
-            this.kpiPanel.Controls.Add(this.cardActive);
-            this.kpiPanel.Controls.Add(this.cardTotal);
-            this.kpiPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.kpiPanel.Location = new System.Drawing.Point(40, 200);
-            this.kpiPanel.Name = "kpiPanel";
-            this.kpiPanel.Padding = new System.Windows.Forms.Padding(0, 15, 0, 15);
-            this.kpiPanel.Size = new System.Drawing.Size(1320, 190);
-            this.kpiPanel.TabIndex = 3;
+            kpiPanel.BackColor = Color.Transparent;
+            kpiPanel.Controls.Add(cardAdmins);
+            kpiPanel.Controls.Add(cardBlocked);
+            kpiPanel.Controls.Add(cardActive);
+            kpiPanel.Controls.Add(cardTotal);
+            kpiPanel.Dock = DockStyle.Top;
+            kpiPanel.Location = new Point(40, 200);
+            kpiPanel.Name = "kpiPanel";
+            kpiPanel.Padding = new Padding(0, 15, 0, 15);
+            kpiPanel.Size = new Size(1320, 190);
+            kpiPanel.TabIndex = 3;
             // 
             // cardAdmins
             // 
-            this.cardAdmins.BackColor = System.Drawing.Color.White;
-            this.cardAdmins.Controls.Add(this.lblAdminsValue);
-            this.cardAdmins.Controls.Add(this.lblAdminsLabel);
-            this.cardAdmins.Controls.Add(this.iconAdmins);
-            this.cardAdmins.Location = new System.Drawing.Point(990, 15);
-            this.cardAdmins.Name = "cardAdmins";
-            this.cardAdmins.Padding = new System.Windows.Forms.Padding(25);
-            this.cardAdmins.Size = new System.Drawing.Size(315, 150);
-            this.cardAdmins.TabIndex = 3;
+            cardAdmins.BackColor = Color.White;
+            cardAdmins.Controls.Add(lblAdminsValue);
+            cardAdmins.Controls.Add(lblAdminsLabel);
+            cardAdmins.Controls.Add(iconAdmins);
+            cardAdmins.Location = new Point(990, 15);
+            cardAdmins.Name = "cardAdmins";
+            cardAdmins.Padding = new Padding(25);
+            cardAdmins.Size = new Size(315, 150);
+            cardAdmins.TabIndex = 3;
             // 
             // lblAdminsValue
             // 
-            this.lblAdminsValue.AutoSize = true;
-            this.lblAdminsValue.Font = new System.Drawing.Font("Segoe UI", 32F, System.Drawing.FontStyle.Bold);
-            this.lblAdminsValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
-            this.lblAdminsValue.Location = new System.Drawing.Point(120, 40);
-            this.lblAdminsValue.Name = "lblAdminsValue";
-            this.lblAdminsValue.Size = new System.Drawing.Size(59, 72);
-            this.lblAdminsValue.TabIndex = 2;
-            this.lblAdminsValue.Text = "2";
+            lblAdminsValue.AutoSize = true;
+            lblAdminsValue.Font = new Font("Segoe UI", 32F, FontStyle.Bold);
+            lblAdminsValue.ForeColor = Color.FromArgb(52, 73, 94);
+            lblAdminsValue.Location = new Point(120, 40);
+            lblAdminsValue.Name = "lblAdminsValue";
+            lblAdminsValue.Size = new Size(61, 72);
+            lblAdminsValue.TabIndex = 2;
+            lblAdminsValue.Text = "2";
             // 
             // lblAdminsLabel
             // 
-            this.lblAdminsLabel.AutoSize = true;
-            this.lblAdminsLabel.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.lblAdminsLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(140)))), ((int)(((byte)(141)))));
-            this.lblAdminsLabel.Location = new System.Drawing.Point(28, 95);
-            this.lblAdminsLabel.Name = "lblAdminsLabel";
-            this.lblAdminsLabel.Size = new System.Drawing.Size(139, 25);
-            this.lblAdminsLabel.TabIndex = 1;
-            this.lblAdminsLabel.Text = "Administrators";
+            lblAdminsLabel.AutoSize = true;
+            lblAdminsLabel.Font = new Font("Segoe UI", 11F);
+            lblAdminsLabel.ForeColor = Color.FromArgb(127, 140, 141);
+            lblAdminsLabel.Location = new Point(28, 95);
+            lblAdminsLabel.Name = "lblAdminsLabel";
+            lblAdminsLabel.Size = new Size(144, 25);
+            lblAdminsLabel.TabIndex = 1;
+            lblAdminsLabel.Text = "Số quản trị viên";
             // 
             // iconAdmins
             // 
-            this.iconAdmins.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
-            this.iconAdmins.Location = new System.Drawing.Point(28, 35);
-            this.iconAdmins.Name = "iconAdmins";
-            this.iconAdmins.Size = new System.Drawing.Size(60, 60);
-            this.iconAdmins.TabIndex = 0;
+            iconAdmins.BackColor = Color.FromArgb(52, 152, 219);
+            iconAdmins.Location = new Point(28, 35);
+            iconAdmins.Name = "iconAdmins";
+            iconAdmins.Size = new Size(60, 60);
+            iconAdmins.TabIndex = 0;
             // 
             // cardBlocked
             // 
-            this.cardBlocked.BackColor = System.Drawing.Color.White;
-            this.cardBlocked.Controls.Add(this.lblBlockedValue);
-            this.cardBlocked.Controls.Add(this.lblBlockedLabel);
-            this.cardBlocked.Controls.Add(this.iconBlocked);
-            this.cardBlocked.Location = new System.Drawing.Point(660, 15);
-            this.cardBlocked.Name = "cardBlocked";
-            this.cardBlocked.Padding = new System.Windows.Forms.Padding(25);
-            this.cardBlocked.Size = new System.Drawing.Size(315, 150);
-            this.cardBlocked.TabIndex = 2;
+            cardBlocked.BackColor = Color.White;
+            cardBlocked.Controls.Add(lblBlockedValue);
+            cardBlocked.Controls.Add(lblBlockedLabel);
+            cardBlocked.Controls.Add(iconBlocked);
+            cardBlocked.Location = new Point(660, 15);
+            cardBlocked.Name = "cardBlocked";
+            cardBlocked.Padding = new Padding(25);
+            cardBlocked.Size = new Size(315, 150);
+            cardBlocked.TabIndex = 2;
             // 
             // lblBlockedValue
             // 
-            this.lblBlockedValue.AutoSize = true;
-            this.lblBlockedValue.Font = new System.Drawing.Font("Segoe UI", 32F, System.Drawing.FontStyle.Bold);
-            this.lblBlockedValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
-            this.lblBlockedValue.Location = new System.Drawing.Point(120, 40);
-            this.lblBlockedValue.Name = "lblBlockedValue";
-            this.lblBlockedValue.Size = new System.Drawing.Size(59, 72);
-            this.lblBlockedValue.TabIndex = 2;
-            this.lblBlockedValue.Text = "0";
+            lblBlockedValue.AutoSize = true;
+            lblBlockedValue.Font = new Font("Segoe UI", 32F, FontStyle.Bold);
+            lblBlockedValue.ForeColor = Color.FromArgb(52, 73, 94);
+            lblBlockedValue.Location = new Point(120, 40);
+            lblBlockedValue.Name = "lblBlockedValue";
+            lblBlockedValue.Size = new Size(61, 72);
+            lblBlockedValue.TabIndex = 2;
+            lblBlockedValue.Text = "0";
             // 
             // lblBlockedLabel
             // 
-            this.lblBlockedLabel.AutoSize = true;
-            this.lblBlockedLabel.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.lblBlockedLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(140)))), ((int)(((byte)(141)))));
-            this.lblBlockedLabel.Location = new System.Drawing.Point(28, 95);
-            this.lblBlockedLabel.Name = "lblBlockedLabel";
-            this.lblBlockedLabel.Size = new System.Drawing.Size(127, 25);
-            this.lblBlockedLabel.TabIndex = 1;
-            this.lblBlockedLabel.Text = "Blocked Users";
+            lblBlockedLabel.AutoSize = true;
+            lblBlockedLabel.Font = new Font("Segoe UI", 11F);
+            lblBlockedLabel.ForeColor = Color.FromArgb(127, 140, 141);
+            lblBlockedLabel.Location = new Point(28, 95);
+            lblBlockedLabel.Name = "lblBlockedLabel";
+            lblBlockedLabel.Size = new Size(203, 25);
+            lblBlockedLabel.TabIndex = 1;
+            lblBlockedLabel.Text = "Số người dùng bị chặn";
             // 
             // iconBlocked
             // 
-            this.iconBlocked.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(76)))), ((int)(((byte)(60)))));
-            this.iconBlocked.Location = new System.Drawing.Point(28, 35);
-            this.iconBlocked.Name = "iconBlocked";
-            this.iconBlocked.Size = new System.Drawing.Size(60, 60);
-            this.iconBlocked.TabIndex = 0;
+            iconBlocked.BackColor = Color.FromArgb(231, 76, 60);
+            iconBlocked.Location = new Point(28, 35);
+            iconBlocked.Name = "iconBlocked";
+            iconBlocked.Size = new Size(60, 60);
+            iconBlocked.TabIndex = 0;
             // 
             // cardActive
             // 
-            this.cardActive.BackColor = System.Drawing.Color.White;
-            this.cardActive.Controls.Add(this.lblActiveValue);
-            this.cardActive.Controls.Add(this.lblActiveLabel);
-            this.cardActive.Controls.Add(this.iconActive);
-            this.cardActive.Location = new System.Drawing.Point(330, 15);
-            this.cardActive.Name = "cardActive";
-            this.cardActive.Padding = new System.Windows.Forms.Padding(25);
-            this.cardActive.Size = new System.Drawing.Size(315, 150);
-            this.cardActive.TabIndex = 1;
+            cardActive.BackColor = Color.White;
+            cardActive.Controls.Add(lblActiveValue);
+            cardActive.Controls.Add(lblActiveLabel);
+            cardActive.Controls.Add(iconActive);
+            cardActive.Location = new Point(330, 15);
+            cardActive.Name = "cardActive";
+            cardActive.Padding = new Padding(25);
+            cardActive.Size = new Size(315, 150);
+            cardActive.TabIndex = 1;
             // 
             // lblActiveValue
             // 
-            this.lblActiveValue.AutoSize = true;
-            this.lblActiveValue.Font = new System.Drawing.Font("Segoe UI", 32F, System.Drawing.FontStyle.Bold);
-            this.lblActiveValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
-            this.lblActiveValue.Location = new System.Drawing.Point(120, 40);
-            this.lblActiveValue.Name = "lblActiveValue";
-            this.lblActiveValue.Size = new System.Drawing.Size(59, 72);
-            this.lblActiveValue.TabIndex = 2;
-            this.lblActiveValue.Text = "6";
+            lblActiveValue.AutoSize = true;
+            lblActiveValue.Font = new Font("Segoe UI", 32F, FontStyle.Bold);
+            lblActiveValue.ForeColor = Color.FromArgb(52, 73, 94);
+            lblActiveValue.Location = new Point(120, 40);
+            lblActiveValue.Name = "lblActiveValue";
+            lblActiveValue.Size = new Size(61, 72);
+            lblActiveValue.TabIndex = 2;
+            lblActiveValue.Text = "6";
             // 
             // lblActiveLabel
             // 
-            this.lblActiveLabel.AutoSize = true;
-            this.lblActiveLabel.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.lblActiveLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(140)))), ((int)(((byte)(141)))));
-            this.lblActiveLabel.Location = new System.Drawing.Point(28, 95);
-            this.lblActiveLabel.Name = "lblActiveLabel";
-            this.lblActiveLabel.Size = new System.Drawing.Size(110, 25);
-            this.lblActiveLabel.TabIndex = 1;
-            this.lblActiveLabel.Text = "Active Users";
+            lblActiveLabel.AutoSize = true;
+            lblActiveLabel.Font = new Font("Segoe UI", 11F);
+            lblActiveLabel.ForeColor = Color.FromArgb(127, 140, 141);
+            lblActiveLabel.Location = new Point(28, 95);
+            lblActiveLabel.Name = "lblActiveLabel";
+            lblActiveLabel.Size = new Size(228, 25);
+            lblActiveLabel.TabIndex = 1;
+            lblActiveLabel.Text = "Số người dùng hoạt động";
             // 
             // iconActive
             // 
-            this.iconActive.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
-            this.iconActive.Location = new System.Drawing.Point(28, 35);
-            this.iconActive.Name = "iconActive";
-            this.iconActive.Size = new System.Drawing.Size(60, 60);
-            this.iconActive.TabIndex = 0;
+            iconActive.BackColor = Color.FromArgb(46, 204, 113);
+            iconActive.Location = new Point(28, 35);
+            iconActive.Name = "iconActive";
+            iconActive.Size = new Size(60, 60);
+            iconActive.TabIndex = 0;
             // 
             // cardTotal
             // 
-            this.cardTotal.BackColor = System.Drawing.Color.White;
-            this.cardTotal.Controls.Add(this.lblTotalValue);
-            this.cardTotal.Controls.Add(this.lblTotalLabel);
-            this.cardTotal.Controls.Add(this.iconTotal);
-            this.cardTotal.Location = new System.Drawing.Point(0, 15);
-            this.cardTotal.Name = "cardTotal";
-            this.cardTotal.Padding = new System.Windows.Forms.Padding(25);
-            this.cardTotal.Size = new System.Drawing.Size(315, 150);
-            this.cardTotal.TabIndex = 0;
+            cardTotal.BackColor = Color.White;
+            cardTotal.Controls.Add(lblTotalValue);
+            cardTotal.Controls.Add(lblTotalLabel);
+            cardTotal.Controls.Add(iconTotal);
+            cardTotal.Location = new Point(0, 15);
+            cardTotal.Name = "cardTotal";
+            cardTotal.Padding = new Padding(25);
+            cardTotal.Size = new Size(315, 150);
+            cardTotal.TabIndex = 0;
             // 
             // lblTotalValue
             // 
-            this.lblTotalValue.AutoSize = true;
-            this.lblTotalValue.Font = new System.Drawing.Font("Segoe UI", 32F, System.Drawing.FontStyle.Bold);
-            this.lblTotalValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
-            this.lblTotalValue.Location = new System.Drawing.Point(120, 40);
-            this.lblTotalValue.Name = "lblTotalValue";
-            this.lblTotalValue.Size = new System.Drawing.Size(59, 72);
-            this.lblTotalValue.TabIndex = 2;
-            this.lblTotalValue.Text = "6";
+            lblTotalValue.AutoSize = true;
+            lblTotalValue.Font = new Font("Segoe UI", 32F, FontStyle.Bold);
+            lblTotalValue.ForeColor = Color.FromArgb(52, 73, 94);
+            lblTotalValue.Location = new Point(120, 40);
+            lblTotalValue.Name = "lblTotalValue";
+            lblTotalValue.Size = new Size(61, 72);
+            lblTotalValue.TabIndex = 2;
+            lblTotalValue.Text = "6";
             // 
             // lblTotalLabel
             // 
-            this.lblTotalLabel.AutoSize = true;
-            this.lblTotalLabel.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.lblTotalLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(140)))), ((int)(((byte)(141)))));
-            this.lblTotalLabel.Location = new System.Drawing.Point(28, 95);
-            this.lblTotalLabel.Name = "lblTotalLabel";
-            this.lblTotalLabel.Size = new System.Drawing.Size(100, 25);
-            this.lblTotalLabel.TabIndex = 1;
-            this.lblTotalLabel.Text = "Total Users";
+            lblTotalLabel.AutoSize = true;
+            lblTotalLabel.Font = new Font("Segoe UI", 11F);
+            lblTotalLabel.ForeColor = Color.FromArgb(127, 140, 141);
+            lblTotalLabel.Location = new Point(28, 95);
+            lblTotalLabel.Name = "lblTotalLabel";
+            lblTotalLabel.Size = new Size(158, 25);
+            lblTotalLabel.TabIndex = 1;
+            lblTotalLabel.Text = "Tổng người dùng";
             // 
             // iconTotal
             // 
-            this.iconTotal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(89)))), ((int)(((byte)(182)))));
-            this.iconTotal.Location = new System.Drawing.Point(28, 35);
-            this.iconTotal.Name = "iconTotal";
-            this.iconTotal.Size = new System.Drawing.Size(60, 60);
-            this.iconTotal.TabIndex = 0;
+            iconTotal.BackColor = Color.FromArgb(155, 89, 182);
+            iconTotal.Location = new Point(28, 35);
+            iconTotal.Name = "iconTotal";
+            iconTotal.Size = new Size(60, 60);
+            iconTotal.TabIndex = 0;
             // 
             // searchPanel
             // 
-            this.searchPanel.BackColor = System.Drawing.Color.White;
-            this.searchPanel.Controls.Add(this.btnRefresh);
-            this.searchPanel.Controls.Add(this.btnSearch);
-            this.searchPanel.Controls.Add(this.cmbStatus);
-            this.searchPanel.Controls.Add(this.cmbRole);
-            this.searchPanel.Controls.Add(this.txtSearch);
-            this.searchPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.searchPanel.Location = new System.Drawing.Point(40, 110);
-            this.searchPanel.Name = "searchPanel";
-            this.searchPanel.Padding = new System.Windows.Forms.Padding(25, 20, 25, 20);
-            this.searchPanel.Size = new System.Drawing.Size(1320, 90);
-            this.searchPanel.TabIndex = 2;
+            searchPanel.BackColor = Color.White;
+            searchPanel.Controls.Add(btnRefresh);
+            searchPanel.Controls.Add(btnSearch);
+            searchPanel.Controls.Add(cmbStatus);
+            searchPanel.Controls.Add(cmbRole);
+            searchPanel.Controls.Add(txtSearch);
+            searchPanel.Dock = DockStyle.Top;
+            searchPanel.Location = new Point(40, 110);
+            searchPanel.Name = "searchPanel";
+            searchPanel.Padding = new Padding(25, 20, 25, 20);
+            searchPanel.Size = new Size(1320, 90);
+            searchPanel.TabIndex = 2;
             // 
             // btnRefresh
             // 
-            this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRefresh.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(149)))), ((int)(((byte)(165)))), ((int)(((byte)(166)))));
-            this.btnRefresh.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnRefresh.FlatAppearance.BorderSize = 0;
-            this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRefresh.IconChar = FontAwesome.Sharp.IconChar.Sync;
-            this.btnRefresh.IconColor = System.Drawing.Color.White;
-            this.btnRefresh.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnRefresh.IconSize = 24;
-            this.btnRefresh.Location = new System.Drawing.Point(1240, 26);
-            this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(50, 40);
-            this.btnRefresh.TabIndex = 4;
-            this.btnRefresh.UseVisualStyleBackColor = false;
-            this.btnRefresh.Click += new System.EventHandler(this.BtnRefresh_Click);
+            btnRefresh.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnRefresh.BackColor = Color.FromArgb(149, 165, 166);
+            btnRefresh.Cursor = Cursors.Hand;
+            btnRefresh.FlatAppearance.BorderSize = 0;
+            btnRefresh.FlatStyle = FlatStyle.Flat;
+            btnRefresh.IconChar = IconChar.Refresh;
+            btnRefresh.IconColor = Color.White;
+            btnRefresh.IconFont = IconFont.Auto;
+            btnRefresh.IconSize = 24;
+            btnRefresh.Location = new Point(1240, 26);
+            btnRefresh.Name = "btnRefresh";
+            btnRefresh.Size = new Size(50, 40);
+            btnRefresh.TabIndex = 4;
+            btnRefresh.UseVisualStyleBackColor = false;
+            btnRefresh.Click += BtnRefresh_Click;
             // 
             // btnSearch
             // 
-            this.btnSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
-            this.btnSearch.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnSearch.FlatAppearance.BorderSize = 0;
-            this.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSearch.IconChar = FontAwesome.Sharp.IconChar.MagnifyingGlass;
-            this.btnSearch.IconColor = System.Drawing.Color.White;
-            this.btnSearch.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnSearch.IconSize = 24;
-            this.btnSearch.Location = new System.Drawing.Point(1175, 26);
-            this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(50, 40);
-            this.btnSearch.TabIndex = 3;
-            this.btnSearch.UseVisualStyleBackColor = false;
-            this.btnSearch.Click += new System.EventHandler(this.BtnSearch_Click);
+            btnSearch.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnSearch.BackColor = Color.FromArgb(52, 152, 219);
+            btnSearch.Cursor = Cursors.Hand;
+            btnSearch.FlatAppearance.BorderSize = 0;
+            btnSearch.FlatStyle = FlatStyle.Flat;
+            btnSearch.IconChar = IconChar.Search;
+            btnSearch.IconColor = Color.White;
+            btnSearch.IconFont = IconFont.Auto;
+            btnSearch.IconSize = 24;
+            btnSearch.Location = new Point(1175, 26);
+            btnSearch.Name = "btnSearch";
+            btnSearch.Size = new Size(50, 40);
+            btnSearch.TabIndex = 3;
+            btnSearch.UseVisualStyleBackColor = false;
+            btnSearch.Click += BtnSearch_Click;
             // 
             // cmbStatus
             // 
-            this.cmbStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbStatus.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.cmbStatus.FormattingEnabled = true;
-            this.cmbStatus.Items.AddRange(new object[] {
-            "All Status",
-            "Active",
-            "Blocked"});
-            this.cmbStatus.Location = new System.Drawing.Point(960, 28);
-            this.cmbStatus.Name = "cmbStatus";
-            this.cmbStatus.Size = new System.Drawing.Size(190, 33);
-            this.cmbStatus.TabIndex = 2;
-            this.cmbStatus.SelectedIndexChanged += new System.EventHandler(this.CmbStatus_SelectedIndexChanged);
+            cmbStatus.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            cmbStatus.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbStatus.Font = new Font("Segoe UI", 11F);
+            cmbStatus.FormattingEnabled = true;
+            cmbStatus.Items.AddRange(new object[] { "Tất cả trạng thái", "Hoạt động", "Bị chặn" });
+            cmbStatus.Location = new Point(960, 28);
+            cmbStatus.Name = "cmbStatus";
+            cmbStatus.Size = new Size(190, 33);
+            cmbStatus.TabIndex = 2;
+            cmbStatus.SelectedIndexChanged += CmbStatus_SelectedIndexChanged;
             // 
             // cmbRole
             // 
-            this.cmbRole.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbRole.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbRole.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.cmbRole.FormattingEnabled = true;
-            this.cmbRole.Items.AddRange(new object[] {
-            "All Roles",
-            "User",
-            "Admin"});
-            this.cmbRole.Location = new System.Drawing.Point(750, 28);
-            this.cmbRole.Name = "cmbRole";
-            this.cmbRole.Size = new System.Drawing.Size(190, 33);
-            this.cmbRole.TabIndex = 1;
-            this.cmbRole.SelectedIndexChanged += new System.EventHandler(this.CmbRole_SelectedIndexChanged);
+            cmbRole.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            cmbRole.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbRole.Font = new Font("Segoe UI", 11F);
+            cmbRole.FormattingEnabled = true;
+            cmbRole.Items.AddRange(new object[] { "Tất cả vai trò", "Người dùng", "Quản trị viên" }); 
+            cmbRole.Location = new Point(750, 28);
+            cmbRole.Name = "cmbRole";
+            cmbRole.Size = new Size(190, 33);
+            cmbRole.TabIndex = 1;
+            cmbRole.SelectedIndexChanged += CmbRole_SelectedIndexChanged;
             // 
             // txtSearch
             // 
-            this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSearch.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.txtSearch.Location = new System.Drawing.Point(28, 26);
-            this.txtSearch.Name = "txtSearch";
-            this.txtSearch.PlaceholderText = "Search users...";
-            this.txtSearch.Size = new System.Drawing.Size(700, 34);
-            this.txtSearch.TabIndex = 0;
-            this.txtSearch.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtSearch_KeyPress);
+            txtSearch.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtSearch.Font = new Font("Segoe UI", 12F);
+            txtSearch.Location = new Point(28, 26);
+            txtSearch.Name = "txtSearch";
+            txtSearch.PlaceholderText = "Tìm kiếm người dùng...";
+            txtSearch.Size = new Size(700, 34);
+            txtSearch.TabIndex = 0;
+            txtSearch.KeyPress += TxtSearch_KeyPress;
             // 
             // headerPanel
             // 
-            this.headerPanel.BackColor = System.Drawing.Color.Transparent;
-            this.headerPanel.Controls.Add(this.lblDateTime); // <--- 2. Thêm vào panel
-            this.headerPanel.Controls.Add(this.lblSubtitle);
-            this.headerPanel.Controls.Add(this.lblTitle);
-            this.headerPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.headerPanel.Location = new System.Drawing.Point(40, 30);
-            this.headerPanel.Name = "headerPanel";
-            this.headerPanel.Size = new System.Drawing.Size(1320, 80);
-            this.headerPanel.TabIndex = 1;
+            headerPanel.BackColor = Color.Transparent;
+            headerPanel.Controls.Add(lblDateTime);
+            headerPanel.Controls.Add(lblSubtitle);
+            headerPanel.Controls.Add(lblTitle);
+            headerPanel.Dock = DockStyle.Top;
+            headerPanel.Location = new Point(40, 30);
+            headerPanel.Name = "headerPanel";
+            headerPanel.Size = new Size(1320, 80);
+            headerPanel.TabIndex = 1;
             // 
             // lblDateTime
             // 
-            this.lblDateTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblDateTime.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblDateTime.ForeColor = System.Drawing.Color.Gray;
-            this.lblDateTime.Location = new System.Drawing.Point(1000, 15); // Vị trí góc phải
-            this.lblDateTime.Name = "lblDateTime";
-            this.lblDateTime.Size = new System.Drawing.Size(300, 23);
-            this.lblDateTime.TabIndex = 2;
-            this.lblDateTime.Text = "📅 ...";
-            this.lblDateTime.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            lblDateTime.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            lblDateTime.Font = new Font("Segoe UI", 9F);
+            lblDateTime.ForeColor = Color.Gray;
+            lblDateTime.Location = new Point(1000, 15);
+            lblDateTime.Name = "lblDateTime";
+            lblDateTime.Size = new Size(300, 23);
+            lblDateTime.TabIndex = 2;
+            lblDateTime.Text = "📅 ...";
+            lblDateTime.TextAlign = ContentAlignment.TopRight;
             // 
             // lblSubtitle
             // 
-            this.lblSubtitle.AutoSize = true;
-            this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(140)))), ((int)(((byte)(141)))));
-            this.lblSubtitle.Location = new System.Drawing.Point(5, 50);
-            this.lblSubtitle.Name = "lblSubtitle";
-            this.lblSubtitle.Size = new System.Drawing.Size(336, 23);
-            this.lblSubtitle.TabIndex = 1;
-            this.lblSubtitle.Text = "Manage all system users and their accounts";
+            lblSubtitle.AutoSize = true;
+            lblSubtitle.Font = new Font("Segoe UI", 10F);
+            lblSubtitle.ForeColor = Color.FromArgb(127, 140, 141);
+            lblSubtitle.Location = new Point(5, 50);
+            lblSubtitle.Name = "lblSubtitle";
+            lblSubtitle.Size = new Size(366, 23);
+            lblSubtitle.TabIndex = 1;
+            lblSubtitle.Text = "Quản lý tất cả người dùng và tài khoản của họ";
             // 
             // lblTitle
             // 
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
-            this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
-            this.lblTitle.Location = new System.Drawing.Point(0, 5);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(301, 46);
-            this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "User Management";
+            lblTitle.AutoSize = true;
+            lblTitle.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
+            lblTitle.ForeColor = Color.FromArgb(44, 62, 80);
+            lblTitle.Location = new Point(0, 5);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(341, 46);
+            lblTitle.TabIndex = 0;
+            lblTitle.Text = "Quản lý người dùng";
             // 
             // loadingPanel
             // 
-            this.loadingPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
-            this.loadingPanel.Controls.Add(this.lblLoading);
-            this.loadingPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.loadingPanel.Location = new System.Drawing.Point(40, 30);
-            this.loadingPanel.Name = "loadingPanel";
-            this.loadingPanel.Size = new System.Drawing.Size(1320, 840);
-            this.loadingPanel.TabIndex = 6;
-            this.loadingPanel.Visible = false;
+            loadingPanel.BackColor = Color.FromArgb(250, 250, 250);
+            loadingPanel.Controls.Add(lblLoading);
+            loadingPanel.Dock = DockStyle.Fill;
+            loadingPanel.Location = new Point(40, 30);
+            loadingPanel.Name = "loadingPanel";
+            loadingPanel.Size = new Size(1320, 840);
+            loadingPanel.TabIndex = 6;
+            loadingPanel.Visible = false;
             // 
             // lblLoading
             // 
-            this.lblLoading.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblLoading.Font = new System.Drawing.Font("Segoe UI", 16F);
-            this.lblLoading.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
-            this.lblLoading.Location = new System.Drawing.Point(0, 0);
-            this.lblLoading.Name = "lblLoading";
-            this.lblLoading.Size = new System.Drawing.Size(1320, 840);
-            this.lblLoading.TabIndex = 0;
-            this.lblLoading.Text = "⏳ Loading data...";
-            this.lblLoading.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            lblLoading.Dock = DockStyle.Fill;
+            lblLoading.Font = new Font("Segoe UI", 16F);
+            lblLoading.ForeColor = Color.FromArgb(52, 152, 219);
+            lblLoading.Location = new Point(0, 0);
+            lblLoading.Name = "lblLoading";
+            lblLoading.Size = new Size(1320, 840);
+            lblLoading.TabIndex = 0;
+            lblLoading.Text = "⏳ Đang tải dữ liệu...";
+            lblLoading.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // UC_UserAD
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.mainPanel);
-            this.Name = "UC_UserAD";
-            this.Size = new System.Drawing.Size(1400, 900);
-            this.mainPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvUsers)).EndInit();
-            this.paginationPanel.ResumeLayout(false);
-            this.paginationPanel.PerformLayout();
-            this.kpiPanel.ResumeLayout(false);
-            this.cardAdmins.ResumeLayout(false);
-            this.cardAdmins.PerformLayout();
-            this.cardBlocked.ResumeLayout(false);
-            this.cardBlocked.PerformLayout();
-            this.cardActive.ResumeLayout(false);
-            this.cardActive.PerformLayout();
-            this.cardTotal.ResumeLayout(false);
-            this.cardTotal.PerformLayout();
-            this.searchPanel.ResumeLayout(false);
-            this.searchPanel.PerformLayout();
-            this.headerPanel.ResumeLayout(false);
-            this.headerPanel.PerformLayout();
-            this.loadingPanel.ResumeLayout(false);
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(mainPanel);
+            Name = "UC_UserAD";
+            Size = new Size(1400, 900);
+            mainPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvUsers).EndInit();
+            paginationPanel.ResumeLayout(false);
+            paginationPanel.PerformLayout();
+            kpiPanel.ResumeLayout(false);
+            cardAdmins.ResumeLayout(false);
+            cardAdmins.PerformLayout();
+            cardBlocked.ResumeLayout(false);
+            cardBlocked.PerformLayout();
+            cardActive.ResumeLayout(false);
+            cardActive.PerformLayout();
+            cardTotal.ResumeLayout(false);
+            cardTotal.PerformLayout();
+            searchPanel.ResumeLayout(false);
+            searchPanel.PerformLayout();
+            headerPanel.ResumeLayout(false);
+            headerPanel.PerformLayout();
+            loadingPanel.ResumeLayout(false);
+            ResumeLayout(false);
 
         }
 

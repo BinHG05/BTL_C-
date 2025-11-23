@@ -28,7 +28,20 @@ namespace ExpenseManager.App.Views.Admin.Forms
             InitializeComponent();
             InitializeForm();
         }
-
+        private readonly Dictionary<string, string> StatusMap = new Dictionary<string, string>
+        {
+            {"Mở", "Open"},
+            {"Đang xử lí", "Pending"},
+            {"Đã xử lí", "Resolved"}
+        };
+        private string GetLogicStatus(string displayStatus)
+        {
+            return StatusMap.ContainsKey(displayStatus) ? StatusMap[displayStatus] : displayStatus;
+        }
+        private string GetDisplayStatus(string logicStatus)
+        {
+            return StatusMap.FirstOrDefault(x => x.Value == logicStatus).Key ?? logicStatus;
+        }
         private void InitializeForm()
         {
             // Set form properties
@@ -47,8 +60,8 @@ namespace ExpenseManager.App.Views.Admin.Forms
             lblQuestionValue.Text = Question ?? "N/A";
             lblQuestionTypeValue.Text = QuestionType ?? "N/A";
 
-            // Set status
-            cboStatus.Text = Status ?? "Open";
+
+            cboStatus.Text = GetDisplayStatus(Status ?? "Open"); 
             UpdateStatusColor();
 
             // Set admin note
@@ -61,7 +74,9 @@ namespace ExpenseManager.App.Views.Admin.Forms
 
         private void UpdateStatusColor()
         {
-            switch (cboStatus.Text)
+            string logicStatus = GetLogicStatus(cboStatus.Text);
+
+            switch (logicStatus) 
             {
                 case "Open":
                     lblStatusValue.ForeColor = Color.FromArgb(1, 87, 155);
@@ -75,6 +90,10 @@ namespace ExpenseManager.App.Views.Admin.Forms
                     lblStatusValue.ForeColor = Color.FromArgb(27, 94, 32);
                     lblStatusValue.BackColor = Color.FromArgb(200, 230, 201);
                     break;
+                default:
+                    lblStatusValue.ForeColor = Color.Black;
+                    lblStatusValue.BackColor = Color.White;
+                    break;
             }
             lblStatusValue.Text = cboStatus.Text;
         }
@@ -87,18 +106,19 @@ namespace ExpenseManager.App.Views.Admin.Forms
         private void BtnSave_Click(object sender, EventArgs e)
         {
             // Update the properties with new values
-            Status = cboStatus.Text;
+            Status = GetLogicStatus(cboStatus.Text);
             AdminNote = txtAdminNote.Text;
             UpdatedDate = DateTime.Now.ToString("HH:mm:ss dd/MM/yyyy");
             lblUpdatedValue.Text = UpdatedDate;
 
-            MessageBox.Show(
-                "Đã lưu thay đổi thành công!",
-                "Thông báo",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information
-            );
-
+            //MessageBox.Show(
+            //    "Đã lưu thay đổi thành công!",
+            //    "Thông báo",
+            //    MessageBoxButtons.OK,
+            //    MessageBoxIcon.Information
+            //);
+            this.DialogResult = DialogResult.OK; 
+            this.Close();
             // TODO: Add code to save to database here
             // Example:
             // ticketService.UpdateTicket(TicketID, Status, AdminNote);
@@ -106,7 +126,7 @@ namespace ExpenseManager.App.Views.Admin.Forms
 
         private void BtnClose_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.OK;
+            this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
 

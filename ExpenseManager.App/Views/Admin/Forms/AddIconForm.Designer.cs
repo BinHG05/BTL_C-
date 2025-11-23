@@ -36,7 +36,7 @@ namespace ExpenseManager.App.Views.Admin.Forms
             this.lblTitle.Location = new Point(20, 20);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new Size(150, 25);
-            this.lblTitle.Text = "Thêm Icon mới";
+            this.lblTitle.Text = "Thêm biểu tượng mới";
 
             // lblIconName
             this.lblIconName.AutoSize = true;
@@ -44,7 +44,7 @@ namespace ExpenseManager.App.Views.Admin.Forms
             this.lblIconName.Location = new Point(20, 70);
             this.lblIconName.Name = "lblIconName";
             this.lblIconName.Size = new Size(100, 19);
-            this.lblIconName.Text = "Tên Icon:";
+            this.lblIconName.Text = "Tên biểu tượng:";
 
             // txtIconName
             this.txtIconName.Font = new Font("Segoe UI", 10F);
@@ -74,7 +74,7 @@ namespace ExpenseManager.App.Views.Admin.Forms
             this.lblExample.Location = new Point(20, 190);
             this.lblExample.Name = "lblExample";
             this.lblExample.Size = new Size(360, 40);
-            this.lblExample.Text = "Tìm icon tại: https://fontawesome.com/icons\nFormat: fa-solid fa-[icon-name]";
+            this.lblExample.Text = "Tìm biểu tượng tại: https://fontawesome.com/icons\nFormat: fa-solid fa-[icon-name]";
 
             // btnSave
             this.btnSave.BackColor = Color.FromArgb(0, 123, 255);
@@ -117,7 +117,7 @@ namespace ExpenseManager.App.Views.Admin.Forms
             this.MinimizeBox = false;
             this.Name = "AddIconForm";
             this.StartPosition = FormStartPosition.CenterParent;
-            this.Text = "Thêm Icon";
+            this.Text = "Thêm biểu tượng";
             this.ResumeLayout(false);
             this.PerformLayout();
         }

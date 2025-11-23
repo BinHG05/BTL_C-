@@ -107,9 +107,9 @@ namespace ExpenseManager.App.Views.Admin.Forms
             lblTitle.ForeColor = Color.FromArgb(33, 37, 41);
             lblTitle.Location = new Point(34, 20);
             lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(209, 41);
+            lblTitle.Size = new Size(235, 41);
             lblTitle.TabIndex = 0;
-            lblTitle.Text = "Ticket Details";
+            lblTitle.Text = "Chi tiết yêu cầu";
             // 
             // mainPanel
             // 
@@ -151,7 +151,7 @@ namespace ExpenseManager.App.Views.Admin.Forms
             btnClose.Name = "btnClose";
             btnClose.Size = new Size(103, 47);
             btnClose.TabIndex = 1;
-            btnClose.Text = "Close";
+            btnClose.Text = "Đóng";
             btnClose.UseVisualStyleBackColor = false;
             btnClose.Click += BtnClose_Click;
             // 
@@ -168,7 +168,7 @@ namespace ExpenseManager.App.Views.Admin.Forms
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(103, 47);
             btnSave.TabIndex = 0;
-            btnSave.Text = "Save";
+            btnSave.Text = "Lưu";
             btnSave.UseVisualStyleBackColor = false;
             btnSave.Click += BtnSave_Click;
             // 
@@ -254,9 +254,9 @@ namespace ExpenseManager.App.Views.Admin.Forms
             lblAdminNote.ForeColor = Color.FromArgb(13, 110, 253);
             lblAdminNote.Location = new Point(40, 447);
             lblAdminNote.Name = "lblAdminNote";
-            lblAdminNote.Size = new Size(120, 25);
+            lblAdminNote.Size = new Size(222, 25);
             lblAdminNote.TabIndex = 10;
-            lblAdminNote.Text = "Admin Note";
+            lblAdminNote.Text = "Ghi chú từ quản trị viên";
             // 
             // panel2
             // 
@@ -289,7 +289,9 @@ namespace ExpenseManager.App.Views.Admin.Forms
             cboStatus.DropDownStyle = ComboBoxStyle.DropDownList;
             cboStatus.Font = new Font("Segoe UI", 10F);
             cboStatus.FormattingEnabled = true;
-            cboStatus.Items.AddRange(new object[] { "Open", "Pending", "Resolved" });
+            cboStatus.Items.AddRange(new object[] { "Mở",
+            "Đang xử lí",
+            "Đã xử lí" });
             cboStatus.Location = new Point(369, 9);
             cboStatus.Margin = new Padding(3, 4, 3, 4);
             cboStatus.Name = "cboStatus";
@@ -327,9 +329,9 @@ namespace ExpenseManager.App.Views.Admin.Forms
             lblQuestionType.ForeColor = Color.FromArgb(13, 110, 253);
             lblQuestionType.Location = new Point(6, 7);
             lblQuestionType.Name = "lblQuestionType";
-            lblQuestionType.Size = new Size(139, 25);
+            lblQuestionType.Size = new Size(118, 25);
             lblQuestionType.TabIndex = 4;
-            lblQuestionType.Text = "Question Type";
+            lblQuestionType.Text = "Loại câu hỏi";
             // 
             // panel1
             // 
@@ -364,9 +366,9 @@ namespace ExpenseManager.App.Views.Admin.Forms
             lblQuestion.ForeColor = Color.FromArgb(13, 110, 253);
             lblQuestion.Location = new Point(6, 113);
             lblQuestion.Name = "lblQuestion";
-            lblQuestion.Size = new Size(125, 25);
+            lblQuestion.Size = new Size(64, 25);
             lblQuestion.TabIndex = 4;
-            lblQuestion.Text = "My Question";
+            lblQuestion.Text = "Mô tả";
             // 
             // lblEmailValue
             // 
@@ -410,9 +412,9 @@ namespace ExpenseManager.App.Views.Admin.Forms
             lblUserName.ForeColor = Color.FromArgb(13, 110, 253);
             lblUserName.Location = new Point(6, 7);
             lblUserName.Name = "lblUserName";
-            lblUserName.Size = new Size(109, 25);
+            lblUserName.Size = new Size(155, 25);
             lblUserName.TabIndex = 0;
-            lblUserName.Text = "User Name";
+            lblUserName.Text = "Tên người dùng";
             // 
             // TicketDetailsAD
             // 
