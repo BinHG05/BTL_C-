@@ -57,9 +57,9 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             profileContextMenu.SuspendLayout();
             SuspendLayout();
             // 
-            // sidebarPanel
+            // sidebarPanel - OPTION 1: DEEP NAVY BLUE
             // 
-            sidebarPanel.BackColor = Color.FromArgb(31, 31, 224);
+            sidebarPanel.BackColor = Color.FromArgb(15, 23, 42);
             sidebarPanel.Controls.Add(btnSettings);
             sidebarPanel.Controls.Add(btnAnalytics);
             sidebarPanel.Controls.Add(btnGoals);
@@ -71,7 +71,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             sidebarPanel.Location = new Point(0, 0);
             sidebarPanel.Margin = new Padding(3, 4, 3, 4);
             sidebarPanel.Name = "sidebarPanel";
-            sidebarPanel.Size = new Size(91, 1024);
+            sidebarPanel.Size = new Size(240, 1024);
             sidebarPanel.TabIndex = 0;
             // 
             // btnSettings
@@ -80,18 +80,23 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             btnSettings.Dock = DockStyle.Bottom;
             btnSettings.FlatAppearance.BorderSize = 0;
             btnSettings.FlatStyle = FlatStyle.Flat;
-            btnSettings.Font = new Font("Segoe UI", 10F);
-            btnSettings.ForeColor = Color.White;
+            btnSettings.Font = new Font("Segoe UI", 11F, FontStyle.Regular);
+            btnSettings.ForeColor = Color.FromArgb(226, 232, 240);
             btnSettings.IconChar = IconChar.Cog;
-            btnSettings.IconColor = Color.White;
+            btnSettings.IconColor = Color.FromArgb(226, 232, 240);
             btnSettings.IconFont = IconFont.Auto;
-            btnSettings.IconSize = 32;
-            btnSettings.Location = new Point(0, 931);
+            btnSettings.IconSize = 24;
+            btnSettings.ImageAlign = ContentAlignment.MiddleLeft;
+            btnSettings.Location = new Point(0, 944);
             btnSettings.Margin = new Padding(3, 4, 3, 4);
             btnSettings.Name = "btnSettings";
-            btnSettings.Size = new Size(91, 93);
+            btnSettings.Padding = new Padding(20, 0, 0, 0);
+            btnSettings.Size = new Size(240, 80);
             btnSettings.TabIndex = 6;
             btnSettings.Tag = "Settings";
+            btnSettings.Text = "  Settings";
+            btnSettings.TextAlign = ContentAlignment.MiddleLeft;
+            btnSettings.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnSettings.UseVisualStyleBackColor = false;
             btnSettings.Click += BtnSettings_Click;
             // 
@@ -101,18 +106,23 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             btnAnalytics.Dock = DockStyle.Top;
             btnAnalytics.FlatAppearance.BorderSize = 0;
             btnAnalytics.FlatStyle = FlatStyle.Flat;
-            btnAnalytics.Font = new Font("Segoe UI", 10F);
-            btnAnalytics.ForeColor = Color.White;
+            btnAnalytics.Font = new Font("Segoe UI", 11F);
+            btnAnalytics.ForeColor = Color.FromArgb(226, 232, 240);
             btnAnalytics.IconChar = IconChar.ChartLine;
-            btnAnalytics.IconColor = Color.White;
+            btnAnalytics.IconColor = Color.FromArgb(226, 232, 240);
             btnAnalytics.IconFont = IconFont.Auto;
-            btnAnalytics.IconSize = 32;
-            btnAnalytics.Location = new Point(0, 585);
+            btnAnalytics.IconSize = 24;
+            btnAnalytics.ImageAlign = ContentAlignment.MiddleLeft;
+            btnAnalytics.Location = new Point(0, 540);
             btnAnalytics.Margin = new Padding(3, 4, 3, 4);
             btnAnalytics.Name = "btnAnalytics";
-            btnAnalytics.Size = new Size(91, 93);
+            btnAnalytics.Padding = new Padding(20, 0, 0, 0);
+            btnAnalytics.Size = new Size(240, 65);
             btnAnalytics.TabIndex = 5;
             btnAnalytics.Tag = "Analytics";
+            btnAnalytics.Text = "  Analytics";
+            btnAnalytics.TextAlign = ContentAlignment.MiddleLeft;
+            btnAnalytics.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnAnalytics.UseVisualStyleBackColor = false;
             btnAnalytics.Click += BtnAnalytics_Click;
             // 
@@ -122,18 +132,23 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             btnGoals.Dock = DockStyle.Top;
             btnGoals.FlatAppearance.BorderSize = 0;
             btnGoals.FlatStyle = FlatStyle.Flat;
-            btnGoals.Font = new Font("Segoe UI", 10F);
-            btnGoals.ForeColor = Color.White;
+            btnGoals.Font = new Font("Segoe UI", 11F);
+            btnGoals.ForeColor = Color.FromArgb(226, 232, 240);
             btnGoals.IconChar = IconChar.Bullseye;
-            btnGoals.IconColor = Color.White;
+            btnGoals.IconColor = Color.FromArgb(226, 232, 240);
             btnGoals.IconFont = IconFont.Auto;
-            btnGoals.IconSize = 32;
-            btnGoals.Location = new Point(0, 492);
+            btnGoals.IconSize = 24;
+            btnGoals.ImageAlign = ContentAlignment.MiddleLeft;
+            btnGoals.Location = new Point(0, 475);
             btnGoals.Margin = new Padding(3, 4, 3, 4);
             btnGoals.Name = "btnGoals";
-            btnGoals.Size = new Size(91, 93);
+            btnGoals.Padding = new Padding(20, 0, 0, 0);
+            btnGoals.Size = new Size(240, 65);
             btnGoals.TabIndex = 4;
             btnGoals.Tag = "Goals";
+            btnGoals.Text = "  Goals";
+            btnGoals.TextAlign = ContentAlignment.MiddleLeft;
+            btnGoals.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnGoals.UseVisualStyleBackColor = false;
             btnGoals.Click += BtnGoals_Click;
             // 
@@ -143,18 +158,23 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             btnBudget.Dock = DockStyle.Top;
             btnBudget.FlatAppearance.BorderSize = 0;
             btnBudget.FlatStyle = FlatStyle.Flat;
-            btnBudget.Font = new Font("Segoe UI", 10F);
-            btnBudget.ForeColor = Color.White;
+            btnBudget.Font = new Font("Segoe UI", 11F);
+            btnBudget.ForeColor = Color.FromArgb(226, 232, 240);
             btnBudget.IconChar = IconChar.Coins;
-            btnBudget.IconColor = Color.White;
+            btnBudget.IconColor = Color.FromArgb(226, 232, 240);
             btnBudget.IconFont = IconFont.Auto;
-            btnBudget.IconSize = 32;
-            btnBudget.Location = new Point(0, 399);
+            btnBudget.IconSize = 24;
+            btnBudget.ImageAlign = ContentAlignment.MiddleLeft;
+            btnBudget.Location = new Point(0, 410);
             btnBudget.Margin = new Padding(3, 4, 3, 4);
             btnBudget.Name = "btnBudget";
-            btnBudget.Size = new Size(91, 93);
+            btnBudget.Padding = new Padding(20, 0, 0, 0);
+            btnBudget.Size = new Size(240, 65);
             btnBudget.TabIndex = 3;
             btnBudget.Tag = "Budget";
+            btnBudget.Text = "  Budget";
+            btnBudget.TextAlign = ContentAlignment.MiddleLeft;
+            btnBudget.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnBudget.UseVisualStyleBackColor = false;
             btnBudget.Click += BtnBudget_Click;
             // 
@@ -164,18 +184,23 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             btnWallet.Dock = DockStyle.Top;
             btnWallet.FlatAppearance.BorderSize = 0;
             btnWallet.FlatStyle = FlatStyle.Flat;
-            btnWallet.Font = new Font("Segoe UI", 10F);
-            btnWallet.ForeColor = Color.White;
-            btnWallet.IconChar = IconChar.CreditCard;
-            btnWallet.IconColor = Color.White;
+            btnWallet.Font = new Font("Segoe UI", 11F);
+            btnWallet.ForeColor = Color.FromArgb(226, 232, 240);
+            btnWallet.IconChar = IconChar.Wallet;
+            btnWallet.IconColor = Color.FromArgb(226, 232, 240);
             btnWallet.IconFont = IconFont.Auto;
-            btnWallet.IconSize = 32;
-            btnWallet.Location = new Point(0, 306);
+            btnWallet.IconSize = 24;
+            btnWallet.ImageAlign = ContentAlignment.MiddleLeft;
+            btnWallet.Location = new Point(0, 345);
             btnWallet.Margin = new Padding(3, 4, 3, 4);
             btnWallet.Name = "btnWallet";
-            btnWallet.Size = new Size(91, 93);
+            btnWallet.Padding = new Padding(20, 0, 0, 0);
+            btnWallet.Size = new Size(240, 65);
             btnWallet.TabIndex = 2;
             btnWallet.Tag = "Wallet";
+            btnWallet.Text = "  Wallet";
+            btnWallet.TextAlign = ContentAlignment.MiddleLeft;
+            btnWallet.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnWallet.UseVisualStyleBackColor = false;
             btnWallet.Click += BtnWallet_Click;
             // 
@@ -185,18 +210,23 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             btnDashboard.Dock = DockStyle.Top;
             btnDashboard.FlatAppearance.BorderSize = 0;
             btnDashboard.FlatStyle = FlatStyle.Flat;
-            btnDashboard.Font = new Font("Segoe UI", 10F);
-            btnDashboard.ForeColor = Color.White;
-            btnDashboard.IconChar = IconChar.PieChart;
-            btnDashboard.IconColor = Color.White;
+            btnDashboard.Font = new Font("Segoe UI", 11F);
+            btnDashboard.ForeColor = Color.FromArgb(226, 232, 240);
+            btnDashboard.IconChar = IconChar.Home;
+            btnDashboard.IconColor = Color.FromArgb(226, 232, 240);
             btnDashboard.IconFont = IconFont.Auto;
-            btnDashboard.IconSize = 32;
-            btnDashboard.Location = new Point(0, 213);
+            btnDashboard.IconSize = 24;
+            btnDashboard.ImageAlign = ContentAlignment.MiddleLeft;
+            btnDashboard.Location = new Point(0, 280);
             btnDashboard.Margin = new Padding(3, 4, 3, 4);
             btnDashboard.Name = "btnDashboard";
-            btnDashboard.Size = new Size(91, 93);
+            btnDashboard.Padding = new Padding(20, 0, 0, 0);
+            btnDashboard.Size = new Size(240, 65);
             btnDashboard.TabIndex = 1;
             btnDashboard.Tag = "Dashboard";
+            btnDashboard.Text = "  Dashboard";
+            btnDashboard.TextAlign = ContentAlignment.MiddleLeft;
+            btnDashboard.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnDashboard.UseVisualStyleBackColor = false;
             btnDashboard.Click += BtnDashboard_Click;
             // 
@@ -208,16 +238,16 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             logoPanel.Location = new Point(0, 0);
             logoPanel.Margin = new Padding(3, 4, 3, 4);
             logoPanel.Name = "logoPanel";
-            logoPanel.Size = new Size(91, 213);
+            logoPanel.Size = new Size(240, 280);
             logoPanel.TabIndex = 0;
             // 
             // logoPic
             // 
             logoPic.BackColor = Color.Transparent;
-            logoPic.Location = new Point(11, 67);
+            logoPic.Location = new Point(50, 80);
             logoPic.Margin = new Padding(3, 4, 3, 4);
             logoPic.Name = "logoPic";
-            logoPic.Size = new Size(69, 80);
+            logoPic.Size = new Size(140, 120);
             logoPic.SizeMode = PictureBoxSizeMode.Zoom;
             logoPic.TabIndex = 0;
             logoPic.TabStop = false;
@@ -228,11 +258,11 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             headerPanel.Controls.Add(rightPanel);
             headerPanel.Controls.Add(centerPanel);
             headerPanel.Dock = DockStyle.Top;
-            headerPanel.Location = new Point(91, 0);
+            headerPanel.Location = new Point(240, 0);
             headerPanel.Margin = new Padding(3, 4, 3, 4);
             headerPanel.Name = "headerPanel";
             headerPanel.Padding = new Padding(34, 20, 34, 20);
-            headerPanel.Size = new Size(1536, 93);
+            headerPanel.Size = new Size(1387, 93);
             headerPanel.TabIndex = 1;
             // 
             // rightPanel
@@ -242,7 +272,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             rightPanel.Controls.Add(btnNotification);
             rightPanel.Controls.Add(btnProfileTop);
             rightPanel.Dock = DockStyle.Right;
-            rightPanel.Location = new Point(1296, 20);
+            rightPanel.Location = new Point(1147, 20);
             rightPanel.Margin = new Padding(3, 4, 3, 4);
             rightPanel.Name = "rightPanel";
             rightPanel.Padding = new Padding(0, 13, 23, 13);
@@ -287,7 +317,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             // 
             // btnProfileTop
             // 
-            btnProfileTop.BackColor = Color.FromArgb(31, 31, 224);
+            btnProfileTop.BackColor = Color.FromArgb(59, 130, 246);
             btnProfileTop.Dock = DockStyle.Right;
             btnProfileTop.FlatAppearance.BorderSize = 0;
             btnProfileTop.FlatStyle = FlatStyle.Flat;
@@ -316,7 +346,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             // 
             // btnAddTransaction
             // 
-            btnAddTransaction.BackColor = Color.FromArgb(101, 109, 255);
+            btnAddTransaction.BackColor = Color.FromArgb(59, 130, 246);
             btnAddTransaction.FlatAppearance.BorderSize = 0;
             btnAddTransaction.FlatStyle = FlatStyle.Flat;
             btnAddTransaction.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
@@ -348,7 +378,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             // 
             // btnSearchInside
             // 
-            btnSearchInside.BackColor = Color.FromArgb(31, 31, 224);
+            btnSearchInside.BackColor = Color.FromArgb(59, 130, 246);
             btnSearchInside.FlatAppearance.BorderSize = 0;
             btnSearchInside.FlatStyle = FlatStyle.Flat;
             btnSearchInside.IconChar = IconChar.Search;
@@ -380,10 +410,10 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             // 
             contentPanel.BackColor = Color.FromArgb(245, 245, 245);
             contentPanel.Dock = DockStyle.Fill;
-            contentPanel.Location = new Point(91, 93);
+            contentPanel.Location = new Point(240, 93);
             contentPanel.Margin = new Padding(3, 4, 3, 4);
             contentPanel.Name = "contentPanel";
-            contentPanel.Size = new Size(1536, 931);
+            contentPanel.Size = new Size(1387, 931);
             contentPanel.TabIndex = 2;
             // 
             // profileContextMenu
@@ -406,7 +436,10 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             settingsMenuItem.Padding = new Padding(10, 8, 10, 8);
             settingsMenuItem.Size = new Size(193, 42);
             settingsMenuItem.Text = "⚙️  Settings";
+
             //settingsMenuItem.Click += SettingsMenuItem_Click;
+
+
             // 
             // logoutMenuItem
             // 
@@ -444,7 +477,6 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             ResumeLayout(false);
         }
 
-        // ✅ THÊM METHOD TẠO PROFILE INFO PANEL
         private Panel CreateProfileInfoPanel()
         {
             Panel panel = new Panel
@@ -454,21 +486,18 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
                 Padding = new Padding(15, 10, 15, 10)
             };
 
-            // Icon
             PictureBox iconBox = new PictureBox
             {
                 Size = new Size(40, 40),
                 Location = new Point(10, 15),
-                BackColor = Color.FromArgb(31, 31, 224),
+                BackColor = Color.FromArgb(59, 130, 246),
                 SizeMode = PictureBoxSizeMode.CenterImage
             };
 
-            // Make icon circular
             System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
             path.AddEllipse(0, 0, iconBox.Width, iconBox.Height);
             iconBox.Region = new Region(path);
 
-            // Icon user (dùng emoji hoặc text)
             Label iconLabel = new Label
             {
                 Text = "👤",
@@ -479,7 +508,6 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
                 Parent = iconBox
             };
 
-            // Name label
             profileNameLabel = new Label
             {
                 Text = "User Name",
@@ -490,7 +518,6 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
                 BackColor = Color.Transparent
             };
 
-            // Email label
             profileEmailLabel = new Label
             {
                 Text = "email@example.com",
@@ -531,8 +558,6 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
         private FontAwesome.Sharp.IconButton btnSearchInside;
         private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.Panel contentPanel;
-
-        // ✅ THÊM CÁC BIẾN MỚI
         private System.Windows.Forms.ContextMenuStrip profileContextMenu;
         private System.Windows.Forms.ToolStripControlHost profileInfoPanel;
         private System.Windows.Forms.ToolStripSeparator separator1;

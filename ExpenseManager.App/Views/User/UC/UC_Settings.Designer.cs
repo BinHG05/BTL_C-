@@ -104,7 +104,8 @@ namespace ExpenseManager.App.Views.User.UC
             // mainPanel
             // 
             mainPanel.AutoScroll = true;
-            mainPanel.BackColor = Color.FromArgb(245, 247, 250);
+            mainPanel.BackColor = Color.FromArgb(238, 242, 247);
+
             mainPanel.Controls.Add(personalInfoPanel);
             mainPanel.Controls.Add(topPanel);
             mainPanel.Controls.Add(headerPanel);
@@ -570,7 +571,8 @@ namespace ExpenseManager.App.Views.User.UC
             // 
             // headerPanel
             // 
-            headerPanel.BackColor = Color.FromArgb(245, 247, 250);
+            headerPanel.BackColor = Color.FromArgb(238, 242, 247);
+
             headerPanel.Controls.Add(lblTitle);
             headerPanel.Controls.Add(lblSubtitle);
             headerPanel.Controls.Add(breadcrumbPanel);
