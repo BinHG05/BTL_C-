@@ -25,10 +25,21 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
     public partial class LayoutUser : Form
     {
         private IconButton currentButton;
-        private Color sidebarColor = Color.FromArgb(31, 31, 224);
-        private Color activeColor = Color.FromArgb(51, 51, 255);
-        private Color hoverColor = Color.FromArgb(61, 61, 244);
+
+        // =========================================================
+        // ✅ CẬP NHẬT MÀU SẮC (Đã sửa lại màu chữ mặc định)
+        // =========================================================
+        private Color sidebarColor = Color.FromArgb(15, 23, 42);     // Màu nền sidebar (Dark Navy)
+        private Color activeColor = Color.FromArgb(99, 102, 241);      // Màu tím/indigo khi Active
+        private Color hoverColor = Color.FromArgb(30, 41, 59);         // Màu khi di chuột (Sáng hơn nền một chút)
         private Color defaultBg = Color.Transparent;
+
+        // 🔥 ĐÂY LÀ DÒNG QUAN TRỌNG ĐÃ SỬA:
+        // Đổi từ màu xám đậm (71, 85, 105) sang màu trắng bạc (226, 232, 240) để nổi bật trên nền tối
+        private Color defaultTextColor = Color.FromArgb(226, 232, 240);
+
+        private Color activeTextColor = Color.White;
+
         private string _currentUserId;
 
         private ContextMenuStrip profileMenu;
@@ -171,14 +182,42 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             btnProfileTop.Region = new Region(path);
         }
 
+        // ✅ CẬP NHẬT: Hover effects sử dụng màu chữ sáng
         private void SetupButtonHoverEffects()
         {
             var buttons = new[] { btnDashboard, btnWallet, btnBudget, btnGoals, btnAnalytics, btnSettings };
 
             foreach (var btn in buttons)
             {
-                btn.MouseEnter += (s, e) => { if (btn != currentButton) btn.BackColor = hoverColor; };
-                btn.MouseLeave += (s, e) => { if (btn != currentButton) btn.BackColor = defaultBg; };
+                // Đảm bảo ban đầu nút có màu đúng
+                if (btn != currentButton)
+                {
+                    btn.ForeColor = defaultTextColor;
+                    btn.IconColor = defaultTextColor;
+                }
+
+                btn.MouseEnter += (s, e) =>
+                {
+                    if (btn != currentButton)
+                    {
+                        btn.BackColor = hoverColor;
+                        // Khi hover có thể giữ màu trắng hoặc đổi sang màu tím nhạt tùy bạn, 
+                        // ở đây tôi giữ màu trắng cho dễ nhìn
+                        btn.ForeColor = Color.White;
+                        btn.IconColor = Color.White;
+                    }
+                };
+
+                btn.MouseLeave += (s, e) =>
+                {
+                    if (btn != currentButton)
+                    {
+                        btn.BackColor = defaultBg;
+                        // Khi rời chuột, trả về màu mặc định (Bây giờ là màu sáng)
+                        btn.ForeColor = defaultTextColor;
+                        btn.IconColor = defaultTextColor;
+                    }
+                };
             }
         }
 
@@ -188,21 +227,24 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             centerPanel.Top = (headerPanel.Height - centerPanel.Height) / 2;
         }
 
+        // ✅ CẬP NHẬT: Active button logic
         private void ActivateButton(IconButton btn)
         {
             if (btn == currentButton) return;
 
             if (currentButton != null)
             {
+                // Trả nút cũ về màu mặc định (Màu sáng)
                 currentButton.BackColor = defaultBg;
-                currentButton.ForeColor = Color.White;
-                currentButton.IconColor = Color.White;
+                currentButton.ForeColor = defaultTextColor;
+                currentButton.IconColor = defaultTextColor;
             }
 
             currentButton = btn;
+            // Nút đang chọn (Active)
             btn.BackColor = activeColor;
-            btn.ForeColor = Color.White;
-            btn.IconColor = Color.White;
+            btn.ForeColor = activeTextColor;
+            btn.IconColor = activeTextColor;
         }
 
         private void LoadContent(UserControl uc)
@@ -226,14 +268,12 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             LoadContent(new UC_Wallet());
         }
 
-        // ✅ SỬA LẠI HOÀN TOÀN - DÙNG DI CONTAINER
         private void BtnBudget_Click(object sender, EventArgs e)
         {
             ActivateButton(btnBudget);
 
             try
             {
-                // ✅ LẤY UC_Budget TỪ DI CONTAINER (đã có Presenter sẵn)
                 var uc = Program.GetService<UC_Budget>();
                 LoadContent(uc);
             }

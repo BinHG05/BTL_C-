@@ -32,6 +32,10 @@ namespace ExpenseManager.App.Views.User.UC
         public UC_Settings(string userId)
         {
             InitializeComponent();
+            this.BackColor = System.Drawing.Color.FromArgb(238, 242, 247);
+            mainPanel.BackColor = System.Drawing.Color.FromArgb(238, 242, 247);
+            breadcrumbPanel.Visible = false;
+
             InitializeCustomComponents();
             InitializePresenter();
         }
@@ -39,10 +43,14 @@ namespace ExpenseManager.App.Views.User.UC
         public UC_Settings()
         {
             InitializeComponent();
+            this.BackColor = System.Drawing.Color.FromArgb(238, 242, 247);
+            mainPanel.BackColor = System.Drawing.Color.FromArgb(238, 242, 247);
+            breadcrumbPanel.Visible = false; // ✅ Thêm dòng này
             InitializeCustomComponents();
             InitializePresenter();
             this.Resize += UC_Settings_Resize;
         }
+
 
         // =========================================================
         // ===== IMPLEMENT IProfileView - PROPERTIES (ĐÃ CÓ) =====

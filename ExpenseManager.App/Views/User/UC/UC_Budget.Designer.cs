@@ -20,7 +20,6 @@
             pnlHeader = new System.Windows.Forms.Panel();
             lblTitle = new System.Windows.Forms.Label();
             lblSubtitle = new System.Windows.Forms.Label();
-            btnAddNewBudget = new System.Windows.Forms.Button();
             pnlLeftSidebar = new System.Windows.Forms.Panel();
             flpBudgetList = new System.Windows.Forms.FlowLayoutPanel();
             btnAddBudgetSidebar = new System.Windows.Forms.Button();
@@ -69,12 +68,11 @@
             pnlHeader.BackColor = System.Drawing.Color.Transparent;
             pnlHeader.Controls.Add(lblTitle);
             pnlHeader.Controls.Add(lblSubtitle);
-            pnlHeader.Controls.Add(btnAddNewBudget);
             pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
             pnlHeader.Location = new System.Drawing.Point(0, 0);
             pnlHeader.Name = "pnlHeader";
             pnlHeader.Padding = new System.Windows.Forms.Padding(35, 25, 35, 25);
-            pnlHeader.Size = new System.Drawing.Size(1600, 140);
+            pnlHeader.Size = new System.Drawing.Size(1600, 120);
             pnlHeader.TabIndex = 0;
             // 
             // lblTitle
@@ -93,35 +91,19 @@
             lblSubtitle.AutoSize = true;
             lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 11F);
             lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(100, 116, 139);
-            lblSubtitle.Location = new System.Drawing.Point(35, 90);
+            lblSubtitle.Location = new System.Drawing.Point(35, 85);
             lblSubtitle.Name = "lblSubtitle";
             lblSubtitle.Size = new System.Drawing.Size(266, 25);
             lblSubtitle.TabIndex = 1;
             lblSubtitle.Text = "Create and track your budgets";
             // 
-            // btnAddNewBudget
-            // 
-            btnAddNewBudget.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            btnAddNewBudget.BackColor = System.Drawing.Color.FromArgb(99, 102, 241);
-            btnAddNewBudget.Cursor = System.Windows.Forms.Cursors.Hand;
-            btnAddNewBudget.FlatAppearance.BorderSize = 0;
-            btnAddNewBudget.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            btnAddNewBudget.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            btnAddNewBudget.ForeColor = System.Drawing.Color.White;
-            btnAddNewBudget.Location = new System.Drawing.Point(1353, 45);
-            btnAddNewBudget.Name = "btnAddNewBudget";
-            btnAddNewBudget.Size = new System.Drawing.Size(212, 50);
-            btnAddNewBudget.TabIndex = 2;
-            btnAddNewBudget.Text = "+ Add new budget";
-            btnAddNewBudget.UseVisualStyleBackColor = false;
-            // 
             // pnlLeftSidebar
             // 
             pnlLeftSidebar.BackColor = System.Drawing.Color.Transparent;
             pnlLeftSidebar.Controls.Add(flpBudgetList);
-            pnlLeftSidebar.Location = new System.Drawing.Point(30, 160);
+            pnlLeftSidebar.Location = new System.Drawing.Point(30, 140);
             pnlLeftSidebar.Name = "pnlLeftSidebar";
-            pnlLeftSidebar.Size = new System.Drawing.Size(350, 700);
+            pnlLeftSidebar.Size = new System.Drawing.Size(350, 720);
             pnlLeftSidebar.TabIndex = 1;
             // 
             // flpBudgetList
@@ -132,7 +114,7 @@
             flpBudgetList.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             flpBudgetList.Location = new System.Drawing.Point(0, 0);
             flpBudgetList.Name = "flpBudgetList";
-            flpBudgetList.Size = new System.Drawing.Size(350, 700);
+            flpBudgetList.Size = new System.Drawing.Size(350, 720);
             flpBudgetList.TabIndex = 0;
             flpBudgetList.WrapContents = false;
             // 
@@ -159,9 +141,9 @@
             pnlMainContent.Controls.Add(pnlBudgetOverview);
             pnlMainContent.Controls.Add(pnlBudgetStats);
             pnlMainContent.Controls.Add(pnlBudgetChart);
-            pnlMainContent.Location = new System.Drawing.Point(400, 160);
+            pnlMainContent.Location = new System.Drawing.Point(400, 140);
             pnlMainContent.Name = "pnlMainContent";
-            pnlMainContent.Size = new System.Drawing.Size(1180, 720);
+            pnlMainContent.Size = new System.Drawing.Size(1180, 740);
             pnlMainContent.TabIndex = 2;
             // 
             // pnlBudgetHeader
@@ -441,7 +423,7 @@
             pnlBudgetChart.Location = new System.Drawing.Point(0, 395);
             pnlBudgetChart.Name = "pnlBudgetChart";
             pnlBudgetChart.Padding = new System.Windows.Forms.Padding(30);
-            pnlBudgetChart.Size = new System.Drawing.Size(1140, 300);
+            pnlBudgetChart.Size = new System.Drawing.Size(1140, 340);
             pnlBudgetChart.TabIndex = 6;
             // 
             // lblChartTitle
@@ -503,7 +485,7 @@
             pnlChartArea.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             pnlChartArea.Location = new System.Drawing.Point(30, 80);
             pnlChartArea.Name = "pnlChartArea";
-            pnlChartArea.Size = new System.Drawing.Size(1080, 190);
+            pnlChartArea.Size = new System.Drawing.Size(1080, 230);
             pnlChartArea.TabIndex = 5;
             // 
             // UC_Budget
@@ -532,7 +514,6 @@
             pnlBudgetChart.ResumeLayout(false);
             pnlBudgetChart.PerformLayout();
             ResumeLayout(false);
-
         }
 
         #endregion
@@ -541,11 +522,10 @@
         private System.Windows.Forms.Panel pnlHeader;
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Label lblSubtitle;
-        private System.Windows.Forms.Button btnAddNewBudget; // *** GIỮ LẠI NÚT NÀY ***
         private System.Windows.Forms.Panel pnlLeftSidebar;
         private System.Windows.Forms.FlowLayoutPanel flpBudgetList;
         private System.Windows.Forms.Panel pnlMainContent;
-        private System.Windows.Forms.Button btnAddBudgetSidebar; // *** GIỮ LẠI NÚT NÀY ***
+        private System.Windows.Forms.Button btnAddBudgetSidebar;
 
         // Panel Nội dung
         private System.Windows.Forms.Panel pnlBudgetHeader;

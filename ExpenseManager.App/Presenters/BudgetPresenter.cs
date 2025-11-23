@@ -1,16 +1,16 @@
-﻿using System;
+﻿using ExpenseManager.App.Models.DTOs;
+using ExpenseManager.App.Models.Entities;
+using ExpenseManager.App.Repositories.Interfaces;
+using ExpenseManager.App.Services;
+using ExpenseManager.App.Services.Interfaces;
+using ExpenseManager.App.Views.User;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ExpenseManager.App.Services.Interfaces;
-using ExpenseManager.App.Models.Entities;
-using ExpenseManager.App.Services;
-using DbColor = ExpenseManager.App.Models.Entities.Color;
-using DbIcon = ExpenseManager.App.Models.Entities.Icon;
-using WinColor = System.Drawing.Color;
-using System.Diagnostics;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace ExpenseManager.App.Presenters
 {
@@ -46,9 +46,6 @@ namespace ExpenseManager.App.Presenters
 
         private int _selectedBudgetId;
         private List<BudgetSummaryDto> _currentBudgets;
-        private List<Category> _allCategories;
-        private List<DbIcon> _allIcons;
-        private List<DbColor> _allColors;
 
         public BudgetPresenter(IBudgetView view, IServiceProvider serviceProvider)
         {
@@ -65,25 +62,18 @@ namespace ExpenseManager.App.Presenters
 
         private async void OnViewLoaded(object sender, EventArgs e)
         {
-            Debug.WriteLine("[BudgetPresenter] OnViewLoaded");
-            await LoadInitialDataAsync();
+            await LoadBudgetsAsync();
         }
 
         private async void OnBudgetSelected(object sender, int budgetId)
         {
-            Debug.WriteLine($"[BudgetPresenter] OnBudgetSelected: {budgetId}");
             _selectedBudgetId = budgetId;
             await LoadBudgetDetailAsync(budgetId);
         }
 
         private async void OnDeleteBudgetClicked(object sender, EventArgs e)
         {
-            if (_selectedBudgetId <= 0)
-            {
-                _view.ShowMessage("Vui lòng chọn ngân sách để xóa!", "Thông báo", MessageBoxIcon.Warning);
-                return;
-            }
-
+            if (_selectedBudgetId <= 0) return;
             await DeleteBudgetAsync(_selectedBudgetId);
         }
 
@@ -91,15 +81,71 @@ namespace ExpenseManager.App.Presenters
         {
             if (_selectedBudgetId <= 0)
             {
-                _view.ShowMessage("Vui lòng chọn ngân sách để sửa!", "Thông báo", MessageBoxIcon.Warning);
+                _view.ShowMessage("Vui lòng chọn ngân sách cần sửa!", "Thông báo", MessageBoxIcon.Warning);
                 return;
             }
 
-            Debug.WriteLine($"[BudgetPresenter] OnEditBudgetClicked: {_selectedBudgetId}");
-            // TODO: Implement edit logic
-            _view.ShowMessage("Chức năng chỉnh sửa đang phát triển!", "Thông báo", MessageBoxIcon.Information);
+            try
+            {
+                _view.ShowLoading(true);
+
+                using (var scope = _serviceProvider.CreateScope())
+                {
+                    var budgetService = scope.ServiceProvider.GetRequiredService<IBudgetService>();
+                    var categoryService = scope.ServiceProvider.GetRequiredService<ICategoryService>();
+
+                    var currentBudget = await budgetService.GetBudgetDetailAsync(_selectedBudgetId, _view.CurrentUserId);
+                    if (currentBudget == null)
+                    {
+                        _view.ShowMessage("Không tìm thấy thông tin ngân sách!", "Lỗi", MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    var allCategories = await categoryService.GetCategoriesByUserIdAsync(_view.CurrentUserId);
+                    var summaries = await budgetService.GetUserBudgetSummariesAsync(_view.CurrentUserId);
+
+                    var usedCategoryIds = summaries
+                        .Where(b => b.BudgetId != _selectedBudgetId)
+                        .Select(b => b.CategoryId)
+                        .ToHashSet();
+
+                    var availableCategories = allCategories
+                        .Where(c => c.Type == "Expense" && !usedCategoryIds.Contains(c.CategoryId))
+                        .ToList();
+
+                    using (var dialog = new BudgetEditDialog(currentBudget, availableCategories))
+                    {
+                        _view.ShowLoading(false);
+
+                        if (dialog.ShowDialog() == DialogResult.OK && dialog.UpdatedBudgetDto != null)
+                        {
+                            _view.ShowLoading(true);
+                            bool success = await budgetService.UpdateBudgetAsync(_selectedBudgetId, dialog.UpdatedBudgetDto, _view.CurrentUserId);
+
+                            if (success)
+                            {
+                                _view.ShowMessage("Cập nhật thành công!", "Thông báo", MessageBoxIcon.Information);
+                                await LoadBudgetsAsync();
+                            }
+                            else
+                            {
+                                _view.ShowMessage("Cập nhật thất bại!", "Lỗi", MessageBoxIcon.Error);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _view.ShowMessage($"Lỗi: {ex.Message}", "Lỗi", MessageBoxIcon.Error);
+            }
+            finally
+            {
+                _view.ShowLoading(false);
+            }
         }
 
+        // SỬA: Load lại chart khi thay đổi date range
         private async void OnChartDateRangeChanged(object sender, BudgetViewDateRangeEventArgs e)
         {
             if (_selectedBudgetId > 0)
@@ -108,53 +154,24 @@ namespace ExpenseManager.App.Presenters
             }
         }
 
+        // SỬA: Chỉ load lại chart khi thay đổi loại, không load lại detail
         private async void OnChartTypeChanged(object sender, string chartType)
         {
             if (_selectedBudgetId > 0)
             {
-                await LoadBudgetDetailAsync(_selectedBudgetId);
-            }
-        }
-
-        private async Task LoadInitialDataAsync()
-        {
-            try
-            {
-                _view.ShowLoading(true);
-                Debug.WriteLine("=== LoadInitialDataAsync START ===");
-
-                using (var scope1 = _serviceProvider.CreateScope())
+                try
                 {
-                    var categoryService = scope1.ServiceProvider.GetRequiredService<ICategoryService>();
-                    _allCategories = await categoryService.GetCategoriesByUserIdAsync(_view.CurrentUserId);
-                    Debug.WriteLine($"✅ Categories: {_allCategories?.Count ?? 0}");
+                    using (var scope = _serviceProvider.CreateScope())
+                    {
+                        var budgetService = scope.ServiceProvider.GetRequiredService<IBudgetService>();
+                        var breakdown = await budgetService.GetExpenseBreakdownAsync(_selectedBudgetId, _view.CurrentUserId);
+                        _view.DisplayExpenseChart(breakdown ?? Enumerable.Empty<ExpenseBreakdownDto>());
+                    }
                 }
-
-                using (var scope2 = _serviceProvider.CreateScope())
+                catch (Exception ex)
                 {
-                    var categoryService = scope2.ServiceProvider.GetRequiredService<ICategoryService>();
-                    _allIcons = await categoryService.GetAllIconsAsync();
-                    Debug.WriteLine($"✅ Icons: {_allIcons?.Count ?? 0}");
+                    Debug.WriteLine($"OnChartTypeChanged Error: {ex.Message}");
                 }
-
-                using (var scope3 = _serviceProvider.CreateScope())
-                {
-                    var categoryService = scope3.ServiceProvider.GetRequiredService<ICategoryService>();
-                    _allColors = await categoryService.GetAllColorsAsync();
-                    Debug.WriteLine($"✅ Colors: {_allColors?.Count ?? 0}");
-                }
-
-                await LoadBudgetsAsync();
-                Debug.WriteLine("=== LoadInitialDataAsync COMPLETE ===");
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"❌ LoadInitialDataAsync Error: {ex.Message}\n{ex.StackTrace}");
-                _view.ShowMessage($"Lỗi tải dữ liệu: {ex.Message}", "Lỗi", MessageBoxIcon.Error);
-            }
-            finally
-            {
-                _view.ShowLoading(false);
             }
         }
 
@@ -162,22 +179,24 @@ namespace ExpenseManager.App.Presenters
         {
             try
             {
-                Debug.WriteLine("[LoadBudgetsAsync] START");
-
                 using (var scope = _serviceProvider.CreateScope())
                 {
                     var budgetService = scope.ServiceProvider.GetRequiredService<IBudgetService>();
                     var budgets = await budgetService.GetUserBudgetSummariesAsync(_view.CurrentUserId);
-
                     _currentBudgets = budgets?.ToList() ?? new List<BudgetSummaryDto>();
-                    Debug.WriteLine($"✅ Loaded {_currentBudgets.Count} budgets");
-
                     _view.DisplayBudgetList(_currentBudgets);
 
                     if (_currentBudgets.Any())
                     {
-                        _selectedBudgetId = _currentBudgets.First().BudgetId;
-                        await LoadBudgetDetailAsync(_selectedBudgetId);
+                        if (_selectedBudgetId > 0 && _currentBudgets.Any(b => b.BudgetId == _selectedBudgetId))
+                        {
+                            await LoadBudgetDetailAsync(_selectedBudgetId);
+                        }
+                        else
+                        {
+                            _selectedBudgetId = _currentBudgets.First().BudgetId;
+                            await LoadBudgetDetailAsync(_selectedBudgetId);
+                        }
                     }
                     else
                     {
@@ -187,8 +206,7 @@ namespace ExpenseManager.App.Presenters
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"❌ LoadBudgetsAsync Error: {ex.Message}");
-                _view.ShowMessage($"Lỗi tải danh sách: {ex.Message}", "Lỗi", MessageBoxIcon.Error);
+                Debug.WriteLine($"LoadBudgetsAsync Error: {ex.Message}");
             }
         }
 
@@ -196,50 +214,50 @@ namespace ExpenseManager.App.Presenters
         {
             try
             {
-                Debug.WriteLine($"[LoadBudgetDetailAsync] Loading ID: {budgetId}");
-
                 using (var scope = _serviceProvider.CreateScope())
                 {
                     var budgetService = scope.ServiceProvider.GetRequiredService<IBudgetService>();
-
                     var detail = await budgetService.GetBudgetDetailAsync(budgetId, _view.CurrentUserId);
-
                     if (detail != null)
                     {
                         _view.DisplayBudgetDetail(detail);
 
+                        // Load chart theo range của budget
                         var breakdown = await budgetService.GetExpenseBreakdownAsync(budgetId, _view.CurrentUserId);
                         _view.DisplayExpenseChart(breakdown ?? Enumerable.Empty<ExpenseBreakdownDto>());
-                    }
-                    else
-                    {
-                        _view.ClearBudgetDetail();
                     }
                 }
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"❌ LoadBudgetDetailAsync Error: {ex.Message}");
-                _view.ShowMessage($"Lỗi tải chi tiết: {ex.Message}", "Lỗi", MessageBoxIcon.Error);
+                Debug.WriteLine($"LoadBudgetDetailAsync Error: {ex.Message}");
             }
         }
 
-        private async Task LoadExpenseChartAsync(int budgetId, DateTime startDate, DateTime endDate)
+        // SỬA: Lọc breakdown theo date range
+        private async Task LoadExpenseChartAsync(int budgetId, DateTime start, DateTime end)
         {
             try
             {
                 using (var scope = _serviceProvider.CreateScope())
                 {
                     var budgetService = scope.ServiceProvider.GetRequiredService<IBudgetService>();
+
+                    // Lấy tất cả breakdown của budget
                     var breakdown = await budgetService.GetExpenseBreakdownAsync(budgetId, _view.CurrentUserId);
-                    var filtered = breakdown?.Where(b => b.Date >= startDate && b.Date <= endDate)
-                                   ?? Enumerable.Empty<ExpenseBreakdownDto>();
+
+                    // Lọc theo date range
+                    var filtered = breakdown?
+                        .Where(b => b.Date.Date >= start.Date && b.Date.Date <= end.Date)
+                        .OrderBy(b => b.Date)
+                        ?? Enumerable.Empty<ExpenseBreakdownDto>();
+
                     _view.DisplayExpenseChart(filtered);
                 }
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"❌ LoadExpenseChartAsync Error: {ex.Message}");
+                Debug.WriteLine($"LoadExpenseChartAsync Error: {ex.Message}");
             }
         }
 
@@ -247,24 +265,34 @@ namespace ExpenseManager.App.Presenters
         {
             try
             {
-                if (_allCategories == null || !_allCategories.Any())
+                using (var scope = _serviceProvider.CreateScope())
                 {
-                    using (var scope = _serviceProvider.CreateScope())
-                    {
-                        var categoryService = scope.ServiceProvider.GetRequiredService<ICategoryService>();
-                        _allCategories = await categoryService.GetCategoriesByUserIdAsync(_view.CurrentUserId);
-                    }
-                }
+                    var categoryService = scope.ServiceProvider.GetRequiredService<ICategoryService>();
+                    var allCategories = await categoryService.GetCategoriesByUserIdAsync(_view.CurrentUserId);
 
-                return _allCategories
-                    .Where(c => c.Type.Equals("Expense", StringComparison.OrdinalIgnoreCase))
-                    .ToList();
+                    if (allCategories == null) return new List<Category>();
+
+                    var existingBudgetCategoryIds = GetExistingBudgetCategoryIds();
+
+                    var validCategories = allCategories
+                        .Where(c => c.Type == "Expense" && !existingBudgetCategoryIds.Contains(c.CategoryId))
+                        .ToList();
+
+                    return validCategories;
+                }
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"❌ GetCategoriesForNewBudgetAsync Error: {ex.Message}");
-                throw;
+                return new List<Category>();
             }
+        }
+
+        public HashSet<int> GetExistingBudgetCategoryIds()
+        {
+            if (_currentBudgets == null || !_currentBudgets.Any())
+                return new HashSet<int>();
+            return new HashSet<int>(_currentBudgets.Select(b => b.CategoryId));
         }
 
         public async Task CreateBudgetAsync(BudgetCreateDto createDto)
@@ -272,26 +300,17 @@ namespace ExpenseManager.App.Presenters
             try
             {
                 _view.ShowLoading(true);
-                Debug.WriteLine($"[CreateBudgetAsync] Creating budget for CategoryId: {createDto.CategoryId}");
-
                 using (var scope = _serviceProvider.CreateScope())
                 {
                     var budgetService = scope.ServiceProvider.GetRequiredService<IBudgetService>();
                     await budgetService.CreateBudgetAsync(createDto, _view.CurrentUserId);
                 }
-
                 _view.ShowMessage("Tạo ngân sách thành công!", "Thành công", MessageBoxIcon.Information);
                 await LoadBudgetsAsync();
             }
-            catch (InvalidOperationException ex)
-            {
-                Debug.WriteLine($"⚠️ CreateBudgetAsync Validation: {ex.Message}");
-                _view.ShowMessage(ex.Message, "Cảnh báo", MessageBoxIcon.Warning);
-            }
             catch (Exception ex)
             {
-                Debug.WriteLine($"❌ CreateBudgetAsync Error: {ex.Message}\n{ex.StackTrace}");
-                _view.ShowMessage($"Lỗi tạo ngân sách: {ex.Message}", "Lỗi", MessageBoxIcon.Error);
+                _view.ShowMessage(ex.Message, "Lỗi", MessageBoxIcon.Error);
             }
             finally
             {
@@ -304,28 +323,18 @@ namespace ExpenseManager.App.Presenters
             try
             {
                 _view.ShowLoading(true);
-                Debug.WriteLine($"[DeleteBudgetAsync] Deleting ID: {budgetId}");
-
                 using (var scope = _serviceProvider.CreateScope())
                 {
                     var budgetService = scope.ServiceProvider.GetRequiredService<IBudgetService>();
-
-                    if (await budgetService.DeleteBudgetAsync(budgetId, _view.CurrentUserId))
-                    {
-                        _view.ShowMessage("Xóa ngân sách thành công!", "Thành công", MessageBoxIcon.Information);
-                        _selectedBudgetId = 0;
-                        await LoadBudgetsAsync();
-                    }
-                    else
-                    {
-                        _view.ShowMessage("Không thể xóa ngân sách!", "Lỗi", MessageBoxIcon.Error);
-                    }
+                    await budgetService.DeleteBudgetAsync(budgetId, _view.CurrentUserId);
                 }
+                _view.ShowMessage("Xóa thành công!", "Thông báo", MessageBoxIcon.Information);
+                _selectedBudgetId = 0;
+                await LoadBudgetsAsync();
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"❌ DeleteBudgetAsync Error: {ex.Message}");
-                _view.ShowMessage($"Lỗi xóa: {ex.Message}", "Lỗi", MessageBoxIcon.Error);
+                _view.ShowMessage(ex.Message, "Lỗi", MessageBoxIcon.Error);
             }
             finally
             {
@@ -333,35 +342,9 @@ namespace ExpenseManager.App.Presenters
             }
         }
 
-        public WinColor GetColor(int colorId)
-        {
-            try
-            {
-                var dbColor = _allColors?.FirstOrDefault(c => c.ColorId == colorId);
-                if (dbColor != null && !string.IsNullOrEmpty(dbColor.HexCode))
-                {
-                    return System.Drawing.ColorTranslator.FromHtml(dbColor.HexCode);
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"❌ GetColor Error: {ex.Message}");
-            }
-            return WinColor.Gray;
-        }
-
         public string GetIconEmoji(int iconId)
         {
-            try
-            {
-                var icon = _allIcons?.FirstOrDefault(i => i.IconId == iconId);
-                return icon?.IconName ?? "💰";
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"❌ GetIconEmoji Error: {ex.Message}");
-                return "💰";
-            }
+            return "💰";
         }
     }
 }

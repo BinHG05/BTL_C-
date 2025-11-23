@@ -29,6 +29,8 @@ namespace ExpenseManager.App.Views.User
         public UC_Goals(GoalsPresenter presenter)
         {
             InitializeComponent();
+            this.BackColor = Color.FromArgb(238, 242, 247);
+
             _presenter = presenter;
             _presenter.SetView(this);
 
