@@ -106,7 +106,10 @@ namespace ExpenseManager.App
             services.AddTransient<LayoutAdmin>();
             services.AddTransient<UC_Goals>();
             services.AddScoped<UC_Budget>();
+<<<<<<< HEAD
             services.AddTransient<ChatForm>();
+=======
+>>>>>>> 60eadf08778e20ba6ea810bcdcbe37b43e6345af
 
 
             // Form thêm giao dịch

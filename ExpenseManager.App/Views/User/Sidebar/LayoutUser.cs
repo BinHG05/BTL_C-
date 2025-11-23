@@ -25,7 +25,10 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
     public partial class LayoutUser : Form
     {
         private IconButton currentButton;
+<<<<<<< HEAD
         private IconButton btnChatbot;
+=======
+>>>>>>> 60eadf08778e20ba6ea810bcdcbe37b43e6345af
 
         // =========================================================
         // ✅ CẬP NHẬT MÀU SẮC (Đã sửa lại màu chữ mặc định)
@@ -190,6 +193,68 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             profileMenu.Show(menuLocation);
         }
 
+<<<<<<< HEAD
+=======
+        private void InitializeProfileMenu()
+        {
+            profileMenu = new ContextMenuStrip();
+            profileMenu.Font = new Font("Segoe UI", 10F);
+            profileMenu.RenderMode = ToolStripRenderMode.Professional;
+            profileMenu.Renderer = new CustomMenuRenderer();
+
+            string userName = CurrentUserSession.CurrentUser?.FullName ?? "User";
+            string userEmail = CurrentUserSession.CurrentUser?.Email ?? "Email";
+
+            var headerItem = new ToolStripMenuItem();
+            headerItem.Text = $"{userName}\n{userEmail}";
+            headerItem.Enabled = false;
+            headerItem.ForeColor = Color.Gray;
+            headerItem.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+
+            itemSettings = new ToolStripMenuItem("Settings", GetIconBitmap(IconChar.Gear, 16, Color.Black));
+            itemSettings.Click += BtnSettings_Click;
+
+            itemLogout = new ToolStripMenuItem("Logout", GetIconBitmap(IconChar.SignOutAlt, 16, Color.Red));
+            itemLogout.ForeColor = Color.Red;
+            itemLogout.Click += LogoutMenuItem_Click;
+
+            profileMenu.Items.Add(headerItem);
+            profileMenu.Items.Add(new ToolStripSeparator());
+            profileMenu.Items.Add(itemSettings);
+            profileMenu.Items.Add(new ToolStripSeparator());
+            profileMenu.Items.Add(itemLogout);
+        }
+
+        private Bitmap GetIconBitmap(IconChar icon, int size, Color color)
+        {
+            using (var iconPic = new IconPictureBox())
+            {
+                iconPic.IconChar = icon;
+                iconPic.IconSize = size;
+                iconPic.IconColor = color;
+                iconPic.BackColor = Color.Transparent;
+                iconPic.Size = new Size(size, size);
+                iconPic.SizeMode = PictureBoxSizeMode.CenterImage;
+
+                var bmp = new Bitmap(size, size);
+                iconPic.DrawToBitmap(bmp, new Rectangle(0, 0, size, size));
+                return bmp;
+            }
+        }
+
+        private void BtnProfileTop_Click(object sender, EventArgs e)
+        {
+            if (profileMenu.Items.Count > 0)
+            {
+                string userName = CurrentUserSession.CurrentUser?.FullName ?? "User";
+                string userEmail = CurrentUserSession.CurrentUser?.Email ?? "Email";
+                profileMenu.Items[0].Text = $"{userName}\n{userEmail}";
+            }
+            Point menuLocation = btnProfileTop.PointToScreen(new Point(-150, btnProfileTop.Height + 5));
+            profileMenu.Show(menuLocation);
+        }
+
+>>>>>>> 60eadf08778e20ba6ea810bcdcbe37b43e6345af
         private void BtnAddTransaction_Click(object sender, EventArgs e)
         {
             try
