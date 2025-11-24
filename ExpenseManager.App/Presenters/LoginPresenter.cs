@@ -9,9 +9,9 @@ namespace ExpenseManager.App.Presenters
     public class LoginPresenter
     {
         private readonly IAuthService _authService;
-        private readonly IGoogleAuthService _googleAuthService; // ✅ THÊM
+        private readonly IGoogleAuthService _googleAuthService; 
 
-        // ✅ SỬA CONSTRUCTOR
+       
         public LoginPresenter(IAuthService authService, IGoogleAuthService googleAuthService)
         {
             _authService = authService;
@@ -40,7 +40,7 @@ namespace ExpenseManager.App.Presenters
             }
         }
 
-        // ✅ THÊM METHOD MỚI
+     
         public async Task<(bool Success, User User, string Error)> LoginWithGoogleAsync()
         {
             try

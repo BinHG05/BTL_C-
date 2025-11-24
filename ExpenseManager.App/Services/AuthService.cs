@@ -6,12 +6,7 @@ using System.Threading.Tasks;
 
 namespace ExpenseManager.App.Services
 {
-    //public interface IAuthService
-    //{
-    //    Task<User> LoginAsync(string email, string password);
-    //    Task<(bool Success, string ErrorMessage)> RegisterAsync(string fullName, string email, string password);
-    //    Task<User> LoginWithGoogleAsync(string email, string fullName); // ✅ THÊM
-    //}
+  
 
     public class AuthService : IAuthService
     {
@@ -132,7 +127,7 @@ namespace ExpenseManager.App.Services
             return (true, null);
         }
 
-        // ✅ THÊM METHOD MỚI: Đăng nhập bằng Google
+        //  Đăng nhập bằng Google
         public async Task<User> LoginWithGoogleAsync(string email, string fullName)
         {
             // Kiểm tra user đã tồn tại chưa

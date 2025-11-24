@@ -5,10 +5,7 @@ using ExpenseManager.App.Views.Admin.UC;
 
 namespace ExpenseManager.App.Presenters
 {
-    /// <summary>
-    /// Presenter kết nối View và Service theo mô hình MVP
-    /// Điều phối luồng dữ liệu giữa UI và Business Logic
-    /// </summary>
+   
     public class DashboardADPresenter
     {
         private readonly IDashboardADView _view;
