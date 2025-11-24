@@ -292,7 +292,28 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
 
             try
             {
-                var uc = Program.GetService<UC_Budget>();
+                // ✅ Dispose control cũ trước
+                if (contentPanel.Controls.Count > 0)
+                {
+                    var oldControl = contentPanel.Controls[0];
+                    contentPanel.Controls.Clear();
+
+                    if (oldControl != null && !oldControl.IsDisposed)
+                    {
+                        oldControl.Dispose();
+                    }
+                }
+
+                // ✅ TẠO MỚI trực tiếp, KHÔNG dùng GetService
+                var uc = new UC_Budget();
+
+                // ✅ Check nếu disposed
+                if (uc.IsDisposed)
+                {
+                    MessageBox.Show("Cannot create Budget control", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 LoadContent(uc);
             }
             catch (Exception ex)
