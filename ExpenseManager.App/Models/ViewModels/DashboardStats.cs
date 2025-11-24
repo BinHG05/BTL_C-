@@ -3,50 +3,66 @@ using System.Collections.Generic;
 
 namespace ExpenseManager.App.Models.ViewModels
 {
-    /// <summary>
-    /// Model chứa toàn bộ dữ liệu thống kê cho Dashboard
-    /// </summary>
     public class DashboardStats
     {
-        /// <summary>
-        /// Tổng số dư của tất cả các ví
-        /// </summary>
+        // 1. Các chỉ số chính (4 ô trên cùng)
         public decimal TotalBalance { get; set; }
-
-        /// <summary>
-        /// Tổng thu nhập trong tháng hiện tại
-        /// </summary>
         public decimal MonthlyIncome { get; set; }
-
-        /// <summary>
-        /// Tổng chi tiêu trong tháng hiện tại
-        /// </summary>
         public decimal MonthlyExpense { get; set; }
-
-        /// <summary>
-        /// Thông tin ngân sách đang hoạt động
-        /// </summary>
         public BudgetInfo CurrentBudget { get; set; }
-
-        /// <summary>
-        /// Thông tin so sánh với tháng trước
-        /// </summary>
         public ComparisonStats Comparison { get; set; }
 
-        /// <summary>
-        /// Dữ liệu biểu đồ Balance Trends (theo tuần)
-        /// </summary>
-        public List<BalanceTrendPoint> BalanceTrends { get; set; }
+        // 2. Dữ liệu cho các biểu đồ bên dưới
+        public List<BalanceTrendPoint> BalanceTrends { get; set; } // Biểu đồ đường
+        public List<ExpenseCategoryBreakdown> ExpenseBreakdown { get; set; } // List danh mục
 
-        /// <summary>
-        /// Dữ liệu phân tích chi tiêu theo danh mục
-        /// </summary>
-        public List<ExpenseCategoryBreakdown> ExpenseBreakdown { get; set; }
+        // 3. DỮ LIỆU MỚI CHO GRID 2x2
+        public List<BudgetDto> Budgets { get; set; }
+        public List<DailyAnalysisDto> DailyAnalysis { get; set; }
+        public List<RecentTransactionDto> RecentTransactions { get; set; }
+        public List<GoalDto> Goals { get; set; }
     }
 
-    /// <summary>
-    /// Thông tin về ngân sách
-    /// </summary>
+    // --- CÁC CLASS CON (DTO) ---
+
+    public class BudgetDto
+    {
+        public string Name { get; set; }
+        public string CategoryIcon { get; set; }
+        public decimal Spent { get; set; }
+        public decimal Limit { get; set; }
+        public double Percent { get; set; }
+        public string ColorHex { get; set; }
+    }
+
+    public class DailyAnalysisDto
+    {
+        public DateTime Date { get; set; }
+        public string Label { get; set; } // VD: 22/11
+        public decimal Income { get; set; }
+        public decimal Expense { get; set; }
+    }
+
+    public class RecentTransactionDto
+    {
+        public string CategoryName { get; set; }
+        public string CategoryIcon { get; set; }
+        public string ColorHex { get; set; }
+        public DateTime Date { get; set; }
+        public string Note { get; set; }
+        public decimal Amount { get; set; }
+        public string Type { get; set; } // "Income" hoặc "Expense"
+    }
+
+    public class GoalDto
+    {
+        public string Name { get; set; }
+        public decimal Saved { get; set; }
+        public decimal Target { get; set; }
+        public double Percent { get; set; }
+    }
+
+    // --- CÁC CLASS CŨ (GIỮ NGUYÊN ĐỂ KHÔNG LỖI) ---
     public class BudgetInfo
     {
         public string BudgetName { get; set; }
@@ -56,42 +72,21 @@ namespace ExpenseManager.App.Models.ViewModels
         public double UsagePercent { get; set; }
     }
 
-    /// <summary>
-    /// Thông tin so sánh với tháng trước
-    /// </summary>
     public class ComparisonStats
     {
-        /// <summary>
-        /// Có phải là tháng đầu tiên không (chưa có dữ liệu tháng trước)
-        /// </summary>
         public bool IsFirstMonth { get; set; }
-
-        // So sánh số dư
         public decimal BalanceChangePercent { get; set; }
-        public decimal BalanceChangeAmount { get; set; }
-
-        // So sánh thu nhập
         public decimal IncomeChangePercent { get; set; }
-        public decimal IncomeChangeAmount { get; set; }
-
-        // So sánh chi tiêu
         public decimal ExpenseChangePercent { get; set; }
-        public decimal ExpenseChangeAmount { get; set; }
     }
 
-    /// <summary>
-    /// Điểm dữ liệu cho biểu đồ Balance Trends
-    /// </summary>
     public class BalanceTrendPoint
     {
         public DateTime Date { get; set; }
-        public decimal NetAmount { get; set; } // Thu - Chi
-        public string Label { get; set; } // "Tuần 1", "Tuần 2"...
+        public decimal NetAmount { get; set; }
+        public string Label { get; set; }
     }
 
-    /// <summary>
-    /// Phân tích chi tiêu theo danh mục
-    /// </summary>
     public class ExpenseCategoryBreakdown
     {
         public string CategoryName { get; set; }

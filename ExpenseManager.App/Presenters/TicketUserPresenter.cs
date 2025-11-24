@@ -35,7 +35,7 @@ namespace ExpenseManager.App.Presenters
             }
             catch (Exception ex)
             {
-                _view.ShowError($"Không thể tải danh sách ticket: {ex.Message}");
+                _view.ShowError($"Không thể tải danh sách yêu cầu: {ex.Message}");
             }
             finally
             {

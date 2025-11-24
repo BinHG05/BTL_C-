@@ -43,7 +43,6 @@ namespace ExpenseManager.App.Views.User.UC
             txtCurrentEmail = new TextBox();
             picProfile = new PictureBox();
             lblProfileName = new Label();
-            lblMaxFileSize = new Label();
             btnBrowse = new Button();
             btnSaveProfile = new Button();
             passwordPanel = new Panel();
@@ -105,7 +104,6 @@ namespace ExpenseManager.App.Views.User.UC
             // 
             mainPanel.AutoScroll = true;
             mainPanel.BackColor = Color.FromArgb(238, 242, 247);
-
             mainPanel.Controls.Add(personalInfoPanel);
             mainPanel.Controls.Add(topPanel);
             mainPanel.Controls.Add(headerPanel);
@@ -145,9 +143,9 @@ namespace ExpenseManager.App.Views.User.UC
             lblPersonalInfo.Location = new Point(40, 38);
             lblPersonalInfo.Margin = new Padding(4, 0, 4, 0);
             lblPersonalInfo.Name = "lblPersonalInfo";
-            lblPersonalInfo.Size = new Size(242, 32);
+            lblPersonalInfo.Size = new Size(212, 32);
             lblPersonalInfo.TabIndex = 0;
-            lblPersonalInfo.Text = "Personal Information";
+            lblPersonalInfo.Text = "Thông tin cá nhân";
             // 
             // lblAddress
             // 
@@ -157,9 +155,9 @@ namespace ExpenseManager.App.Views.User.UC
             lblAddress.Location = new Point(40, 108);
             lblAddress.Margin = new Padding(4, 0, 4, 0);
             lblAddress.Name = "lblAddress";
-            lblAddress.Size = new Size(70, 23);
+            lblAddress.Size = new Size(62, 23);
             lblAddress.TabIndex = 1;
-            lblAddress.Text = "Address";
+            lblAddress.Text = "Địa chỉ";
             // 
             // txtAddress
             // 
@@ -179,9 +177,9 @@ namespace ExpenseManager.App.Views.User.UC
             lblCity.Location = new Point(707, 108);
             lblCity.Margin = new Padding(4, 0, 4, 0);
             lblCity.Name = "lblCity";
-            lblCity.Size = new Size(39, 23);
+            lblCity.Size = new Size(93, 23);
             lblCity.TabIndex = 3;
-            lblCity.Text = "City";
+            lblCity.Text = "Thành phố";
             // 
             // txtCity
             // 
@@ -201,20 +199,22 @@ namespace ExpenseManager.App.Views.User.UC
             lblBirthDate.Location = new Point(40, 215);
             lblBirthDate.Margin = new Padding(4, 0, 4, 0);
             lblBirthDate.Name = "lblBirthDate";
-            lblBirthDate.Size = new Size(105, 23);
+            lblBirthDate.Size = new Size(86, 23);
             lblBirthDate.TabIndex = 5;
-            lblBirthDate.Text = "Birth of date";
+            lblBirthDate.Text = "Ngày sinh";
             // 
             // dtpBirthDate
             // 
             dtpBirthDate.CustomFormat = "dd/MM/yyyy";
             dtpBirthDate.Font = new Font("Segoe UI", 10F);
-            dtpBirthDate.Format = DateTimePickerFormat.Custom;
+            dtpBirthDate.Format = DateTimePickerFormat.Short;   
+            dtpBirthDate.ShowUpDown = false;
             dtpBirthDate.Location = new Point(40, 254);
             dtpBirthDate.Margin = new Padding(4, 5, 4, 5);
             dtpBirthDate.Name = "dtpBirthDate";
             dtpBirthDate.Size = new Size(599, 30);
             dtpBirthDate.TabIndex = 6;
+            dtpBirthDate.Value = new System.DateTime(2005, 9, 24, 0, 0, 0, 0);
             // 
             // lblCountry
             // 
@@ -224,9 +224,9 @@ namespace ExpenseManager.App.Views.User.UC
             lblCountry.Location = new Point(707, 215);
             lblCountry.Margin = new Padding(4, 0, 4, 0);
             lblCountry.Name = "lblCountry";
-            lblCountry.Size = new Size(71, 23);
+            lblCountry.Size = new Size(79, 23);
             lblCountry.TabIndex = 7;
-            lblCountry.Text = "Country";
+            lblCountry.Text = "Quốc gia";
             // 
             // cmbCountry
             // 
@@ -254,7 +254,7 @@ namespace ExpenseManager.App.Views.User.UC
             btnSavePersonal.Name = "btnSavePersonal";
             btnSavePersonal.Size = new Size(133, 58);
             btnSavePersonal.TabIndex = 9;
-            btnSavePersonal.Text = "Save";
+            btnSavePersonal.Text = "Lưu";
             btnSavePersonal.UseVisualStyleBackColor = false;
             btnSavePersonal.Click += BtnSavePersonal_Click;
             // 
@@ -278,7 +278,6 @@ namespace ExpenseManager.App.Views.User.UC
             profilePanel.Controls.Add(txtCurrentEmail);
             profilePanel.Controls.Add(picProfile);
             profilePanel.Controls.Add(lblProfileName);
-            profilePanel.Controls.Add(lblMaxFileSize);
             profilePanel.Controls.Add(btnBrowse);
             profilePanel.Controls.Add(btnSaveProfile);
             profilePanel.Location = new Point(0, 0);
@@ -295,9 +294,9 @@ namespace ExpenseManager.App.Views.User.UC
             lblUserProfile.Location = new Point(33, 31);
             lblUserProfile.Margin = new Padding(4, 0, 4, 0);
             lblUserProfile.Name = "lblUserProfile";
-            lblUserProfile.Size = new Size(140, 32);
+            lblUserProfile.Size = new Size(212, 32);
             lblUserProfile.TabIndex = 0;
-            lblUserProfile.Text = "User Profile";
+            lblUserProfile.Text = "Hồ sơ người dùng";
             // 
             // lblFullName
             // 
@@ -307,9 +306,9 @@ namespace ExpenseManager.App.Views.User.UC
             lblFullName.Location = new Point(33, 92);
             lblFullName.Margin = new Padding(4, 0, 4, 0);
             lblFullName.Name = "lblFullName";
-            lblFullName.Size = new Size(87, 23);
+            lblFullName.Size = new Size(84, 23);
             lblFullName.TabIndex = 1;
-            lblFullName.Text = "Full Name";
+            lblFullName.Text = "Họ và tên";
             // 
             // txtFullName
             // 
@@ -329,9 +328,9 @@ namespace ExpenseManager.App.Views.User.UC
             lblCurrentEmail.Location = new Point(33, 192);
             lblCurrentEmail.Margin = new Padding(4, 0, 4, 0);
             lblCurrentEmail.Name = "lblCurrentEmail";
-            lblCurrentEmail.Size = new Size(114, 23);
+            lblCurrentEmail.Size = new Size(113, 23);
             lblCurrentEmail.TabIndex = 3;
-            lblCurrentEmail.Text = "Current Email";
+            lblCurrentEmail.Text = "Email hiện tại";
             // 
             // txtCurrentEmail
             // 
@@ -365,18 +364,6 @@ namespace ExpenseManager.App.Views.User.UC
             lblProfileName.TabIndex = 6;
             lblProfileName.Text = "Âu Dương Tải";
             // 
-            // lblMaxFileSize
-            // 
-            lblMaxFileSize.AutoSize = true;
-            lblMaxFileSize.Font = new Font("Segoe UI", 9F);
-            lblMaxFileSize.ForeColor = Color.Gray;
-            lblMaxFileSize.Location = new Point(113, 331);
-            lblMaxFileSize.Margin = new Padding(4, 0, 4, 0);
-            lblMaxFileSize.Name = "lblMaxFileSize";
-            lblMaxFileSize.Size = new Size(147, 20);
-            lblMaxFileSize.TabIndex = 7;
-            lblMaxFileSize.Text = "Max file size is 20mb";
-            // 
             // btnBrowse
             // 
             btnBrowse.BackColor = Color.WhiteSmoke;
@@ -390,7 +377,7 @@ namespace ExpenseManager.App.Views.User.UC
             btnBrowse.Name = "btnBrowse";
             btnBrowse.Size = new Size(107, 49);
             btnBrowse.TabIndex = 9;
-            btnBrowse.Text = "Browse";
+            btnBrowse.Text = "Duyệt";
             btnBrowse.UseVisualStyleBackColor = false;
             btnBrowse.Click += BtnBrowse_Click;
             // 
@@ -407,7 +394,7 @@ namespace ExpenseManager.App.Views.User.UC
             btnSaveProfile.Name = "btnSaveProfile";
             btnSaveProfile.Size = new Size(133, 58);
             btnSaveProfile.TabIndex = 10;
-            btnSaveProfile.Text = "Save";
+            btnSaveProfile.Text = "Lưu";
             btnSaveProfile.UseVisualStyleBackColor = false;
             btnSaveProfile.Click += BtnSaveProfile_Click;
             // 
@@ -439,9 +426,9 @@ namespace ExpenseManager.App.Views.User.UC
             lblUserProfilePass.Location = new Point(33, 31);
             lblUserProfilePass.Margin = new Padding(4, 0, 4, 0);
             lblUserProfilePass.Name = "lblUserProfilePass";
-            lblUserProfilePass.Size = new Size(140, 32);
+            lblUserProfilePass.Size = new Size(212, 32);
             lblUserProfilePass.TabIndex = 0;
-            lblUserProfilePass.Text = "User Profile";
+            lblUserProfilePass.Text = "Hồ sơ người dùng";
             // 
             // lblNewEmail
             // 
@@ -451,9 +438,9 @@ namespace ExpenseManager.App.Views.User.UC
             lblNewEmail.Location = new Point(33, 92);
             lblNewEmail.Margin = new Padding(4, 0, 4, 0);
             lblNewEmail.Name = "lblNewEmail";
-            lblNewEmail.Size = new Size(90, 23);
+            lblNewEmail.Size = new Size(85, 23);
             lblNewEmail.TabIndex = 1;
-            lblNewEmail.Text = "New Email";
+            lblNewEmail.Text = "Email mới";
             // 
             // txtNewEmail
             // 
@@ -475,9 +462,9 @@ namespace ExpenseManager.App.Views.User.UC
             lblCurrentPassword.Location = new Point(33, 192);
             lblCurrentPassword.Margin = new Padding(4, 0, 4, 0);
             lblCurrentPassword.Name = "lblCurrentPassword";
-            lblCurrentPassword.Size = new Size(226, 23);
+            lblCurrentPassword.Size = new Size(227, 23);
             lblCurrentPassword.TabIndex = 3;
-            lblCurrentPassword.Text = "Current Password (Required)";
+            lblCurrentPassword.Text = "Mật khẩu hiện tại (bắt buộc)";
             // 
             // txtCurrentPassword
             // 
@@ -510,9 +497,9 @@ namespace ExpenseManager.App.Views.User.UC
             lblNewPassword.Location = new Point(33, 292);
             lblNewPassword.Margin = new Padding(4, 0, 4, 0);
             lblNewPassword.Name = "lblNewPassword";
-            lblNewPassword.Size = new Size(119, 23);
+            lblNewPassword.Size = new Size(116, 23);
             lblNewPassword.TabIndex = 6;
-            lblNewPassword.Text = "New Password";
+            lblNewPassword.Text = "Mật khẩu mới";
             // 
             // txtNewPassword
             // 
@@ -535,9 +522,9 @@ namespace ExpenseManager.App.Views.User.UC
             lblConfirmPassword.Location = new Point(33, 392);
             lblConfirmPassword.Margin = new Padding(4, 0, 4, 0);
             lblConfirmPassword.Name = "lblConfirmPassword";
-            lblConfirmPassword.Size = new Size(185, 23);
+            lblConfirmPassword.Size = new Size(192, 23);
             lblConfirmPassword.TabIndex = 8;
-            lblConfirmPassword.Text = "Confirm New Password";
+            lblConfirmPassword.Text = "Xác nhận mật khẩu mới";
             // 
             // txtConfirmPassword
             // 
@@ -565,14 +552,13 @@ namespace ExpenseManager.App.Views.User.UC
             btnSavePassword.Name = "btnSavePassword";
             btnSavePassword.Size = new Size(133, 58);
             btnSavePassword.TabIndex = 10;
-            btnSavePassword.Text = "Save";
+            btnSavePassword.Text = "Lưu";
             btnSavePassword.UseVisualStyleBackColor = false;
             btnSavePassword.Click += BtnSavePassword_Click;
             // 
             // headerPanel
             // 
             headerPanel.BackColor = Color.FromArgb(238, 242, 247);
-
             headerPanel.Controls.Add(lblTitle);
             headerPanel.Controls.Add(lblSubtitle);
             headerPanel.Controls.Add(breadcrumbPanel);
@@ -590,9 +576,9 @@ namespace ExpenseManager.App.Views.User.UC
             lblTitle.Location = new Point(0, 0);
             lblTitle.Margin = new Padding(4, 0, 4, 0);
             lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(176, 41);
+            lblTitle.Size = new Size(413, 41);
             lblTitle.TabIndex = 0;
-            lblTitle.Text = "Edit Profile";
+            lblTitle.Text = "Chỉnh sửa thông tin cá nhân";
             // 
             // lblSubtitle
             // 
@@ -602,9 +588,9 @@ namespace ExpenseManager.App.Views.User.UC
             lblSubtitle.Location = new Point(0, 54);
             lblSubtitle.Margin = new Padding(4, 0, 4, 0);
             lblSubtitle.Name = "lblSubtitle";
-            lblSubtitle.Size = new Size(298, 23);
+            lblSubtitle.Size = new Size(379, 23);
             lblSubtitle.TabIndex = 1;
-            lblSubtitle.Text = "Welcome Ekash Finance Management";
+            lblSubtitle.Text = "Chào mừng đến với Ekash Finance Management";
             // 
             // breadcrumbPanel
             // 
@@ -626,9 +612,9 @@ namespace ExpenseManager.App.Views.User.UC
             lblSettings.Location = new Point(0, 5);
             lblSettings.Margin = new Padding(4, 0, 4, 0);
             lblSettings.Name = "lblSettings";
-            lblSettings.Size = new Size(71, 23);
+            lblSettings.Size = new Size(64, 23);
             lblSettings.TabIndex = 0;
-            lblSettings.Text = "Settings";
+            lblSettings.Text = "Cài đặt";
             // 
             // lblArrow
             // 
@@ -650,9 +636,9 @@ namespace ExpenseManager.App.Views.User.UC
             lblProfile.Location = new Point(120, 5);
             lblProfile.Margin = new Padding(4, 0, 4, 0);
             lblProfile.Name = "lblProfile";
-            lblProfile.Size = new Size(58, 23);
+            lblProfile.Size = new Size(54, 23);
             lblProfile.TabIndex = 2;
-            lblProfile.Text = "Profile";
+            lblProfile.Text = "Hồ sơ";
             // 
             // tabPanel
             // 
@@ -675,9 +661,9 @@ namespace ExpenseManager.App.Views.User.UC
             lblTabProfile.Location = new Point(27, 15);
             lblTabProfile.Margin = new Padding(4, 0, 4, 0);
             lblTabProfile.Name = "lblTabProfile";
-            lblTabProfile.Size = new Size(68, 25);
+            lblTabProfile.Size = new Size(62, 25);
             lblTabProfile.TabIndex = 0;
-            lblTabProfile.Text = "Profile";
+            lblTabProfile.Text = "Hồ sơ";
             lblTabProfile.Click += lblTabProfile_Click;
             // 
             // lblTabCategories
@@ -689,9 +675,9 @@ namespace ExpenseManager.App.Views.User.UC
             lblTabCategories.Location = new Point(160, 15);
             lblTabCategories.Margin = new Padding(4, 0, 4, 0);
             lblTabCategories.Name = "lblTabCategories";
-            lblTabCategories.Size = new Size(102, 25);
+            lblTabCategories.Size = new Size(98, 25);
             lblTabCategories.TabIndex = 1;
-            lblTabCategories.Text = "Categories";
+            lblTabCategories.Text = "Danh mục";
             lblTabCategories.Click += lblTabCategories_Click;
             // 
             // lblTabSupport
@@ -703,9 +689,9 @@ namespace ExpenseManager.App.Views.User.UC
             lblTabSupport.Location = new Point(333, 15);
             lblTabSupport.Margin = new Padding(4, 0, 4, 0);
             lblTabSupport.Name = "lblTabSupport";
-            lblTabSupport.Size = new Size(79, 25);
+            lblTabSupport.Size = new Size(65, 25);
             lblTabSupport.TabIndex = 2;
-            lblTabSupport.Text = "Support";
+            lblTabSupport.Text = "Hỗ trợ";
             lblTabSupport.Click += lblTabSupport_Click;
             // 
             // categoriesPanel
@@ -750,7 +736,7 @@ namespace ExpenseManager.App.Views.User.UC
             lblExpenseCategories.Name = "lblExpenseCategories";
             lblExpenseCategories.Size = new Size(225, 32);
             lblExpenseCategories.TabIndex = 2;
-            lblExpenseCategories.Text = "Expense Categories";
+            lblExpenseCategories.Text = "Danh mục chi tiêu";
             // 
             // flpIncomeCategories
             // 
@@ -771,7 +757,7 @@ namespace ExpenseManager.App.Views.User.UC
             lblIncomeCategories.Name = "lblIncomeCategories";
             lblIncomeCategories.Size = new Size(217, 32);
             lblIncomeCategories.TabIndex = 0;
-            lblIncomeCategories.Text = "Income Categories";
+            lblIncomeCategories.Text = "Danh mục thu nhập";
             // 
             // createCategoryPanel
             // 
@@ -811,7 +797,7 @@ namespace ExpenseManager.App.Views.User.UC
             lblCategoryName.Name = "lblCategoryName";
             lblCategoryName.Size = new Size(56, 23);
             lblCategoryName.TabIndex = 1;
-            lblCategoryName.Text = "Name";
+            lblCategoryName.Text = "Tên";
             // 
             // txtCategoryName
             // 
@@ -829,14 +815,14 @@ namespace ExpenseManager.App.Views.User.UC
             lblCategoryType.Name = "lblCategoryType";
             lblCategoryType.Size = new Size(45, 23);
             lblCategoryType.TabIndex = 3;
-            lblCategoryType.Text = "Type";
+            lblCategoryType.Text = "Loại";
             // 
             // cmbCategoryType
             // 
             cmbCategoryType.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbCategoryType.Font = new Font("Segoe UI", 10F);
             cmbCategoryType.FormattingEnabled = true;
-            cmbCategoryType.Items.AddRange(new object[] { "Expense", "Income" });
+            cmbCategoryType.Items.AddRange(new object[] { "Chi tiêu", "Thu nhập" });
             cmbCategoryType.Location = new Point(24, 176);
             cmbCategoryType.Name = "cmbCategoryType";
             cmbCategoryType.Size = new Size(400, 31);
@@ -850,7 +836,7 @@ namespace ExpenseManager.App.Views.User.UC
             lblCategoryIcon.Name = "lblCategoryIcon";
             lblCategoryIcon.Size = new Size(43, 23);
             lblCategoryIcon.TabIndex = 5;
-            lblCategoryIcon.Text = "Icon";
+            lblCategoryIcon.Text = "Biểu tượng";
             // 
             // cmbIcon
             // 
@@ -870,7 +856,7 @@ namespace ExpenseManager.App.Views.User.UC
             lblCategoryColor.Name = "lblCategoryColor";
             lblCategoryColor.Size = new Size(51, 23);
             lblCategoryColor.TabIndex = 7;
-            lblCategoryColor.Text = "Color";
+            lblCategoryColor.Text = "Màu";
             // 
             // cmbColor
             // 
@@ -957,7 +943,6 @@ namespace ExpenseManager.App.Views.User.UC
         private System.Windows.Forms.TextBox txtCurrentEmail;
         private System.Windows.Forms.PictureBox picProfile;
         private System.Windows.Forms.Label lblProfileName;
-        private System.Windows.Forms.Label lblMaxFileSize;
         private System.Windows.Forms.Button btnBrowse;
         private System.Windows.Forms.Button btnSaveProfile;
         private System.Windows.Forms.Panel passwordPanel;

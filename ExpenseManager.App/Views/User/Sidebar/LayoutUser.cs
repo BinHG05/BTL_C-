@@ -107,10 +107,10 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             headerItem.ForeColor = Color.Gray;
             headerItem.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
 
-            itemSettings = new ToolStripMenuItem("Settings", GetIconBitmap(IconChar.Gear, 16, Color.Black));
+            itemSettings = new ToolStripMenuItem("Cài đặt", GetIconBitmap(IconChar.Gear, 16, Color.Black));
             itemSettings.Click += BtnSettings_Click;
 
-            itemLogout = new ToolStripMenuItem("Logout", GetIconBitmap(IconChar.SignOutAlt, 16, Color.Red));
+            itemLogout = new ToolStripMenuItem("Đăng xuất", GetIconBitmap(IconChar.SignOutAlt, 16, Color.Red));
             itemLogout.ForeColor = Color.Red;
             itemLogout.Click += LogoutMenuItem_Click;
 
@@ -258,8 +258,26 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
 
         private void BtnDashboard_Click(object sender, EventArgs e)
         {
+            // 1. Đổi màu nút trên Sidebar
             ActivateButton(btnDashboard);
-            LoadContent(new UC_Dashboard());
+
+            // 2. Tạo mới Dashboard
+            var dashboard = new UC_Dashboard();
+
+            // 3. [QUAN TRỌNG] Truyền UserID vào để Dashboard biết lấy dữ liệu của ai
+            // Biến _currentUserId đã được bạn lấy từ Session ở đầu Form LayoutUser rồi
+            if (!string.IsNullOrEmpty(_currentUserId))
+            {
+                dashboard.SetUserId(_currentUserId);
+            }
+            else
+            {
+                // Phòng trường hợp lỗi Session (hiếm khi xảy ra nếu đã login)
+                MessageBox.Show("Lỗi: Không tìm thấy ID người dùng!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            // 4. Hiển thị Dashboard lên màn hình chính
+            LoadContent(dashboard);
         }
 
         private void BtnWallet_Click(object sender, EventArgs e)

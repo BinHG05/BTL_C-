@@ -114,8 +114,28 @@ namespace ExpenseManager.App.Views.User.UC
         }
         public string CategoryType
         {
-            get => cmbCategoryType.SelectedItem.ToString();
-            set => cmbCategoryType.SelectedItem = value;
+            get
+            {
+                string selectedText = cmbCategoryType.SelectedItem.ToString();
+                // Ánh xạ chuỗi hiển thị sang key logic (Expense hoặc Income)
+                if (selectedText == "Chi tiêu")
+                    return "Expense";
+                if (selectedText == "Thu nhập")
+                    return "Income";
+
+                // Trả về mặc định nếu không khớp (hoặc xử lý lỗi)
+                return selectedText;
+            }
+            set
+            {
+                // Khi Presenter gán giá trị (ví dụ: "Expense"), ánh xạ sang Tiếng Việt để hiển thị
+                if (value == "Expense")
+                    cmbCategoryType.SelectedItem = "Chi tiêu";
+                else if (value == "Income")
+                    cmbCategoryType.SelectedItem = "Thu nhập";
+                else
+                    cmbCategoryType.SelectedItem = value; // Giá trị không phải Expense/Income
+            }
         }
         public int SelectedIconId
         {
@@ -204,7 +224,7 @@ namespace ExpenseManager.App.Views.User.UC
             }
             else
             {
-                cmbCountry.SelectedIndex = -1; 
+                cmbCountry.SelectedIndex = -1;
             }
             try
             {
@@ -230,7 +250,7 @@ namespace ExpenseManager.App.Views.User.UC
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error loading image: {ex.Message}");
+                Console.WriteLine($"Lỗi tải ảnh: {ex.Message}");
                 picProfile.Image = null;
             }
         }
@@ -335,7 +355,7 @@ namespace ExpenseManager.App.Views.User.UC
 
             btnSaveCategory.Text = "Lưu thay đổi";
             btnSaveCategory.BackColor = System.Drawing.Color.FromArgb(0, 112, 243);
-            lblCreateCategoryTitle.Text = "Edit category";
+            lblCreateCategoryTitle.Text = "Chỉnh sửa danh mục";
         }
 
         public void ResetForm()
@@ -346,9 +366,9 @@ namespace ExpenseManager.App.Views.User.UC
             if (cmbIcon.Items.Count > 0) cmbIcon.SelectedIndex = 0;
             if (cmbColor.Items.Count > 0) cmbColor.SelectedIndex = 0;
 
-            btnSaveCategory.Text = "Create new category";
+            btnSaveCategory.Text = "Tạo danh mục mới";
             btnSaveCategory.BackColor = System.Drawing.Color.FromArgb(28, 176, 80);
-            lblCreateCategoryTitle.Text = "Create a new category";
+            lblCreateCategoryTitle.Text = "Tạo danh mục mới";
         }
 
         public void ShowMessage(string message, string title, bool isError = false)

@@ -44,27 +44,22 @@ namespace ExpenseManager.App.Views.User.UC
         {
             cmbType.Items.Clear();
 
-            // Mục mặc định (placeholder)
-            cmbType.Items.Add("-- Choose Type --");
+            cmbType.Items.Add("-- Chọn Loại --");
 
-            // Các mục chung
-            cmbType.Items.Add("General"); // Mục chung
-            cmbType.Items.Add("Bug Report"); // Báo lỗi
-            cmbType.Items.Add("Feature Request"); // Yêu cầu tính năng mới
+            cmbType.Items.Add("Chung");
+            cmbType.Items.Add("Báo lỗi");
+            cmbType.Items.Add("Yêu cầu tính năng");
 
-            // Các mục cụ thể cho ứng dụng Expense Manager
-            cmbType.Items.Add("Account & Login"); // Vấn đề tài khoản & đăng nhập
-            cmbType.Items.Add("Transaction Issue"); // Lỗi liên quan đến giao dịch
-            cmbType.Items.Add("Budget & Goals"); // Vấn đề về ngân sách/mục tiêu
-            cmbType.Items.Add("Data & Backup"); // Vấn đề về dữ liệu & sao lưu
-            cmbType.Items.Add("Payment & Subscription"); // Vấn đề thanh toán & gói dịch vụ
-            cmbType.Items.Add("Withdrawals"); // Vấn đề rút tiền
-            cmbType.Items.Add("Earning"); // Hỏi đáp về ghi nhận thu nhập
+            cmbType.Items.Add("Tài khoản & Đăng nhập");
+            cmbType.Items.Add("Lỗi Giao dịch");
+            cmbType.Items.Add("Ngân sách & Mục tiêu");
+            cmbType.Items.Add("Dữ liệu & Sao lưu");
+            cmbType.Items.Add("Thanh toán & Gói dịch vụ");
+            cmbType.Items.Add("Vấn đề Rút tiền");
+            cmbType.Items.Add("Vấn đề Thu nhập");
 
-            // Mục cuối cùng
-            cmbType.Items.Add("Others"); // Khác
+            cmbType.Items.Add("Khác");
 
-            // Đặt mục "-- Choose Type --" làm mục được chọn mặc định
             cmbType.SelectedIndex = 0;
         }
 
@@ -88,12 +83,12 @@ namespace ExpenseManager.App.Views.User.UC
             if (isLoading)
             {
                 Cursor = Cursors.WaitCursor;
-                btnCreate.Text = "Creating...";
+                btnCreate.Text = "Đang tạo...";
             }
             else
             {
                 Cursor = Cursors.Default;
-                btnCreate.Text = "Create";
+                btnCreate.Text = "Tạo";
             }
         }
 

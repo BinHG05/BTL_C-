@@ -93,7 +93,7 @@ namespace ExpenseManager.App.Views.User.UC
             btnSupport.Name = "btnSupport";
             btnSupport.Size = new Size(137, 67);
             btnSupport.TabIndex = 2;
-            btnSupport.Text = "Support";
+            btnSupport.Text = "Hỗ trợ";
             btnSupport.UseVisualStyleBackColor = false;
             // 
             // btnCreateTicket
@@ -113,7 +113,7 @@ namespace ExpenseManager.App.Views.User.UC
             btnCreateTicket.Name = "btnCreateTicket";
             btnCreateTicket.Size = new Size(194, 60);
             btnCreateTicket.TabIndex = 3;
-            btnCreateTicket.Text = "Create Ticket";
+            btnCreateTicket.Text = "Tạo yêu cầu";
             btnCreateTicket.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnCreateTicket.UseVisualStyleBackColor = false;
             btnCreateTicket.Click += BtnCreateTicket_Click;
@@ -130,7 +130,7 @@ namespace ExpenseManager.App.Views.User.UC
             btnCategories.Name = "btnCategories";
             btnCategories.Size = new Size(137, 67);
             btnCategories.TabIndex = 1;
-            btnCategories.Text = "Categories";
+            btnCategories.Text = "Danh mục";
             btnCategories.UseVisualStyleBackColor = false;
             btnCategories.Click += btnCategories_Click;
             // 
@@ -146,7 +146,7 @@ namespace ExpenseManager.App.Views.User.UC
             btnProfile.Name = "btnProfile";
             btnProfile.Size = new Size(137, 67);
             btnProfile.TabIndex = 0;
-            btnProfile.Text = "Profile";
+            btnProfile.Text = "Hồ sơ";
             btnProfile.UseVisualStyleBackColor = false;
             btnProfile.Click += btnProfile_Click;
             // 
@@ -182,7 +182,7 @@ namespace ExpenseManager.App.Views.User.UC
             lblBreadcrumb.Name = "lblBreadcrumb";
             lblBreadcrumb.Size = new Size(229, 40);
             lblBreadcrumb.TabIndex = 0;
-            lblBreadcrumb.Text = "Settings  >  Support";
+            lblBreadcrumb.Text = "Cài đặt  >  Hỗ trợ";
             lblBreadcrumb.TextAlign = ContentAlignment.MiddleRight;
             // 
             // lblSubtitle
@@ -192,9 +192,9 @@ namespace ExpenseManager.App.Views.User.UC
             lblSubtitle.ForeColor = Color.Gray;
             lblSubtitle.Location = new Point(0, 73);
             lblSubtitle.Name = "lblSubtitle";
-            lblSubtitle.Size = new Size(298, 23);
+            lblSubtitle.Size = new Size(379, 23);
             lblSubtitle.TabIndex = 1;
-            lblSubtitle.Text = "Welcome Ekash Finance Management";
+            lblSubtitle.Text = "Chào mừng đến với Ekash Finance Management";
             // 
             // lblTitle
             // 
@@ -203,9 +203,9 @@ namespace ExpenseManager.App.Views.User.UC
             lblTitle.ForeColor = Color.Black;
             lblTitle.Location = new Point(0, 20);
             lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(197, 46);
+            lblTitle.Size = new Size(292, 46);
             lblTitle.TabIndex = 0;
-            lblTitle.Text = "Edit Profile";
+            lblTitle.Text = "Yêu cầu và hỗ trợ";
             // 
             // UC_TicketUser
             // 

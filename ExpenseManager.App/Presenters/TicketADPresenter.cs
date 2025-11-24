@@ -36,7 +36,7 @@ namespace ExpenseManager.App.Presenters
             catch (Exception ex)
             {
                 _view.ShowMessage(
-                    $"Lỗi khi tải danh sách tickets: {ex.Message}",
+                    $"Lỗi khi tải danh sách yêu cầu: {ex.Message}",
                     "Lỗi",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error
@@ -54,7 +54,7 @@ namespace ExpenseManager.App.Presenters
                 if (string.IsNullOrEmpty(ticketIdStr))
                 {
                     _view.ShowMessage(
-                        "Vui lòng chọn một ticket để xóa!",
+                        "Vui lòng chọn một yêu cầu để xóa!",
                         "Thông báo",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Warning

@@ -94,7 +94,7 @@ namespace ExpenseManager.App.Views.User.UC
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(171, 53);
             btnCancel.TabIndex = 1;
-            btnCancel.Text = "Cancel";
+            btnCancel.Text = "Hủy";
             btnCancel.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnCancel.UseVisualStyleBackColor = false;
             btnCancel.Click += BtnCancel_Click;
@@ -115,7 +115,7 @@ namespace ExpenseManager.App.Views.User.UC
             btnCreate.Name = "btnCreate";
             btnCreate.Size = new Size(171, 53);
             btnCreate.TabIndex = 0;
-            btnCreate.Text = "Create";
+            btnCreate.Text = "Tạo";
             btnCreate.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnCreate.UseVisualStyleBackColor = false;
             btnCreate.Click += BtnCreate_Click;
@@ -141,9 +141,9 @@ namespace ExpenseManager.App.Views.User.UC
             lblDescription.ForeColor = Color.Black;
             lblDescription.Location = new Point(34, 166);
             lblDescription.Name = "lblDescription";
-            lblDescription.Size = new Size(175, 38);
+            lblDescription.Size = new Size(95, 38);
             lblDescription.TabIndex = 4;
-            lblDescription.Text = "Description:";
+            lblDescription.Text = "Mô tả";
             // 
             // cmbType
             // 
@@ -163,9 +163,9 @@ namespace ExpenseManager.App.Views.User.UC
             lblType.ForeColor = Color.Black;
             lblType.Location = new Point(34, 33);
             lblType.Name = "lblType";
-            lblType.Size = new Size(87, 38);
+            lblType.Size = new Size(174, 38);
             lblType.TabIndex = 0;
-            lblType.Text = "Type:";
+            lblType.Text = "Loại câu hỏi";
             // 
             // headerPanel
             // 
@@ -185,9 +185,9 @@ namespace ExpenseManager.App.Views.User.UC
             lblTitle.ForeColor = Color.Black;
             lblTitle.Location = new Point(0, 20);
             lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(327, 41);
+            lblTitle.Size = new Size(279, 41);
             lblTitle.TabIndex = 0;
-            lblTitle.Text = "Create Support Ticket";
+            lblTitle.Text = "Tạo yêu cầu hỗ trợ";
             // 
             // UC_CreateTicketUser
             // 

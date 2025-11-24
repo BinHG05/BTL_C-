@@ -45,7 +45,7 @@ namespace ExpenseManager.App.Repositories
         {
             if (ticket == null)
             {
-                throw new ArgumentNullException(nameof(ticket), "Ticket không được null");
+                throw new ArgumentNullException(nameof(ticket), "yêu cầu không được null");
             }
 
             // Đánh dấu entity là đã được sửa đổi

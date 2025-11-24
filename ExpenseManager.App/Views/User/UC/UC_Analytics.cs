@@ -308,7 +308,7 @@ namespace ExpenseManager.App.Views.Admin.UC
 
             underline.Location = new Point(btnExpenses.Left, btnExpenses.Bottom - 3);
 
-            lblExpensesBreakdown.Text = "Expenses Breakdown";
+            lblExpensesBreakdown.Text = "Phân tích chi tiêu";
             ApplyFilter?.Invoke(this, EventArgs.Empty);
         }
 
@@ -322,7 +322,7 @@ namespace ExpenseManager.App.Views.Admin.UC
 
             underline.Location = new Point(btnIncome.Left, btnIncome.Bottom - 3);
 
-            lblExpensesBreakdown.Text = "Income Breakdown";
+            lblExpensesBreakdown.Text = "Phân tích thu nhập";
             ApplyFilter?.Invoke(this, EventArgs.Empty);
         }
 
@@ -352,16 +352,16 @@ namespace ExpenseManager.App.Views.Admin.UC
         private void ShowEmptyTransactionHistory()
         {
             DataTable dt = new DataTable();
-            dt.Columns.Add("Category"); dt.Columns.Add("Date"); dt.Columns.Add("Description"); dt.Columns.Add("Amount", typeof(string));
+            dt.Columns.Add("Danhmuc"); dt.Columns.Add("Ngay"); dt.Columns.Add("Mota"); dt.Columns.Add("Sotien", typeof(string));
             dgvTransactions.DataSource = dt;
             dt.Rows.Add("", "", "Không có giao dịch nào trong khoảng thời gian này", "");
             dgvTransactions.DataSource = dt;
             dgvTransactions.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
             foreach (DataGridViewColumn col in dgvTransactions.Columns) { col.Visible = true; col.DefaultCellStyle.ForeColor = Color.Transparent; }
-            dgvTransactions.Columns["Description"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgvTransactions.Columns["Description"].DefaultCellStyle.Font = new Font("Segoe UI", 11F, FontStyle.Italic);
-            dgvTransactions.Columns["Description"].DefaultCellStyle.ForeColor = Color.FromArgb(148, 163, 184);
+            dgvTransactions.Columns["Mota"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvTransactions.Columns["Mota"].DefaultCellStyle.Font = new Font("Segoe UI", 11F, FontStyle.Italic);
+            dgvTransactions.Columns["Mota"].DefaultCellStyle.ForeColor = Color.FromArgb(148, 163, 184);
         }
 
         private void pnlDonutChart_Paint(object sender, PaintEventArgs e)
@@ -468,6 +468,11 @@ namespace ExpenseManager.App.Views.Admin.UC
             dgvTransactions.DefaultCellStyle.Font = new Font("Segoe UI", 10F);
             dgvTransactions.DefaultCellStyle.Padding = new Padding(10, 5, 10, 5);
             dgvTransactions.RowTemplate.Height = 50;
+
+            dgvTransactions.Columns["Category"].HeaderText = "Danh mục";
+            dgvTransactions.Columns["Date"].HeaderText = "Ngày";
+            dgvTransactions.Columns["Description"].HeaderText = "Mô tả";
+            dgvTransactions.Columns["Amount"].HeaderText = "Số tiền";
 
             dgvTransactions.Columns["Category"].FillWeight = 20;
             dgvTransactions.Columns["Date"].FillWeight = 15;

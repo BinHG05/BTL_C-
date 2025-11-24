@@ -81,6 +81,8 @@ namespace ExpenseManager.App
 
             services.AddScoped<IBudgetService, BudgetService>();
 
+            services.AddTransient<ForgotPasswordPresenter>();
+            services.AddTransient<ForgotPasswordForm>();
             services.AddScoped<IGoalService, GoalService>();
 
 
@@ -112,6 +114,9 @@ namespace ExpenseManager.App
             // Đăng ký Search services
             services.AddScoped<ISearchRepository, SearchRepository>();
             services.AddScoped<ISearchServices, SearchServices>();
+            // Đăng ký Dashboard Repository & Service 
+            services.AddScoped<IDashboardRepository, DashboardRepository>();
+            services.AddScoped<IDashboardService, DashboardService>();
         }
 
         /// <summary>

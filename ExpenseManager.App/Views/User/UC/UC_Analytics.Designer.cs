@@ -17,397 +17,396 @@
 
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.pnlHeader = new System.Windows.Forms.Panel();
-            this.lblTitle = new System.Windows.Forms.Label();
-            this.lblSubtitle = new System.Windows.Forms.Label();
-            this.lblHome = new System.Windows.Forms.Label();
-            this.lblSeparator = new System.Windows.Forms.Label();
-            this.lblPageName = new System.Windows.Forms.Label();
-            this.pnlFilterWrapper = new System.Windows.Forms.Panel();
-            this.pnlTabsAndFilters = new System.Windows.Forms.Panel();
-            this.btnExpenses = new System.Windows.Forms.Button();
-            this.btnIncome = new System.Windows.Forms.Button();
-            this.lblChonVi = new System.Windows.Forms.Label();
-            this.cmbWallets = new System.Windows.Forms.ComboBox();
-            this.lblThang = new System.Windows.Forms.Label();
-            this.dtpMonth = new System.Windows.Forms.DateTimePicker();
-            this.btnLoc = new System.Windows.Forms.Button();
-            this.btnReset = new System.Windows.Forms.Button();
-            this.tlpMainContent = new System.Windows.Forms.TableLayoutPanel();
-            this.pnlChart = new System.Windows.Forms.Panel();
-            this.lblExpensesBreakdown = new System.Windows.Forms.Label();
-            this.pnlDonutChart = new System.Windows.Forms.Panel();
-            this.flpLegend = new System.Windows.Forms.FlowLayoutPanel();
-            this.pnlHistory = new System.Windows.Forms.Panel();
-            this.lblTransactionHistory = new System.Windows.Forms.Label();
-            this.lblTotalExpenses = new System.Windows.Forms.Label();
-            this.dgvTransactions = new System.Windows.Forms.DataGridView();
-            this.pnlHeader.SuspendLayout();
-            this.pnlFilterWrapper.SuspendLayout();
-            this.pnlTabsAndFilters.SuspendLayout();
-            this.tlpMainContent.SuspendLayout();
-            this.pnlChart.SuspendLayout();
-            this.pnlHistory.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvTransactions)).BeginInit();
-            this.SuspendLayout();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            pnlHeader = new System.Windows.Forms.Panel();
+            lblTitle = new System.Windows.Forms.Label();
+            lblSubtitle = new System.Windows.Forms.Label();
+            lblHome = new System.Windows.Forms.Label();
+            lblSeparator = new System.Windows.Forms.Label();
+            lblPageName = new System.Windows.Forms.Label();
+            pnlFilterWrapper = new System.Windows.Forms.Panel();
+            pnlTabsAndFilters = new System.Windows.Forms.Panel();
+            btnExpenses = new System.Windows.Forms.Button();
+            btnIncome = new System.Windows.Forms.Button();
+            lblChonVi = new System.Windows.Forms.Label();
+            cmbWallets = new System.Windows.Forms.ComboBox();
+            lblThang = new System.Windows.Forms.Label();
+            dtpMonth = new System.Windows.Forms.DateTimePicker();
+            btnLoc = new System.Windows.Forms.Button();
+            btnReset = new System.Windows.Forms.Button();
+            tlpMainContent = new System.Windows.Forms.TableLayoutPanel();
+            pnlChart = new System.Windows.Forms.Panel();
+            lblExpensesBreakdown = new System.Windows.Forms.Label();
+            pnlDonutChart = new System.Windows.Forms.Panel();
+            flpLegend = new System.Windows.Forms.FlowLayoutPanel();
+            pnlHistory = new System.Windows.Forms.Panel();
+            lblTransactionHistory = new System.Windows.Forms.Label();
+            lblTotalExpenses = new System.Windows.Forms.Label();
+            dgvTransactions = new System.Windows.Forms.DataGridView();
+            pnlHeader.SuspendLayout();
+            pnlFilterWrapper.SuspendLayout();
+            pnlTabsAndFilters.SuspendLayout();
+            tlpMainContent.SuspendLayout();
+            pnlChart.SuspendLayout();
+            pnlHistory.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvTransactions).BeginInit();
+            SuspendLayout();
             // 
             // pnlHeader
             // 
-            this.pnlHeader.BackColor = System.Drawing.Color.Transparent;
-            this.pnlHeader.Controls.Add(this.lblTitle);
-            this.pnlHeader.Controls.Add(this.lblSubtitle);
-            this.pnlHeader.Controls.Add(this.lblHome);
-            this.pnlHeader.Controls.Add(this.lblSeparator);
-            this.pnlHeader.Controls.Add(this.lblPageName);
-            this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlHeader.Location = new System.Drawing.Point(0, 0);
-            this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Padding = new System.Windows.Forms.Padding(35, 25, 35, 25);
-            this.pnlHeader.Size = new System.Drawing.Size(1600, 140);
-            this.pnlHeader.TabIndex = 0;
+            pnlHeader.BackColor = System.Drawing.Color.Transparent;
+            pnlHeader.Controls.Add(lblTitle);
+            pnlHeader.Controls.Add(lblSubtitle);
+            pnlHeader.Controls.Add(lblHome);
+            pnlHeader.Controls.Add(lblSeparator);
+            pnlHeader.Controls.Add(lblPageName);
+            pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
+            pnlHeader.Location = new System.Drawing.Point(0, 0);
+            pnlHeader.Name = "pnlHeader";
+            pnlHeader.Padding = new System.Windows.Forms.Padding(35, 25, 35, 25);
+            pnlHeader.Size = new System.Drawing.Size(1600, 140);
+            pnlHeader.TabIndex = 0;
             // 
             // lblTitle
             // 
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 26F, System.Drawing.FontStyle.Bold);
-            this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.lblTitle.Location = new System.Drawing.Point(35, 25);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(214, 60);
-            this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "Analytics";
+            lblTitle.AutoSize = true;
+            lblTitle.Font = new System.Drawing.Font("Segoe UI", 26F, System.Drawing.FontStyle.Bold);
+            lblTitle.ForeColor = System.Drawing.Color.FromArgb(30, 41, 59);
+            lblTitle.Location = new System.Drawing.Point(35, 25);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new System.Drawing.Size(218, 60);
+            lblTitle.TabIndex = 0;
+            lblTitle.Text = "Phân tích";
             // 
             // lblSubtitle
             // 
-            this.lblSubtitle.AutoSize = true;
-            this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
-            this.lblSubtitle.Location = new System.Drawing.Point(35, 90);
-            this.lblSubtitle.Name = "lblSubtitle";
-            this.lblSubtitle.Size = new System.Drawing.Size(330, 25);
-            this.lblSubtitle.TabIndex = 1;
-            this.lblSubtitle.Text = "Welcome Ekash Finance Management";
+            lblSubtitle.AutoSize = true;
+            lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 11F);
+            lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(100, 116, 139);
+            lblSubtitle.Location = new System.Drawing.Point(35, 90);
+            lblSubtitle.Name = "lblSubtitle";
+            lblSubtitle.Size = new System.Drawing.Size(417, 25);
+            lblSubtitle.TabIndex = 1;
+            lblSubtitle.Text = "Chào mừng đến với Ekash Finance Management";
             // 
             // lblHome
             // 
-            this.lblHome.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblHome.AutoSize = true;
-            this.lblHome.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lblHome.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.lblHome.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(102)))), ((int)(((byte)(241)))));
-            this.lblHome.Location = new System.Drawing.Point(1390, 60);
-            this.lblHome.Name = "lblHome";
-            this.lblHome.Size = new System.Drawing.Size(58, 23);
-            this.lblHome.TabIndex = 2;
-            this.lblHome.Text = "Home";
+            lblHome.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            lblHome.AutoSize = true;
+            lblHome.Cursor = System.Windows.Forms.Cursors.Hand;
+            lblHome.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            lblHome.ForeColor = System.Drawing.Color.FromArgb(99, 102, 241);
+            lblHome.Location = new System.Drawing.Point(1390, 60);
+            lblHome.Name = "lblHome";
+            lblHome.Size = new System.Drawing.Size(58, 23);
+            lblHome.TabIndex = 2;
+            lblHome.Text = "Trang chủ";
             // 
             // lblSeparator
             // 
-            this.lblSeparator.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblSeparator.AutoSize = true;
-            this.lblSeparator.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblSeparator.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
-            this.lblSeparator.Location = new System.Drawing.Point(1450, 60);
-            this.lblSeparator.Name = "lblSeparator";
-            this.lblSeparator.Size = new System.Drawing.Size(22, 23);
-            this.lblSeparator.TabIndex = 3;
-            this.lblSeparator.Text = ">";
+            lblSeparator.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            lblSeparator.AutoSize = true;
+            lblSeparator.Font = new System.Drawing.Font("Segoe UI", 10F);
+            lblSeparator.ForeColor = System.Drawing.Color.FromArgb(100, 116, 139);
+            lblSeparator.Location = new System.Drawing.Point(1450, 60);
+            lblSeparator.Name = "lblSeparator";
+            lblSeparator.Size = new System.Drawing.Size(22, 23);
+            lblSeparator.TabIndex = 3;
+            lblSeparator.Text = ">";
             // 
             // lblPageName
             // 
-            this.lblPageName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblPageName.AutoSize = true;
-            this.lblPageName.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblPageName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
-            this.lblPageName.Location = new System.Drawing.Point(1470, 60);
-            this.lblPageName.Name = "lblPageName";
-            this.lblPageName.Size = new System.Drawing.Size(72, 23);
-            this.lblPageName.TabIndex = 4;
-            this.lblPageName.Text = "Expense";
+            lblPageName.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            lblPageName.AutoSize = true;
+            lblPageName.Font = new System.Drawing.Font("Segoe UI", 10F);
+            lblPageName.ForeColor = System.Drawing.Color.FromArgb(100, 116, 139);
+            lblPageName.Location = new System.Drawing.Point(1470, 60);
+            lblPageName.Name = "lblPageName";
+            lblPageName.Size = new System.Drawing.Size(72, 23);
+            lblPageName.TabIndex = 4;
+            lblPageName.Text = "Phân tích";
             // 
             // pnlFilterWrapper
             // 
-            this.pnlFilterWrapper.BackColor = System.Drawing.Color.Transparent;
-            this.pnlFilterWrapper.Controls.Add(this.pnlTabsAndFilters);
-            this.pnlFilterWrapper.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlFilterWrapper.Location = new System.Drawing.Point(0, 140);
-            this.pnlFilterWrapper.Name = "pnlFilterWrapper";
-            this.pnlFilterWrapper.Padding = new System.Windows.Forms.Padding(35, 0, 35, 20);
-            this.pnlFilterWrapper.Size = new System.Drawing.Size(1600, 140);
-            this.pnlFilterWrapper.TabIndex = 1;
+            pnlFilterWrapper.BackColor = System.Drawing.Color.Transparent;
+            pnlFilterWrapper.Controls.Add(pnlTabsAndFilters);
+            pnlFilterWrapper.Dock = System.Windows.Forms.DockStyle.Top;
+            pnlFilterWrapper.Location = new System.Drawing.Point(0, 140);
+            pnlFilterWrapper.Name = "pnlFilterWrapper";
+            pnlFilterWrapper.Padding = new System.Windows.Forms.Padding(35, 0, 35, 20);
+            pnlFilterWrapper.Size = new System.Drawing.Size(1600, 140);
+            pnlFilterWrapper.TabIndex = 1;
             // 
             // pnlTabsAndFilters
             // 
-            this.pnlTabsAndFilters.BackColor = System.Drawing.Color.White;
-            this.pnlTabsAndFilters.Controls.Add(this.btnExpenses);
-            this.pnlTabsAndFilters.Controls.Add(this.btnIncome);
-            this.pnlTabsAndFilters.Controls.Add(this.lblChonVi);
-            this.pnlTabsAndFilters.Controls.Add(this.cmbWallets);
-            this.pnlTabsAndFilters.Controls.Add(this.lblThang);
-            this.pnlTabsAndFilters.Controls.Add(this.dtpMonth);
-            this.pnlTabsAndFilters.Controls.Add(this.btnLoc);
-            this.pnlTabsAndFilters.Controls.Add(this.btnReset);
-            this.pnlTabsAndFilters.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlTabsAndFilters.Location = new System.Drawing.Point(35, 0);
-            this.pnlTabsAndFilters.Name = "pnlTabsAndFilters";
-            this.pnlTabsAndFilters.Size = new System.Drawing.Size(1530, 120);
-            this.pnlTabsAndFilters.TabIndex = 0;
+            pnlTabsAndFilters.BackColor = System.Drawing.Color.White;
+            pnlTabsAndFilters.Controls.Add(btnExpenses);
+            pnlTabsAndFilters.Controls.Add(btnIncome);
+            pnlTabsAndFilters.Controls.Add(lblChonVi);
+            pnlTabsAndFilters.Controls.Add(cmbWallets);
+            pnlTabsAndFilters.Controls.Add(lblThang);
+            pnlTabsAndFilters.Controls.Add(dtpMonth);
+            pnlTabsAndFilters.Controls.Add(btnLoc);
+            pnlTabsAndFilters.Controls.Add(btnReset);
+            pnlTabsAndFilters.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnlTabsAndFilters.Location = new System.Drawing.Point(35, 0);
+            pnlTabsAndFilters.Name = "pnlTabsAndFilters";
+            pnlTabsAndFilters.Size = new System.Drawing.Size(1530, 120);
+            pnlTabsAndFilters.TabIndex = 0;
             // 
             // btnExpenses
             // 
-            this.btnExpenses.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnExpenses.FlatAppearance.BorderSize = 0;
-            this.btnExpenses.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnExpenses.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.btnExpenses.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(130)))), ((int)(((byte)(246)))));
-            this.btnExpenses.Location = new System.Drawing.Point(40, 10);
-            this.btnExpenses.Name = "btnExpenses";
-            this.btnExpenses.Size = new System.Drawing.Size(120, 40);
-            this.btnExpenses.TabIndex = 0;
-            this.btnExpenses.Text = "Expenses";
-            this.btnExpenses.UseVisualStyleBackColor = true;
+            btnExpenses.Cursor = System.Windows.Forms.Cursors.Hand;
+            btnExpenses.FlatAppearance.BorderSize = 0;
+            btnExpenses.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            btnExpenses.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            btnExpenses.ForeColor = System.Drawing.Color.FromArgb(59, 130, 246);
+            btnExpenses.Location = new System.Drawing.Point(40, 10);
+            btnExpenses.Name = "btnExpenses";
+            btnExpenses.Size = new System.Drawing.Size(120, 40);
+            btnExpenses.TabIndex = 0;
+            btnExpenses.Text = "Chi tiêu";
+            btnExpenses.UseVisualStyleBackColor = true;
             // 
             // btnIncome
             // 
-            this.btnIncome.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnIncome.FlatAppearance.BorderSize = 0;
-            this.btnIncome.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnIncome.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.btnIncome.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
-            this.btnIncome.Location = new System.Drawing.Point(170, 10);
-            this.btnIncome.Name = "btnIncome";
-            this.btnIncome.Size = new System.Drawing.Size(120, 40);
-            this.btnIncome.TabIndex = 1;
-            this.btnIncome.Text = "Income";
-            this.btnIncome.UseVisualStyleBackColor = true;
+            btnIncome.Cursor = System.Windows.Forms.Cursors.Hand;
+            btnIncome.FlatAppearance.BorderSize = 0;
+            btnIncome.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            btnIncome.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            btnIncome.ForeColor = System.Drawing.Color.FromArgb(100, 116, 139);
+            btnIncome.Location = new System.Drawing.Point(170, 10);
+            btnIncome.Name = "btnIncome";
+            btnIncome.Size = new System.Drawing.Size(120, 40);
+            btnIncome.TabIndex = 1;
+            btnIncome.Text = "Thu nhập";
+            btnIncome.UseVisualStyleBackColor = true;
             // 
             // lblChonVi
             // 
-            this.lblChonVi.AutoSize = true;
-            this.lblChonVi.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.lblChonVi.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.lblChonVi.Location = new System.Drawing.Point(40, 70);
-            this.lblChonVi.Name = "lblChonVi";
-            this.lblChonVi.Size = new System.Drawing.Size(70, 23);
-            this.lblChonVi.TabIndex = 2;
-            this.lblChonVi.Text = "Chọn ví";
+            lblChonVi.AutoSize = true;
+            lblChonVi.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            lblChonVi.ForeColor = System.Drawing.Color.FromArgb(30, 41, 59);
+            lblChonVi.Location = new System.Drawing.Point(40, 70);
+            lblChonVi.Name = "lblChonVi";
+            lblChonVi.Size = new System.Drawing.Size(70, 23);
+            lblChonVi.TabIndex = 2;
+            lblChonVi.Text = "Chọn ví";
             // 
             // cmbWallets
             // 
-            this.cmbWallets.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.cmbWallets.FormattingEnabled = true;
-            this.cmbWallets.Items.AddRange(new object[] {
-            "Tất cả ví"});
-            this.cmbWallets.Location = new System.Drawing.Point(120, 67);
-            this.cmbWallets.Name = "cmbWallets";
-            this.cmbWallets.Size = new System.Drawing.Size(200, 31);
-            this.cmbWallets.TabIndex = 3;
-            this.cmbWallets.Text = "Tất cả ví";
+            cmbWallets.Font = new System.Drawing.Font("Segoe UI", 10F);
+            cmbWallets.FormattingEnabled = true;
+            cmbWallets.Items.AddRange(new object[] { "Tất cả ví" });
+            cmbWallets.Location = new System.Drawing.Point(120, 67);
+            cmbWallets.Name = "cmbWallets";
+            cmbWallets.Size = new System.Drawing.Size(200, 31);
+            cmbWallets.TabIndex = 3;
+            cmbWallets.Text = "Tất cả ví";
             // 
             // lblThang
             // 
-            this.lblThang.AutoSize = true;
-            this.lblThang.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.lblThang.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.lblThang.Location = new System.Drawing.Point(340, 70);
-            this.lblThang.Name = "lblThang";
-            this.lblThang.Size = new System.Drawing.Size(60, 23);
-            this.lblThang.TabIndex = 4;
-            this.lblThang.Text = "Tháng";
+            lblThang.AutoSize = true;
+            lblThang.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            lblThang.ForeColor = System.Drawing.Color.FromArgb(30, 41, 59);
+            lblThang.Location = new System.Drawing.Point(340, 70);
+            lblThang.Name = "lblThang";
+            lblThang.Size = new System.Drawing.Size(60, 23);
+            lblThang.TabIndex = 4;
+            lblThang.Text = "Tháng";
             // 
             // dtpMonth
             // 
-            this.dtpMonth.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.dtpMonth.Location = new System.Drawing.Point(410, 67);
-            this.dtpMonth.Name = "dtpMonth";
-            this.dtpMonth.Size = new System.Drawing.Size(200, 30);
-            this.dtpMonth.TabIndex = 5;
+            dtpMonth.Font = new System.Drawing.Font("Segoe UI", 10F);
+            dtpMonth.Location = new System.Drawing.Point(410, 67);
+            dtpMonth.Name = "dtpMonth";
+            dtpMonth.Size = new System.Drawing.Size(200, 30);
+            dtpMonth.TabIndex = 5;
             // 
             // btnLoc
             // 
-            this.btnLoc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(130)))), ((int)(((byte)(246)))));
-            this.btnLoc.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnLoc.FlatAppearance.BorderSize = 0;
-            this.btnLoc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLoc.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnLoc.ForeColor = System.Drawing.Color.White;
-            this.btnLoc.Location = new System.Drawing.Point(630, 65);
-            this.btnLoc.Name = "btnLoc";
-            this.btnLoc.Size = new System.Drawing.Size(100, 35);
-            this.btnLoc.TabIndex = 6;
-            this.btnLoc.Text = "Lọc";
-            this.btnLoc.UseVisualStyleBackColor = false;
+            btnLoc.BackColor = System.Drawing.Color.FromArgb(59, 130, 246);
+            btnLoc.Cursor = System.Windows.Forms.Cursors.Hand;
+            btnLoc.FlatAppearance.BorderSize = 0;
+            btnLoc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            btnLoc.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            btnLoc.ForeColor = System.Drawing.Color.White;
+            btnLoc.Location = new System.Drawing.Point(630, 65);
+            btnLoc.Name = "btnLoc";
+            btnLoc.Size = new System.Drawing.Size(100, 35);
+            btnLoc.TabIndex = 6;
+            btnLoc.Text = "Lọc";
+            btnLoc.UseVisualStyleBackColor = false;
             // 
             // btnReset
             // 
-            this.btnReset.BackColor = System.Drawing.Color.White;
-            this.btnReset.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnReset.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
-            this.btnReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnReset.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnReset.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.btnReset.Location = new System.Drawing.Point(740, 65);
-            this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(100, 35);
-            this.btnReset.TabIndex = 7;
-            this.btnReset.Text = "Reset";
-            this.btnReset.UseVisualStyleBackColor = false;
+            btnReset.BackColor = System.Drawing.Color.White;
+            btnReset.Cursor = System.Windows.Forms.Cursors.Hand;
+            btnReset.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
+            btnReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            btnReset.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            btnReset.ForeColor = System.Drawing.Color.FromArgb(30, 41, 59);
+            btnReset.Location = new System.Drawing.Point(740, 65);
+            btnReset.Name = "btnReset";
+            btnReset.Size = new System.Drawing.Size(100, 35);
+            btnReset.TabIndex = 7;
+            btnReset.Text = "Tái lập";
+            btnReset.UseVisualStyleBackColor = false;
             // 
             // tlpMainContent
             // 
-            this.tlpMainContent.ColumnCount = 2;
-            this.tlpMainContent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
-            this.tlpMainContent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
-            this.tlpMainContent.Controls.Add(this.pnlChart, 0, 0);
-            this.tlpMainContent.Controls.Add(this.pnlHistory, 1, 0);
-            this.tlpMainContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpMainContent.Location = new System.Drawing.Point(0, 280);
-            this.tlpMainContent.Name = "tlpMainContent";
-            this.tlpMainContent.Padding = new System.Windows.Forms.Padding(30, 0, 30, 20);
-            this.tlpMainContent.RowCount = 1;
-            this.tlpMainContent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpMainContent.Size = new System.Drawing.Size(1600, 620);
-            this.tlpMainContent.TabIndex = 2;
+            tlpMainContent.ColumnCount = 2;
+            tlpMainContent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            tlpMainContent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            tlpMainContent.Controls.Add(pnlChart, 0, 0);
+            tlpMainContent.Controls.Add(pnlHistory, 1, 0);
+            tlpMainContent.Dock = System.Windows.Forms.DockStyle.Fill;
+            tlpMainContent.Location = new System.Drawing.Point(0, 280);
+            tlpMainContent.Name = "tlpMainContent";
+            tlpMainContent.Padding = new System.Windows.Forms.Padding(30, 0, 30, 20);
+            tlpMainContent.RowCount = 1;
+            tlpMainContent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tlpMainContent.Size = new System.Drawing.Size(1600, 620);
+            tlpMainContent.TabIndex = 2;
             // 
             // pnlChart
             // 
-            this.pnlChart.BackColor = System.Drawing.Color.White;
-            this.pnlChart.Controls.Add(this.lblExpensesBreakdown);
-            this.pnlChart.Controls.Add(this.pnlDonutChart);
-            this.pnlChart.Controls.Add(this.flpLegend);
-            this.pnlChart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlChart.Location = new System.Drawing.Point(33, 3);
-            this.pnlChart.Name = "pnlChart";
-            this.pnlChart.Padding = new System.Windows.Forms.Padding(20);
-            this.pnlChart.Size = new System.Drawing.Size(610, 594);
-            this.pnlChart.TabIndex = 0;
+            pnlChart.BackColor = System.Drawing.Color.White;
+            pnlChart.Controls.Add(lblExpensesBreakdown);
+            pnlChart.Controls.Add(pnlDonutChart);
+            pnlChart.Controls.Add(flpLegend);
+            pnlChart.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnlChart.Location = new System.Drawing.Point(33, 3);
+            pnlChart.Name = "pnlChart";
+            pnlChart.Padding = new System.Windows.Forms.Padding(20);
+            pnlChart.Size = new System.Drawing.Size(610, 594);
+            pnlChart.TabIndex = 0;
             // 
             // lblExpensesBreakdown
             // 
-            this.lblExpensesBreakdown.AutoSize = true;
-            this.lblExpensesBreakdown.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.lblExpensesBreakdown.Location = new System.Drawing.Point(25, 20);
-            this.lblExpensesBreakdown.Name = "lblExpensesBreakdown";
-            this.lblExpensesBreakdown.Size = new System.Drawing.Size(253, 32);
-            this.lblExpensesBreakdown.TabIndex = 0;
-            this.lblExpensesBreakdown.Text = "Expenses Breakdown";
+            lblExpensesBreakdown.AutoSize = true;
+            lblExpensesBreakdown.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            lblExpensesBreakdown.Location = new System.Drawing.Point(25, 20);
+            lblExpensesBreakdown.Name = "lblExpensesBreakdown";
+            lblExpensesBreakdown.Size = new System.Drawing.Size(211, 32);
+            lblExpensesBreakdown.TabIndex = 0;
+            lblExpensesBreakdown.Text = "Phân tích chi tiêu";
             // 
             // pnlDonutChart
             // 
-            this.pnlDonutChart.Location = new System.Drawing.Point(100, 70);
-            this.pnlDonutChart.Name = "pnlDonutChart";
-            this.pnlDonutChart.Size = new System.Drawing.Size(410, 300);
-            this.pnlDonutChart.TabIndex = 1;
+            pnlDonutChart.Location = new System.Drawing.Point(100, 70);
+            pnlDonutChart.Name = "pnlDonutChart";
+            pnlDonutChart.Size = new System.Drawing.Size(410, 300);
+            pnlDonutChart.TabIndex = 1;
             // 
             // flpLegend
             // 
-            this.flpLegend.AutoScroll = true;
-            this.flpLegend.Location = new System.Drawing.Point(30, 380);
-            this.flpLegend.Name = "flpLegend";
-            this.flpLegend.Size = new System.Drawing.Size(550, 190);
-            this.flpLegend.TabIndex = 2;
+            flpLegend.AutoScroll = true;
+            flpLegend.Location = new System.Drawing.Point(30, 380);
+            flpLegend.Name = "flpLegend";
+            flpLegend.Size = new System.Drawing.Size(550, 190);
+            flpLegend.TabIndex = 2;
             // 
             // pnlHistory
             // 
-            this.pnlHistory.BackColor = System.Drawing.Color.White;
-            this.pnlHistory.Controls.Add(this.lblTransactionHistory);
-            this.pnlHistory.Controls.Add(this.lblTotalExpenses);
-            this.pnlHistory.Controls.Add(this.dgvTransactions);
-            this.pnlHistory.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlHistory.Location = new System.Drawing.Point(649, 3);
-            this.pnlHistory.Name = "pnlHistory";
-            this.pnlHistory.Padding = new System.Windows.Forms.Padding(20);
-            this.pnlHistory.Size = new System.Drawing.Size(918, 594);
-            this.pnlHistory.TabIndex = 1;
+            pnlHistory.BackColor = System.Drawing.Color.White;
+            pnlHistory.Controls.Add(lblTransactionHistory);
+            pnlHistory.Controls.Add(lblTotalExpenses);
+            pnlHistory.Controls.Add(dgvTransactions);
+            pnlHistory.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnlHistory.Location = new System.Drawing.Point(649, 3);
+            pnlHistory.Name = "pnlHistory";
+            pnlHistory.Padding = new System.Windows.Forms.Padding(20);
+            pnlHistory.Size = new System.Drawing.Size(918, 594);
+            pnlHistory.TabIndex = 1;
             // 
             // lblTransactionHistory
             // 
-            this.lblTransactionHistory.AutoSize = true;
-            this.lblTransactionHistory.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.lblTransactionHistory.Location = new System.Drawing.Point(25, 20);
-            this.lblTransactionHistory.Name = "lblTransactionHistory";
-            this.lblTransactionHistory.Size = new System.Drawing.Size(237, 32);
-            this.lblTransactionHistory.TabIndex = 0;
-            this.lblTransactionHistory.Text = "Transaction History";
+            lblTransactionHistory.AutoSize = true;
+            lblTransactionHistory.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            lblTransactionHistory.Location = new System.Drawing.Point(25, 20);
+            lblTransactionHistory.Name = "lblTransactionHistory";
+            lblTransactionHistory.Size = new System.Drawing.Size(205, 32);
+            lblTransactionHistory.TabIndex = 0;
+            lblTransactionHistory.Text = "Lịch sử giao dịch";
             // 
             // lblTotalExpenses
             // 
-            this.lblTotalExpenses.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblTotalExpenses.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.lblTotalExpenses.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.lblTotalExpenses.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(38)))), ((int)(((byte)(38)))));
-            this.lblTotalExpenses.Location = new System.Drawing.Point(695, 18);
-            this.lblTotalExpenses.Name = "lblTotalExpenses";
-            this.lblTotalExpenses.Padding = new System.Windows.Forms.Padding(10);
-            this.lblTotalExpenses.Size = new System.Drawing.Size(200, 40);
-            this.lblTotalExpenses.TabIndex = 1;
-            this.lblTotalExpenses.Text = "Tổng: 39,326,000đ";
-            this.lblTotalExpenses.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            lblTotalExpenses.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            lblTotalExpenses.BackColor = System.Drawing.Color.FromArgb(254, 226, 226);
+            lblTotalExpenses.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            lblTotalExpenses.ForeColor = System.Drawing.Color.FromArgb(220, 38, 38);
+            lblTotalExpenses.Location = new System.Drawing.Point(695, 18);
+            lblTotalExpenses.Name = "lblTotalExpenses";
+            lblTotalExpenses.Padding = new System.Windows.Forms.Padding(10);
+            lblTotalExpenses.Size = new System.Drawing.Size(200, 40);
+            lblTotalExpenses.TabIndex = 1;
+            lblTotalExpenses.Text = "Tổng: 39,326,000đ";
+            lblTotalExpenses.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // dgvTransactions
             // 
-            this.dgvTransactions.AllowUserToAddRows = false;
-            this.dgvTransactions.AllowUserToDeleteRows = false;
-            this.dgvTransactions.BackgroundColor = System.Drawing.Color.White;
-            this.dgvTransactions.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgvTransactions.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvTransactions.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvTransactions.ColumnHeadersHeight = 40;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 10F);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(242)))), ((int)(((byte)(247)))));
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvTransactions.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dgvTransactions.EnableHeadersVisualStyles = false;
-            this.dgvTransactions.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
-            this.dgvTransactions.Location = new System.Drawing.Point(25, 80);
-            this.dgvTransactions.Name = "dgvTransactions";
-            this.dgvTransactions.ReadOnly = true;
-            this.dgvTransactions.RowHeadersVisible = false;
-            this.dgvTransactions.RowHeadersWidth = 51;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvTransactions.RowsDefaultCellStyle = dataGridViewCellStyle3;
-            this.dgvTransactions.RowTemplate.Height = 40;
-            this.dgvTransactions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvTransactions.Size = new System.Drawing.Size(1000, 490);
-            this.dgvTransactions.TabIndex = 2;
+            dgvTransactions.AllowUserToAddRows = false;
+            dgvTransactions.AllowUserToDeleteRows = false;
+            dgvTransactions.BackgroundColor = System.Drawing.Color.White;
+            dgvTransactions.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            dgvTransactions.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(248, 250, 252);
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.FromArgb(100, 116, 139);
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            dgvTransactions.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dgvTransactions.ColumnHeadersHeight = 40;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI", 10F);
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.FromArgb(30, 41, 59);
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(238, 242, 247);
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.FromArgb(30, 41, 59);
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            dgvTransactions.DefaultCellStyle = dataGridViewCellStyle5;
+            dgvTransactions.EnableHeadersVisualStyles = false;
+            dgvTransactions.GridColor = System.Drawing.Color.FromArgb(226, 232, 240);
+            dgvTransactions.Location = new System.Drawing.Point(25, 80);
+            dgvTransactions.Name = "dgvTransactions";
+            dgvTransactions.ReadOnly = true;
+            dgvTransactions.RowHeadersVisible = false;
+            dgvTransactions.RowHeadersWidth = 51;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            dgvTransactions.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dgvTransactions.RowTemplate.Height = 40;
+            dgvTransactions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            dgvTransactions.Size = new System.Drawing.Size(1000, 490);
+            dgvTransactions.TabIndex = 2;
             // 
             // UC_Analytics
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoScroll = true;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(242)))), ((int)(((byte)(247)))));
-            this.Controls.Add(this.tlpMainContent);
-            this.Controls.Add(this.pnlFilterWrapper);
-            this.Controls.Add(this.pnlHeader);
-            this.Name = "UC_Analytics";
-            this.Size = new System.Drawing.Size(1600, 900);
-            this.pnlHeader.ResumeLayout(false);
-            this.pnlHeader.PerformLayout();
-            this.pnlFilterWrapper.ResumeLayout(false);
-            this.pnlTabsAndFilters.ResumeLayout(false);
-            this.pnlTabsAndFilters.PerformLayout();
-            this.tlpMainContent.ResumeLayout(false);
-            this.pnlChart.ResumeLayout(false);
-            this.pnlChart.PerformLayout();
-            this.pnlHistory.ResumeLayout(false);
-            this.pnlHistory.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvTransactions)).EndInit();
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            AutoScroll = true;
+            BackColor = System.Drawing.Color.FromArgb(238, 242, 247);
+            Controls.Add(tlpMainContent);
+            Controls.Add(pnlFilterWrapper);
+            Controls.Add(pnlHeader);
+            Name = "UC_Analytics";
+            Size = new System.Drawing.Size(1600, 900);
+            pnlHeader.ResumeLayout(false);
+            pnlHeader.PerformLayout();
+            pnlFilterWrapper.ResumeLayout(false);
+            pnlTabsAndFilters.ResumeLayout(false);
+            pnlTabsAndFilters.PerformLayout();
+            tlpMainContent.ResumeLayout(false);
+            pnlChart.ResumeLayout(false);
+            pnlChart.PerformLayout();
+            pnlHistory.ResumeLayout(false);
+            pnlHistory.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvTransactions).EndInit();
+            ResumeLayout(false);
 
         }
 

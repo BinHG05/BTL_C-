@@ -82,9 +82,9 @@
             lblTitle.ForeColor = System.Drawing.Color.FromArgb(30, 41, 59);
             lblTitle.Location = new System.Drawing.Point(35, 25);
             lblTitle.Name = "lblTitle";
-            lblTitle.Size = new System.Drawing.Size(175, 60);
+            lblTitle.Size = new System.Drawing.Size(414, 60);
             lblTitle.TabIndex = 0;
-            lblTitle.Text = "Budget";
+            lblTitle.Text = "Ngân sách của bạn";
             // 
             // lblSubtitle
             // 
@@ -93,9 +93,9 @@
             lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(100, 116, 139);
             lblSubtitle.Location = new System.Drawing.Point(35, 85);
             lblSubtitle.Name = "lblSubtitle";
-            lblSubtitle.Size = new System.Drawing.Size(266, 25);
+            lblSubtitle.Size = new System.Drawing.Size(305, 25);
             lblSubtitle.TabIndex = 1;
-            lblSubtitle.Text = "Create and track your budgets";
+            lblSubtitle.Text = "Tạo và theo dõi ngân sách của bạn";
             // 
             // pnlLeftSidebar
             // 
@@ -130,7 +130,7 @@
             btnAddBudgetSidebar.Name = "btnAddBudgetSidebar";
             btnAddBudgetSidebar.Size = new System.Drawing.Size(330, 55);
             btnAddBudgetSidebar.TabIndex = 2;
-            btnAddBudgetSidebar.Text = "⊕  Add new budget";
+            btnAddBudgetSidebar.Text = "⊕  Thêm ngân sách mới";
             btnAddBudgetSidebar.UseVisualStyleBackColor = false;
             // 
             // pnlMainContent

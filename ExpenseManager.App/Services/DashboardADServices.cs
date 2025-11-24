@@ -8,10 +8,7 @@ using ExpenseManager.App.Repositories;
 
 namespace ExpenseManager.App.Services
 {
-    /// <summary>
-    /// Service chứa logic nghiệp vụ cho Dashboard
-    /// Thực hiện tính toán và xử lý dữ liệu từ Repository
-    /// </summary>
+ 
     public class DashboardADService : IDashboardADService
     {
         private readonly IDashboardADRepository _repository;

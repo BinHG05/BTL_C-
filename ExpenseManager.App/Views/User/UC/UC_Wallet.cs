@@ -283,10 +283,10 @@ namespace ExpenseManager.App.Views.Admin.UC
             DataGridViewImageColumn iconCol = new DataGridViewImageColumn();
             iconCol.Name = "Icon"; iconCol.HeaderText = ""; iconCol.Width = 50; iconCol.ImageLayout = DataGridViewImageCellLayout.Zoom;
             dgvTransactions.Columns.Add(iconCol);
-            dgvTransactions.Columns.Add("CategoryName", "Category"); dgvTransactions.Columns["CategoryName"].Width = 180;
-            dgvTransactions.Columns.Add("Date", "Date"); dgvTransactions.Columns["Date"].Width = 120;
-            dgvTransactions.Columns.Add("Description", "Description"); dgvTransactions.Columns["Description"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgvTransactions.Columns.Add("Amount", "Amount"); dgvTransactions.Columns["Amount"].Width = 150;
+            dgvTransactions.Columns.Add("CategoryName", "Danh mục"); dgvTransactions.Columns["CategoryName"].Width = 180;
+            dgvTransactions.Columns.Add("Date", "Ngày"); dgvTransactions.Columns["Date"].Width = 120;
+            dgvTransactions.Columns.Add("Description", "Mô tả"); dgvTransactions.Columns["Description"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvTransactions.Columns.Add("Amount", "Số tiền"); dgvTransactions.Columns["Amount"].Width = 150;
             dgvTransactions.Columns["Amount"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
         }
 
