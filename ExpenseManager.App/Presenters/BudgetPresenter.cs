@@ -40,13 +40,14 @@ namespace ExpenseManager.App.Presenters
         void SetChartDateRange(DateTime startDate, DateTime endDate);
     }
 
-    public class BudgetPresenter
+    public class BudgetPresenter : IDisposable
     {
         private readonly IBudgetView _view;
         private readonly IServiceProvider _serviceProvider;
 
         private int _selectedBudgetId;
         private List<BudgetSummaryDto> _currentBudgets;
+        private bool _disposed = false;
 
         public BudgetPresenter(IBudgetView view, IServiceProvider serviceProvider)
         {
@@ -61,25 +62,63 @@ namespace ExpenseManager.App.Presenters
             _view.ChartTypeChanged += OnChartTypeChanged;
         }
 
+        // ✅ DISPOSE METHOD
+        public void Dispose()
+        {
+            if (!_disposed)
+            {
+                // Unsubscribe all events
+                _view.ViewLoaded -= OnViewLoaded;
+                _view.BudgetSelected -= OnBudgetSelected;
+                _view.DeleteBudgetClicked -= OnDeleteBudgetClicked;
+                _view.EditBudgetClicked -= OnEditBudgetClicked;
+                _view.ChartDateRangeChanged -= OnChartDateRangeChanged;
+                _view.ChartTypeChanged -= OnChartTypeChanged;
+
+                // Clear data
+                _currentBudgets?.Clear();
+                _currentBudgets = null;
+                _selectedBudgetId = 0;
+
+                _disposed = true;
+            }
+        }
+
+        // ✅ Helper method to check if view can be updated
+        private bool CanUpdateView()
+        {
+            if (_disposed) return false;
+
+            if (_view is UserControl uc && (uc.IsDisposed || uc.Disposing))
+                return false;
+
+            return true;
+        }
+
         private async void OnViewLoaded(object sender, EventArgs e)
         {
+            if (!CanUpdateView()) return;
             await LoadBudgetsAsync();
         }
 
         private async void OnBudgetSelected(object sender, int budgetId)
         {
+            if (!CanUpdateView()) return;
             _selectedBudgetId = budgetId;
             await LoadBudgetDetailAsync(budgetId);
         }
 
         private async void OnDeleteBudgetClicked(object sender, EventArgs e)
         {
+            if (!CanUpdateView()) return;
             if (_selectedBudgetId <= 0) return;
             await DeleteBudgetAsync(_selectedBudgetId);
         }
 
         private async void OnEditBudgetClicked(object sender, EventArgs e)
         {
+            if (!CanUpdateView()) return;
+
             if (_selectedBudgetId <= 0)
             {
                 _view.ShowMessage("Vui lòng chọn ngân sách cần sửa!", "Thông báo", MessageBoxIcon.Warning);
@@ -96,6 +135,9 @@ namespace ExpenseManager.App.Presenters
                     var categoryService = scope.ServiceProvider.GetRequiredService<ICategoryService>();
 
                     var currentBudget = await budgetService.GetBudgetDetailAsync(_selectedBudgetId, _view.CurrentUserId);
+
+                    if (!CanUpdateView()) return;
+
                     if (currentBudget == null)
                     {
                         _view.ShowMessage("Không tìm thấy thông tin ngân sách!", "Lỗi", MessageBoxIcon.Error);
@@ -104,6 +146,8 @@ namespace ExpenseManager.App.Presenters
 
                     var allCategories = await categoryService.GetCategoriesByUserIdAsync(_view.CurrentUserId);
                     var summaries = await budgetService.GetUserBudgetSummariesAsync(_view.CurrentUserId);
+
+                    if (!CanUpdateView()) return;
 
                     var usedCategoryIds = summaries
                         .Where(b => b.BudgetId != _selectedBudgetId)
@@ -120,8 +164,12 @@ namespace ExpenseManager.App.Presenters
 
                         if (dialog.ShowDialog() == DialogResult.OK && dialog.UpdatedBudgetDto != null)
                         {
+                            if (!CanUpdateView()) return;
+
                             _view.ShowLoading(true);
                             bool success = await budgetService.UpdateBudgetAsync(_selectedBudgetId, dialog.UpdatedBudgetDto, _view.CurrentUserId);
+
+                            if (!CanUpdateView()) return;
 
                             if (success)
                             {
@@ -138,63 +186,46 @@ namespace ExpenseManager.App.Presenters
             }
             catch (Exception ex)
             {
-                _view.ShowMessage($"Lỗi: {ex.Message}", "Lỗi", MessageBoxIcon.Error);
+                if (CanUpdateView())
+                    _view.ShowMessage($"Lỗi: {ex.Message}", "Lỗi", MessageBoxIcon.Error);
             }
             finally
             {
-                _view.ShowLoading(false);
+                if (CanUpdateView())
+                    _view.ShowLoading(false);
             }
         }
 
-        // SỬA: Load lại chart khi thay đổi date range
         private async void OnChartDateRangeChanged(object sender, BudgetViewDateRangeEventArgs e)
         {
+            if (!CanUpdateView()) return;
             if (_selectedBudgetId > 0)
             {
                 await LoadExpenseChartAsync(_selectedBudgetId, e.StartDate, e.EndDate);
             }
         }
 
-        // SỬA: Chỉ load lại chart khi thay đổi loại, không load lại detail
-        //private async void OnChartTypeChanged(object sender, string chartType)
-        //{
-        //    if (_selectedBudgetId > 0)
-        //    {
-        //        try
-        //        {
-        //            using (var scope = _serviceProvider.CreateScope())
-        //            {
-        //                var budgetService = scope.ServiceProvider.GetRequiredService<IBudgetService>();
-        //                var breakdown = await budgetService.GetExpenseBreakdownAsync(_selectedBudgetId, _view.CurrentUserId);
-        //                _view.DisplayExpenseChart(breakdown ?? Enumerable.Empty<ExpenseBreakdownDto>());
-        //            }
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            Debug.WriteLine($"OnChartTypeChanged Error: {ex.Message}");
-        //        }
-        //    }
-        //}
-
         private void OnChartTypeChanged(object sender, string chartType)
         {
-            // Không làm gì cả.
-            // Khi View đổi loại chart -> View sẽ tự update lại DatePicker 
-            // -> DatePicker kích hoạt sự kiện ChartDateRangeChanged 
-            // -> ChartDateRangeChanged sẽ gọi LoadExpenseChartAsync.
-
-            // Nếu bạn load dữ liệu ở đây mà không có ngày bắt đầu/kết thúc cụ thể, 
-            // biểu đồ sẽ bị sai lệch.
+            // Không làm gì - để DatePicker trigger ChartDateRangeChanged
+            // Khi View đổi loại chart -> View tự update DatePicker 
+            // -> DatePicker kích hoạt ChartDateRangeChanged 
+            // -> ChartDateRangeChanged gọi LoadExpenseChartAsync
         }
 
         public async Task LoadBudgetsAsync()
         {
             try
             {
+                if (!CanUpdateView()) return;
+
                 using (var scope = _serviceProvider.CreateScope())
                 {
                     var budgetService = scope.ServiceProvider.GetRequiredService<IBudgetService>();
                     var budgets = await budgetService.GetUserBudgetSummariesAsync(_view.CurrentUserId);
+
+                    if (!CanUpdateView()) return;
+
                     _currentBudgets = budgets?.ToList() ?? new List<BudgetSummaryDto>();
                     _view.DisplayBudgetList(_currentBudgets);
 
@@ -226,20 +257,28 @@ namespace ExpenseManager.App.Presenters
         {
             try
             {
+                if (!CanUpdateView()) return;
+
                 using (var scope = _serviceProvider.CreateScope())
                 {
                     var budgetService = scope.ServiceProvider.GetRequiredService<IBudgetService>();
                     var detail = await budgetService.GetBudgetDetailAsync(budgetId, _view.CurrentUserId);
+
+                    if (!CanUpdateView()) return;
+
                     if (detail != null)
                     {
                         _view.DisplayBudgetDetail(detail);
 
-                        // ✅ CẬP NHẬT DATEPICKER TRƯỚC KHI LOAD CHART
+                        // ✅ Cập nhật DatePicker về range của budget
                         _view.SetChartDateRange(detail.StartDate, detail.EndDate);
 
-                        // ✅ Load chart theo range của budget
+                        // ✅ Load chart với date range đúng
                         var breakdown = await budgetService.GetExpenseBreakdownAsync(
                             budgetId, _view.CurrentUserId, detail.StartDate, detail.EndDate);
+
+                        if (!CanUpdateView()) return;
+
                         _view.DisplayExpenseChart(breakdown ?? Enumerable.Empty<ExpenseBreakdownDto>());
                     }
                 }
@@ -250,20 +289,23 @@ namespace ExpenseManager.App.Presenters
             }
         }
 
-        // SỬA: Lọc breakdown theo date range
         private async Task LoadExpenseChartAsync(int budgetId, DateTime start, DateTime end)
         {
             try
             {
+                if (!CanUpdateView()) return;
+
                 using (var scope = _serviceProvider.CreateScope())
                 {
                     var budgetService = scope.ServiceProvider.GetRequiredService<IBudgetService>();
 
-                    // ✅ Truyền đúng startDate và endDate vào Service
+                    // ✅ Truyền startDate và endDate vào Service
                     var breakdown = await budgetService.GetExpenseBreakdownAsync(
                         budgetId, _view.CurrentUserId, start, end);
 
-                    // ✅ Service đã lọc và group rồi, không cần filter lại ở đây
+                    if (!CanUpdateView()) return;
+
+                    // ✅ Service đã filter và group, không cần xử lý thêm
                     _view.DisplayExpenseChart(breakdown ?? Enumerable.Empty<ExpenseBreakdownDto>());
                 }
             }
@@ -277,6 +319,8 @@ namespace ExpenseManager.App.Presenters
         {
             try
             {
+                if (!CanUpdateView()) return new List<Category>();
+
                 using (var scope = _serviceProvider.CreateScope())
                 {
                     var categoryService = scope.ServiceProvider.GetRequiredService<ICategoryService>();
@@ -295,7 +339,7 @@ namespace ExpenseManager.App.Presenters
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"❌ GetCategoriesForNewBudgetAsync Error: {ex.Message}");
+                Debug.WriteLine($"GetCategoriesForNewBudgetAsync Error: {ex.Message}");
                 return new List<Category>();
             }
         }
@@ -311,22 +355,29 @@ namespace ExpenseManager.App.Presenters
         {
             try
             {
+                if (!CanUpdateView()) return;
+
                 _view.ShowLoading(true);
                 using (var scope = _serviceProvider.CreateScope())
                 {
                     var budgetService = scope.ServiceProvider.GetRequiredService<IBudgetService>();
                     await budgetService.CreateBudgetAsync(createDto, _view.CurrentUserId);
                 }
+
+                if (!CanUpdateView()) return;
+
                 _view.ShowMessage("Tạo ngân sách thành công!", "Thành công", MessageBoxIcon.Information);
                 await LoadBudgetsAsync();
             }
             catch (Exception ex)
             {
-                _view.ShowMessage(ex.Message, "Lỗi", MessageBoxIcon.Error);
+                if (CanUpdateView())
+                    _view.ShowMessage(ex.Message, "Lỗi", MessageBoxIcon.Error);
             }
             finally
             {
-                _view.ShowLoading(false);
+                if (CanUpdateView())
+                    _view.ShowLoading(false);
             }
         }
 
@@ -334,23 +385,30 @@ namespace ExpenseManager.App.Presenters
         {
             try
             {
+                if (!CanUpdateView()) return;
+
                 _view.ShowLoading(true);
                 using (var scope = _serviceProvider.CreateScope())
                 {
                     var budgetService = scope.ServiceProvider.GetRequiredService<IBudgetService>();
                     await budgetService.DeleteBudgetAsync(budgetId, _view.CurrentUserId);
                 }
+
+                if (!CanUpdateView()) return;
+
                 _view.ShowMessage("Xóa thành công!", "Thông báo", MessageBoxIcon.Information);
                 _selectedBudgetId = 0;
                 await LoadBudgetsAsync();
             }
             catch (Exception ex)
             {
-                _view.ShowMessage(ex.Message, "Lỗi", MessageBoxIcon.Error);
+                if (CanUpdateView())
+                    _view.ShowMessage(ex.Message, "Lỗi", MessageBoxIcon.Error);
             }
             finally
             {
-                _view.ShowLoading(false);
+                if (CanUpdateView())
+                    _view.ShowLoading(false);
             }
         }
 
