@@ -29,6 +29,7 @@
             btnEdit = new System.Windows.Forms.Button();
             btnDelete = new System.Windows.Forms.Button();
             pnlBudgetOverview = new System.Windows.Forms.Panel();
+            pbBudgetProgress = new ExpenseManager.App.CustomControls.CustomProgressBar();
             lblDaChiTitle = new System.Windows.Forms.Label();
             lblDaChiAmount = new System.Windows.Forms.Label();
             lblNganSachTitle = new System.Windows.Forms.Label();
@@ -52,7 +53,6 @@
             lblDen = new System.Windows.Forms.Label();
             dtpChartTo = new System.Windows.Forms.DateTimePicker();
             pnlChartArea = new System.Windows.Forms.Panel();
-            pbBudgetProgress = new ExpenseManager.App.CustomControls.CustomProgressBar();
             pnlHeader.SuspendLayout();
             pnlLeftSidebar.SuspendLayout();
             flpBudgetList.SuspendLayout();
@@ -217,6 +217,21 @@
             pnlBudgetOverview.Padding = new System.Windows.Forms.Padding(30);
             pnlBudgetOverview.Size = new System.Drawing.Size(1140, 140);
             pnlBudgetOverview.TabIndex = 4;
+            // 
+            // pbBudgetProgress
+            // 
+            pbBudgetProgress.DangerThreshold = 90;
+            pbBudgetProgress.Font = new System.Drawing.Font("Segoe UI", 9F);
+            pbBudgetProgress.Location = new System.Drawing.Point(595, 38);
+            pbBudgetProgress.Maximum = 100;
+            pbBudgetProgress.Minimum = 0;
+            pbBudgetProgress.Name = "pbBudgetProgress";
+            pbBudgetProgress.Percentage = 0D;
+            pbBudgetProgress.ShowText = false;
+            pbBudgetProgress.Size = new System.Drawing.Size(283, 33);
+            pbBudgetProgress.TabIndex = 0;
+            pbBudgetProgress.UseGradient = false;
+            pbBudgetProgress.WarningThreshold = 70;
             // 
             // lblDaChiTitle
             // 
@@ -480,21 +495,6 @@
             pnlChartArea.Name = "pnlChartArea";
             pnlChartArea.Size = new System.Drawing.Size(1080, 230);
             pnlChartArea.TabIndex = 5;
-            // 
-            // pbBudgetProgress
-            // 
-            pbBudgetProgress.DangerThreshold = 90;
-            pbBudgetProgress.Font = new System.Drawing.Font("Segoe UI", 9F);
-            pbBudgetProgress.Location = new System.Drawing.Point(595, 38);
-            pbBudgetProgress.Maximum = 100;
-            pbBudgetProgress.Minimum = 0;
-            pbBudgetProgress.Name = "pbBudgetProgress";
-            pbBudgetProgress.Percentage = 0D;
-            pbBudgetProgress.ShowText = true;
-            pbBudgetProgress.Size = new System.Drawing.Size(283, 33);
-            pbBudgetProgress.TabIndex = 0;
-            pbBudgetProgress.UseGradient = false;
-            pbBudgetProgress.WarningThreshold = 70;
             // 
             // UC_Budget
             // 
