@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using ExpenseManager.App.Presenters;
+using Microsoft.Extensions.DependencyInjection; // Cần cái này để lấy LoginForm
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -7,15 +8,20 @@ namespace ExpenseManager.App.Views
 {
     public partial class ForgotPasswordForm : Form
     {
+        private readonly ForgotPasswordPresenter _presenter;
+
+        // Màu sắc UI
         private Color focusColor = Color.FromArgb(0, 123, 255);
         private Color blurColor = Color.LightGray;
 
-        public ForgotPasswordForm()
+        // Constructor nhận Presenter từ Dependency Injection
+        public ForgotPasswordForm(ForgotPasswordPresenter presenter)
         {
             InitializeComponent();
+            _presenter = presenter;
 
+            // Setup UI mặc định
             this.lblError.Text = string.Empty;
-            // Set màu mặc định
             pnlEmailLine.BackColor = blurColor;
             pnlCodeLine.BackColor = blurColor;
             pnlNewPasswordLine.BackColor = blurColor;
@@ -24,74 +30,100 @@ namespace ExpenseManager.App.Views
 
         private void ForgotPasswordForm_Load(object sender, EventArgs e)
         {
-            // Căn giữa panel chính
+            // Căn giữa panel
             int panelX = (this.ClientSize.Width - pnlForgotPassword.Width) / 2;
             int panelY = (this.ClientSize.Height - pnlForgotPassword.Height) / 2;
             pnlForgotPassword.Location = new Point(panelX, panelY);
 
-            txtEmail.Focus(); // Focus vào ô Email
+            txtEmail.Focus();
         }
 
-        // --- Xử lý sự kiện cho Bước 1 ---
-        private void btnSubmitEmail_Click(object sender, EventArgs e)
+        // --- BƯỚC 1: GỬI MÃ ---
+        private async void btnSubmitEmail_Click(object sender, EventArgs e)
         {
             lblError.Text = string.Empty;
-            if (string.IsNullOrEmpty(txtEmail.Text) || !txtEmail.Text.Contains("@"))
+            string email = txtEmail.Text.Trim();
+
+            if (string.IsNullOrEmpty(email) || !email.Contains("@"))
             {
-                ShowErrorMessage("Vui lòng nhập một email hợp lệ.");
+                ShowErrorMessage("Vui lòng nhập email hợp lệ.");
                 return;
             }
 
-            // --- GIẢ LẬP: Gửi mã thành công ---
-            // Đổi Tiêu đề
-            lblTitle.Text = "ĐẶT LẠI MẬT KHẨU";
-            lblTitle.Location = new Point(15, 40); // Căn lại (420 - 390) / 2 = 15
-            lblTitle.Size = new System.Drawing.Size(390, 54); // Điều chỉnh kích thước
+            // UI: Loading
+            btnSubmitEmail.Enabled = false;
+            btnSubmitEmail.Text = "Đang gửi mã...";
 
-            // Ẩn/Hiện Panel
-            pnlStep1.Visible = false;
-            pnlStep2.Visible = true;
-            txtCode.Focus();
+            // GỌI PRESENTER
+            var result = await _presenter.RequestResetCode(email);
+
+            // UI: Reset button
+            btnSubmitEmail.Enabled = true;
+            btnSubmitEmail.Text = "Gửi mã";
+
+            if (result.Success)
+            {
+                // Chuyển sang giao diện nhập mã (Bước 2)
+                lblTitle.Text = "ĐẶT LẠI MẬT KHẨU";
+                pnlStep1.Visible = false;
+                pnlStep2.Visible = true;
+                txtCode.Focus();
+                MessageBox.Show(result.Message, "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                ShowErrorMessage(result.Message);
+            }
         }
 
-        // --- Xử lý sự kiện cho Bước 2 ---
-        private void btnResetPassword_Click(object sender, EventArgs e)
+        // --- BƯỚC 2: XÁC NHẬN ĐỔI PASS ---
+        private async void btnResetPassword_Click(object sender, EventArgs e)
         {
             lblError.Text = string.Empty;
 
-            // Kiểm tra rỗng
-            if (string.IsNullOrEmpty(txtCode.Text) || string.IsNullOrEmpty(txtNewPassword.Text) || string.IsNullOrEmpty(txtConfirmPassword.Text))
+            if (string.IsNullOrEmpty(txtCode.Text) || string.IsNullOrEmpty(txtNewPassword.Text))
             {
                 ShowErrorMessage("Vui lòng nhập đầy đủ thông tin.");
                 return;
             }
 
-            // Kiểm tra mật khẩu khớp
             if (txtNewPassword.Text != txtConfirmPassword.Text)
             {
-                ShowErrorMessage("Mật khẩu mới không khớp. Vui lòng nhập lại.");
+                ShowErrorMessage("Mật khẩu xác nhận không khớp.");
                 return;
             }
 
-            // --- GIẢ LẬP: Đổi mật khẩu thành công ---
-            MessageBox.Show("Đổi mật khẩu thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            btnResetPassword.Enabled = false;
+            btnResetPassword.Text = "Đang xử lý...";
 
-            // Quay về trang Đăng nhập
-            GoBackToLogin();
+            // GỌI PRESENTER
+            var result = await _presenter.SubmitNewPassword(txtEmail.Text.Trim(), txtCode.Text.Trim(), txtNewPassword.Text);
+
+            btnResetPassword.Enabled = true;
+            btnResetPassword.Text = "Xác nhận";
+
+            if (result.Success)
+            {
+                MessageBox.Show("Đổi mật khẩu thành công! Vui lòng đăng nhập lại.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                GoBackToLogin();
+            }
+            else
+            {
+                ShowErrorMessage(result.Message);
+            }
         }
 
-        // --- Các hàm xử lý sự kiện chung ---
-        private void lnkBackToLogin_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            GoBackToLogin();
-        }
+        // --- Helper Methods ---
         private void GoBackToLogin()
         {
-            // Lấy Form từ DI (Dependency Injection)
-            // KHÔNG DÙNG: new LoginForm();
             var loginForm = Program.ServiceProvider.GetRequiredService<LoginForm>();
             loginForm.Show();
             this.Hide();
+        }
+
+        private void lnkBackToLogin_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            GoBackToLogin();
         }
 
         public void ShowErrorMessage(string message)
@@ -99,7 +131,7 @@ namespace ExpenseManager.App.Views
             lblError.Text = message;
         }
 
-        // --- Xử lý Focus gạch chân ---
+        // --- Các hàm UI Effect (Focus/Blur/ShowPass) giữ nguyên như cũ ---
         private void txtEmail_Enter(object sender, EventArgs e) { pnlEmailLine.BackColor = focusColor; }
         private void txtEmail_Leave(object sender, EventArgs e) { pnlEmailLine.BackColor = blurColor; }
         private void txtCode_Enter(object sender, EventArgs e) { pnlCodeLine.BackColor = focusColor; }
@@ -109,33 +141,16 @@ namespace ExpenseManager.App.Views
         private void txtConfirmPassword_Enter(object sender, EventArgs e) { pnlConfirmPasswordLine.BackColor = focusColor; }
         private void txtConfirmPassword_Leave(object sender, EventArgs e) { pnlConfirmPasswordLine.BackColor = blurColor; }
 
-        // --- Xử lý 2 nút ẩn/hiện mật khẩu ---
         private void btnShowHideNewPass_Click(object sender, EventArgs e)
         {
-            if (txtNewPassword.PasswordChar == '•')
-            {
-                txtNewPassword.PasswordChar = '\0';
-                btnShowHideNewPass.Text = "🔒";
-            }
-            else
-            {
-                txtNewPassword.PasswordChar = '•';
-                btnShowHideNewPass.Text = "👁️";
-            }
+            txtNewPassword.PasswordChar = txtNewPassword.PasswordChar == '•' ? '\0' : '•';
+            btnShowHideNewPass.Text = txtNewPassword.PasswordChar == '•' ? "👁️" : "🔒";
         }
 
         private void btnShowHideConfirmPass_Click(object sender, EventArgs e)
         {
-            if (txtConfirmPassword.PasswordChar == '•')
-            {
-                txtConfirmPassword.PasswordChar = '\0';
-                btnShowHideConfirmPass.Text = "🔒";
-            }
-            else
-            {
-                txtConfirmPassword.PasswordChar = '•';
-                btnShowHideConfirmPass.Text = "👁️";
-            }
+            txtConfirmPassword.PasswordChar = txtConfirmPassword.PasswordChar == '•' ? '\0' : '•';
+            btnShowHideConfirmPass.Text = txtConfirmPassword.PasswordChar == '•' ? "👁️" : "🔒";
         }
     }
 }

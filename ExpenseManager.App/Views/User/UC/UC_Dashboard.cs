@@ -120,11 +120,11 @@ namespace ExpenseManager.App.Views.Admin.UC
         {
             // --- 1. CẤU HÌNH PHẦN GIỮA (Biểu đồ cũ & List cũ) ---
 
-            // Ẩn số tiền to & % (vì đã có trên biểu đồ)
+            
             lblBalanceTrendsAmount.Visible = false;
             lblBalanceTrendsChange.Visible = false;
 
-            // Chỉnh lại vị trí pnlMainContent (nằm dưới 4 ô thống kê)
+          
             pnlMainContent.Dock = DockStyle.None;
             pnlMainContent.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             pnlMainContent.Location = new Point(0, 290);
@@ -133,7 +133,6 @@ namespace ExpenseManager.App.Views.Admin.UC
             // Chỉnh chiều cao khung chứa biểu đồ (Gọn gàng: 350px)
             pnlBalanceTrends.Height = 350;
 
-            // Đẩy biểu đồ lên cao (Y=60) và chừa lề trái (X=10)
             pnlBalanceChart.Location = new Point(10, 60);
             pnlBalanceChart.Size = new Size(pnlBalanceTrends.Width - 20, pnlBalanceTrends.Height - 70);
             pnlBalanceChart.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;

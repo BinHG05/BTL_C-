@@ -81,6 +81,8 @@ namespace ExpenseManager.App
 
             services.AddScoped<IBudgetService, BudgetService>();
 
+            services.AddTransient<ForgotPasswordPresenter>();
+            services.AddTransient<ForgotPasswordForm>();
             services.AddScoped<IGoalService, GoalService>();
 
 
