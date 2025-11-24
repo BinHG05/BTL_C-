@@ -505,8 +505,6 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
         private System.Windows.Forms.PictureBox logoPic;
         private System.Windows.Forms.Panel headerPanel;
         private System.Windows.Forms.Panel rightPanel;
-        private FontAwesome.Sharp.IconButton btnToggleTheme;
-        private FontAwesome.Sharp.IconButton btnNotification;
         private FontAwesome.Sharp.IconButton btnProfileTop;
         private System.Windows.Forms.Panel centerPanel;
         private FontAwesome.Sharp.IconButton btnAddTransaction;

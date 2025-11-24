@@ -91,8 +91,8 @@ namespace ExpenseManager.App.Views.User.UC
         {
             get
             {
-                if (dtpBirthDate.Value.Year < 1900 || dtpBirthDate.Value > DateTime.Now)
-                    return null;
+                //if (dtpBirthDate.Value.Year < 1900 || dtpBirthDate.Value > DateTime.Now)
+                //    return null;
                 return dtpBirthDate.Value;
             }
         }
@@ -341,7 +341,8 @@ namespace ExpenseManager.App.Views.User.UC
                     Cursor = Cursors.Hand,
                     Tag = color.ColorId
                 };
-                colorPanel.Click += (s, e) => {
+                colorPanel.Click += (s, e) =>
+                {
                     cmbColor.SelectedValue = (int)((Panel)s).Tag;
                 };
                 flpColorPicker.Controls.Add(colorPanel);

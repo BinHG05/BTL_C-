@@ -1,7 +1,9 @@
 ﻿using ExpenseManager.App.Helpers;
 using ExpenseManager.App.Models.Entities;
 using ExpenseManager.App.Repositories;
+using ExpenseManager.App.Repositories.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ExpenseManager.App.Services
@@ -11,10 +13,12 @@ namespace ExpenseManager.App.Services
     public class AuthService : IAuthService
     {
         private readonly IUserRepository _userRepository;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public AuthService(IUserRepository userRepository)
+        public AuthService(IUserRepository userRepository, ICategoryRepository categoryRepository)
         {
             _userRepository = userRepository;
+            _categoryRepository = categoryRepository; 
         }
         public async Task<(bool Success, string Message)> SendResetCodeAsync(string email)
         {
@@ -124,6 +128,10 @@ namespace ExpenseManager.App.Services
             };
 
             await _userRepository.AddUserAsync(newUser);
+
+            // ✅ BƯỚC MỚI: TẠO CÁC DANH MỤC MẶC ĐỊNH
+            await CreateDefaultCategoriesAsync(newUser.UserId);
+
             return (true, null);
         }
 
@@ -156,7 +164,73 @@ namespace ExpenseManager.App.Services
                 };
 
                 await _userRepository.AddUserAsync(newUser);
+
+                // ✅ BƯỚC MỚI: TẠO CÁC DANH MỤC MẶC ĐỊNH
+                await CreateDefaultCategoriesAsync(newUser.UserId);
+
                 return newUser;
+            }
+        }
+        private async Task CreateDefaultCategoriesAsync(string userId)
+        {
+            var defaultCategories = new List<Category>
+            {
+                // 3 Chi tiêu (Expense)
+                new Category {
+                    UserId = userId,
+                    CategoryName = "Ăn uống",
+                    Type = "Expense",
+                    CreatedAt = DateTime.Now,
+                    ColorId = 1,
+                    IconId = 1 
+                },
+                new Category {
+                    UserId = userId,
+                    CategoryName = "Di chuyển",
+                    Type = "Expense",
+                    CreatedAt = DateTime.Now,
+                    ColorId = 2,
+                    IconId = 2
+                },
+                new Category {
+                    UserId = userId,
+                    CategoryName = "Xăng xe",
+                    Type = "Expense",
+                    CreatedAt = DateTime.Now,
+                    ColorId = 3,
+                    IconId = 3 
+                },
+                
+                // 3 Thu nhập (Income)
+                new Category {
+                    UserId = userId,
+                    CategoryName = "Lương",
+                    Type = "Income",
+                    CreatedAt = DateTime.Now,
+                    ColorId = 4, 
+                    IconId = 20 
+                },
+                new Category {
+                    UserId = userId,
+                    CategoryName = "Kinh doanh",
+                    Type = "Income",
+                    CreatedAt = DateTime.Now,
+                    ColorId = 5, 
+                    IconId = 21 
+                },
+                new Category {
+                    UserId = userId,
+                    CategoryName = "Đầu tư",
+                    Type = "Income",
+                    CreatedAt = DateTime.Now,
+                    ColorId = 6, 
+                    IconId = 22 
+                }
+            };
+
+            foreach (var category in defaultCategories)
+            {
+                await _categoryRepository.AddCategoryAsync(category);
             }
         }
     }
