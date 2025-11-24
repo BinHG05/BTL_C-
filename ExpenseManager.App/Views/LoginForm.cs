@@ -3,7 +3,9 @@ using ExpenseManager.App.Session;
 using ExpenseManager.App.Views.Admin.Sidebar;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Diagnostics;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ExpenseManager.App.Views
@@ -125,6 +127,9 @@ namespace ExpenseManager.App.Views
         {
             try
             {
+                Debug.WriteLine("========================================");
+                Debug.WriteLine("[LoginForm] Google Login START");
+
                 // Hiển thị loading
                 btnGoogleLogin.Enabled = false;
                 btnGoogleLogin.Text = "Đang xử lý...";
@@ -132,24 +137,66 @@ namespace ExpenseManager.App.Views
                 // Gọi Google Login
                 var (success, user, error) = await _presenter.LoginWithGoogleAsync();
 
+                Debug.WriteLine($"[LoginForm] Login result: Success={success}, User={user?.UserId ?? "NULL"}");
+
                 if (success && user != null)
                 {
+                    // ✅ VERIFY SESSION ĐÃ SET ĐÚNG
+                    if (CurrentUserSession.CurrentUser == null)
+                    {
+                        Debug.WriteLine("[LoginForm] ❌ ERROR: Session is NULL after login!");
+                        MessageBox.Show("Lỗi: Không thể lưu phiên đăng nhập!",
+                            "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    Debug.WriteLine($"[LoginForm] ✅ Session verified: {CurrentUserSession.CurrentUser.UserId}");
+                    Debug.WriteLine($"[LoginForm] User Role: {user.Role}");
+
+                    // Đợi một chút để đảm bảo Session được set
+                    await Task.Delay(100);
+
+                    // ✅ VERIFY LẦN 2
+                    if (CurrentUserSession.CurrentUser == null)
+                    {
+                        Debug.WriteLine("[LoginForm] ❌ ERROR: Session is NULL after delay!");
+                        MessageBox.Show("Lỗi: Phiên đăng nhập không ổn định!",
+                            "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
                     // Phân quyền
                     if (user.Role == "Admin")
                     {
+                        Debug.WriteLine("[LoginForm] Opening LayoutAdmin...");
                         var layoutAdmin = Program.ServiceProvider.GetRequiredService<LayoutAdmin>();
                         layoutAdmin.Show();
                         this.Hide();
                     }
                     else if (user.Role == "User")
                     {
+                        Debug.WriteLine("[LoginForm] Opening LayoutUser...");
                         var layoutUser = Program.ServiceProvider.GetRequiredService<LayoutUser>();
+
+                        // ✅ VERIFY LẦN 3 - Ngay trước khi show
+                        if (CurrentUserSession.CurrentUser == null)
+                        {
+                            Debug.WriteLine("[LoginForm] ❌ ERROR: Session cleared before showing LayoutUser!");
+                            MessageBox.Show("Lỗi: Phiên đăng nhập bị mất!",
+                                "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+
+                        Debug.WriteLine($"[LoginForm] Final Session check: {CurrentUserSession.CurrentUser.UserId}");
                         layoutUser.Show();
                         this.Hide();
                     }
+
+                    Debug.WriteLine("[LoginForm] Google Login SUCCESS");
                 }
                 else
                 {
+                    Debug.WriteLine($"[LoginForm] Login FAILED: {error}");
                     MessageBox.Show(
                         error ?? "Đăng nhập Google thất bại.",
                         "Lỗi",
@@ -160,6 +207,8 @@ namespace ExpenseManager.App.Views
             }
             catch (Exception ex)
             {
+                Debug.WriteLine($"[LoginForm] EXCEPTION: {ex.Message}");
+                Debug.WriteLine($"[LoginForm] Stack Trace: {ex.StackTrace}");
                 MessageBox.Show(
                     $"Lỗi: {ex.Message}",
                     "Lỗi",
@@ -172,6 +221,7 @@ namespace ExpenseManager.App.Views
                 // Reset button
                 btnGoogleLogin.Enabled = true;
                 btnGoogleLogin.Text = "Đăng nhập bằng Google";
+                Debug.WriteLine("========================================");
             }
         }
 
