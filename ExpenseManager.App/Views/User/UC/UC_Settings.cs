@@ -16,7 +16,7 @@ using ExpenseManager.App.Session;
 using System.Collections.Generic;
 using System.Linq;
 
-// Thêm 2 dòng alias này
+// Alias cho các entity trùng tên
 using DbColor = ExpenseManager.App.Models.Entities.Color;
 using DbIcon = ExpenseManager.App.Models.Entities.Icon;
 
@@ -32,10 +32,7 @@ namespace ExpenseManager.App.Views.User.UC
         public UC_Settings(string userId)
         {
             InitializeComponent();
-            this.BackColor = System.Drawing.Color.FromArgb(238, 242, 247);
-            mainPanel.BackColor = System.Drawing.Color.FromArgb(238, 242, 247);
-            breadcrumbPanel.Visible = false;
-
+            SetupUI(); // Gom code setup giao diện vào hàm chung
             InitializeCustomComponents();
             InitializePresenter();
         }
@@ -43,17 +40,27 @@ namespace ExpenseManager.App.Views.User.UC
         public UC_Settings()
         {
             InitializeComponent();
-            this.BackColor = System.Drawing.Color.FromArgb(238, 242, 247);
-            mainPanel.BackColor = System.Drawing.Color.FromArgb(238, 242, 247);
-            breadcrumbPanel.Visible = false; // ✅ Thêm dòng này
+            SetupUI(); // Gom code setup giao diện vào hàm chung
             InitializeCustomComponents();
             InitializePresenter();
             this.Resize += UC_Settings_Resize;
         }
 
+        // Hàm setup chung cho cả 2 constructor
+        private void SetupUI()
+        {
+            this.BackColor = System.Drawing.Color.FromArgb(238, 242, 247);
+            mainPanel.BackColor = System.Drawing.Color.FromArgb(238, 242, 247);
+            breadcrumbPanel.Visible = false;
+
+            // --- CẤU HÌNH SCROLLBAR ---
+            pnlCategoryLists.AutoScroll = true;
+            pnlCategoryLists.HorizontalScroll.Visible = false; // Ẩn scroll ngang nếu không cần
+            // ---------------------------
+        }
 
         // =========================================================
-        // ===== IMPLEMENT IProfileView - PROPERTIES (ĐÃ CÓ) =====
+        // ===== IMPLEMENT IProfileView - PROPERTIES =====
         // =========================================================
 
         public string UserId => CurrentUserSession.CurrentUser?.UserId;
@@ -93,7 +100,7 @@ namespace ExpenseManager.App.Views.User.UC
         public string CountryInput => cmbCountry.SelectedItem?.ToString() ?? "";
 
         // ======================================================
-        // ===== IMPLEMENT IProfileView - EVENTS (ĐÃ CÓ) =====
+        // ===== IMPLEMENT IProfileView - EVENTS =====
         // ======================================================
 
         public event EventHandler SaveGeneralInfoClicked;
@@ -102,7 +109,7 @@ namespace ExpenseManager.App.Views.User.UC
 
 
         // ============================================================
-        // ===== 2. IMPLEMENT ICategoryView - PROPERTIES (MỚI) =====
+        // ===== IMPLEMENT ICategoryView - PROPERTIES =====
         // ============================================================
 
         public int? SelectedCategoryId => _selectedCategoryId;
@@ -117,24 +124,15 @@ namespace ExpenseManager.App.Views.User.UC
             get
             {
                 string selectedText = cmbCategoryType.SelectedItem.ToString();
-                // Ánh xạ chuỗi hiển thị sang key logic (Expense hoặc Income)
-                if (selectedText == "Chi tiêu")
-                    return "Expense";
-                if (selectedText == "Thu nhập")
-                    return "Income";
-
-                // Trả về mặc định nếu không khớp (hoặc xử lý lỗi)
+                if (selectedText == "Chi tiêu") return "Expense";
+                if (selectedText == "Thu nhập") return "Income";
                 return selectedText;
             }
             set
             {
-                // Khi Presenter gán giá trị (ví dụ: "Expense"), ánh xạ sang Tiếng Việt để hiển thị
-                if (value == "Expense")
-                    cmbCategoryType.SelectedItem = "Chi tiêu";
-                else if (value == "Income")
-                    cmbCategoryType.SelectedItem = "Thu nhập";
-                else
-                    cmbCategoryType.SelectedItem = value; // Giá trị không phải Expense/Income
+                if (value == "Expense") cmbCategoryType.SelectedItem = "Chi tiêu";
+                else if (value == "Income") cmbCategoryType.SelectedItem = "Thu nhập";
+                else cmbCategoryType.SelectedItem = value;
             }
         }
         public int SelectedIconId
@@ -149,7 +147,7 @@ namespace ExpenseManager.App.Views.User.UC
         }
 
         // =========================================================
-        // ===== 3. IMPLEMENT ICategoryView - EVENTS (MỚI) =====
+        // ===== IMPLEMENT ICategoryView - EVENTS =====
         // =========================================================
 
         public event EventHandler LoadView;
@@ -160,7 +158,7 @@ namespace ExpenseManager.App.Views.User.UC
 
 
         // ==========================================================
-        // ===== 4. CẬP NHẬT PRESENTER (GỘP) =====
+        // ===== PRESENTER =====
         // ==========================================================
 
         private void InitializePresenter()
@@ -191,10 +189,9 @@ namespace ExpenseManager.App.Views.User.UC
         }
 
         // ====================================================================
-        // ===== 5. IMPLEMENT IProfileView & ICategoryView - METHODS =====
+        // ===== IMPLEMENT METHODS =====
         // ====================================================================
 
-        // Methods cho IProfileView (ĐÃ CÓ)
         public void DisplayUserData(ExpenseManager.App.Models.Entities.User user)
         {
             if (user == null) return;
@@ -217,10 +214,7 @@ namespace ExpenseManager.App.Views.User.UC
             if (!string.IsNullOrEmpty(user.Country))
             {
                 int index = cmbCountry.FindStringExact(user.Country);
-                if (index != -1)
-                {
-                    cmbCountry.SelectedIndex = index;
-                }
+                if (index != -1) cmbCountry.SelectedIndex = index;
             }
             else
             {
@@ -234,18 +228,11 @@ namespace ExpenseManager.App.Views.User.UC
                 }
                 else
                 {
-                    string defaultAvatarPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
-                                                            "image",
-                                                            "AvatarDefault.jpg");
-
+                    string defaultAvatarPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "image", "AvatarDefault.jpg");
                     if (File.Exists(defaultAvatarPath))
-                    {
                         picProfile.Image = System.Drawing.Image.FromFile(defaultAvatarPath);
-                    }
                     else
-                    {
                         picProfile.Image = null;
-                    }
                 }
             }
             catch (Exception ex)
@@ -257,64 +244,80 @@ namespace ExpenseManager.App.Views.User.UC
 
         public void ShowSuccess(string message)
         {
-            MessageBox.Show(message, "Thành công",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(message, "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         public void ShowError(string message)
         {
-            MessageBox.Show(message, "Lỗi",
-                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            MessageBox.Show(message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
-        // Methods cho ICategoryView
+        // ===== HÀM QUAN TRỌNG ĐỂ SỬA LỖI HIỂN THỊ CATEGORY =====
         public void DisplayCategories(List<Category> incomeCategories, List<Category> expenseCategories)
         {
-            // Tạm dừng layout
+            // 1. Tạm dừng layout
             pnlCategoryLists.SuspendLayout();
             flpIncomeCategories.SuspendLayout();
             flpExpenseCategories.SuspendLayout();
 
+            // 2. Xóa dữ liệu cũ
             flpIncomeCategories.Controls.Clear();
             flpExpenseCategories.Controls.Clear();
 
-            // 1. Lấy chiều rộng CHUẨN từ panel cha (pnlCategoryLists).
-            // Đảm bảo các FLP có chiều rộng bằng panel cha (đã được resize trong AdjustLayout)
-            int panelWidth = pnlCategoryLists.ClientSize.Width;
+            // 3. Tính toán chiều rộng
+            // Trừ hao 25px để chừa chỗ cho Scrollbar dọc, tránh bị che nút
+            int scrollbarPadding = 25;
+            int panelWidth = pnlCategoryLists.ClientSize.Width - scrollbarPadding;
+            if (panelWidth < 0) panelWidth = pnlCategoryLists.ClientSize.Width;
 
-            // 2. Set width cho cả 2 FlowLayoutPanel
+            // Set width và AutoSize cho các panel chứa danh sách
             flpIncomeCategories.Width = panelWidth;
+            flpIncomeCategories.AutoSize = true;
+            flpIncomeCategories.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+
             flpExpenseCategories.Width = panelWidth;
+            flpExpenseCategories.AutoSize = true;
+            flpExpenseCategories.AutoSizeMode = AutoSizeMode.GrowAndShrink;
 
-            // 3. Lấy chiều rộng item (CHỈ 1 LẦN) - Lấy sau khi FLP đã có chiều rộng đúng
-            int itemWidth = flpIncomeCategories.ClientSize.Width;
-
-            // 4. Thêm vào list Income
+            // 4. Thêm danh sách Thu nhập (Income)
             foreach (var category in incomeCategories)
             {
                 var item = new UC_CategoryItem(category);
-                item.Width = itemWidth; // Dùng itemWidth
+                item.Width = panelWidth;
                 item.EditClicked += OnCategoryItem_EditClicked;
                 item.DeleteClicked += OnCategoryItem_DeleteClicked;
                 flpIncomeCategories.Controls.Add(item);
             }
 
-            // 5. Thêm vào list Expense
+            // 5. Cập nhật layout của Income ngay lập tức để lấy chiều cao thực tế
+            flpIncomeCategories.ResumeLayout(false);
+            flpIncomeCategories.PerformLayout();
+
+            // 6. Tính toán vị trí mới cho phần Chi tiêu (Expense) để không bị đè
+            // Vị trí Y mới = Đáy của danh sách Thu nhập + khoảng cách (30px)
+            int gap = 30;
+            int newY = flpIncomeCategories.Bottom + gap;
+
+            lblExpenseCategories.Location = new Point(lblExpenseCategories.Location.X, newY);
+
+            // Danh sách chi tiêu nằm ngay dưới label chi tiêu
+            flpExpenseCategories.Location = new Point(flpExpenseCategories.Location.X, lblExpenseCategories.Bottom + 10);
+
+            // 7. Thêm danh sách Chi tiêu (Expense)
             foreach (var category in expenseCategories)
             {
                 var item = new UC_CategoryItem(category);
-                item.Width = itemWidth; // Dùng CHUNG itemWidth
+                item.Width = panelWidth;
                 item.EditClicked += OnCategoryItem_EditClicked;
                 item.DeleteClicked += OnCategoryItem_DeleteClicked;
                 flpExpenseCategories.Controls.Add(item);
             }
 
-            // Tiếp tục layout
-            flpIncomeCategories.ResumeLayout(false);
+            // 8. Tiếp tục layout
             flpExpenseCategories.ResumeLayout(false);
+            flpExpenseCategories.PerformLayout();
             pnlCategoryLists.ResumeLayout(true);
         }
-
 
         public void PopulateDropdowns(List<DbIcon> icons, List<DbColor> colors)
         {
@@ -379,10 +382,9 @@ namespace ExpenseManager.App.Views.User.UC
         }
 
         // ========================================================
-        // ===== 6. EVENT HANDLERS (GỘP) =====
+        // ===== EVENT HANDLERS =====
         // ========================================================
 
-        // Handlers cho IProfileView (ĐÃ CÓ)
         private void BtnSaveProfile_Click(object sender, EventArgs e)
         {
             SaveGeneralInfoClicked?.Invoke(this, EventArgs.Empty);
@@ -435,11 +437,8 @@ namespace ExpenseManager.App.Views.User.UC
             }
         }
 
-        // Handlers cho Chuyển Tab (MỚI / CẬP NHẬT)
-        private void lblTabProfile_Click(object sender, EventArgs e)
-        {
-            SwitchTab(Tab.Profile);
-        }
+        // Handlers cho Chuyển Tab
+        private void lblTabProfile_Click(object sender, EventArgs e) => SwitchTab(Tab.Profile);
 
         private void lblTabCategories_Click(object sender, EventArgs e)
         {
@@ -489,17 +488,10 @@ namespace ExpenseManager.App.Views.User.UC
             }
         }
 
-        // Handlers cho ICategoryView (MỚI)
         private void BtnSaveCategory_Click(object sender, EventArgs e)
         {
-            if (_selectedCategoryId == null)
-            {
-                CreateCategory?.Invoke(this, EventArgs.Empty);
-            }
-            else
-            {
-                UpdateCategory?.Invoke(this, EventArgs.Empty);
-            }
+            if (_selectedCategoryId == null) CreateCategory?.Invoke(this, EventArgs.Empty);
+            else UpdateCategory?.Invoke(this, EventArgs.Empty);
         }
 
         private void OnCategoryItem_EditClicked(object sender, EventArgs e)
@@ -512,10 +504,8 @@ namespace ExpenseManager.App.Views.User.UC
         private void OnCategoryItem_DeleteClicked(object sender, EventArgs e)
         {
             var item = (UC_CategoryItem)sender;
-
             var confirmResult = MessageBox.Show($"Bạn có chắc muốn xóa danh mục '{item.GetCategory().CategoryName}' không?",
-                                     "Xác nhận xóa",
-                                     MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                                             "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (confirmResult == DialogResult.Yes)
             {
@@ -525,7 +515,7 @@ namespace ExpenseManager.App.Views.User.UC
         }
 
         // ========================================================
-        // ===== 7. HELPER METHODS (ĐÃ CÓ) =====
+        // ===== HELPER METHODS =====
         // ========================================================
 
         private string GetInputValue(TextBox textBox, string placeholderText)
@@ -551,100 +541,57 @@ namespace ExpenseManager.App.Views.User.UC
 
         private void AdjustLayout()
         {
-            // Lấy chiều rộng khả dụng (Available Width)
             int availableWidth = this.Width - (this.mainPanel.Padding.Horizontal);
-            int mainPanelPadding = this.mainPanel.Padding.Left; // 30
+            int mainPanelPadding = this.mainPanel.Padding.Left;
             int panelSpacing = 20;
 
-            // 1. HEADER & TAB PANEL
+            // HEADER & TAB
             headerPanel.Width = availableWidth - mainPanelPadding * 2;
             tabPanel.Width = availableWidth - mainPanelPadding * 2;
-
             headerPanel.Left = mainPanelPadding;
             tabPanel.Left = mainPanelPadding;
-
             breadcrumbPanel.Left = headerPanel.Width - breadcrumbPanel.Width;
 
-            // 2. TOP PANEL (Profile & Password) - FIXED HEIGHT
+            // PROFILE & PASSWORD
             topPanel.Width = availableWidth - mainPanelPadding * 2;
             topPanel.Left = mainPanelPadding;
-            topPanel.Height = 565; // Cố định chiều cao cho đồng nhất
+            topPanel.Height = 565;
 
             int halfWidth = (topPanel.Width - panelSpacing) / 2;
-
-            // Profile Panel và Password Panel có chiều cao bằng nhau
             profilePanel.Width = halfWidth;
             profilePanel.Height = 565;
-
             passwordPanel.Width = halfWidth;
             passwordPanel.Height = 565;
             passwordPanel.Left = halfWidth + panelSpacing;
 
-            // Căn chỉnh các control trong profilePanel với padding 30px
+            // Căn chỉnh Profile
             int profileContentWidth = profilePanel.Width - 60;
+            txtFullName.Left = 33; txtFullName.Width = profileContentWidth;
+            txtCurrentEmail.Left = 33; txtCurrentEmail.Width = profileContentWidth;
 
-            txtFullName.Left = 33;
-            txtFullName.Width = profileContentWidth;
-            txtFullName.Height = 30;
-
-            txtCurrentEmail.Left = 33;
-            txtCurrentEmail.Width = profileContentWidth;
-            txtCurrentEmail.Height = 30;
-
-            // Căn chỉnh các control trong passwordPanel với padding 30px
+            // Căn chỉnh Password
             int passwordContentWidth = passwordPanel.Width - 60;
-
-            txtNewEmail.Left = 33;
-            txtNewEmail.Width = passwordContentWidth;
-            txtNewEmail.Height = 30;
-
-            txtNewPassword.Left = 33;
-            txtNewPassword.Width = passwordContentWidth;
-            txtNewPassword.Height = 30;
-
-            txtConfirmPassword.Left = 33;
-            txtConfirmPassword.Width = passwordContentWidth;
-            txtConfirmPassword.Height = 30;
-
-            // Current Password với nút Toggle - căn chỉnh chính xác
-            txtCurrentPassword.Left = 33;
-            txtCurrentPassword.Width = passwordContentWidth - btnTogglePassword.Width - 5;
-            txtCurrentPassword.Height = 30;
+            txtNewEmail.Left = 33; txtNewEmail.Width = passwordContentWidth;
+            txtNewPassword.Left = 33; txtNewPassword.Width = passwordContentWidth;
+            txtConfirmPassword.Left = 33; txtConfirmPassword.Width = passwordContentWidth;
+            txtCurrentPassword.Left = 33; txtCurrentPassword.Width = passwordContentWidth - btnTogglePassword.Width - 5;
             btnTogglePassword.Left = txtCurrentPassword.Left + txtCurrentPassword.Width - 170;
             btnTogglePassword.Top = txtCurrentPassword.Top;
 
-            // 3. PERSONAL INFO PANEL - FIXED HEIGHT
+            // PERSONAL INFO
             personalInfoPanel.Width = availableWidth - mainPanelPadding * 2;
             personalInfoPanel.Left = mainPanelPadding;
-            personalInfoPanel.Height = 389; // Cố định chiều cao
+            personalInfoPanel.Height = 389;
 
-            // Điều chỉnh các control trong personalInfoPanel với padding 40px
             int personalContentWidth = personalInfoPanel.Width - 80;
             int fieldWidth = (personalContentWidth - panelSpacing) / 2;
-
-            // Cột trái - đồng nhất chiều cao và vị trí
-            txtAddress.Left = 40;
-            txtAddress.Width = fieldWidth;
-            txtAddress.Height = 30;
-
-            dtpBirthDate.Left = 40;
-            dtpBirthDate.Width = fieldWidth;
-            dtpBirthDate.Height = 30;
-
-            // Cột phải - đồng nhất chiều cao và vị trí
+            txtAddress.Left = 40; txtAddress.Width = fieldWidth;
+            dtpBirthDate.Left = 40; dtpBirthDate.Width = fieldWidth;
             int rightColumnLeft = 40 + fieldWidth + panelSpacing;
+            lblCity.Left = rightColumnLeft; txtCity.Left = rightColumnLeft; txtCity.Width = fieldWidth;
+            lblCountry.Left = rightColumnLeft; cmbCountry.Left = rightColumnLeft; cmbCountry.Width = 604;
 
-            lblCity.Left = rightColumnLeft;
-            txtCity.Left = rightColumnLeft;
-            txtCity.Width = fieldWidth;
-            txtCity.Height = 30;
-
-            lblCountry.Left = rightColumnLeft;
-            cmbCountry.Left = rightColumnLeft;
-            cmbCountry.Width = 604;
-            cmbCountry.Height = 30;
-
-            // 4. CATEGORIES PANEL
+            // CATEGORIES PANEL - CẬP NHẬT CHO SCROLLBAR
             if (categoriesPanel.Visible)
             {
                 categoriesPanel.Width = availableWidth - mainPanelPadding * 2;
@@ -656,38 +603,28 @@ namespace ExpenseManager.App.Views.User.UC
                 pnlCategoryLists.Width = categoriesPanel.Width - createCategoryPanel.Width - panelSpacing;
                 pnlCategoryLists.Left = createCategoryPanel.Width + panelSpacing;
 
-                // Căn chỉnh các control trong createCategoryPanel
-                int categoryContentWidth = createCategoryPanel.Width - 48; // 24px padding mỗi bên
+                // Căn chỉnh createCategoryPanel
+                int categoryContentWidth = createCategoryPanel.Width - 48;
                 txtCategoryName.Width = categoryContentWidth;
-                txtCategoryName.Height = 30;
-
                 cmbCategoryType.Width = categoryContentWidth;
-                cmbCategoryType.Height = 31;
-
                 cmbIcon.Width = categoryContentWidth;
-                cmbIcon.Height = 31;
-
                 cmbColor.Width = categoryContentWidth;
-                cmbColor.Height = 31;
 
-                // Căn chỉnh lại các item trong FlowLayoutPanel
-                int listWidth = pnlCategoryLists.ClientSize.Width;
-                flpIncomeCategories.Width = listWidth;
-                flpExpenseCategories.Width = listWidth;
+                // --- CẬP NHẬT LẠI CHIỀU RỘNG LIST KHI RESIZE ---
+                // Trừ hao scrollbar 25px
+                int scrollbarPadding = 25;
+                int listWidth = pnlCategoryLists.ClientSize.Width - scrollbarPadding;
 
-                int itemWidth = flpIncomeCategories.ClientSize.Width;
-                foreach (Control item in flpIncomeCategories.Controls)
+                if (listWidth > 0)
                 {
-                    item.Width = itemWidth;
-                }
+                    flpIncomeCategories.Width = listWidth;
+                    flpExpenseCategories.Width = listWidth;
 
-                foreach (Control item in flpExpenseCategories.Controls)
-                {
-                    item.Width = itemWidth;
+                    foreach (Control item in flpIncomeCategories.Controls) item.Width = listWidth;
+                    foreach (Control item in flpExpenseCategories.Controls) item.Width = listWidth;
                 }
             }
         }
-
 
         private void ApplyRoundedCorners()
         {
@@ -700,19 +637,17 @@ namespace ExpenseManager.App.Views.User.UC
             ApplyRoundedCorner(txtAddress, 10);
             ApplyRoundedCorner(txtCity, 10);
             ApplyRoundedCorner(dtpBirthDate, 10);
-
             ApplyRoundedCorner(btnSaveProfile, 8);
             ApplyRoundedCorner(btnSavePassword, 8);
             ApplyRoundedCorner(btnSavePersonal, 8);
             ApplyRoundedCorner(btnBrowse, 8);
-
             ApplyRoundedCorner(txtCategoryName, 10);
             ApplyRoundedCorner(btnSaveCategory, 8);
 
             btnTogglePassword.FlatStyle = FlatStyle.Flat;
             btnTogglePassword.FlatAppearance.BorderSize = 1;
             btnTogglePassword.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            ApplyRoundedCorner(btnTogglePassword, 8); 
+            ApplyRoundedCorner(btnTogglePassword, 8);
         }
 
         private void ApplyRoundedCorner(Control control, int radius)
