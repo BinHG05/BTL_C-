@@ -1,25 +1,27 @@
 ﻿using ExpenseManager.App.Services;
-using System;
 using System.Threading.Tasks;
 
 namespace ExpenseManager.App.Presenters
 {
     public class ForgotPasswordPresenter
     {
-        // Tạm thời Presenter này chưa cần logic phức tạp,
-        // vì logic đang được xử lý trực tiếp bên trong ForgotPasswordForm.cs
-        // Tuy nhiên, chúng ta vẫn cần file này để Program.cs có thể inject.
+        private readonly IAuthService _authService;
 
-        public ForgotPasswordPresenter()
+        public ForgotPasswordPresenter(IAuthService authService)
         {
-            // Khi bạn phát triển logic BE cho "Quên mật khẩu",
-            // bạn sẽ inject IAuthService vào đây.
+            _authService = authService;
         }
 
-        // Ví dụ (cho tương lai):
-        // public async Task<bool> SendResetCodeAsync(string email)
-        // {
-        //     // return await _authService.SendResetCodeAsync(email);
-        // }
+        public async Task<(bool Success, string Message)> RequestResetCode(string email)
+        {
+            // Gọi Service để tạo mã và gửi mail
+            return await _authService.SendResetCodeAsync(email);
+        }
+
+        public async Task<(bool Success, string Message)> SubmitNewPassword(string email, string code, string newPass)
+        {
+            // Gọi Service để verify và đổi pass
+            return await _authService.ResetPasswordAsync(email, code, newPass);
+        }
     }
 }
