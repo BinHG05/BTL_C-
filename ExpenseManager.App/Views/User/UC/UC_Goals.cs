@@ -166,7 +166,7 @@ namespace ExpenseManager.App.Views.User
             lblName.Text = goal.GoalName;
             lblName.Font = new Font("Segoe UI", 11, FontStyle.Bold);
             lblName.ForeColor = titleColor;
-            lblName.Location = new Point(85, 20);
+            lblName.Location = new Point(100, 20);
             lblName.AutoSize = true;
             lblName.BackColor = Color.Transparent;
 
@@ -174,9 +174,68 @@ namespace ExpenseManager.App.Views.User
             lblAmount.Text = $"{goal.CurrentAmount:N0}đ / {goal.TargetAmount:N0}đ";
             lblAmount.Font = new Font("Segoe UI", 9, FontStyle.Regular);
             lblAmount.ForeColor = subTitleColor;
-            lblAmount.Location = new Point(85, 45);
+            lblAmount.Location = new Point(100, 45);
             lblAmount.AutoSize = true;
             lblAmount.BackColor = Color.Transparent;
+
+            // --- LOGIC TRẠNG THÁI ---
+            bool isFinished = goal.CurrentAmount >= goal.TargetAmount;
+            bool isDeadlinePassed = goal.CompletionDate.HasValue && DateTime.Today > goal.CompletionDate.Value.Date;
+            
+            // Determine Status
+            // 1. Completed Late
+            bool isCompletedLate = isFinished && goal.CompletionDate.HasValue && goal.LastDepositDate.HasValue 
+                                   && goal.LastDepositDate.Value.Date > goal.CompletionDate.Value.Date;
+
+            // 2. Overdue (Not finished and deadline passed)
+            bool isOverdue = !isFinished && isDeadlinePassed;
+
+            // 3. Completed (On time)
+            bool isCompleted = isFinished && !isCompletedLate;
+
+            // --- ÁP DỤNG STYLE ---
+            if (isCompletedLate)
+            {
+                pnl.BackColor = Color.FromArgb(255, 247, 237); // Orange tint
+                pnl.Paint += (s, e) => {
+                    ControlPaint.DrawBorder(e.Graphics, pnl.ClientRectangle, Color.FromArgb(249, 115, 22), ButtonBorderStyle.Solid);
+                };
+                lblIcon.Text = "⚠️"; // Warning icon
+                lblName.ForeColor = Color.FromArgb(194, 65, 12); // Dark Orange
+            }
+            else if (isOverdue)
+            {
+                pnl.BackColor = Color.FromArgb(254, 242, 242); // Red tint
+                pnl.Paint += (s, e) => {
+                    ControlPaint.DrawBorder(e.Graphics, pnl.ClientRectangle, Color.FromArgb(239, 68, 68), ButtonBorderStyle.Solid);
+                };
+                lblIcon.Text = "⏰"; // Alarm icon
+                lblName.ForeColor = Color.FromArgb(185, 28, 28); // Dark Red
+            }
+            else if (isCompleted)
+            {
+                pnl.BackColor = Color.FromArgb(240, 253, 244); // Green tint
+                pnl.Paint += (s, e) => {
+                    ControlPaint.DrawBorder(e.Graphics, pnl.ClientRectangle, Color.FromArgb(34, 197, 94), ButtonBorderStyle.Solid);
+                };
+                lblIcon.Text = "✅"; // Check icon
+                lblName.ForeColor = Color.FromArgb(21, 128, 61); // Dark Green
+            }
+            else
+            {
+                pnl.BackColor = inactiveBgColor; // Default
+            }
+
+            // Add Status Label (Optional, but helpful)
+            Label lblStatus = new Label();
+            lblStatus.Font = new Font("Segoe UI", 8, FontStyle.Italic);
+            lblStatus.Location = new Point(100, 70);
+            lblStatus.AutoSize = true;
+            
+            if (isCompletedLate) { lblStatus.Text = "Hoàn thành trễ"; lblStatus.ForeColor = Color.FromArgb(194, 65, 12); }
+            else if (isOverdue) { lblStatus.Text = "Quá hạn"; lblStatus.ForeColor = Color.FromArgb(185, 28, 28); }
+            else if (isCompleted) { lblStatus.Text = "Đã hoàn thành"; lblStatus.ForeColor = Color.FromArgb(21, 128, 61); }
+            else { lblStatus.Text = "Đang thực hiện"; lblStatus.ForeColor = subTitleColor; }
 
             EventHandler clickEvent = (s, e) =>
             {
@@ -193,10 +252,12 @@ namespace ExpenseManager.App.Views.User
             lblIcon.Click += clickEvent;
             lblName.Click += clickEvent;
             lblAmount.Click += clickEvent;
+            lblStatus.Click += clickEvent;
 
             pnl.Controls.Add(lblIcon);
             pnl.Controls.Add(lblName);
             pnl.Controls.Add(lblAmount);
+            pnl.Controls.Add(lblStatus);
 
             return pnl;
         }
@@ -223,7 +284,6 @@ namespace ExpenseManager.App.Views.User
             }
         }
 
-        // --- HIỂN THỊ CHI TIẾT + PROGRESS BAR ---
         public void DisplayGoalDetails(GoalDTO goal)
         {
             if (goal == null) return;
@@ -295,19 +355,19 @@ namespace ExpenseManager.App.Views.User
             if (contribution.WalletName.ToLower().Contains("momo")) lblIcon.Text = "📱";
             else if (contribution.WalletName.ToLower().Contains("bank")) lblIcon.Text = "🏦";
             else if (contribution.WalletName.ToLower().Contains("tiền mặt")) lblIcon.Text = "💵";
-            else if (contribution.WalletName.ToLower().Contains("bidv")) lblIcon.Text = "🏦"; // Thêm icon ngân hàng nếu cần
+            else if (contribution.WalletName.ToLower().Contains("bidv")) lblIcon.Text = "🏦";
 
             lblIcon.Font = new Font("Segoe UI", 18);
             lblIcon.AutoSize = true;
-            lblIcon.Location = new Point(0, 10); // Icon nằm sát trái
+            lblIcon.Location = new Point(0, 10);
 
-            // 2. Tên ví (ĐÃ SỬA: Dời X từ 50 -> 70)
+            // 2. Tên ví
             Label lblName = new Label();
             lblName.Text = contribution.WalletName;
             lblName.Font = new Font("Segoe UI", 11, FontStyle.Bold);
             lblName.ForeColor = titleColor;
             lblName.AutoSize = true;
-            lblName.Location = new Point(70, 15); // ✅ Cách xa Icon hơn (Cũ là 50)
+            lblName.Location = new Point(70, 15);
 
             // 3. Số tiền
             Label lblAmount = new Label();
@@ -319,10 +379,10 @@ namespace ExpenseManager.App.Views.User
             lblAmount.Size = new Size(200, 30);
             lblAmount.Location = new Point(itemWidth - 210, 15);
 
-            // 4. Thanh Background (ĐÃ SỬA: Dời X từ 50 -> 70 và giảm Width tương ứng)
+            // 4. Thanh Background
             Panel pnlBarBg = new Panel();
-            pnlBarBg.Size = new Size(itemWidth - 70, 6); // ✅ Trừ 70 để không bị tràn
-            pnlBarBg.Location = new Point(70, 50);       // ✅ Thẳng hàng với tên ví
+            pnlBarBg.Size = new Size(itemWidth - 70, 6);
+            pnlBarBg.Location = new Point(70, 50);
             pnlBarBg.BackColor = Color.FromArgb(226, 232, 240);
 
             // 5. Thanh Value
@@ -333,7 +393,7 @@ namespace ExpenseManager.App.Views.User
 
             Panel pnlBarVal = new Panel();
             pnlBarVal.Height = 6;
-            pnlBarVal.BackColor = Color.FromArgb(16, 185, 129); // Xanh lá
+            pnlBarVal.BackColor = Color.FromArgb(16, 185, 129);
             pnlBarVal.Location = new Point(0, 0);
             pnlBarVal.Width = (int)((float)percent / 100 * pnlBarBg.Width);
 

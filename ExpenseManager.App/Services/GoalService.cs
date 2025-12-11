@@ -29,6 +29,7 @@ namespace ExpenseManager.App.Services
             foreach (var goal in goals)
             {
                 var lastMonthDeposit = await _goalRepository.GetLastMonthDepositAsync(goal.GoalId);
+                var lastDepositDate = goal.GoalDeposits.OrderByDescending(d => d.DepositDate).FirstOrDefault()?.DepositDate;
                 var progressPercentage = goal.TargetAmount > 0
                     ? Math.Round((goal.CurrentAmount / goal.TargetAmount) * 100, 2)
                     : 0;
@@ -46,7 +47,8 @@ namespace ExpenseManager.App.Services
                     WalletId = goal.WalletId,
                     WalletName = goal.Wallet?.WalletName,
                     CompletionDate = goal.CompletionDate,
-                    LastMonthDeposit = lastMonthDeposit
+                    LastMonthDeposit = lastMonthDeposit,
+                    LastDepositDate = lastDepositDate
                 });
             }
 
@@ -59,6 +61,7 @@ namespace ExpenseManager.App.Services
             if (goal == null) return null;
 
             var lastMonthDeposit = await _goalRepository.GetLastMonthDepositAsync(goalId);
+            var lastDepositDate = goal.GoalDeposits.OrderByDescending(d => d.DepositDate).FirstOrDefault()?.DepositDate;
             var progressPercentage = goal.TargetAmount > 0
                 ? Math.Round((goal.CurrentAmount / goal.TargetAmount) * 100, 2)
                 : 0;
@@ -76,7 +79,8 @@ namespace ExpenseManager.App.Services
                 WalletId = goal.WalletId,
                 WalletName = goal.Wallet?.WalletName,
                 CompletionDate = goal.CompletionDate,
-                LastMonthDeposit = lastMonthDeposit
+                LastMonthDeposit = lastMonthDeposit,
+                LastDepositDate = lastDepositDate
             };
         }
 
@@ -90,7 +94,8 @@ namespace ExpenseManager.App.Services
                 CurrentAmount = 0,
                 Status = "Active",
                 CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now
+                UpdatedAt = DateTime.Now,
+                CompletionDate = createGoalDto.CompletionDate
             };
 
             var createdGoal = await _goalRepository.CreateGoalAsync(goal);
@@ -106,7 +111,8 @@ namespace ExpenseManager.App.Services
                 CreatedAt = createdGoal.CreatedAt,
                 UpdatedAt = createdGoal.UpdatedAt,
                 WalletId = createdGoal.WalletId,
-                LastMonthDeposit = 0
+                LastMonthDeposit = 0,
+                CompletionDate = createdGoal.CompletionDate
             };
         }
 
@@ -118,6 +124,7 @@ namespace ExpenseManager.App.Services
             goal.GoalName = updateGoalDto.GoalName;
             goal.TargetAmount = updateGoalDto.TargetAmount;
             goal.WalletId = updateGoalDto.WalletId;
+            goal.CompletionDate = updateGoalDto.CompletionDate;
 
             if (!string.IsNullOrEmpty(updateGoalDto.Status))
             {
