@@ -4,14 +4,6 @@
     {
         private System.ComponentModel.IContainer components = null;
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
 
         #region Component Designer generated code
 
@@ -29,11 +21,11 @@
             btnEdit = new System.Windows.Forms.Button();
             btnDelete = new System.Windows.Forms.Button();
             pnlBudgetOverview = new System.Windows.Forms.Panel();
+            pbBudgetProgress = new ExpenseManager.App.CustomControls.CustomProgressBar();
             lblDaChiTitle = new System.Windows.Forms.Label();
             lblDaChiAmount = new System.Windows.Forms.Label();
             lblNganSachTitle = new System.Windows.Forms.Label();
             lblNganSachAmount = new System.Windows.Forms.Label();
-            pbBudgetProgress = new System.Windows.Forms.ProgressBar();
             lblProgressPercent = new System.Windows.Forms.Label();
             lblConLaiTitleOverview = new System.Windows.Forms.Label();
             lblConLaiAmountOverview = new System.Windows.Forms.Label();
@@ -82,9 +74,9 @@
             lblTitle.ForeColor = System.Drawing.Color.FromArgb(30, 41, 59);
             lblTitle.Location = new System.Drawing.Point(35, 25);
             lblTitle.Name = "lblTitle";
-            lblTitle.Size = new System.Drawing.Size(175, 60);
+            lblTitle.Size = new System.Drawing.Size(414, 60);
             lblTitle.TabIndex = 0;
-            lblTitle.Text = "Budget";
+            lblTitle.Text = "Ngân sách của bạn";
             // 
             // lblSubtitle
             // 
@@ -93,9 +85,9 @@
             lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(100, 116, 139);
             lblSubtitle.Location = new System.Drawing.Point(35, 85);
             lblSubtitle.Name = "lblSubtitle";
-            lblSubtitle.Size = new System.Drawing.Size(266, 25);
+            lblSubtitle.Size = new System.Drawing.Size(305, 25);
             lblSubtitle.TabIndex = 1;
-            lblSubtitle.Text = "Create and track your budgets";
+            lblSubtitle.Text = "Tạo và theo dõi ngân sách của bạn";
             // 
             // pnlLeftSidebar
             // 
@@ -204,11 +196,11 @@
             // pnlBudgetOverview
             // 
             pnlBudgetOverview.BackColor = System.Drawing.Color.White;
+            pnlBudgetOverview.Controls.Add(pbBudgetProgress);
             pnlBudgetOverview.Controls.Add(lblDaChiTitle);
             pnlBudgetOverview.Controls.Add(lblDaChiAmount);
             pnlBudgetOverview.Controls.Add(lblNganSachTitle);
             pnlBudgetOverview.Controls.Add(lblNganSachAmount);
-            pnlBudgetOverview.Controls.Add(pbBudgetProgress);
             pnlBudgetOverview.Controls.Add(lblProgressPercent);
             pnlBudgetOverview.Controls.Add(lblConLaiTitleOverview);
             pnlBudgetOverview.Controls.Add(lblConLaiAmountOverview);
@@ -217,6 +209,21 @@
             pnlBudgetOverview.Padding = new System.Windows.Forms.Padding(30);
             pnlBudgetOverview.Size = new System.Drawing.Size(1140, 140);
             pnlBudgetOverview.TabIndex = 4;
+            // 
+            // pbBudgetProgress
+            // 
+            pbBudgetProgress.DangerThreshold = 90;
+            pbBudgetProgress.Font = new System.Drawing.Font("Segoe UI", 9F);
+            pbBudgetProgress.Location = new System.Drawing.Point(595, 38);
+            pbBudgetProgress.Maximum = 100;
+            pbBudgetProgress.Minimum = 0;
+            pbBudgetProgress.Name = "pbBudgetProgress";
+            pbBudgetProgress.Percentage = 0D;
+            pbBudgetProgress.ShowText = false;
+            pbBudgetProgress.Size = new System.Drawing.Size(283, 33);
+            pbBudgetProgress.TabIndex = 0;
+            pbBudgetProgress.UseGradient = false;
+            pbBudgetProgress.WarningThreshold = 70;
             // 
             // lblDaChiTitle
             // 
@@ -261,13 +268,6 @@
             lblNganSachAmount.Size = new System.Drawing.Size(62, 46);
             lblNganSachAmount.TabIndex = 3;
             lblNganSachAmount.Text = "0đ";
-            // 
-            // pbBudgetProgress
-            // 
-            pbBudgetProgress.Location = new System.Drawing.Point(600, 60);
-            pbBudgetProgress.Name = "pbBudgetProgress";
-            pbBudgetProgress.Size = new System.Drawing.Size(250, 20);
-            pbBudgetProgress.TabIndex = 4;
             // 
             // lblProgressPercent
             // 
@@ -538,7 +538,6 @@
         private System.Windows.Forms.Label lblDaChiAmount;
         private System.Windows.Forms.Label lblNganSachTitle;
         private System.Windows.Forms.Label lblNganSachAmount;
-        private System.Windows.Forms.ProgressBar pbBudgetProgress;
         private System.Windows.Forms.Label lblProgressPercent;
         private System.Windows.Forms.Label lblConLaiTitleOverview;
         private System.Windows.Forms.Label lblConLaiAmountOverview;
@@ -560,5 +559,6 @@
         private System.Windows.Forms.Label lblDen;
         private System.Windows.Forms.DateTimePicker dtpChartTo;
         private System.Windows.Forms.Panel pnlChartArea;
+        private CustomControls.CustomProgressBar pbBudgetProgress;
     }
 }

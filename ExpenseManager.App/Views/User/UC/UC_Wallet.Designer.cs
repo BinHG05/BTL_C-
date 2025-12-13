@@ -95,7 +95,7 @@
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(165, 60);
             this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "Wallets";
+            this.lblTitle.Text = "Ví của bạn";
             // 
             // lblSubtitle
             // 
