@@ -26,6 +26,9 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
     {
         private IconButton currentButton;
 
+        private IconButton btnChatbot;
+        private ChatForm _chatForm;
+
         // =========================================================
         // ✅ CẬP NHẬT MÀU SẮC (Đã sửa lại màu chữ mặc định)
         // =========================================================
@@ -89,6 +92,8 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             RoundProfileButton();
 
             this.btnAddTransaction.Click += new System.EventHandler(this.BtnAddTransaction_Click);
+            //Tạo button Chatbot
+            CreateChatbotButton();
         }
 
         private void InitializeProfileMenu()
@@ -135,6 +140,51 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
                 var bmp = new Bitmap(size, size);
                 iconPic.DrawToBitmap(bmp, new Rectangle(0, 0, size, size));
                 return bmp;
+            }
+        }
+
+        private void CreateChatbotButton()
+        {
+            btnChatbot = new IconButton();
+            btnChatbot.IconChar = IconChar.Robot;
+            btnChatbot.IconColor = Color.White;
+            btnChatbot.IconFont = IconFont.Auto;
+            btnChatbot.IconSize = 30;
+            btnChatbot.BackColor = Color.FromArgb(41, 128, 185);
+            btnChatbot.FlatStyle = FlatStyle.Flat;
+            btnChatbot.FlatAppearance.BorderSize = 0;
+            btnChatbot.Size = new Size(50, 50);
+            btnChatbot.Location = new Point(this.ClientSize.Width - 70, this.ClientSize.Height - 70);
+            btnChatbot.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+
+            // Make it circular
+            btnChatbot.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, 50, 50, 50, 50));
+
+            btnChatbot.Click += BtnChatbot_Click;
+            this.Controls.Add(btnChatbot);
+            btnChatbot.BringToFront();
+        }
+        private void BtnChatbot_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (_chatForm == null || _chatForm.IsDisposed)
+                {
+                    _chatForm = Program.ServiceProvider.GetRequiredService<ChatForm>();
+                    _chatForm.Show();
+                }
+                else
+                {
+                    if (_chatForm.WindowState == FormWindowState.Minimized)
+                    {
+                        _chatForm.WindowState = FormWindowState.Normal;
+                    }
+                    _chatForm.BringToFront();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Không thể mở Chatbot: " + ex.Message);
             }
         }
 

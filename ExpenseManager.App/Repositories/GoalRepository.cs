@@ -25,7 +25,6 @@ namespace ExpenseManager.App.Repositories
                 .Where(g => g.UserId == userId)
                 .Include(g => g.GoalDeposits)
                 .Include(g => g.Wallet)
-                // 👇 ĐÃ SỬA: OrderBy (Tăng dần) -> Cũ trên, Mới dưới
                 .OrderBy(g => g.CreatedAt)
                 .ToListAsync();
         }
@@ -123,12 +122,10 @@ namespace ExpenseManager.App.Repositories
             if (goal.CurrentAmount >= goal.TargetAmount && goal.Status != "Completed")
             {
                 goal.Status = "Completed";
-                goal.CompletionDate = DateTime.Now;
             }
             else if (goal.CurrentAmount < goal.TargetAmount && goal.Status == "Completed")
             {
                 goal.Status = "Active";
-                goal.CompletionDate = null;
             }
 
             return await _context.SaveChangesAsync() > 0;
