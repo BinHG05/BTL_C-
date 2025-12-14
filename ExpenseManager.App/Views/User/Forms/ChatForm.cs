@@ -11,6 +11,7 @@ namespace ExpenseManager.App.Views.User.Forms
     public partial class ChatForm : Form
     {
         private readonly IAIChatService _aiChatService;
+        private Label lblTyping;
 
         // Drag Form
         [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
@@ -22,6 +23,41 @@ namespace ExpenseManager.App.Views.User.Forms
         {
             InitializeComponent();
             _aiChatService = aiChatService;
+
+            // Add Mascot to Header
+            try
+            {
+                string mascotPath = System.IO.Path.Combine(Application.StartupPath, "image", "mascot.png");
+                if (System.IO.File.Exists(mascotPath))
+                {
+                    var pbHeaderMascot = new PictureBox();
+                    pbHeaderMascot.Size = new Size(35, 35);
+                    pbHeaderMascot.SizeMode = PictureBoxSizeMode.Zoom;
+                    pbHeaderMascot.Image = Image.FromFile(mascotPath);
+                    pbHeaderMascot.Location = new Point(10, 8); // Adjust position
+                    pbHeaderMascot.BackColor = Color.Transparent;
+                    
+                    // Shift title
+                    lblTitle.Location = new Point(50, 15);
+                    
+                    pnlHeader.Controls.Add(pbHeaderMascot);
+                    // Ensure title is brought to front if needed, or added after
+                }
+            }
+            catch { }
+            
+            // Init Typing Indicator
+            lblTyping = new Label();
+            lblTyping.Text = "AI đang soạn tin...";
+            lblTyping.Font = new Font("Segoe UI", 9, FontStyle.Italic);
+            lblTyping.ForeColor = Color.Gray;
+            lblTyping.AutoSize = true;
+            lblTyping.BackColor = Color.White; // Match message panel bg
+            lblTyping.Location = new Point(15, this.ClientSize.Height - 75); // Just above input
+            lblTyping.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            lblTyping.Visible = false;
+            this.Controls.Add(lblTyping);
+            lblTyping.BringToFront();
 
             // Load history if any
             foreach (var msg in _aiChatService.GetHistory())
@@ -83,19 +119,21 @@ namespace ExpenseManager.App.Views.User.Forms
             txtMessage.Text = "";
             AddMessageToUI(new ChatMessage(message, true));
 
-            // Show loading placeholder?
-            var loadingMsg = new ChatMessage("...", false);
-            // AddMessageToUI(loadingMsg); // Optional
-
+            lblTyping.Visible = true; // Show typing
+            lblTyping.BringToFront();
+            
             try
             {
                 string response = await _aiChatService.SendMessageAsync(message);
-                // Remove loading if added
                 AddMessageToUI(new ChatMessage(response, false));
             }
             catch (Exception ex)
             {
                 AddMessageToUI(new ChatMessage($"Lỗi: {ex.Message}", false));
+            }
+            finally
+            {
+                lblTyping.Visible = false; // Hide typing
             }
         }
 
@@ -104,55 +142,147 @@ namespace ExpenseManager.App.Views.User.Forms
             // Container for the row (Full Width)
             var pnlRow = new Panel();
             pnlRow.Width = pnlMessages.ClientSize.Width - 25; // Minus scrollbar
-            pnlRow.Padding = new Padding(0, 5, 0, 5);
             pnlRow.AutoSize = true;
+            pnlRow.Padding = new Padding(0, 10, 0, 10); // Spacing between messages
 
-            // Bubble (Label)
-            var lblMsg = new Label();
-            lblMsg.Text = msg.Content;
-            lblMsg.Font = new Font("Segoe UI", 10);
-            lblMsg.AutoSize = true;
-            lblMsg.MaximumSize = new Size(pnlRow.Width - 60, 0); // Leave space for margins
-            lblMsg.Padding = new Padding(10, 8, 10, 8); // Inner padding
+            // Avatar for AI
+            PictureBox pbAvatar = null;
+            if (!msg.IsUser)
+            {
+                pbAvatar = new PictureBox();
+                pbAvatar.Size = new Size(40, 40);
+                pbAvatar.SizeMode = PictureBoxSizeMode.Zoom;
+                try
+                {
+                    // Load mascot from file
+                    string mascotPath = System.IO.Path.Combine(Application.StartupPath, "image", "mascot.png");
+                    if (System.IO.File.Exists(mascotPath))
+                        pbAvatar.Image = Image.FromFile(mascotPath);
+                }
+                catch { } // Ignore if fail
+                pbAvatar.Location = new Point(5, 0); // Top-left of row
+            }
 
-            // Styling based on User vs Bot
+            // Bubble Panel (Custom Painting)
+            var pnlBubble = new Panel();
+            // Calculate size based on text
+            // We use a dummy label to measure text size
+            var lblMeasure = new Label();
+            lblMeasure.Font = new Font("Segoe UI", 11); // Larger font
+            lblMeasure.Text = msg.Content;
+            lblMeasure.MaximumSize = new Size(pnlRow.Width - 100, 0); // Max width constrained
+            lblMeasure.AutoSize = true;
+            var textSize = lblMeasure.GetPreferredSize(new Size(pnlRow.Width - 100, 0));
+            
+            pnlBubble.Size = new Size(textSize.Width + 40, textSize.Height + 30); // Add padding
+            pnlBubble.Font = new Font("Segoe UI", 11);
+            
+            // Content Label inside Bubble
+            var lblContent = new Label();
+            lblContent.Text = msg.Content;
+            lblContent.Font = new Font("Segoe UI", 11);
+            lblContent.ForeColor = msg.IsUser ? Color.White : Color.Black;
+            lblContent.BackColor = Color.Transparent; // Important for custom background
+            lblContent.Dock = DockStyle.Fill;
+            lblContent.Padding = new Padding(15);
+            lblContent.TextAlign = ContentAlignment.MiddleLeft; // Vertically center text if single line? No, default TopLeft is better for multi-line.
+            
+            pnlBubble.Controls.Add(lblContent);
+
+            // Positioning
             if (msg.IsUser)
             {
-                lblMsg.BackColor = Color.FromArgb(0, 132, 255); // Messenger Blue
-                lblMsg.ForeColor = Color.White;
                 // Align Right
-                // We need to add logic to position it to the right after it autosizes
-                // We'll calculate location after adding to control? No, do it now.
-                // Note: AutoSize happens when added or text set.
+                pnlBubble.Location = new Point(pnlRow.Width - pnlBubble.Width - 10, 0);
+                pnlBubble.Paint += (s, e) => 
+                {
+                    var g = e.Graphics;
+                    g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                    // Pink/Purple Gradient for User (MoMo style)
+                    using (var brush = new System.Drawing.Drawing2D.LinearGradientBrush(pnlBubble.ClientRectangle, 
+                        Color.FromArgb(216, 45, 139), Color.FromArgb(171, 39, 134), 45f)) // MoMo Pink
+                    {
+                        var rect = pnlBubble.ClientRectangle;
+                        rect.Width--; rect.Height--;
+                        FillRoundedRectangle(g, brush, rect, 20);
+                    }
+                };
             }
             else
             {
-                lblMsg.BackColor = Color.White; // Cleaner White
-                lblMsg.ForeColor = Color.Black;
-                // Add a border maybe? Or shadow?
-                // For now just background.
-                // Align Left
+                // Align Left (next to Avatar)
+                pnlBubble.Location = new Point(55, 0); // 5 (margin) + 40 (avatar) + 10 (spacing)
+                pnlBubble.Paint += (s, e) =>
+                {
+                    var g = e.Graphics;
+                    g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                    using (var brush = new SolidBrush(Color.White))
+                    {
+                        var rect = pnlBubble.ClientRectangle;
+                        rect.Width--; rect.Height--;
+                        FillRoundedRectangle(g, brush, rect, 20);
+                        // Optional Border
+                        using (var pen = new Pen(Color.FromArgb(230,230,230), 1))
+                            DrawRoundedRectangle(g, pen, rect, 20);
+                    }
+                };
+                
+                if (pbAvatar != null) pnlRow.Controls.Add(pbAvatar);
             }
 
-            pnlRow.Controls.Add(lblMsg);
+            pnlRow.Controls.Add(pnlBubble);
             pnlMessages.Controls.Add(pnlRow);
-
-            // Force layout update to calculate sizes
-            lblMsg.PerformLayout();
-            pnlRow.PerformLayout();
-
-            // Set Position
-            if (msg.IsUser)
-            {
-                lblMsg.Location = new Point(pnlRow.Width - lblMsg.Width, 0);
-            }
-            else
-            {
-                lblMsg.Location = new Point(0, 0);
-            }
-
-            // Scroll to bottom
             pnlMessages.ScrollControlIntoView(pnlRow);
+        }
+
+        private void FillRoundedRectangle(Graphics g, Brush brush, Rectangle bounds, int cornerRadius)
+        {
+            if (g == null) return;
+            using (var path = GetRoundedRect(bounds, cornerRadius))
+            {
+                g.FillPath(brush, path);
+            }
+        }
+
+        private void DrawRoundedRectangle(Graphics g, Pen pen, Rectangle bounds, int cornerRadius)
+        {
+            if (g == null) return;
+            using (var path = GetRoundedRect(bounds, cornerRadius))
+            {
+                g.DrawPath(pen, path);
+            }
+        }
+
+        private System.Drawing.Drawing2D.GraphicsPath GetRoundedRect(Rectangle bounds, int radius)
+        {
+            int diameter = radius * 2;
+            Size size = new Size(diameter, diameter);
+            Rectangle arc = new Rectangle(bounds.Location, size);
+            System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
+
+            if (radius == 0)
+            {
+                path.AddRectangle(bounds);
+                return path;
+            }
+
+            // Top left arc  
+            path.AddArc(arc, 180, 90);
+
+            // Top right arc  
+            arc.X = bounds.Right - diameter;
+            path.AddArc(arc, 270, 90);
+
+            // Bottom right arc  
+            arc.Y = bounds.Bottom - diameter;
+            path.AddArc(arc, 0, 90);
+
+            // Bottom left arc 
+            arc.X = bounds.Left;
+            path.AddArc(arc, 90, 90);
+
+            path.CloseFigure();
+            return path;
         }
     }
 }

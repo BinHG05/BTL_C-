@@ -17,6 +17,7 @@ namespace ExpenseManager.App.Services
         private readonly ICategoryService _categoryService;
         private readonly ITransactionService _transactionService;
         private readonly IWalletService _walletService;
+        private readonly IBudgetService _budgetService;
         private readonly List<ChatMessage> _history;
         private readonly HttpClient _httpClient;
         private readonly IConfiguration _configuration;
@@ -32,12 +33,14 @@ namespace ExpenseManager.App.Services
             ICategoryService categoryService,
             ITransactionService transactionService,
             IWalletService walletService,
+            IBudgetService budgetService,
             IConfiguration configuration)
         {
             _goalService = goalService;
             _categoryService = categoryService;
             _transactionService = transactionService;
             _walletService = walletService;
+            _budgetService = budgetService;
             _configuration = configuration;
             _history = new List<ChatMessage>();
             _httpClient = new HttpClient();
@@ -150,20 +153,38 @@ namespace ExpenseManager.App.Services
                          $"- Tạo ví: {{ \"action\": \"create_wallet\", \"name\": \"Tên ví\", \"balance\": 1000000 }}\n" +
                          $"- Nạp tiền vào mục tiêu: {{ \"action\": \"deposit_goal\", \"goal_name\": \"Tên mục tiêu\", \"wallet_name\": \"Tên ví (để trống nếu user không chọn)\", \"amount\": 50000 }}\n" +
                          $"- Nạp tiền vào ví: {{ \"action\": \"deposit_wallet\", \"wallet_name\": \"Tên ví\", \"amount\": 100000 }}\n" +
-                         $"Nếu không phải hành động, hãy trả lời bình thường bằng tiếng Việt ngắn gọn.";
+                         $"- Thêm giao dịch: {{ \"action\": \"create_transaction\", \"type\": \"Income/Expense\", \"amount\": 50000, \"category\": \"Tên danh mục\", \"wallet\": \"Tên ví\", \"desc\": \"Mô tả\" }}\n" +
+                         $"- Tạo ngân sách: {{ \"action\": \"create_budget\", \"category\": \"Tên danh mục\", \"amount\": 2000000 }}\n" +
+                         $"- Xóa mục tiêu: {{ \"action\": \"delete_goal\", \"name\": \"Tên mục tiêu\" }}\n" +
+                         $"- Xóa ví: {{ \"action\": \"delete_wallet\", \"name\": \"Tên ví\" }}\n" +
+                         $"- Xóa ngân sách: {{ \"action\": \"delete_budget\", \"category\": \"Tên danh mục\" }}\n" +
+                         $"- Xem giao dịch: {{ \"action\": \"view_transactions\", \"days\": 7 }}\n" +
+                         $"Nếu không phải hành động, hãy trả lời bình thường bằng tiếng Việt ngắn gọn.\n" +
+                         $"LƯU Ý: Nếu trả về JSON, chỉ trả về JSON thuần túy, KHÔNG rào đón, KHÔNG giải thích.";
             // 5. Call Groq API
             string aiResponseRaw = await CallGroqApiAsync(prompt);
             string finalResponse = aiResponseRaw;
-            // 6. Process Command if JSON is detected
-            if (aiResponseRaw.Trim().StartsWith("{") && aiResponseRaw.Trim().EndsWith("}"))
+            
+            // 6. Process Command if JSON is detected (Robust extraction)
+            int jsonStartIndex = aiResponseRaw.IndexOf('{');
+            int jsonEndIndex = aiResponseRaw.LastIndexOf('}');
+            
+            if (jsonStartIndex >= 0 && jsonEndIndex > jsonStartIndex)
             {
+                string potentialJson = aiResponseRaw.Substring(jsonStartIndex, jsonEndIndex - jsonStartIndex + 1);
                 try
                 {
-                    finalResponse = await ProcessAICommandAsync(aiResponseRaw);
+                    // Validate if it's parseable
+                    using (JsonDocument.Parse(potentialJson))
+                    {
+                        // It's valid JSON, execute it
+                        finalResponse = await ProcessAICommandAsync(potentialJson);
+                    }
                 }
-                catch (Exception ex)
+                catch
                 {
-                    finalResponse = $"Lỗi khi thực hiện lệnh: {ex.Message}";
+                    // Not valid JSON, output original text
+                    finalResponse = aiResponseRaw;
                 }
             }
             // 7. Add AI response to history
@@ -294,6 +315,122 @@ namespace ExpenseManager.App.Services
                     {
                         return $"❌ Lỗi khi nạp tiền: {ex.Message}";
                     }
+                case "create_transaction":
+                    string transType = root.GetProperty("type").GetString(); // "Income" or "Expense"
+                    decimal transAmount = root.GetProperty("amount").GetDecimal();
+                    string transCategoryName = root.GetProperty("category").GetString();
+                    string transWalletName = root.GetProperty("wallet").GetString();
+                    string transDesc = root.GetProperty("desc").GetString();
+
+                    var walletsArg = await _walletService.GetWalletsByUserIdAsync(userId);
+                    var walletTrans = walletsArg.FirstOrDefault(w => w.WalletName.Equals(transWalletName, StringComparison.OrdinalIgnoreCase));
+                    if (walletTrans == null) return $"❌ Không tìm thấy ví '{transWalletName}'.";
+
+                    // Simple category lookup (improve if needed by fetching from DB)
+                    var categories = await _categoryService.GetCategoriesByUserIdAsync(userId);
+                    var categoryTrans = categories.FirstOrDefault(c => c.CategoryName.Equals(transCategoryName, StringComparison.OrdinalIgnoreCase));
+                    
+                    // If category not found, try to map generic names or default
+                    if (categoryTrans == null)
+                    {
+                        // Fallback or create? For now just report error or pick first
+                        return $"❌ Không tìm thấy danh mục '{transCategoryName}'. Vui lòng tạo danh mục trước.";
+                    }
+
+                    var transaction = new Transaction
+                    {
+                        UserId = userId,
+                        WalletId = walletTrans.WalletId,
+                        CategoryId = categoryTrans.CategoryId,
+                        Type = transType,
+                        Amount = transAmount,
+                        TransactionDate = DateTime.Now,
+                        Description = transDesc,
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
+                    };
+
+                    await _transactionService.AddTransactionAsync(transaction);
+                    
+                    // Update wallet balance
+                    if (transType.Equals("Income", StringComparison.OrdinalIgnoreCase))
+                        walletTrans.Balance += transAmount;
+                    else
+                        walletTrans.Balance -= transAmount;
+                    
+                    await _walletService.UpdateWalletAsync(walletTrans);
+
+                    return $"✅ Đã thêm giao dịch: {transType} {transAmount:N0} VND ({transDesc}) vào ví {walletTrans.WalletName}.";
+
+                case "create_budget":
+                    string budCatName = root.GetProperty("category").GetString();
+                    decimal budAmount = root.GetProperty("amount").GetDecimal();
+
+                    var cats = await _categoryService.GetCategoriesByUserIdAsync(userId);
+                    var budCat = cats.FirstOrDefault(c => c.CategoryName.Equals(budCatName, StringComparison.OrdinalIgnoreCase));
+                    if (budCat == null) return $"❌ Không tìm thấy danh mục '{budCatName}'.";
+
+                    var budgetDto = new BudgetCreateDto
+                    {
+                        CategoryId = budCat.CategoryId,
+                        BudgetAmount = budAmount,
+                        StartDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1),
+                        EndDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month)),
+                        IsRecurring = false
+                    };
+
+                    try
+                    {
+                        await _budgetService.CreateBudgetAsync(budgetDto, userId);
+                        return $"✅ Đã tạo ngân sách {budAmount:N0} VND cho danh mục '{budCat.CategoryName}' tháng này.";
+                    }
+                    catch (Exception ex)
+                    {
+                        return $"❌ Lỗi tạo ngân sách: {ex.Message}";
+                    }
+
+                case "delete_goal":
+                    string delGoalName = root.GetProperty("name").GetString();
+                    var goalsToDelete = await _goalService.GetUserGoalsAsync(userId);
+                    var goalToDelete = goalsToDelete.FirstOrDefault(g => g.GoalName.Equals(delGoalName, StringComparison.OrdinalIgnoreCase));
+                    if (goalToDelete == null) return $"❌ Không tìm thấy mục tiêu '{delGoalName}'.";
+                    await _goalService.DeleteGoalAsync(goalToDelete.GoalId);
+                    return $"✅ Đã xóa mục tiêu '{delGoalName}'.";
+
+
+
+                case "delete_wallet":
+                    string delWalletName = root.GetProperty("name").GetString();
+                    var walletsToDelete = await _walletService.GetWalletsByUserIdAsync(userId);
+                    var walletToDelete = walletsToDelete.FirstOrDefault(w => w.WalletName.Equals(delWalletName, StringComparison.OrdinalIgnoreCase));
+                    if (walletToDelete == null) return $"❌ Không tìm thấy ví '{delWalletName}'.";
+                    await _walletService.DeleteWalletAsync(walletToDelete.WalletId);
+                    return $"✅ Đã xóa ví '{delWalletName}'.";
+
+                case "delete_budget":
+                    string delBudCat = root.GetProperty("category").GetString();
+                    var budgetsToDelete = await _budgetService.GetUserBudgetSummariesAsync(userId);
+                    var budgetToDelete = budgetsToDelete.FirstOrDefault(b => b.CategoryName.Equals(delBudCat, StringComparison.OrdinalIgnoreCase));
+                    if (budgetToDelete == null) return $"❌ Không tìm thấy ngân sách cho danh mục '{delBudCat}'.";
+                    await _budgetService.DeleteBudgetAsync(budgetToDelete.BudgetId, userId);
+                    return $"✅ Đã xóa ngân sách cho danh mục '{delBudCat}'.";
+
+                case "view_transactions":
+                    int days = root.TryGetProperty("days", out var daysElem) ? daysElem.GetInt32() : 7;
+                    var transactions = await _transactionService.GetRecentTransactionsAsync(userId, days);
+                    
+                    if (transactions == null || !transactions.Any())
+                        return $"📭 Không có giao dịch nào trong {days} ngày qua.";
+
+                    var sbTrans = new StringBuilder();
+                    sbTrans.AppendLine($"📋 **Giao dịch {days} ngày gần đây:**");
+                    foreach (var t in transactions)
+                    {
+                        string sign = t.Type == "Income" ? "+" : "-";
+                        sbTrans.AppendLine($"- {t.TransactionDate:dd/MM} | {t.Category.CategoryName}: {sign}{t.Amount:N0}đ ({t.Description})");
+                    }
+                    return sbTrans.ToString();
+
                 default:
                     return "⚠️ AI gửi lệnh không xác định.";
             }
@@ -322,6 +459,16 @@ namespace ExpenseManager.App.Services
                 foreach (var w in wallets)
                 {
                     sb.AppendLine($"- {w.WalletName}: {w.Balance} VND");
+                }
+
+                // Budget Alerts
+                var budgets = await _budgetService.GetUserBudgetSummariesAsync(userId);
+                sb.AppendLine("\n--- NGÂN SÁCH (BUDGETS) ---");
+                foreach (var b in budgets)
+                {
+                    string warning = b.PercentageUsed >= 100 ? "🔴 VƯỢT QUÁ!" : 
+                                     b.PercentageUsed >= 80 ? "🟡 Sắp hết" : "🟢 OK";
+                    sb.AppendLine($"- {b.CategoryName}: {b.SpentAmount:N0}/{b.BudgetAmount:N0} ({b.PercentageUsed}%) {warning}");
                 }
             }
             catch (Exception ex)

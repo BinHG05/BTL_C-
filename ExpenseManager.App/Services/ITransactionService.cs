@@ -8,5 +8,7 @@ namespace ExpenseManager.App.Services.Interfaces
     public interface ITransactionService
     {
         Task AddTransactionAsync(Transaction transaction);
+
+        Task<List<Transaction>> GetRecentTransactionsAsync(string userId, int days); 
     }
 }
