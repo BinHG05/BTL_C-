@@ -1,15 +1,16 @@
-﻿using ExpenseManager.App.Models.DTOs;
+﻿using ExpenseManager.App.CustomControls;
+using ExpenseManager.App.Models.DTOs;
 using ExpenseManager.App.Presenters;
 using ExpenseManager.App.Services;
 using ExpenseManager.App.Session;
 using ExpenseManager.App.Views.User;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
-using ExpenseManager.App.CustomControls;
 
 namespace ExpenseManager.App.Views.Admin.UC
 {
@@ -28,18 +29,63 @@ namespace ExpenseManager.App.Views.Admin.UC
 
         public UC_Budget()
         {
-            InitializeComponent();
-            _btnAddCache = btnAddBudgetSidebar;
+            Debug.WriteLine("========================================");
+            Debug.WriteLine("[UC_Budget] Constructor START");
+            Debug.WriteLine($"[UC_Budget] CurrentUser: {CurrentUserSession.CurrentUser?.UserId ?? "NULL"}");
 
-            // ✅ Tắt text trên progress bar
-            if (pbBudgetProgress != null)
+            try
             {
-                pbBudgetProgress.ShowText = false;
-            }
+                InitializeComponent();
+                Debug.WriteLine("[UC_Budget] InitializeComponent done");
 
-            SetupEventHandlers();
-            InitializeChart();
-            _presenter = new BudgetPresenter(this, Program.ServiceProvider);
+                _btnAddCache = btnAddBudgetSidebar;
+                Debug.WriteLine("[UC_Budget] Button cache set");
+
+                if (pbBudgetProgress != null)
+                {
+                    pbBudgetProgress.ShowText = false;
+                    Debug.WriteLine("[UC_Budget] Progress bar configured");
+                }
+
+                SetupEventHandlers();
+                Debug.WriteLine("[UC_Budget] Event handlers set");
+
+                InitializeChart();
+                Debug.WriteLine("[UC_Budget] Chart initialized");
+
+                // ✅ Kiểm tra Session
+                if (CurrentUserSession.CurrentUser == null)
+                {
+                    Debug.WriteLine("[UC_Budget] ❌ ERROR: CurrentUser is NULL!");
+                    throw new InvalidOperationException("Phiên đăng nhập không hợp lệ");
+                }
+
+                Debug.WriteLine($"[UC_Budget] Creating Presenter for User: {CurrentUserSession.CurrentUser.UserId}");
+
+                // ✅ SỬ DỤNG ServiceProvider từ Program
+                _presenter = new BudgetPresenter(this, Program.ServiceProvider);
+                Debug.WriteLine("[UC_Budget] Presenter created");
+
+                Debug.WriteLine("[UC_Budget] ✅ Constructor SUCCESS");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[UC_Budget] ❌ Constructor ERROR: {ex.Message}");
+                Debug.WriteLine($"[UC_Budget] Stack Trace: {ex.StackTrace}");
+
+                // ✅ DISPOSE nếu lỗi để tránh memory leak
+                if (_presenter != null)
+                {
+                    try { _presenter.Dispose(); } catch { }
+                    _presenter = null;
+                }
+
+                throw;
+            }
+            finally
+            {
+                Debug.WriteLine("========================================");
+            }
         }
 
         private void SetupEventHandlers()

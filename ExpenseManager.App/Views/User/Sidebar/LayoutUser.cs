@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -299,10 +300,40 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
 
         private void LoadContent(UserControl uc)
         {
-            contentPanel.Controls.Clear();
-            uc.Dock = DockStyle.Fill;
-            contentPanel.Controls.Add(uc);
+            try
+            {
+                // ✅ Dispose control cũ
+                foreach (Control ctrl in contentPanel.Controls.OfType<UserControl>().ToList())
+                {
+                    contentPanel.Controls.Remove(ctrl);
+                    ctrl.Dispose();
+                }
+
+                contentPanel.Controls.Clear();
+
+                // ✅ Kiểm tra control mới
+                if (uc == null)
+                {
+                    MessageBox.Show("Không thể tạo nội dung!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                if (uc.IsDisposed)
+                {
+                    MessageBox.Show("Nội dung đã bị hủy!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                uc.Dock = DockStyle.Fill;
+                contentPanel.Controls.Add(uc);
+                uc.BringToFront();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi tải nội dung:\n{ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
 
         // ============== BUTTON CLICK EVENTS ==============
 
@@ -342,33 +373,73 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
 
             try
             {
-                // ✅ Dispose control cũ trước
-                if (contentPanel.Controls.Count > 0)
+                Debug.WriteLine("========================================");
+                Debug.WriteLine("[LayoutUser] BtnBudget_Click START");
+
+                // ✅ Kiểm tra Session trước
+                if (CurrentUserSession.CurrentUser == null)
                 {
-                    var oldControl = contentPanel.Controls[0];
-                    contentPanel.Controls.Clear();
-
-                    if (oldControl != null && !oldControl.IsDisposed)
-                    {
-                        oldControl.Dispose();
-                    }
-                }
-
-                // ✅ TẠO MỚI trực tiếp, KHÔNG dùng GetService
-                var uc = new UC_Budget();
-
-                // ✅ Check nếu disposed
-                if (uc.IsDisposed)
-                {
-                    MessageBox.Show("Cannot create Budget control", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Debug.WriteLine("[LayoutUser] ❌ Session is NULL!");
+                    MessageBox.Show("Phiên đăng nhập không hợp lệ. Vui lòng đăng nhập lại!",
+                        "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
+                Debug.WriteLine($"[LayoutUser] Current User: {CurrentUserSession.CurrentUser.UserId}");
+
+                // ✅ TẠO TRỰC TIẾP thay vì dùng DI
+                UC_Budget uc = null;
+
+                try
+                {
+                    Debug.WriteLine("[LayoutUser] Creating UC_Budget directly...");
+                    uc = new UC_Budget();
+
+                    Debug.WriteLine($"[LayoutUser] UC_Budget created: {uc != null}");
+                    Debug.WriteLine($"[LayoutUser] UC_Budget disposed: {uc?.IsDisposed ?? true}");
+                }
+                catch (Exception createEx)
+                {
+                    Debug.WriteLine($"[LayoutUser] ❌ ERROR creating UC_Budget: {createEx.Message}");
+                    Debug.WriteLine($"[LayoutUser] Stack: {createEx.StackTrace}");
+                    throw;
+                }
+
+                if (uc == null)
+                {
+                    Debug.WriteLine("[LayoutUser] ❌ UC_Budget is NULL!");
+                    MessageBox.Show("Không thể khởi tạo trang Ngân sách!",
+                        "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                if (uc.IsDisposed)
+                {
+                    Debug.WriteLine("[LayoutUser] ❌ UC_Budget is DISPOSED!");
+                    MessageBox.Show("Trang Ngân sách đã bị hủy!",
+                        "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                Debug.WriteLine("[LayoutUser] Loading UC_Budget into panel...");
                 LoadContent(uc);
+
+                Debug.WriteLine("[LayoutUser] ✅ BtnBudget_Click SUCCESS");
+                Debug.WriteLine("========================================");
+            }
+            catch (ObjectDisposedException odEx)
+            {
+                Debug.WriteLine($"[LayoutUser] ObjectDisposedException: {odEx.Message}");
+                Debug.WriteLine($"[LayoutUser] Stack: {odEx.StackTrace}");
+                MessageBox.Show($"Đối tượng đã bị hủy:\n{odEx.Message}",
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi khi tải trang Ngân sách: " + ex.Message + "\n" + ex.StackTrace,
+                Debug.WriteLine($"[LayoutUser] Exception: {ex.Message}");
+                Debug.WriteLine($"[LayoutUser] Stack: {ex.StackTrace}");
+                Debug.WriteLine($"[LayoutUser] Inner: {ex.InnerException?.Message}");
+                MessageBox.Show($"Lỗi khi tải trang Ngân sách:\n{ex.Message}\n\nChi tiết:\n{ex.InnerException?.Message}",
                     "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -470,5 +541,10 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
 
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
         private static extern IntPtr CreateRoundRectRgn(int nLeftRect, int nTopRect, int nRightRect, int nBottomRect, int nWidthEllipse, int nHeightEllipse);
+
+        private void btnToggleTheme_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

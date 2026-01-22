@@ -47,7 +47,6 @@ namespace ExpenseManager.App.Views.User.UC
             btnSaveProfile = new Button();
             passwordPanel = new Panel();
             lblUserProfilePass = new Label();
-            lblNewEmail = new Label();
             txtNewEmail = new TextBox();
             lblCurrentPassword = new Label();
             txtCurrentPassword = new TextBox();
@@ -207,8 +206,7 @@ namespace ExpenseManager.App.Views.User.UC
             // 
             dtpBirthDate.CustomFormat = "dd/MM/yyyy";
             dtpBirthDate.Font = new Font("Segoe UI", 10F);
-            dtpBirthDate.Format = DateTimePickerFormat.Short;   
-            dtpBirthDate.ShowUpDown = false;
+            dtpBirthDate.Format = DateTimePickerFormat.Short;
             dtpBirthDate.Location = new Point(40, 254);
             dtpBirthDate.Margin = new Padding(4, 5, 4, 5);
             dtpBirthDate.Name = "dtpBirthDate";
@@ -283,7 +281,7 @@ namespace ExpenseManager.App.Views.User.UC
             profilePanel.Location = new Point(0, 0);
             profilePanel.Margin = new Padding(4, 5, 4, 5);
             profilePanel.Name = "profilePanel";
-            profilePanel.Size = new Size(673, 544);
+            profilePanel.Size = new Size(673, 504);
             profilePanel.TabIndex = 0;
             // 
             // lblUserProfile
@@ -372,7 +370,7 @@ namespace ExpenseManager.App.Views.User.UC
             btnBrowse.FlatStyle = FlatStyle.Flat;
             btnBrowse.Font = new Font("Segoe UI", 9F);
             btnBrowse.ForeColor = Color.CornflowerBlue;
-            btnBrowse.Location = new Point(484, 312);
+            btnBrowse.Location = new Point(356, 312);
             btnBrowse.Margin = new Padding(4, 5, 4, 5);
             btnBrowse.Name = "btnBrowse";
             btnBrowse.Size = new Size(107, 49);
@@ -402,7 +400,6 @@ namespace ExpenseManager.App.Views.User.UC
             // 
             passwordPanel.BackColor = Color.White;
             passwordPanel.Controls.Add(lblUserProfilePass);
-            passwordPanel.Controls.Add(lblNewEmail);
             passwordPanel.Controls.Add(txtNewEmail);
             passwordPanel.Controls.Add(lblCurrentPassword);
             passwordPanel.Controls.Add(txtCurrentPassword);
@@ -415,7 +412,7 @@ namespace ExpenseManager.App.Views.User.UC
             passwordPanel.Location = new Point(713, 0);
             passwordPanel.Margin = new Padding(4, 5, 4, 5);
             passwordPanel.Name = "passwordPanel";
-            passwordPanel.Size = new Size(673, 544);
+            passwordPanel.Size = new Size(673, 504);
             passwordPanel.TabIndex = 1;
             // 
             // lblUserProfilePass
@@ -430,18 +427,6 @@ namespace ExpenseManager.App.Views.User.UC
             lblUserProfilePass.TabIndex = 0;
             lblUserProfilePass.Text = "Hồ sơ người dùng";
             // 
-            // lblNewEmail
-            // 
-            lblNewEmail.AutoSize = true;
-            lblNewEmail.Font = new Font("Segoe UI", 10F);
-            lblNewEmail.ForeColor = Color.FromArgb(102, 102, 102);
-            lblNewEmail.Location = new Point(33, 92);
-            lblNewEmail.Margin = new Padding(4, 0, 4, 0);
-            lblNewEmail.Name = "lblNewEmail";
-            lblNewEmail.Size = new Size(85, 23);
-            lblNewEmail.TabIndex = 1;
-            lblNewEmail.Text = "Email mới";
-            // 
             // txtNewEmail
             // 
             txtNewEmail.BorderStyle = BorderStyle.FixedSingle;
@@ -453,13 +438,14 @@ namespace ExpenseManager.App.Views.User.UC
             txtNewEmail.Size = new Size(606, 30);
             txtNewEmail.TabIndex = 2;
             txtNewEmail.Text = "Để trống nếu không đổi";
+            txtNewEmail.Visible = false;
             // 
             // lblCurrentPassword
             // 
             lblCurrentPassword.AutoSize = true;
             lblCurrentPassword.Font = new Font("Segoe UI", 10F);
             lblCurrentPassword.ForeColor = Color.FromArgb(102, 102, 102);
-            lblCurrentPassword.Location = new Point(33, 192);
+            lblCurrentPassword.Location = new Point(33, 115);
             lblCurrentPassword.Margin = new Padding(4, 0, 4, 0);
             lblCurrentPassword.Name = "lblCurrentPassword";
             lblCurrentPassword.Size = new Size(227, 23);
@@ -470,7 +456,7 @@ namespace ExpenseManager.App.Views.User.UC
             // 
             txtCurrentPassword.BorderStyle = BorderStyle.FixedSingle;
             txtCurrentPassword.Font = new Font("Segoe UI", 10F);
-            txtCurrentPassword.Location = new Point(33, 231);
+            txtCurrentPassword.Location = new Point(33, 154);
             txtCurrentPassword.Margin = new Padding(4, 5, 4, 5);
             txtCurrentPassword.Name = "txtCurrentPassword";
             txtCurrentPassword.Size = new Size(560, 30);
@@ -480,7 +466,7 @@ namespace ExpenseManager.App.Views.User.UC
             // btnTogglePassword
             // 
             btnTogglePassword.FlatStyle = FlatStyle.Flat;
-            btnTogglePassword.Location = new Point(600, 226);
+            btnTogglePassword.Location = new Point(600, 149);
             btnTogglePassword.Margin = new Padding(4, 5, 4, 5);
             btnTogglePassword.Name = "btnTogglePassword";
             btnTogglePassword.Size = new Size(47, 38);
@@ -494,7 +480,7 @@ namespace ExpenseManager.App.Views.User.UC
             lblNewPassword.AutoSize = true;
             lblNewPassword.Font = new Font("Segoe UI", 10F);
             lblNewPassword.ForeColor = Color.FromArgb(102, 102, 102);
-            lblNewPassword.Location = new Point(33, 292);
+            lblNewPassword.Location = new Point(33, 215);
             lblNewPassword.Margin = new Padding(4, 0, 4, 0);
             lblNewPassword.Name = "lblNewPassword";
             lblNewPassword.Size = new Size(116, 23);
@@ -506,7 +492,7 @@ namespace ExpenseManager.App.Views.User.UC
             txtNewPassword.BorderStyle = BorderStyle.FixedSingle;
             txtNewPassword.Font = new Font("Segoe UI", 10F);
             txtNewPassword.ForeColor = Color.Silver;
-            txtNewPassword.Location = new Point(33, 331);
+            txtNewPassword.Location = new Point(33, 254);
             txtNewPassword.Margin = new Padding(4, 5, 4, 5);
             txtNewPassword.Name = "txtNewPassword";
             txtNewPassword.Size = new Size(606, 30);
@@ -519,7 +505,7 @@ namespace ExpenseManager.App.Views.User.UC
             lblConfirmPassword.AutoSize = true;
             lblConfirmPassword.Font = new Font("Segoe UI", 10F);
             lblConfirmPassword.ForeColor = Color.FromArgb(102, 102, 102);
-            lblConfirmPassword.Location = new Point(33, 392);
+            lblConfirmPassword.Location = new Point(33, 315);
             lblConfirmPassword.Margin = new Padding(4, 0, 4, 0);
             lblConfirmPassword.Name = "lblConfirmPassword";
             lblConfirmPassword.Size = new Size(192, 23);
@@ -531,7 +517,7 @@ namespace ExpenseManager.App.Views.User.UC
             txtConfirmPassword.BorderStyle = BorderStyle.FixedSingle;
             txtConfirmPassword.Font = new Font("Segoe UI", 10F);
             txtConfirmPassword.ForeColor = Color.Silver;
-            txtConfirmPassword.Location = new Point(33, 431);
+            txtConfirmPassword.Location = new Point(33, 354);
             txtConfirmPassword.Margin = new Padding(4, 5, 4, 5);
             txtConfirmPassword.Name = "txtConfirmPassword";
             txtConfirmPassword.Size = new Size(606, 30);
@@ -547,7 +533,7 @@ namespace ExpenseManager.App.Views.User.UC
             btnSavePassword.FlatStyle = FlatStyle.Flat;
             btnSavePassword.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
             btnSavePassword.ForeColor = Color.White;
-            btnSavePassword.Location = new Point(33, 492);
+            btnSavePassword.Location = new Point(33, 415);
             btnSavePassword.Margin = new Padding(4, 5, 4, 5);
             btnSavePassword.Name = "btnSavePassword";
             btnSavePassword.Size = new Size(133, 58);
@@ -734,7 +720,7 @@ namespace ExpenseManager.App.Views.User.UC
             lblExpenseCategories.Font = new Font("Segoe UI Semibold", 14F, FontStyle.Bold);
             lblExpenseCategories.Location = new Point(20, 200);
             lblExpenseCategories.Name = "lblExpenseCategories";
-            lblExpenseCategories.Size = new Size(225, 32);
+            lblExpenseCategories.Size = new Size(212, 32);
             lblExpenseCategories.TabIndex = 2;
             lblExpenseCategories.Text = "Danh mục chi tiêu";
             // 
@@ -755,7 +741,7 @@ namespace ExpenseManager.App.Views.User.UC
             lblIncomeCategories.Font = new Font("Segoe UI Semibold", 14F, FontStyle.Bold);
             lblIncomeCategories.Location = new Point(20, 20);
             lblIncomeCategories.Name = "lblIncomeCategories";
-            lblIncomeCategories.Size = new Size(217, 32);
+            lblIncomeCategories.Size = new Size(231, 32);
             lblIncomeCategories.TabIndex = 0;
             lblIncomeCategories.Text = "Danh mục thu nhập";
             // 
@@ -795,7 +781,7 @@ namespace ExpenseManager.App.Views.User.UC
             lblCategoryName.Font = new Font("Segoe UI", 10F);
             lblCategoryName.Location = new Point(20, 80);
             lblCategoryName.Name = "lblCategoryName";
-            lblCategoryName.Size = new Size(56, 23);
+            lblCategoryName.Size = new Size(36, 23);
             lblCategoryName.TabIndex = 1;
             lblCategoryName.Text = "Tên";
             // 
@@ -813,7 +799,7 @@ namespace ExpenseManager.App.Views.User.UC
             lblCategoryType.Font = new Font("Segoe UI", 10F);
             lblCategoryType.Location = new Point(20, 150);
             lblCategoryType.Name = "lblCategoryType";
-            lblCategoryType.Size = new Size(45, 23);
+            lblCategoryType.Size = new Size(41, 23);
             lblCategoryType.TabIndex = 3;
             lblCategoryType.Text = "Loại";
             // 
@@ -834,7 +820,7 @@ namespace ExpenseManager.App.Views.User.UC
             lblCategoryIcon.Font = new Font("Segoe UI", 10F);
             lblCategoryIcon.Location = new Point(20, 220);
             lblCategoryIcon.Name = "lblCategoryIcon";
-            lblCategoryIcon.Size = new Size(43, 23);
+            lblCategoryIcon.Size = new Size(94, 23);
             lblCategoryIcon.TabIndex = 5;
             lblCategoryIcon.Text = "Biểu tượng";
             // 
@@ -854,7 +840,7 @@ namespace ExpenseManager.App.Views.User.UC
             lblCategoryColor.Font = new Font("Segoe UI", 10F);
             lblCategoryColor.Location = new Point(20, 290);
             lblCategoryColor.Name = "lblCategoryColor";
-            lblCategoryColor.Size = new Size(51, 23);
+            lblCategoryColor.Size = new Size(44, 23);
             lblCategoryColor.TabIndex = 7;
             lblCategoryColor.Text = "Màu";
             // 
@@ -947,7 +933,6 @@ namespace ExpenseManager.App.Views.User.UC
         private System.Windows.Forms.Button btnSaveProfile;
         private System.Windows.Forms.Panel passwordPanel;
         private System.Windows.Forms.Label lblUserProfilePass;
-        private System.Windows.Forms.Label lblNewEmail;
         private System.Windows.Forms.TextBox txtNewEmail;
         private System.Windows.Forms.Label lblCurrentPassword;
         private System.Windows.Forms.TextBox txtCurrentPassword;

@@ -34,8 +34,6 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             logoPic = new PictureBox();
             headerPanel = new Panel();
             rightPanel = new Panel();
-            btnToggleTheme = new IconButton();
-            btnNotification = new IconButton();
             btnProfileTop = new IconButton();
             centerPanel = new Panel();
             btnAddTransaction = new IconButton();
@@ -57,7 +55,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             profileContextMenu.SuspendLayout();
             SuspendLayout();
             // 
-            // sidebarPanel - OPTION 1: DEEP NAVY BLUE
+            // sidebarPanel
             // 
             sidebarPanel.BackColor = Color.FromArgb(15, 23, 42);
             sidebarPanel.Controls.Add(btnSettings);
@@ -80,7 +78,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             btnSettings.Dock = DockStyle.Bottom;
             btnSettings.FlatAppearance.BorderSize = 0;
             btnSettings.FlatStyle = FlatStyle.Flat;
-            btnSettings.Font = new Font("Segoe UI", 11F, FontStyle.Regular);
+            btnSettings.Font = new Font("Segoe UI", 11F);
             btnSettings.ForeColor = Color.FromArgb(226, 232, 240);
             btnSettings.IconChar = IconChar.Cog;
             btnSettings.IconColor = Color.FromArgb(226, 232, 240);
@@ -212,7 +210,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             btnDashboard.FlatStyle = FlatStyle.Flat;
             btnDashboard.Font = new Font("Segoe UI", 11F);
             btnDashboard.ForeColor = Color.FromArgb(226, 232, 240);
-            btnDashboard.IconChar = IconChar.Home;
+            btnDashboard.IconChar = IconChar.House;
             btnDashboard.IconColor = Color.FromArgb(226, 232, 240);
             btnDashboard.IconFont = IconFont.Auto;
             btnDashboard.IconSize = 24;
@@ -268,8 +266,6 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             // rightPanel
             // 
             rightPanel.BackColor = Color.White;
-            rightPanel.Controls.Add(btnToggleTheme);
-            rightPanel.Controls.Add(btnNotification);
             rightPanel.Controls.Add(btnProfileTop);
             rightPanel.Dock = DockStyle.Right;
             rightPanel.Location = new Point(1147, 20);
@@ -278,42 +274,6 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             rightPanel.Padding = new Padding(0, 13, 23, 13);
             rightPanel.Size = new Size(206, 53);
             rightPanel.TabIndex = 1;
-            // 
-            // btnToggleTheme
-            // 
-            btnToggleTheme.BackColor = Color.Transparent;
-            btnToggleTheme.Dock = DockStyle.Right;
-            btnToggleTheme.FlatAppearance.BorderSize = 0;
-            btnToggleTheme.FlatStyle = FlatStyle.Flat;
-            btnToggleTheme.ForeColor = Color.Black;
-            btnToggleTheme.IconChar = IconChar.Sun;
-            btnToggleTheme.IconColor = Color.Black;
-            btnToggleTheme.IconFont = IconFont.Auto;
-            btnToggleTheme.IconSize = 22;
-            btnToggleTheme.Location = new Point(45, 13);
-            btnToggleTheme.Margin = new Padding(3, 4, 3, 4);
-            btnToggleTheme.Name = "btnToggleTheme";
-            btnToggleTheme.Size = new Size(46, 27);
-            btnToggleTheme.TabIndex = 2;
-            btnToggleTheme.UseVisualStyleBackColor = false;
-            // 
-            // btnNotification
-            // 
-            btnNotification.BackColor = Color.Transparent;
-            btnNotification.Dock = DockStyle.Right;
-            btnNotification.FlatAppearance.BorderSize = 0;
-            btnNotification.FlatStyle = FlatStyle.Flat;
-            btnNotification.ForeColor = Color.Black;
-            btnNotification.IconChar = IconChar.Bell;
-            btnNotification.IconColor = Color.Black;
-            btnNotification.IconFont = IconFont.Auto;
-            btnNotification.IconSize = 22;
-            btnNotification.Location = new Point(91, 13);
-            btnNotification.Margin = new Padding(3, 4, 3, 4);
-            btnNotification.Name = "btnNotification";
-            btnNotification.Size = new Size(46, 27);
-            btnNotification.TabIndex = 1;
-            btnNotification.UseVisualStyleBackColor = false;
             // 
             // btnProfileTop
             // 
@@ -422,24 +382,20 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             profileContextMenu.ImageScalingSize = new Size(20, 20);
             profileContextMenu.Items.AddRange(new ToolStripItem[] { separator1, settingsMenuItem, logoutMenuItem });
             profileContextMenu.Name = "profileContextMenu";
-            profileContextMenu.Size = new Size(174, 94);
+            profileContextMenu.Size = new Size(192, 94);
             // 
             // separator1
             // 
             separator1.Name = "separator1";
-            separator1.Size = new Size(170, 6);
+            separator1.Size = new Size(188, 6);
             // 
             // settingsMenuItem
             // 
             settingsMenuItem.Font = new Font("Segoe UI", 10F);
             settingsMenuItem.Name = "settingsMenuItem";
             settingsMenuItem.Padding = new Padding(10, 8, 10, 8);
-            settingsMenuItem.Size = new Size(193, 42);
+            settingsMenuItem.Size = new Size(211, 42);
             settingsMenuItem.Text = "⚙️  Cài đặt";
-
-            //settingsMenuItem.Click += SettingsMenuItem_Click;
-
-
             // 
             // logoutMenuItem
             // 
@@ -447,7 +403,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             logoutMenuItem.ForeColor = Color.FromArgb(220, 53, 69);
             logoutMenuItem.Name = "logoutMenuItem";
             logoutMenuItem.Padding = new Padding(10, 8, 10, 8);
-            logoutMenuItem.Size = new Size(193, 42);
+            logoutMenuItem.Size = new Size(211, 42);
             logoutMenuItem.Text = "🚪  Đăng xuất";
             logoutMenuItem.Click += LogoutMenuItem_Click;
             // 
@@ -549,8 +505,6 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
         private System.Windows.Forms.PictureBox logoPic;
         private System.Windows.Forms.Panel headerPanel;
         private System.Windows.Forms.Panel rightPanel;
-        private FontAwesome.Sharp.IconButton btnToggleTheme;
-        private FontAwesome.Sharp.IconButton btnNotification;
         private FontAwesome.Sharp.IconButton btnProfileTop;
         private System.Windows.Forms.Panel centerPanel;
         private FontAwesome.Sharp.IconButton btnAddTransaction;
