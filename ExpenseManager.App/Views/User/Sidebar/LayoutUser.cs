@@ -180,6 +180,7 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
                     {
                         _chatForm.WindowState = FormWindowState.Normal;
                     }
+                    _chatForm.Show(); // ✅ Đảm bảo hiện lại nếu form bị Hide()
                     _chatForm.BringToFront();
                 }
             }

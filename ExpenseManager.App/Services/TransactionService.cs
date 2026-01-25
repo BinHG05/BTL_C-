@@ -75,5 +75,22 @@ namespace ExpenseManager.App.Services
                 }
             }
         }
+        public async Task<List<Transaction>> GetRecentTransactionsAsync(string userId, int days)
+        {
+            var fromDate = DateTime.Now.Date.AddDays(-days);
+            
+            // Note: Since ITransactionRepository might not have this specific filter, 
+            // we'll access DbSet directly or assume GetAll returns IQueryable.
+            // But _transactionRepository is an interface. Let's see what it has.
+            // If repository pattern is strict, we should add this method there.
+            // For now, let's use the context directly to ensure it works fast as user requested.
+            
+            return await _context.Transactions
+                                 .Include(t => t.Category) // Include Category for names
+                                 .Include(t => t.Wallet)   // Include Wallet names
+                                 .Where(t => t.UserId == userId && t.TransactionDate >= fromDate)
+                                 .OrderByDescending(t => t.TransactionDate)
+                                 .ToListAsync();
+        }
     }
 }
