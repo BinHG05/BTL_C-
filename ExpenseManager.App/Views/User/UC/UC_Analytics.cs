@@ -32,6 +32,8 @@ namespace ExpenseManager.App.Views.Admin.UC
         // Data
         private List<ExpenseBreakdownItem> _expenseBreakdown = new List<ExpenseBreakdownItem>();
         private List<IncomeBreakdownItem> _incomeBreakdown = new List<IncomeBreakdownItem>();
+        private List<TrendDataPoint> _expenseTrendData = new List<TrendDataPoint>();
+        private List<TrendDataPoint> _incomeTrendData = new List<TrendDataPoint>();
         private PagingInfo _currentPaging;
 
         public UC_Analytics()
@@ -47,6 +49,7 @@ namespace ExpenseManager.App.Views.Admin.UC
 
             // Events
             this.pnlDonutChart.Paint += pnlDonutChart_Paint;
+            this.pnlLineChart.Paint += pnlLineChart_Paint;
             this.btnExpenses.Click += btnExpenses_Click;
             this.btnIncome.Click += btnIncome_Click;
             this.btnLoc.Click += btnLoc_Click;
@@ -57,8 +60,6 @@ namespace ExpenseManager.App.Views.Admin.UC
             ApplyEnhancedStyles();
 
             // 2. Căn chỉnh vị trí Header thẳng hàng với Content dưới
-            // Lưu ý: Bây giờ pnlTabsAndFilters nằm trong Wrapper, 
-            // nên toạ độ X=20 ở đây là tính từ mép của cái hộp trắng, rất đẹp.
             AlignHeaderItems();
         }
 
@@ -119,12 +120,19 @@ namespace ExpenseManager.App.Views.Admin.UC
 
                 if (pnlChart != null) { pnlChart.BackColor = cardBgColor; pnlChart.Padding = new Padding(20); }
                 if (pnlHistory != null) { pnlHistory.BackColor = cardBgColor; pnlHistory.Padding = new Padding(20); }
+                if (pnlTrend != null) { pnlTrend.BackColor = cardBgColor; pnlTrend.Padding = new Padding(20); }
 
                 if (lblExpensesBreakdown != null)
                 {
                     lblExpensesBreakdown.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
                     lblExpensesBreakdown.ForeColor = Color.FromArgb(30, 41, 59);
                     lblExpensesBreakdown.Location = new Point(10, 20);
+                }
+
+                if (lblTrendTitle != null)
+                {
+                    lblTrendTitle.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+                    lblTrendTitle.ForeColor = Color.FromArgb(30, 41, 59);
                 }
 
                 if (lblTotalExpenses != null)
@@ -138,7 +146,7 @@ namespace ExpenseManager.App.Views.Admin.UC
 
                 if (flpLegend != null) { flpLegend.Padding = new Padding(10); flpLegend.AutoScroll = true; }
 
-                // GridView fix
+                // GridView với scrollbar
                 if (dgvTransactions != null)
                 {
                     dgvTransactions.Dock = DockStyle.None;
@@ -155,6 +163,8 @@ namespace ExpenseManager.App.Views.Admin.UC
                     dgvTransactions.AllowUserToDeleteRows = false;
                     dgvTransactions.ReadOnly = true;
                     dgvTransactions.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                    dgvTransactions.ScrollBars = ScrollBars.Vertical;
+                    dgvTransactions.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
                 }
             }
             catch (Exception ex) { System.Diagnostics.Debug.WriteLine($"Style error: {ex.Message}"); }
@@ -261,6 +271,13 @@ namespace ExpenseManager.App.Views.Admin.UC
             lblTotalExpenses.Visible = true;
         }
 
+        public void DisplayExpenseTrend(List<TrendDataPoint> trendData)
+        {
+            _expenseTrendData = trendData ?? new List<TrendDataPoint>();
+            lblTrendTitle.Text = "Xu hướng chi tiêu";
+            pnlLineChart.Invalidate();
+        }
+
         public void DisplayIncomeBreakdown(List<IncomeBreakdownItem> breakdown)
         {
             _incomeBreakdown = breakdown ?? new List<IncomeBreakdownItem>();
@@ -280,6 +297,13 @@ namespace ExpenseManager.App.Views.Admin.UC
             lblTotalExpenses.BackColor = totalIncomeBgColor;
             lblTotalExpenses.ForeColor = totalIncomeColor;
             lblTotalExpenses.Visible = true;
+        }
+
+        public void DisplayIncomeTrend(List<TrendDataPoint> trendData)
+        {
+            _incomeTrendData = trendData ?? new List<TrendDataPoint>();
+            lblTrendTitle.Text = "Xu hướng thu nhập";
+            pnlLineChart.Invalidate();
         }
 
         public void DisplayPagingInfo(PagingInfo info) { _currentPaging = info; }
@@ -328,7 +352,7 @@ namespace ExpenseManager.App.Views.Admin.UC
 
         #endregion
 
-        #region Empty State & Chart
+        #region Empty State & Donut Chart
 
         private void ShowEmptyState()
         {
@@ -406,6 +430,153 @@ namespace ExpenseManager.App.Views.Admin.UC
             {
                 SizeF textSize = g.MeasureString(text, font);
                 g.DrawString(text, font, textBrush, new PointF(pnlDonutChart.Width / 2 - textSize.Width / 2, pnlDonutChart.Height / 2 - textSize.Height / 2));
+            }
+        }
+
+        #endregion
+
+        #region Line Chart (Trend)
+
+        private void pnlLineChart_Paint(object sender, PaintEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+
+            var trendData = isIncomeView ? _incomeTrendData : _expenseTrendData;
+
+            if (trendData == null || !trendData.Any())
+            {
+                DrawEmptyTrendChart(g);
+                return;
+            }
+
+            // Màu cho đường line
+            Color lineColor = isIncomeView ? totalIncomeColor : totalExpenseColor;
+            Color fillColor = isIncomeView ? Color.FromArgb(30, 22, 163, 74) : Color.FromArgb(30, 220, 38, 38);
+
+            // Padding
+            int padding = 50;
+            int chartWidth = pnlLineChart.Width - (padding * 2);
+            int chartHeight = pnlLineChart.Height - (padding * 2);
+
+            if (chartWidth <= 0 || chartHeight <= 0) return;
+
+            // Tìm min/max
+            decimal maxValue = trendData.Max(d => d.Amount);
+            decimal minValue = 0;
+            decimal range = maxValue - minValue;
+            if (range == 0) range = 1;
+
+            // Vẽ grid lines
+            DrawGridLines(g, padding, chartWidth, chartHeight, maxValue);
+
+            // Tính toán points
+            List<PointF> points = new List<PointF>();
+            int dataCount = trendData.Count;
+            float xStep = dataCount > 1 ? (float)chartWidth / (dataCount - 1) : chartWidth / 2;
+
+            for (int i = 0; i < dataCount; i++)
+            {
+                float x = padding + (i * xStep);
+                float y = padding + chartHeight - (float)((trendData[i].Amount - minValue) / range * chartHeight);
+                points.Add(new PointF(x, y));
+            }
+
+            // Vẽ fill area
+            if (points.Count > 1)
+            {
+                GraphicsPath fillPath = new GraphicsPath();
+                fillPath.AddLine(points[0].X, padding + chartHeight, points[0].X, points[0].Y);
+                for (int i = 0; i < points.Count - 1; i++)
+                {
+                    fillPath.AddLine(points[i], points[i + 1]);
+                }
+                fillPath.AddLine(points[points.Count - 1].X, points[points.Count - 1].Y, points[points.Count - 1].X, padding + chartHeight);
+                fillPath.CloseFigure();
+
+                using (SolidBrush fillBrush = new SolidBrush(fillColor))
+                {
+                    g.FillPath(fillBrush, fillPath);
+                }
+            }
+
+            // Vẽ line
+            if (points.Count > 1)
+            {
+                using (Pen linePen = new Pen(lineColor, 3))
+                {
+                    g.DrawLines(linePen, points.ToArray());
+                }
+            }
+
+            // Vẽ points
+            foreach (var point in points)
+            {
+                using (SolidBrush pointBrush = new SolidBrush(lineColor))
+                {
+                    g.FillEllipse(pointBrush, point.X - 4, point.Y - 4, 8, 8);
+                }
+                using (Pen whitePen = new Pen(Color.White, 2))
+                {
+                    g.DrawEllipse(whitePen, point.X - 4, point.Y - 4, 8, 8);
+                }
+            }
+
+            // Vẽ labels
+            DrawTrendLabels(g, trendData, points, padding, chartHeight);
+        }
+
+        private void DrawGridLines(Graphics g, int padding, int chartWidth, int chartHeight, decimal maxValue)
+        {
+            using (Pen gridPen = new Pen(Color.FromArgb(226, 232, 240), 1))
+            {
+                gridPen.DashStyle = DashStyle.Dash;
+
+                // Horizontal grid lines (5 lines)
+                for (int i = 0; i <= 4; i++)
+                {
+                    float y = padding + (chartHeight * i / 4f);
+                    g.DrawLine(gridPen, padding, y, padding + chartWidth, y);
+
+                    // Y-axis labels
+                    decimal value = maxValue * (4 - i) / 4;
+                    string label = value >= 1000000 ? $"{value / 1000000:F1}M" : $"{value / 1000:F0}K";
+                    using (Font font = new Font("Segoe UI", 9F))
+                    using (Brush brush = new SolidBrush(Color.FromArgb(100, 116, 139)))
+                    {
+                        SizeF size = g.MeasureString(label, font);
+                        g.DrawString(label, font, brush, padding - size.Width - 10, y - size.Height / 2);
+                    }
+                }
+            }
+        }
+
+        private void DrawTrendLabels(Graphics g, List<TrendDataPoint> trendData, List<PointF> points, int padding, int chartHeight)
+        {
+            using (Font font = new Font("Segoe UI", 9F))
+            using (Brush brush = new SolidBrush(Color.FromArgb(100, 116, 139)))
+            {
+                for (int i = 0; i < trendData.Count; i++)
+                {
+                    string label = trendData[i].Label;
+                    SizeF size = g.MeasureString(label, font);
+                    float x = points[i].X - size.Width / 2;
+                    float y = padding + chartHeight + 10;
+                    g.DrawString(label, font, brush, x, y);
+                }
+            }
+        }
+
+        private void DrawEmptyTrendChart(Graphics g)
+        {
+            string text = "Chưa có dữ liệu xu hướng";
+            using (Font font = new Font("Segoe UI", 14F, FontStyle.Bold))
+            using (Brush textBrush = new SolidBrush(Color.FromArgb(148, 163, 184)))
+            {
+                SizeF textSize = g.MeasureString(text, font);
+                g.DrawString(text, font, textBrush,
+                    new PointF(pnlLineChart.Width / 2 - textSize.Width / 2,
+                               pnlLineChart.Height / 2 - textSize.Height / 2));
             }
         }
 

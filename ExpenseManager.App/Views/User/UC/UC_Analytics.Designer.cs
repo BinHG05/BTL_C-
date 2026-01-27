@@ -45,6 +45,10 @@
             lblTransactionHistory = new System.Windows.Forms.Label();
             lblTotalExpenses = new System.Windows.Forms.Label();
             dgvTransactions = new System.Windows.Forms.DataGridView();
+            pnlTrendWrapper = new System.Windows.Forms.Panel();
+            pnlTrend = new System.Windows.Forms.Panel();
+            lblTrendTitle = new System.Windows.Forms.Label();
+            pnlLineChart = new System.Windows.Forms.Panel();
             pnlHeader.SuspendLayout();
             pnlFilterWrapper.SuspendLayout();
             pnlTabsAndFilters.SuspendLayout();
@@ -52,6 +56,8 @@
             pnlChart.SuspendLayout();
             pnlHistory.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvTransactions).BeginInit();
+            pnlTrendWrapper.SuspendLayout();
+            pnlTrend.SuspendLayout();
             SuspendLayout();
             // 
             // pnlHeader
@@ -262,7 +268,7 @@
             tlpMainContent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
             tlpMainContent.Controls.Add(pnlChart, 0, 0);
             tlpMainContent.Controls.Add(pnlHistory, 1, 0);
-            tlpMainContent.Dock = System.Windows.Forms.DockStyle.Fill;
+            tlpMainContent.Dock = System.Windows.Forms.DockStyle.Top;
             tlpMainContent.Location = new System.Drawing.Point(0, 280);
             tlpMainContent.Name = "tlpMainContent";
             tlpMainContent.Padding = new System.Windows.Forms.Padding(30, 0, 30, 20);
@@ -381,8 +387,50 @@
             dgvTransactions.RowsDefaultCellStyle = dataGridViewCellStyle6;
             dgvTransactions.RowTemplate.Height = 40;
             dgvTransactions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            dgvTransactions.Size = new System.Drawing.Size(1000, 490);
+            dgvTransactions.Size = new System.Drawing.Size(870, 490);
             dgvTransactions.TabIndex = 2;
+            // 
+            // pnlTrendWrapper
+            // 
+            pnlTrendWrapper.BackColor = System.Drawing.Color.Transparent;
+            pnlTrendWrapper.Controls.Add(pnlTrend);
+            pnlTrendWrapper.Dock = System.Windows.Forms.DockStyle.Top;
+            pnlTrendWrapper.Location = new System.Drawing.Point(0, 900);
+            pnlTrendWrapper.Name = "pnlTrendWrapper";
+            pnlTrendWrapper.Padding = new System.Windows.Forms.Padding(35, 0, 35, 20);
+            pnlTrendWrapper.Size = new System.Drawing.Size(1600, 420);
+            pnlTrendWrapper.TabIndex = 3;
+            // 
+            // pnlTrend
+            // 
+            pnlTrend.BackColor = System.Drawing.Color.White;
+            pnlTrend.Controls.Add(lblTrendTitle);
+            pnlTrend.Controls.Add(pnlLineChart);
+            pnlTrend.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnlTrend.Location = new System.Drawing.Point(35, 0);
+            pnlTrend.Name = "pnlTrend";
+            pnlTrend.Padding = new System.Windows.Forms.Padding(20);
+            pnlTrend.Size = new System.Drawing.Size(1530, 400);
+            pnlTrend.TabIndex = 0;
+            // 
+            // lblTrendTitle
+            // 
+            lblTrendTitle.AutoSize = true;
+            lblTrendTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            lblTrendTitle.ForeColor = System.Drawing.Color.FromArgb(30, 41, 59);
+            lblTrendTitle.Location = new System.Drawing.Point(25, 20);
+            lblTrendTitle.Name = "lblTrendTitle";
+            lblTrendTitle.Size = new System.Drawing.Size(222, 32);
+            lblTrendTitle.TabIndex = 0;
+            lblTrendTitle.Text = "Xu hướng chi tiêu";
+            // 
+            // pnlLineChart
+            // 
+            pnlLineChart.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            pnlLineChart.Location = new System.Drawing.Point(25, 70);
+            pnlLineChart.Name = "pnlLineChart";
+            pnlLineChart.Size = new System.Drawing.Size(1480, 310);
+            pnlLineChart.TabIndex = 1;
             // 
             // UC_Analytics
             // 
@@ -390,11 +438,12 @@
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             AutoScroll = true;
             BackColor = System.Drawing.Color.FromArgb(238, 242, 247);
+            Controls.Add(pnlTrendWrapper);
             Controls.Add(tlpMainContent);
             Controls.Add(pnlFilterWrapper);
             Controls.Add(pnlHeader);
             Name = "UC_Analytics";
-            Size = new System.Drawing.Size(1600, 900);
+            Size = new System.Drawing.Size(1600, 1400);
             pnlHeader.ResumeLayout(false);
             pnlHeader.PerformLayout();
             pnlFilterWrapper.ResumeLayout(false);
@@ -406,6 +455,9 @@
             pnlHistory.ResumeLayout(false);
             pnlHistory.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvTransactions).EndInit();
+            pnlTrendWrapper.ResumeLayout(false);
+            pnlTrend.ResumeLayout(false);
+            pnlTrend.PerformLayout();
             ResumeLayout(false);
 
         }
@@ -441,5 +493,11 @@
         private System.Windows.Forms.Label lblTransactionHistory;
         private System.Windows.Forms.Label lblTotalExpenses;
         private System.Windows.Forms.DataGridView dgvTransactions;
+
+        // Trend Chart Controls
+        private System.Windows.Forms.Panel pnlTrendWrapper;
+        private System.Windows.Forms.Panel pnlTrend;
+        private System.Windows.Forms.Label lblTrendTitle;
+        private System.Windows.Forms.Panel pnlLineChart;
     }
 }

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 namespace ExpenseManager.App.Views.User.UC
 {
-    // Thêm public để Presenter có thể access
     public interface IAnalyticsView
     {
         string UserId { get; }
@@ -16,11 +15,13 @@ namespace ExpenseManager.App.Views.User.UC
         void DisplayExpenseBreakdown(List<ExpenseBreakdownItem> breakdown);
         void DisplayExpenseHistory(List<TransactionDto> history);
         void DisplayTotalExpense(decimal total);
+        void DisplayExpenseTrend(List<TrendDataPoint> trendData);
 
         // Income Data
         void DisplayIncomeBreakdown(List<IncomeBreakdownItem> breakdown);
         void DisplayIncomeHistory(List<IncomeTransactionDto> history);
         void DisplayTotalIncome(decimal total);
+        void DisplayIncomeTrend(List<TrendDataPoint> trendData);
 
         // Paging và Trạng thái
         void DisplayPagingInfo(PagingInfo info);
