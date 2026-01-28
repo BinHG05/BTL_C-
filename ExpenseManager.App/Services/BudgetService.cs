@@ -85,7 +85,7 @@ namespace ExpenseManager.App.Services
         }
 
         public async Task<IEnumerable<ExpenseBreakdownDto>> GetExpenseBreakdownAsync(
-            int budgetId, string userId, DateTime? startDate = null, DateTime? endDate = null)
+            int budgetId, string userId, DateTime? startDate = null, DateTime? endDate = null, string grouping = "Day")
         {
             var budget = await _budgetRepo.GetByIdAsync(budgetId);
             if (budget == null || budget.UserId != userId)
@@ -97,17 +97,47 @@ namespace ExpenseManager.App.Services
             var transactions = await _transactionRepo.GetByCategoryAndDateRangeAsync(
                 userId, budget.CategoryId, effectiveStartDate, effectiveEndDate);
 
-            return transactions
-                .Where(t => t.Type == "Expense")
-                .GroupBy(t => t.TransactionDate.Date)
-                .Select(g => new ExpenseBreakdownDto
-                {
-                    Date = g.Key,
-                    TotalAmount = g.Sum(t => t.Amount),
-                    TransactionCount = g.Count()
-                })
-                .OrderBy(e => e.Date)
-                .ToList();
+            var query = transactions.Where(t => t.Type == "Expense");
+            IEnumerable<ExpenseBreakdownDto> result;
+
+            switch (grouping?.ToLower())
+            {
+                case "week":
+                    result = query
+                        .GroupBy(t => t.TransactionDate.Date.AddDays(-(int)t.TransactionDate.DayOfWeek))
+                        .Select(g => new ExpenseBreakdownDto
+                        {
+                            Date = g.Key,
+                            Label = $"{g.Key:dd/MM} - {g.Key.AddDays(6):dd/MM}",
+                            TotalAmount = g.Sum(t => t.Amount),
+                            TransactionCount = g.Count()
+                        });
+                    break;
+                case "month":
+                    result = query
+                        .GroupBy(t => new DateTime(t.TransactionDate.Year, t.TransactionDate.Month, 1))
+                        .Select(g => new ExpenseBreakdownDto
+                        {
+                            Date = g.Key,
+                            Label = g.Key.ToString("MM/yyyy"),
+                            TotalAmount = g.Sum(t => t.Amount),
+                            TransactionCount = g.Count()
+                        });
+                    break;
+                default:
+                    result = query
+                        .GroupBy(t => t.TransactionDate.Date)
+                        .Select(g => new ExpenseBreakdownDto
+                        {
+                            Date = g.Key,
+                            Label = g.Key.ToString("dd/MM"),
+                            TotalAmount = g.Sum(t => t.Amount),
+                            TransactionCount = g.Count()
+                        });
+                    break;
+            }
+
+            return result.OrderBy(e => e.Date).ToList();
         }
 
         public async Task<Budget> CreateBudgetAsync(BudgetCreateDto dto, string userId)
@@ -204,6 +234,7 @@ namespace ExpenseManager.App.Services
     public class ExpenseBreakdownDto
     {
         public DateTime Date { get; set; }
+        public string Label { get; set; }
         public decimal TotalAmount { get; set; }
         public int TransactionCount { get; set; }
         public string FormattedDate => Date.ToString("dd/MM/yyyy");

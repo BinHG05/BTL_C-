@@ -459,7 +459,7 @@ namespace ExpenseManager.App.Views.Admin.UC
                 series.Points[pointIndex].Label = item.TotalAmount.ToString("N0");
                 series.Points[pointIndex].ToolTip = $"{item.Date:dd/MM/yyyy}\n{item.TotalAmount:N0}đ";
 
-                // ✅ Sử dụng nhãn tùy chỉnh (Tuần hoặc Tháng) nếu có
+                // Sử dụng nhãn tùy chỉnh (Tuần hoặc Tháng) nếu có
                 if (!string.IsNullOrEmpty(item.Label))
                 {
                     series.Points[pointIndex].AxisLabel = item.Label;
@@ -471,15 +471,17 @@ namespace ExpenseManager.App.Views.Admin.UC
 
             if (hasCustomLabels)
             {
+
                 chartArea.AxisX.LabelStyle.Format = "";
                 chartArea.AxisX.IntervalType = DateTimeIntervalType.Auto;
                 chartArea.AxisX.Interval = 1;
 
-                // Xoay nhãn nếu có nhiều điểm để tránh đè lên nhau
+                // Xoay nhãn nếu có nhiều điểm
                 chartArea.AxisX.LabelStyle.Angle = (breakdown.Count() > 5) ? -45 : 0;
             }
             else
             {
+
                 if (breakdown.Count() > 10)
                 {
                     chartArea.AxisX.LabelStyle.Format = "dd/MM";

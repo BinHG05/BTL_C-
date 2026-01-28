@@ -15,6 +15,6 @@ namespace ExpenseManager.App.Services
         Task<bool> UpdateBudgetAsync(int budgetId, BudgetUpdateDto dto, string userId);
         Task<bool> DeleteBudgetAsync(int budgetId, string userId);
         Task<IEnumerable<ExpenseBreakdownDto>> GetExpenseBreakdownAsync(
-                int budgetId, string userId, DateTime? startDate = null, DateTime? endDate = null);
+                int budgetId, string userId, DateTime? startDate = null, DateTime? endDate = null, string grouping = "Day");
     }
 }

@@ -48,6 +48,7 @@ namespace ExpenseManager.App.Presenters
         private int _selectedBudgetId;
         private List<BudgetSummaryDto> _currentBudgets;
         private bool _disposed = false;
+        private string _currentGrouping = "Day";
 
         public BudgetPresenter(IBudgetView view, IServiceProvider serviceProvider)
         {
@@ -197,12 +198,24 @@ namespace ExpenseManager.App.Presenters
             if (!CanUpdateView()) return;
             if (_selectedBudgetId > 0)
             {
-                await LoadExpenseChartAsync(_selectedBudgetId, e.StartDate, e.EndDate);
+                await LoadExpenseChartAsync(_selectedBudgetId, e.StartDate, e.EndDate, _currentGrouping);
             }
         }
 
-        private void OnChartTypeChanged(object sender, string chartType)
+        private async void OnChartTypeChanged(object sender, string chartType)
         {
+            if (!CanUpdateView()) return;
+
+            // Map loại chart sang grouping key cho Service
+            _currentGrouping = chartType switch
+            {
+                "Theo Tuần" => "Week",
+                "Theo Tháng" => "Month",
+                _ => "Day"
+            };
+
+            // Khi đổi loại chart, UC_Budget đã trigger ChartDateRangeChanged
+            // nên Presenter sẽ tự gọi LoadExpenseChartAsync qua event đó.
         }
 
         public async Task LoadBudgetsAsync()
@@ -265,7 +278,7 @@ namespace ExpenseManager.App.Presenters
                         _view.SetChartDateRange(detail.StartDate, detail.EndDate);
 
                         var breakdown = await budgetService.GetExpenseBreakdownAsync(
-                            budgetId, _view.CurrentUserId, detail.StartDate, detail.EndDate);
+                            budgetId, _view.CurrentUserId, detail.StartDate, detail.EndDate, _currentGrouping);
 
                         if (!CanUpdateView()) return;
 
@@ -279,7 +292,7 @@ namespace ExpenseManager.App.Presenters
             }
         }
 
-        private async Task LoadExpenseChartAsync(int budgetId, DateTime start, DateTime end)
+        private async Task LoadExpenseChartAsync(int budgetId, DateTime start, DateTime end, string grouping = "Day")
         {
             try
             {
@@ -290,7 +303,7 @@ namespace ExpenseManager.App.Presenters
                     var budgetService = scope.ServiceProvider.GetRequiredService<IBudgetService>();
 
                     var breakdown = await budgetService.GetExpenseBreakdownAsync(
-                        budgetId, _view.CurrentUserId, start, end);
+                        budgetId, _view.CurrentUserId, start, end, grouping);
 
                     if (!CanUpdateView()) return;
 
