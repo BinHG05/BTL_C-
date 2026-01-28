@@ -35,7 +35,6 @@ namespace ExpenseManager.App.Views
             txtUsername.Focus();
         }
 
-        // *** SỬA LẠI HÀM NÀY ***
         private async void btnLogin_Click(object sender, EventArgs e)
         {
             string email = txtUsername.Text;
@@ -55,10 +54,8 @@ namespace ExpenseManager.App.Views
             if (loginSuccess && user != null)
             {
                 CurrentUserSession.SetUser(user);
-                // *** PHÂN QUYỀN DỰA TRÊN ROLE ***
                 if (user.Role == "Admin")
                 {
-                    // ✅ Chuyển đến giao diện Admin
                     var layoutAdmin = Program.ServiceProvider.GetRequiredService<LayoutAdmin>();
                     layoutAdmin.Show();
                     this.Hide();
@@ -81,7 +78,6 @@ namespace ExpenseManager.App.Views
                 ShowErrorMessage("Email hoặc mật khẩu không đúng.");
             }
         }
-        // --- Các hàm khác giữ nguyên ---
         private void txtUsername_Enter(object sender, EventArgs e)
         {
             pnlUsernameLine.BackColor = focusColor;
@@ -144,13 +140,13 @@ namespace ExpenseManager.App.Views
                     // ✅ VERIFY SESSION ĐÃ SET ĐÚNG
                     if (CurrentUserSession.CurrentUser == null)
                     {
-                        Debug.WriteLine("[LoginForm] ❌ ERROR: Session is NULL after login!");
+                        Debug.WriteLine("[LoginForm] ERROR: Session is NULL after login!");
                         MessageBox.Show("Lỗi: Không thể lưu phiên đăng nhập!",
                             "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
 
-                    Debug.WriteLine($"[LoginForm] ✅ Session verified: {CurrentUserSession.CurrentUser.UserId}");
+                    Debug.WriteLine($"[LoginForm] Session verified: {CurrentUserSession.CurrentUser.UserId}");
                     Debug.WriteLine($"[LoginForm] User Role: {user.Role}");
 
                     // Đợi một chút để đảm bảo Session được set
@@ -159,7 +155,7 @@ namespace ExpenseManager.App.Views
                     // ✅ VERIFY LẦN 2
                     if (CurrentUserSession.CurrentUser == null)
                     {
-                        Debug.WriteLine("[LoginForm] ❌ ERROR: Session is NULL after delay!");
+                        Debug.WriteLine("[LoginForm] ERROR: Session is NULL after delay!");
                         MessageBox.Show("Lỗi: Phiên đăng nhập không ổn định!",
                             "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
@@ -181,7 +177,7 @@ namespace ExpenseManager.App.Views
                         // ✅ VERIFY LẦN 3 - Ngay trước khi show
                         if (CurrentUserSession.CurrentUser == null)
                         {
-                            Debug.WriteLine("[LoginForm] ❌ ERROR: Session cleared before showing LayoutUser!");
+                            Debug.WriteLine("[LoginForm] ERROR: Session cleared before showing LayoutUser!");
                             MessageBox.Show("Lỗi: Phiên đăng nhập bị mất!",
                                 "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;

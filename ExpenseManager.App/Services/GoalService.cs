@@ -148,22 +148,21 @@ namespace ExpenseManager.App.Services
             if (wallet.Balance < depositDto.Amount) return false;
 
             // 2. THỰC HIỆN TÍNH TOÁN
-            wallet.Balance -= depositDto.Amount;      // Trừ tiền ví
-            goal.CurrentAmount += depositDto.Amount;  // Cộng tiền mục tiêu
+            wallet.Balance -= depositDto.Amount;
+            goal.CurrentAmount += depositDto.Amount; 
 
-            // 3. GỌI REPOSITORY ĐỂ UPDATE (QUAN TRỌNG)
-            // Bạn phải gọi hàm này thì DB mới biết Ví đã bị trừ tiền
+            // 3. GỌI REPOSITORY ĐỂ UPDATE
             await _walletRepository.UpdateWallet(wallet);
 
             // Cập nhật Mục tiêu
             await _goalRepository.UpdateGoalAsync(goal);
 
-            // 4. TẠO LỊCH SỬ (Lưu ý: Chỉ gán ID, KHÔNG gán object Wallet để tránh lỗi Tracking)
+            // 4. TẠO LỊCH SỬ 
             var deposit = new GoalDeposit
             {
                 GoalId = depositDto.GoalId,
                 UserId = depositDto.UserId,
-                WalletId = depositDto.WalletId, // <--- Chỉ gán ID
+                WalletId = depositDto.WalletId, 
                 Amount = depositDto.Amount,
                 Note = depositDto.Note ?? string.Empty,
                 DepositDate = DateTime.Now

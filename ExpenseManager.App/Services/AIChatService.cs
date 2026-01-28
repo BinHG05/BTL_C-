@@ -20,13 +20,11 @@ namespace ExpenseManager.App.Services
         private readonly List<ChatMessage> _history;
         private readonly HttpClient _httpClient;
         private readonly IConfiguration _configuration;
-        // Lưu trạng thái chờ user chọn ví
         private string _pendingAction = null;
         private string _pendingGoalName = null;
         private decimal _pendingAmount = 0;
-        // Groq API Configuration
         private const string API_URL = "https://api.groq.com/openai/v1/chat/completions";
-        private const string MODEL = "llama-3.3-70b-versatile"; // Model mạnh nhất, miễn phí
+        private const string MODEL = "llama-3.3-70b-versatile"; 
         public AIChatService(
             IGoalService goalService,
             ICategoryService categoryService,
@@ -52,7 +50,6 @@ namespace ExpenseManager.App.Services
         }
         public async Task<string> SendMessageAsync(string userMessage)
         {
-            // 0. Xử lý lệnh Reset/Hủy/Xóa
             if (string.Equals(userMessage, "reset", StringComparison.OrdinalIgnoreCase) ||
                 string.Equals(userMessage, "hủy", StringComparison.OrdinalIgnoreCase) ||
                 string.Equals(userMessage, "clear", StringComparison.OrdinalIgnoreCase))
@@ -61,11 +58,11 @@ namespace ExpenseManager.App.Services
                 _pendingGoalName = null;
                 _pendingAmount = 0;
                 _history.Clear();
-                return "🔄 Đã đặt lại cuộc trò chuyện. Tôi có thể giúp gì cho bạn?";
+                return "Đã đặt lại cuộc trò chuyện. Tôi có thể giúp gì cho bạn?";
             }
             // 1. Add user message to history
             _history.Add(new ChatMessage(userMessage, true));
-            // 2. Kiểm tra xem có pending action không (user đang trả lời câu hỏi chọn ví)
+            // 2. Kiểm tra xem có pending action không 
             if (_pendingAction == "choose_wallet_for_deposit")
             {
                 string userId = ExpenseManager.App.Session.CurrentUserSession.CurrentUser?.UserId;
@@ -83,7 +80,7 @@ namespace ExpenseManager.App.Services
                         if (targetGoal == null)
                         {
                             _pendingAction = null;
-                            return "❌ Đã xảy ra lỗi: Không tìm thấy mục tiêu này nữa. Vui lòng thử lại.";
+                            return "Đã xảy ra lỗi: Không tìm thấy mục tiêu này nữa. Vui lòng thử lại.";
                         }
                         var depositDto = new GoalDepositDTO
                         {
@@ -100,14 +97,14 @@ namespace ExpenseManager.App.Services
                         _pendingAction = null;
                         _pendingGoalName = null;
                         _pendingAmount = 0;
-                        string response = $"✅ Đã nạp {amountDeposited:N0} VND vào mục tiêu '{targetGoal.GoalName}' từ ví '{selectedWallet.WalletName}'!";
+                        string response = $"Đã nạp {amountDeposited:N0} VND vào mục tiêu '{targetGoal.GoalName}' từ ví '{selectedWallet.WalletName}'!";
                         _history.Add(new ChatMessage(response, false));
                         return response;
                     }
                     else
                     {
                         // Tìm thấy ví nhưng không đủ tiền
-                        string response = $"⚠️ Ví '{selectedWallet.WalletName}' chỉ còn {selectedWallet.Balance:N0} VND, không đủ để nạp {_pendingAmount:N0} VND.\n👉 Vui lòng chọn ví khác hoặc gõ 'Hủy'.";
+                        string response = $"Ví '{selectedWallet.WalletName}' chỉ còn {selectedWallet.Balance:N0} VND, không đủ để nạp {_pendingAmount:N0} VND.\n👉 Vui lòng chọn ví khác hoặc gõ 'Hủy'.";
                         _history.Add(new ChatMessage(response, false));
                         return response;
                     }
@@ -115,7 +112,6 @@ namespace ExpenseManager.App.Services
                 else
                 {
                     // KHÔNG TÌM THẤY VÍ
-                    // Kiểm tra xem có phải lệnh mới không (Smart Escape)
                     string lowerMsg = userMessage.ToLower();
                     if (userMessage.Length > 20 ||
                         lowerMsg.StartsWith("nạp") ||
@@ -125,13 +121,12 @@ namespace ExpenseManager.App.Services
                         _pendingAction = null;
                         _pendingGoalName = null;
                         _pendingAmount = 0;
-                        // Code sẽ chạy tiếp xuống phần gọi AI để xử lý lệnh mới
                     }
                     else
                     {
                         // Không phải lệnh mới, báo lỗi không tìm thấy ví
                         string availableWallets = string.Join(", ", allWallets.Select(w => w.WalletName));
-                        string response = $"❌ Không tìm thấy ví tên '{userMessage}'.\n📋 Các ví hiện có: {availableWallets}.\n👉 Vui lòng nhập đúng tên ví hoặc gõ 'Hủy'.";
+                        string response = $"Không tìm thấy ví tên '{userMessage}'.\nCác ví hiện có: {availableWallets}.\nVui lòng nhập đúng tên ví hoặc gõ 'Hủy'.";
                         _history.Add(new ChatMessage(response, false));
                         return response;
                     }
@@ -183,10 +178,9 @@ namespace ExpenseManager.App.Services
                     string deadlineStr = root.GetProperty("deadline").GetString();
                     DateTime completionDate;
 
-                    // Nếu AI trả về format thay vì ngày thực, dùng ngày mặc định
                     if (!DateTime.TryParse(deadlineStr, out completionDate))
                     {
-                        completionDate = DateTime.Now.AddMonths(1); // Mặc định 1 tháng sau
+                        completionDate = DateTime.Now.AddMonths(1); 
                     }
 
                     var goalDto = new CreateGoalDTO
@@ -197,13 +191,13 @@ namespace ExpenseManager.App.Services
                         CompletionDate = completionDate
                     };
                     await _goalService.CreateGoalAsync(goalDto);
-                    return $"✅ Đã tạo mục tiêu '{goalDto.GoalName}' thành công!";
+                    return $"Đã tạo mục tiêu '{goalDto.GoalName}' thành công!";
                 case "create_wallet":
                     var allWalletsCheck = await _walletService.GetWalletsByUserIdAsync(userId);
                     string newWalletName = root.GetProperty("name").GetString();
                     if (allWalletsCheck.Any(w => w.WalletName.Equals(newWalletName, StringComparison.OrdinalIgnoreCase)))
                     {
-                        return $"❌ Ví '{newWalletName}' đã tồn tại. Vui lòng đặt tên khác.";
+                        return $"Ví '{newWalletName}' đã tồn tại. Vui lòng đặt tên khác.";
                     }
                     var wallet = new Wallet
                     {
@@ -217,14 +211,14 @@ namespace ExpenseManager.App.Services
                         UpdatedAt = DateTime.Now
                     };
                     await _walletService.CreateWalletAsync(wallet);
-                    return $"✅ Đã tạo ví '{wallet.WalletName}' thành công!";
+                    return $"Đã tạo ví '{wallet.WalletName}' thành công!";
                 case "deposit_goal":
                     string goalName = root.GetProperty("goal_name").GetString();
                     string walletNameRaw = root.TryGetProperty("wallet_name", out var wElem) ? wElem.GetString() : null;
                     decimal amount = root.GetProperty("amount").GetDecimal();
                     var goals = await _goalService.GetUserGoalsAsync(userId);
                     var targetGoal = goals.FirstOrDefault(g => g.GoalName.Equals(goalName, StringComparison.OrdinalIgnoreCase));
-                    if (targetGoal == null) return $"❌ Không tìm thấy mục tiêu tên '{goalName}'.";
+                    if (targetGoal == null) return $"Không tìm thấy mục tiêu tên '{goalName}'.";
                     var allWallets = await _walletService.GetWalletsByUserIdAsync(userId);
                     Wallet selectedWallet = null;
                     string autoMsg = "";
@@ -234,7 +228,7 @@ namespace ExpenseManager.App.Services
                         if (selectedWallet == null)
                         {
                             var existingNames = string.Join(", ", allWallets.Select(w => w.WalletName));
-                            return $"❌ Không tìm thấy ví '{walletNameRaw}'. Các ví hiện có: {existingNames}. Vui lòng chọn lại.";
+                            return $"Không tìm thấy ví '{walletNameRaw}'. Các ví hiện có: {existingNames}. Vui lòng chọn lại.";
                         }
                         if (selectedWallet.Balance < amount)
                         {
@@ -242,7 +236,7 @@ namespace ExpenseManager.App.Services
                             string suggestion = otherAffordable.Any()
                                 ? $"Các ví đủ tiền: {string.Join(", ", otherAffordable)}"
                                 : "Không có ví nào đủ tiền.";
-                            return $"⚠️ Ví '{selectedWallet.WalletName}' không đủ tiền (Dư: {selectedWallet.Balance:N0}). {suggestion}";
+                            return $"Ví '{selectedWallet.WalletName}' không đủ tiền (Dư: {selectedWallet.Balance:N0}). {suggestion}";
                         }
                     }
                     else
@@ -250,7 +244,7 @@ namespace ExpenseManager.App.Services
                         var affordableWallets = allWallets.Where(w => w.Balance >= amount).ToList();
                         if (!affordableWallets.Any())
                         {
-                            return $"❌ Bạn muốn nạp {amount:N0} nhưng không có ví nào đủ số dư.";
+                            return $"Bạn muốn nạp {amount:N0} nhưng không có ví nào đủ số dư.";
                         }
                         else if (affordableWallets.Count == 1)
                         {
@@ -263,7 +257,7 @@ namespace ExpenseManager.App.Services
                             _pendingGoalName = goalName;
                             _pendingAmount = amount;
                             string listW = string.Join(", ", affordableWallets.Select(w => w.WalletName));
-                            return $"❓ Bạn muốn dùng ví nào? Có nhiều ví đủ tiền: {listW}.\n(Vui lòng trả lời tên ví)";
+                            return $"Bạn muốn dùng ví nào? Có nhiều ví đủ tiền: {listW}.\n(Vui lòng trả lời tên ví)";
                         }
                     }
                     var depositDto = new GoalDepositDTO
@@ -276,26 +270,26 @@ namespace ExpenseManager.App.Services
                         Status = "Completed"
                     };
                     await _goalService.DepositToGoalAsync(depositDto);
-                    return $"✅ {autoMsg}Đã nạp {amount:N0} VND vào mục tiêu '{goalName}' từ ví '{selectedWallet.WalletName}'!";
+                    return $"{autoMsg}Đã nạp {amount:N0} VND vào mục tiêu '{goalName}' từ ví '{selectedWallet.WalletName}'!";
                 case "deposit_wallet":
                     string targetWalletName = root.GetProperty("wallet_name").GetString();
                     decimal depositAmount = root.GetProperty("amount").GetDecimal();
                     var userWallets = await _walletService.GetWalletsByUserIdAsync(userId);
                     var targetWallet = userWallets.FirstOrDefault(w => w.WalletName.Equals(targetWalletName, StringComparison.OrdinalIgnoreCase));
-                    if (targetWallet == null) return $"❌ Không tìm thấy ví tên '{targetWalletName}'.";
+                    if (targetWallet == null) return $"Không tìm thấy ví tên '{targetWalletName}'.";
                     targetWallet.Balance += depositAmount;
                     targetWallet.UpdatedAt = DateTime.Now;
                     try
                     {
                         await _walletService.UpdateWalletAsync(targetWallet);
-                        return $"✅ Đã nạp {depositAmount:N0} VND vào ví '{targetWalletName}'. Số dư mới: {targetWallet.Balance:N0} VND.";
+                        return $"Đã nạp {depositAmount:N0} VND vào ví '{targetWalletName}'. Số dư mới: {targetWallet.Balance:N0} VND.";
                     }
                     catch (Exception ex)
                     {
-                        return $"❌ Lỗi khi nạp tiền: {ex.Message}";
+                        return $"Lỗi khi nạp tiền: {ex.Message}";
                     }
                 default:
-                    return "⚠️ AI gửi lệnh không xác định.";
+                    return "AI gửi lệnh không xác định.";
             }
         }
         private async Task<string> GetFinancialContextAsync()
@@ -330,9 +324,7 @@ namespace ExpenseManager.App.Services
             }
             return sb.ToString();
         }
-        /// <summary>
         /// Gọi Groq API (OpenAI-compatible format)
-        /// </summary>
         private async Task<string> CallGroqApiAsync(string prompt)
         {
             try
@@ -340,7 +332,7 @@ namespace ExpenseManager.App.Services
                 var apiKey = _configuration["Groq:ApiKey"];
                 if (string.IsNullOrEmpty(apiKey))
                 {
-                    return "❌ Lỗi: Không tìm thấy Groq API key trong appsettings.json. Vui lòng thêm key vào mục 'Groq:ApiKey'.";
+                    return "Lỗi: Không tìm thấy Groq API key trong appsettings.json. Vui lòng thêm key vào mục 'Groq:ApiKey'.";
                 }
                 // Groq sử dụng format OpenAI-compatible
                 var requestBody = new

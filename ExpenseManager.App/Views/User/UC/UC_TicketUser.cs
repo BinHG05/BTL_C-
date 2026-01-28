@@ -21,7 +21,6 @@ namespace ExpenseManager.App.Views.User.UC
         private Button currentTabButton;
         private ExpenseDbContext _context;
 
-        // ITicketUserView implementation
         public string UserId => CurrentUserSession.CurrentUser?.UserId;
         public event EventHandler LoadTickets;
         public event EventHandler CreateNewTicketRequested;
@@ -33,13 +32,11 @@ namespace ExpenseManager.App.Views.User.UC
             SetActiveTab(btnSupport);
             AddTabUnderline();
 
-            // Trigger load tickets
             this.Load += (s, e) => LoadTickets?.Invoke(this, EventArgs.Empty);
         }
 
         private void InitializePresenter()
         {
-            // Initialize dependencies (you may use DI container instead)
             _context = new ExpenseDbContext();
             var repository = new TicketUserRepository(_context);
             var service = new TicketUserServices(repository);
@@ -136,7 +133,6 @@ namespace ExpenseManager.App.Views.User.UC
                 Padding = new Padding(20, 15, 20, 15)
             };
 
-            // Type Label (styled as badge)
             Label lblType = new Label
             {
                 Text = ticket.QuestionType,
@@ -146,7 +142,6 @@ namespace ExpenseManager.App.Views.User.UC
                 AutoSize = true
             };
 
-            // Status Label
             Label lblStatus = new Label
             {
                 Text = TranslateStatus(ticket.Status),
@@ -155,7 +150,6 @@ namespace ExpenseManager.App.Views.User.UC
                 AutoSize = true
             };
 
-            // Description Label
             Label lblDescription = new Label
             {
                 Text = ticket.Description.Length > 80
@@ -168,7 +162,6 @@ namespace ExpenseManager.App.Views.User.UC
                 AutoSize = true
             };
 
-            // Date Label
             Label lblDate = new Label
             {
                 Text = $"Posted on {ticket.CreatedAt:dd MMMM yyyy}",
@@ -178,7 +171,6 @@ namespace ExpenseManager.App.Views.User.UC
                 AutoSize = true
             };
 
-            // View Button
             Button btnView = new Button
             {
                 Text = "Xem",
@@ -189,13 +181,13 @@ namespace ExpenseManager.App.Views.User.UC
                 ForeColor = System.Drawing.Color.FromArgb(101, 109, 255),
                 FlatStyle = FlatStyle.Flat,
                 Cursor = Cursors.Hand,
-                Tag = ticket // Store ticket object in Tag
+                Tag = ticket 
             };
             btnView.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(101, 109, 255);
             btnView.FlatAppearance.BorderSize = 2;
             btnView.Click += BtnView_Click;
 
-            // Hover effect for View button
+
             btnView.MouseEnter += (s, e) =>
             {
                 btnView.BackColor = System.Drawing.Color.FromArgb(101, 109, 255);
@@ -214,7 +206,6 @@ namespace ExpenseManager.App.Views.User.UC
             itemPanel.Controls.Add(lblDate);
             itemPanel.Controls.Add(btnView);
 
-            // Add hover effect
             itemPanel.MouseEnter += (s, e) => itemPanel.BackColor = System.Drawing.Color.FromArgb(250, 250, 250);
             itemPanel.MouseLeave += (s, e) => itemPanel.BackColor = System.Drawing.Color.White;
 
@@ -227,7 +218,6 @@ namespace ExpenseManager.App.Views.User.UC
             {
                 try
                 {
-                    // Load full ticket with User data
                     var fullTicket = await _context.Tickets
                         .Include(t => t.User)
                         .FirstOrDefaultAsync(t => t.TicketId == ticket.TicketId);

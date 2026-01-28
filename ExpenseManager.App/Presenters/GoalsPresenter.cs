@@ -58,7 +58,6 @@ namespace ExpenseManager.App.Presenters
                     var history = await _goalService.GetGoalHistoryAsync(goalId);
                     _view.DisplayHistory(history);
 
-                    // 3. --- THÊM MỚI: Load thống kê đóng góp theo ví ---
                     // Gọi hàm Service vừa viết để lấy dữ liệu
                     var contributions = await _goalService.GetWalletContributionsAsync(goalId);
 
@@ -107,18 +106,14 @@ namespace ExpenseManager.App.Presenters
             }
             catch (Exception ex)
             {
-                // Lấy lỗi gốc rễ (Inner Exception)
                 var innerMessage = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
 
-                // Hiển thị ra màn hình để đọc
                 _view.ShowMessage($"Lỗi chi tiết: {innerMessage}", false);
 
-                // (Tùy chọn) Ghi log ra cửa sổ Output của Visual Studio để copy
                 System.Diagnostics.Debug.WriteLine($"FULL ERROR: {ex}");
             }
         }
 
-        // --- ĐÃ SỬA: Thay walletId bằng completionDate ---
         public async Task UpdateGoalAsync(int goalId, string goalName, decimal targetAmount, DateTime? completionDate, string status)
         {
             try
@@ -140,7 +135,7 @@ namespace ExpenseManager.App.Presenters
                     GoalId = goalId,
                     GoalName = goalName,
                     TargetAmount = targetAmount,
-                    CompletionDate = completionDate, // Đã thay đổi từ WalletId
+                    CompletionDate = completionDate, 
                     Status = status
                 };
 
@@ -150,7 +145,6 @@ namespace ExpenseManager.App.Presenters
                     _view.ShowMessage("Cập nhật mục tiêu thành công!", true);
                     await LoadUserGoalsAsync();
 
-                    // Nếu đang xem chi tiết mục tiêu này thì reload lại
                     if (_selectedGoalId == goalId)
                     {
                         await LoadGoalDetailsAsync(goalId);
@@ -190,7 +184,6 @@ namespace ExpenseManager.App.Presenters
             }
         }
 
-        // --- ĐÃ SỬA: Thêm tham số goalId để khớp với GoalTransactionForm ---
         public async Task DepositToGoalAsync(int goalId, int walletId, decimal amount, string note)
         {
             try
@@ -215,8 +208,6 @@ namespace ExpenseManager.App.Presenters
                 {
                     _view.ShowMessage("Nạp tiền thành công!", true);
 
-                    // --- THÊM CÁC DÒNG NÀY ĐỂ LÀM MỚI GIAO DIỆN ---
-
                     // 1. Load lại chi tiết Mục tiêu (Để cập nhật thanh tiến độ và Lịch sử)
                     await LoadGoalDetailsAsync(goalId);
 
@@ -238,7 +229,6 @@ namespace ExpenseManager.App.Presenters
             }
         }
 
-        // Hàm hỗ trợ lấy danh sách ví cho ComboBox trong TransactionForm
         public async Task<IEnumerable<GoalWalletBalanceDTO>> GetAvailableWalletsAsync()
         {
             try

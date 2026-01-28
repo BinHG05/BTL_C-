@@ -14,7 +14,6 @@ namespace ExpenseManager.App.Views.User
     {
         private readonly GoalsPresenter _presenter;
 
-        // --- CẤU HÌNH MÀU SẮC ---
         private Color activeBgColor = Color.FromArgb(59, 130, 246);
         private Color activeTextColor = Color.White;
         private Color activeSubColor = Color.FromArgb(225, 230, 255);
@@ -178,25 +177,19 @@ namespace ExpenseManager.App.Views.User
             lblAmount.AutoSize = true;
             lblAmount.BackColor = Color.Transparent;
 
-            // --- LOGIC TRẠNG THÁI ---
             bool isFinished = goal.CurrentAmount >= goal.TargetAmount;
             bool isDeadlinePassed = goal.CompletionDate.HasValue && DateTime.Today > goal.CompletionDate.Value.Date;
             
-            // Determine Status
-            // 1. Completed Late
             bool isCompletedLate = isFinished && goal.CompletionDate.HasValue && goal.LastDepositDate.HasValue 
                                    && goal.LastDepositDate.Value.Date > goal.CompletionDate.Value.Date;
 
-            // 2. Overdue (Not finished and deadline passed)
             bool isOverdue = !isFinished && isDeadlinePassed;
 
-            // 3. Completed (On time)
             bool isCompleted = isFinished && !isCompletedLate;
 
-            // --- ÁP DỤNG STYLE ---
             if (isCompletedLate)
             {
-                pnl.BackColor = Color.FromArgb(255, 247, 237); // Orange tint
+                pnl.BackColor = Color.FromArgb(255, 247, 237); 
                 pnl.Paint += (s, e) => {
                     ControlPaint.DrawBorder(e.Graphics, pnl.ClientRectangle, Color.FromArgb(249, 115, 22), ButtonBorderStyle.Solid);
                 };
@@ -467,7 +460,7 @@ namespace ExpenseManager.App.Views.User
             lblGoalTitle.Text = "Chọn mục tiêu";
             lblSavedAmount.Text = "0 đ";
             lblTargetAmount.Text = "0 đ";
-            pnlPbValue.Width = 0; // Reset thanh xanh
+            pnlPbValue.Width = 0; 
             flpWalletList.Controls.Clear();
             dgvHistory.DataSource = null;
             lblNoHistory.Visible = true;

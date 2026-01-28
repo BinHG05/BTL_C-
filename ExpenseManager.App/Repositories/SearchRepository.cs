@@ -20,8 +20,8 @@ namespace ExpenseManager.App.Repositories
         public async Task<List<Transaction>> GetTransactionsByUserIdAsync(string userId)
         {
             return await _context.Transactions
-                .Include(t => t.Category)      // Load Category để hiển thị tên danh mục
-                .Include(t => t.Wallet)        // Load Wallet nếu cần
+                .Include(t => t.Category)      
+                .Include(t => t.Wallet)   
                 .Where(t => t.UserId == userId)
                 .OrderByDescending(t => t.TransactionDate)
                 .ToListAsync();

@@ -15,7 +15,6 @@ namespace ExpenseManager.App.Views.User.UC
         private readonly SearchPresenter _presenter;
         private bool _isSearching = false;
 
-        // ISearchView Properties
         public string Keyword
         {
             get => txtKeyword.Text;
@@ -36,7 +35,6 @@ namespace ExpenseManager.App.Views.User.UC
                     return "Tất cả";
 
                 var selected = cboType.SelectedItem.ToString();
-                // Map UI to Database values
                 if (selected == "Thu nhập") return "Income";
                 if (selected == "Chi tiêu") return "Expense";
                 return "Tất cả";
@@ -52,13 +50,12 @@ namespace ExpenseManager.App.Views.User.UC
 
         private void SetTypeComboBox(string value)
         {
-            // Map Database to UI values
             if (value == "Income")
                 cboType.SelectedItem = "Thu nhập";
             else if (value == "Expense")
                 cboType.SelectedItem = "Chi tiêu";
             else
-                cboType.SelectedIndex = 0; // Tất cả
+                cboType.SelectedIndex = 0; 
         }
 
         public int? SelectedCategoryId
@@ -167,7 +164,6 @@ namespace ExpenseManager.App.Views.User.UC
         {
             InitializeComponent();
 
-            // Initialize Presenter with DI
             var searchService = Program.ServiceProvider.GetRequiredService<ISearchServices>();
             _presenter = new SearchPresenter(this, searchService);
 
@@ -185,7 +181,6 @@ namespace ExpenseManager.App.Views.User.UC
 
         private void InitializeTypeComboBox()
         {
-            // Only initialize if empty
             if (cboType.Items.Count == 0)
             {
                 cboType.Items.Clear();
@@ -204,12 +199,10 @@ namespace ExpenseManager.App.Views.User.UC
 
         public void ResetFiltersUI()
         {
-            // Reset without reloading categories
             txtKeyword.Text = string.Empty;
             InitializeTypeComboBox();
             InitializeDatePickers();
 
-            // Reset category to "Tất cả" without reloading
             if (cboCategory.Items.Count > 0)
                 cboCategory.SelectedIndex = 0;
         }
@@ -224,11 +217,9 @@ namespace ExpenseManager.App.Views.User.UC
                 cboCategory.DisplayMember = "CategoryName";
                 cboCategory.ValueMember = "CategoryId";
 
-                // Add "Tất cả" option
                 var allCategory = new Category { CategoryId = 0, CategoryName = "Tất cả" };
                 cboCategory.Items.Add(allCategory);
 
-                // Add all categories
                 if (categories != null)
                 {
                     foreach (var category in categories)
@@ -253,14 +244,12 @@ namespace ExpenseManager.App.Views.User.UC
             dgvTransactions.AutoGenerateColumns = false;
             dgvTransactions.EnableHeadersVisualStyles = false;
 
-            // Header styling
             dgvTransactions.ColumnHeadersDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(31, 31, 224);
             dgvTransactions.ColumnHeadersDefaultCellStyle.ForeColor = System.Drawing.Color.White;
             dgvTransactions.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             dgvTransactions.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dgvTransactions.ColumnHeadersDefaultCellStyle.Padding = new Padding(10, 5, 10, 5);
 
-            // Row styling
             dgvTransactions.DefaultCellStyle.Font = new Font("Segoe UI", 9.5F);
             dgvTransactions.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(230, 240, 255);
             dgvTransactions.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Black;
@@ -268,7 +257,6 @@ namespace ExpenseManager.App.Views.User.UC
             dgvTransactions.AlternatingRowsDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(248, 249, 250);
             dgvTransactions.GridColor = System.Drawing.Color.FromArgb(220, 220, 220);
 
-            // Add columns
             dgvTransactions.Columns.Add(new DataGridViewTextBoxColumn
             {
                 DataPropertyName = "TransactionDate",
@@ -319,13 +307,11 @@ namespace ExpenseManager.App.Views.User.UC
             {
                 var transaction = _transactions[e.RowIndex];
 
-                // Format Category Name
                 if (dgvTransactions.Columns[e.ColumnIndex].Name == "CategoryName")
                 {
                     e.Value = transaction.Category?.CategoryName ?? "N/A";
                 }
 
-                // Format Type column - Convert to Vietnamese
                 if (dgvTransactions.Columns[e.ColumnIndex].Name == "TypeColumn")
                 {
                     if (transaction.Type == "Income")
@@ -336,15 +322,13 @@ namespace ExpenseManager.App.Views.User.UC
                         e.Value = transaction.Type;
                 }
 
-                // Color Amount column based on Type
                 if (dgvTransactions.Columns[e.ColumnIndex].HeaderText == "Số tiền (VNĐ)")
                 {
-                    // Check both English and Vietnamese
                     bool isIncome = transaction.Type == "Income" || transaction.Type == "Thu nhập";
 
                     e.CellStyle.ForeColor = isIncome
-                        ? System.Drawing.Color.FromArgb(40, 167, 69)   // Green for Income
-                        : System.Drawing.Color.FromArgb(220, 53, 69);  // Red for Expense
+                        ? System.Drawing.Color.FromArgb(40, 167, 69)   
+                        : System.Drawing.Color.FromArgb(220, 53, 69);  
                     e.CellStyle.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
                 }
             }
@@ -359,7 +343,6 @@ namespace ExpenseManager.App.Views.User.UC
                 return;
             }
 
-            // Bind to BindingSource for better performance
             var bindingSource = new BindingSource
             {
                 DataSource = _transactions
@@ -396,7 +379,6 @@ namespace ExpenseManager.App.Views.User.UC
             }
             finally
             {
-                // Re-enable after a short delay
                 System.Threading.Tasks.Task.Delay(300).ContinueWith(t =>
                 {
                     if (this.InvokeRequired)

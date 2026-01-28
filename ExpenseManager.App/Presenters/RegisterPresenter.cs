@@ -9,9 +9,8 @@ namespace ExpenseManager.App.Presenters
     public class RegisterPresenter
     {
         private readonly IAuthService _authService;
-        private readonly IGoogleAuthService _googleAuthService; // ✅ THÊM
+        private readonly IGoogleAuthService _googleAuthService; 
 
-        // ✅ SỬA CONSTRUCTOR - Thêm IGoogleAuthService
         public RegisterPresenter(IAuthService authService, IGoogleAuthService googleAuthService)
         {
             _authService = authService;
@@ -31,7 +30,7 @@ namespace ExpenseManager.App.Presenters
             }
         }
 
-        // ✅ THÊM HÀM ĐĂNG KÝ BẰNG GOOGLE
+        // HÀM ĐĂNG KÝ BẰNG GOOGLE
         public async Task<(bool Success, string? ErrorMessage)> RegisterWithGoogleAsync()
         {
             try
@@ -49,7 +48,7 @@ namespace ExpenseManager.App.Presenters
 
                 if (user != null)
                 {
-                    // ✅ LƯU USER VÀO SESSION
+                    //LƯU USER VÀO SESSION
                     CurrentUserSession.SetUser(user);
                     return (true, null);
                 }

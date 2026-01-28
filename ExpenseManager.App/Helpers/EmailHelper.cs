@@ -36,7 +36,6 @@ namespace ExpenseManager.App.Helpers
             }
             catch (Exception ex)
             {
-                // Ném lỗi ra để Service bắt được
                 throw new Exception("Không thể gửi email: " + ex.Message);
             }
         }

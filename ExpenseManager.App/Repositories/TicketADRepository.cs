@@ -17,30 +17,24 @@ namespace ExpenseManager.App.Repositories
             _context = context;
         }
 
-        /// <summary>
         /// Lấy tất cả tickets kèm theo thông tin User
-        /// </summary>
         public async Task<IEnumerable<Ticket>> GetAllTicketsWithUserAsync()
         {
             return await _context.Tickets
-                .Include(t => t.User)  // Include navigation property User
-                .OrderByDescending(t => t.CreatedAt)  // Sắp xếp theo ngày tạo mới nhất
+                .Include(t => t.User)  
+                .OrderByDescending(t => t.CreatedAt)  
                 .ToListAsync();
         }
 
-        /// <summary>
         /// Lấy một ticket theo ID kèm theo thông tin User
-        /// </summary>
         public async Task<Ticket> GetTicketByIdAsync(int ticketId)
         {
             return await _context.Tickets
-                .Include(t => t.User)  // Include navigation property User
+                .Include(t => t.User) 
                 .FirstOrDefaultAsync(t => t.TicketId == ticketId);
         }
 
-        /// <summary>
         /// Cập nhật ticket trong database
-        /// </summary>
         public async Task UpdateTicketAsync(Ticket ticket)
         {
             if (ticket == null)
@@ -55,9 +49,7 @@ namespace ExpenseManager.App.Repositories
             await _context.SaveChangesAsync();
         }
 
-        /// <summary>
         /// Xóa ticket theo ID
-        /// </summary>
         public async Task DeleteTicketAsync(int ticketId)
         {
             // Tìm ticket cần xóa
@@ -68,10 +60,8 @@ namespace ExpenseManager.App.Repositories
                 throw new Exception($"Không tìm thấy ticket với ID: {ticketId}");
             }
 
-            // Xóa ticket khỏi DbContext
             _context.Tickets.Remove(ticket);
 
-            // Lưu thay đổi vào database
             await _context.SaveChangesAsync();
         }
     }

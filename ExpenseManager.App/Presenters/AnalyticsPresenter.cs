@@ -111,10 +111,12 @@ namespace ExpenseManager.App.Presenters
                     // Materialize tất cả collections ngay
                     var breakdown = result.Breakdown.ToList();
                     var history = result.History.ToList();
+                    var trendData = result.TrendData.ToList();
 
                     _view.DisplayIncomeBreakdown(breakdown);
                     _view.DisplayIncomeHistory(history);
                     _view.DisplayTotalIncome(result.Total);
+                    _view.DisplayIncomeTrend(trendData);
                     _view.DisplayPagingInfo(result.Paging);
                 }
                 else
@@ -125,10 +127,12 @@ namespace ExpenseManager.App.Presenters
                     // Materialize tất cả collections ngay
                     var breakdown = result.Breakdown.ToList();
                     var history = result.History.ToList();
+                    var trendData = result.TrendData.ToList();
 
                     _view.DisplayExpenseBreakdown(breakdown);
                     _view.DisplayExpenseHistory(history);
                     _view.DisplayTotalExpense(result.Total);
+                    _view.DisplayExpenseTrend(trendData);
                     _view.DisplayPagingInfo(result.Paging);
                 }
             }

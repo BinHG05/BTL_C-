@@ -11,7 +11,6 @@ namespace ExpenseManager.App.Services
         Task<KPIStatsDTO> GetKPIStatsAsync();
 
       
-        /// <param name="filterType">
         Task<List<ChartDataPointDTO>> GetUserGrowthDataAsync(string filterType);
     }
 }

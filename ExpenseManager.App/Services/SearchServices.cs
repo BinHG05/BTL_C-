@@ -36,7 +36,6 @@ namespace ExpenseManager.App.Services
 
             System.Diagnostics.Debug.WriteLine($"Total transactions from DB: {transactions?.Count ?? 0}");
 
-            // Debug: Show sample transaction types
             if (transactions != null && transactions.Any())
             {
                 var sampleTypes = transactions.Take(5).Select(t => $"[{t.Type}]").ToList();
@@ -48,14 +47,12 @@ namespace ExpenseManager.App.Services
 
             var originalCount = transactions.Count;
 
-            // Filter by date range FIRST
             transactions = transactions.Where(t =>
                 t.TransactionDate.Date >= fromDate.Date &&
                 t.TransactionDate.Date <= toDate.Date).ToList();
 
             System.Diagnostics.Debug.WriteLine($"After date filter: {transactions.Count} (from {originalCount})");
 
-            // Filter by keyword
             if (!string.IsNullOrWhiteSpace(keyword))
             {
                 var beforeKeyword = transactions.Count;
@@ -65,7 +62,6 @@ namespace ExpenseManager.App.Services
                 System.Diagnostics.Debug.WriteLine($"After keyword filter: {transactions.Count} (from {beforeKeyword})");
             }
 
-            // Filter by type
             if (!string.IsNullOrWhiteSpace(type) && type != "Tất cả")
             {
                 var beforeType = transactions.Count;
@@ -74,7 +70,6 @@ namespace ExpenseManager.App.Services
                     t.Type.Equals(type, StringComparison.OrdinalIgnoreCase)).ToList();
                 System.Diagnostics.Debug.WriteLine($"After type filter '{type}': {transactions.Count} (from {beforeType})");
 
-                // Debug: Show what didn't match
                 if (transactions.Count == 0 && beforeType > 0)
                 {
                     var allTypes = await _repository.GetTransactionsByUserIdAsync(userId);
@@ -83,7 +78,6 @@ namespace ExpenseManager.App.Services
                 }
             }
 
-            // Filter by category
             if (categoryId.HasValue && categoryId.Value > 0)
             {
                 var beforeCategory = transactions.Count;

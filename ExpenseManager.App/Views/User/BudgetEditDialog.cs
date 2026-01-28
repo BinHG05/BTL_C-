@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using ExpenseManager.App.Models.Entities;
-using ExpenseManager.App.Services; // Chứa DTO
+using ExpenseManager.App.Services; 
 
 using Color = System.Drawing.Color;
 
@@ -26,9 +26,6 @@ namespace ExpenseManager.App.Views.User
             InitializeComponent();
             _currentBudget = currentBudget;
 
-            // Danh sách category hiển thị bao gồm:
-            // 1. Category hiện tại của budget này (để hiện lên mà chọn)
-            // 2. Các category chưa có budget (để có thể đổi sang)
             _availableCategories = allCategories ?? new List<Category>();
 
             // Ẩn combobox cũ
@@ -63,8 +60,8 @@ namespace ExpenseManager.App.Views.User
         {
             _categoryPanel = new FlowLayoutPanel
             {
-                Location = new Point(60, 130), // Căn chỉnh theo thiết kế form edit
-                Size = new Size(415, 120),     // Nhỏ hơn chút cho vừa form
+                Location = new Point(60, 130), 
+                Size = new Size(415, 120),     
                 AutoScroll = true,
                 BackColor = Color.White,
                 Padding = new Padding(0, 5, 0, 0),
@@ -92,7 +89,7 @@ namespace ExpenseManager.App.Views.User
         {
             Panel pnlCard = new Panel
             {
-                Size = new Size(90, 90), // Nhỏ hơn form create chút
+                Size = new Size(90, 90), 
                 Margin = new Padding(0, 0, 10, 10),
                 BackColor = Color.White,
                 Cursor = Cursors.Hand,
@@ -195,7 +192,7 @@ namespace ExpenseManager.App.Views.User
 
         private void SetupEvents()
         {
-            addBtn.Click += SaveBtn_Click; // Đổi tên hành động là Save
+            addBtn.Click += SaveBtn_Click; 
             cancelBtn.Click += (s, e) => { this.DialogResult = DialogResult.Cancel; this.Close(); };
             weekRadioBtn.CheckedChanged += RadioBtn_CheckedChanged;
             monthRadioBtn.CheckedChanged += RadioBtn_CheckedChanged;
@@ -208,7 +205,6 @@ namespace ExpenseManager.App.Views.User
             if (((RadioButton)sender).Checked)
             {
                 DateTime start = fromDateTimePicker.Value.Date;
-                // Nếu muốn logic thông minh: giữ nguyên ngày bắt đầu, chỉ đổi ngày kết thúc
                 DateTime end = start;
                 if (weekRadioBtn.Checked) end = start.AddDays(7);
                 else if (monthRadioBtn.Checked) end = start.AddMonths(1);

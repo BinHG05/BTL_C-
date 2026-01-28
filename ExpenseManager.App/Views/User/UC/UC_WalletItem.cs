@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-// ===== THÊM ALIAS NÀY =====
 using DbColor = ExpenseManager.App.Models.Entities.Color;
 
 namespace ExpenseManager.App.Views.User.UC
@@ -52,19 +51,13 @@ namespace ExpenseManager.App.Views.User.UC
                 iconPictureBox.IconColor = System.Drawing.Color.FromArgb(30, 41, 59);
             }
         }
-
-        // ===== SỬA LỖI STACKOVERFLOW =====
         private void OnControl_Click(object sender, EventArgs e)
         {
-            // Chỉ raise event nếu sender là control con (Label, Icon)
-            // Nếu sender là chính UserControl (this), nó đã tự raise event rồi
-            // không cần gọi lại base.OnClick() nữa để tránh vòng lặp.
             if (sender != this)
             {
                 base.OnClick(e);
             }
         }
-        // ===== KẾT THÚC SỬA =====
 
         private IconChar ConvertIconClassToIconChar(string iconClass)
         {

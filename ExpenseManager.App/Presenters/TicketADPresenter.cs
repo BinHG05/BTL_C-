@@ -139,7 +139,7 @@ namespace ExpenseManager.App.Presenters
                 // Mở form TicketDetailsAD và nhận kết quả
                 var result = _view.ShowTicketDetailsDialog(ticket, ticket.User);
 
-                // Kiểm tra nếu người dùng nhấn OK (đã lưu thay đổi)
+                // Kiểm tra nếu người dùng nhấn OK 
                 if (result.DialogResult == DialogResult.OK)
                 {
                     // Cập nhật ticket với thông tin mới
