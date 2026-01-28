@@ -1,12 +1,11 @@
 ﻿using ExpenseManager.App.Models.EF;
 using ExpenseManager.App.Models.Entities;
 using ExpenseManager.App.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore; // Đảm bảo bạn đã using
+using Microsoft.EntityFrameworkCore; 
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-// Thêm 2 dòng alias này
 using DbColor = ExpenseManager.App.Models.Entities.Color;
 using DbIcon = ExpenseManager.App.Models.Entities.Icon;
 
@@ -23,13 +22,12 @@ namespace ExpenseManager.App.Repositories
 
         public async Task<List<Category>> GetCategoriesByUserIdAsync(string userId)
         {
-            // AsNoTracking() buộc EF đọc lại từ DB, không dùng cache cũ
             return await _context.Categories
-                .Include(c => c.Icon) // Load cả thông tin Icon
-                .Include(c => c.Color) // Load cả thông tin Color
+                .Include(c => c.Icon) 
+                .Include(c => c.Color) 
                 .Where(c => c.UserId == userId)
                 .OrderBy(c => c.CategoryName)
-                .AsNoTracking() // <<< DÒNG SỬA LỖI QUAN TRỌNG
+                .AsNoTracking() 
                 .ToListAsync();
         }
 
@@ -64,10 +62,8 @@ namespace ExpenseManager.App.Repositories
         private readonly ExpenseDbContext _context;
         public IconRepository(ExpenseDbContext context) { _context = context; }
 
-        // Sửa dùng alias DbIcon
         public async Task<List<DbIcon>> GetAllIconsAsync()
         {
-            // Thêm AsNoTracking()
             return await _context.Icons.AsNoTracking().ToListAsync();
         }
     }
@@ -80,10 +76,8 @@ namespace ExpenseManager.App.Repositories
             _context = context;
         }
 
-        // Sửa dùng alias DbColor
         public async Task<List<DbColor>> GetAllColorsAsync()
         {
-            // Thêm AsNoTracking()
             return await _context.Colors.AsNoTracking().ToListAsync();
         }
     }

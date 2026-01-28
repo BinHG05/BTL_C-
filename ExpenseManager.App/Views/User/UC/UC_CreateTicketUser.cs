@@ -15,7 +15,6 @@ namespace ExpenseManager.App.Views.User.UC
     {
         private CreateTicketPresenter _presenter;
 
-        // ICreateTicketView implementation
         public string UserId => CurrentUserSession.CurrentUser?.UserId;
         public string Description => txtDescription.Text;
         public string QuestionType => cmbType.SelectedItem?.ToString() ?? "";
@@ -33,8 +32,7 @@ namespace ExpenseManager.App.Views.User.UC
 
         private void InitializePresenter()
         {
-            // Initialize dependencies
-            var context = new ExpenseDbContext(); // Or inject via constructor
+            var context = new ExpenseDbContext(); 
             var repository = new TicketUserRepository(context);
             var service = new TicketUserServices(repository);
             _presenter = new CreateTicketPresenter(this, service);

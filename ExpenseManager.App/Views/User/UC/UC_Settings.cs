@@ -16,7 +16,6 @@ using ExpenseManager.App.Session;
 using System.Collections.Generic;
 using System.Linq;
 
-// Alias cho các entity trùng tên
 using DbColor = ExpenseManager.App.Models.Entities.Color;
 using DbIcon = ExpenseManager.App.Models.Entities.Icon;
 
@@ -32,7 +31,7 @@ namespace ExpenseManager.App.Views.User.UC
         public UC_Settings(string userId)
         {
             InitializeComponent();
-            SetupUI(); // Gom code setup giao diện vào hàm chung
+            SetupUI(); 
             InitializeCustomComponents();
             InitializePresenter();
         }
@@ -40,28 +39,22 @@ namespace ExpenseManager.App.Views.User.UC
         public UC_Settings()
         {
             InitializeComponent();
-            SetupUI(); // Gom code setup giao diện vào hàm chung
+            SetupUI(); 
             InitializeCustomComponents();
             InitializePresenter();
             this.Resize += UC_Settings_Resize;
         }
 
-        // Hàm setup chung cho cả 2 constructor
         private void SetupUI()
         {
             this.BackColor = System.Drawing.Color.FromArgb(238, 242, 247);
             mainPanel.BackColor = System.Drawing.Color.FromArgb(238, 242, 247);
             breadcrumbPanel.Visible = false;
 
-            // --- CẤU HÌNH SCROLLBAR ---
             pnlCategoryLists.AutoScroll = true;
-            pnlCategoryLists.HorizontalScroll.Visible = false; // Ẩn scroll ngang nếu không cần
-            // ---------------------------
+            pnlCategoryLists.HorizontalScroll.Visible = false; 
         }
 
-        // =========================================================
-        // ===== IMPLEMENT IProfileView - PROPERTIES =====
-        // =========================================================
 
         public string UserId => CurrentUserSession.CurrentUser?.UserId;
 
@@ -91,26 +84,15 @@ namespace ExpenseManager.App.Views.User.UC
         {
             get
             {
-                //if (dtpBirthDate.Value.Year < 1900 || dtpBirthDate.Value > DateTime.Now)
-                //    return null;
                 return dtpBirthDate.Value;
             }
         }
 
         public string CountryInput => cmbCountry.SelectedItem?.ToString() ?? "";
 
-        // ======================================================
-        // ===== IMPLEMENT IProfileView - EVENTS =====
-        // ======================================================
-
         public event EventHandler SaveGeneralInfoClicked;
         public event EventHandler SaveSecurityClicked;
         public event EventHandler SavePersonalInfoClicked;
-
-
-        // ============================================================
-        // ===== IMPLEMENT ICategoryView - PROPERTIES =====
-        // ============================================================
 
         public int? SelectedCategoryId => _selectedCategoryId;
 
@@ -146,20 +128,11 @@ namespace ExpenseManager.App.Views.User.UC
             set => cmbColor.SelectedValue = value;
         }
 
-        // =========================================================
-        // ===== IMPLEMENT ICategoryView - EVENTS =====
-        // =========================================================
-
         public event EventHandler LoadView;
         public event EventHandler CreateCategory;
         public event EventHandler UpdateCategory;
         public event EventHandler DeleteCategory;
         public event EventHandler SelectCategory;
-
-
-        // ==========================================================
-        // ===== PRESENTER =====
-        // ==========================================================
 
         private void InitializePresenter()
         {
@@ -187,10 +160,6 @@ namespace ExpenseManager.App.Views.User.UC
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-        // ====================================================================
-        // ===== IMPLEMENT METHODS =====
-        // ====================================================================
 
         public void DisplayUserData(ExpenseManager.App.Models.Entities.User user)
         {
@@ -252,7 +221,6 @@ namespace ExpenseManager.App.Views.User.UC
             MessageBox.Show(message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
-        // ===== HÀM QUAN TRỌNG ĐỂ SỬA LỖI HIỂN THỊ CATEGORY =====
         public void DisplayCategories(List<Category> incomeCategories, List<Category> expenseCategories)
         {
             // 1. Tạm dừng layout
@@ -382,10 +350,6 @@ namespace ExpenseManager.App.Views.User.UC
                 isError ? MessageBoxIcon.Warning : MessageBoxIcon.Information);
         }
 
-        // ========================================================
-        // ===== EVENT HANDLERS =====
-        // ========================================================
-
         private void BtnSaveProfile_Click(object sender, EventArgs e)
         {
             SaveGeneralInfoClicked?.Invoke(this, EventArgs.Empty);
@@ -438,7 +402,6 @@ namespace ExpenseManager.App.Views.User.UC
             }
         }
 
-        // Handlers cho Chuyển Tab
         private void lblTabProfile_Click(object sender, EventArgs e) => SwitchTab(Tab.Profile);
 
         private void lblTabCategories_Click(object sender, EventArgs e)
@@ -515,10 +478,6 @@ namespace ExpenseManager.App.Views.User.UC
             }
         }
 
-        // ========================================================
-        // ===== HELPER METHODS =====
-        // ========================================================
-
         private string GetInputValue(TextBox textBox, string placeholderText)
         {
             if (textBox.Text == placeholderText || string.IsNullOrWhiteSpace(textBox.Text))
@@ -546,14 +505,12 @@ namespace ExpenseManager.App.Views.User.UC
             int mainPanelPadding = this.mainPanel.Padding.Left;
             int panelSpacing = 20;
 
-            // HEADER & TAB
             headerPanel.Width = availableWidth - mainPanelPadding * 2;
             tabPanel.Width = availableWidth - mainPanelPadding * 2;
             headerPanel.Left = mainPanelPadding;
             tabPanel.Left = mainPanelPadding;
             breadcrumbPanel.Left = headerPanel.Width - breadcrumbPanel.Width;
 
-            // PROFILE & PASSWORD
             topPanel.Width = availableWidth - mainPanelPadding * 2;
             topPanel.Left = mainPanelPadding;
             topPanel.Height = 565;
@@ -565,12 +522,10 @@ namespace ExpenseManager.App.Views.User.UC
             passwordPanel.Height = 565;
             passwordPanel.Left = halfWidth + panelSpacing;
 
-            // Căn chỉnh Profile
             int profileContentWidth = profilePanel.Width - 60;
             txtFullName.Left = 33; txtFullName.Width = profileContentWidth;
             txtCurrentEmail.Left = 33; txtCurrentEmail.Width = profileContentWidth;
 
-            // Căn chỉnh Password
             int passwordContentWidth = passwordPanel.Width - 60;
             txtNewEmail.Left = 33; txtNewEmail.Width = passwordContentWidth;
             txtNewPassword.Left = 33; txtNewPassword.Width = passwordContentWidth;
@@ -579,7 +534,6 @@ namespace ExpenseManager.App.Views.User.UC
             btnTogglePassword.Left = txtCurrentPassword.Left + txtCurrentPassword.Width - 170;
             btnTogglePassword.Top = txtCurrentPassword.Top;
 
-            // PERSONAL INFO
             personalInfoPanel.Width = availableWidth - mainPanelPadding * 2;
             personalInfoPanel.Left = mainPanelPadding;
             personalInfoPanel.Height = 389;
@@ -592,7 +546,6 @@ namespace ExpenseManager.App.Views.User.UC
             lblCity.Left = rightColumnLeft; txtCity.Left = rightColumnLeft; txtCity.Width = fieldWidth;
             lblCountry.Left = rightColumnLeft; cmbCountry.Left = rightColumnLeft; cmbCountry.Width = 604;
 
-            // CATEGORIES PANEL - CẬP NHẬT CHO SCROLLBAR
             if (categoriesPanel.Visible)
             {
                 categoriesPanel.Width = availableWidth - mainPanelPadding * 2;
@@ -604,15 +557,12 @@ namespace ExpenseManager.App.Views.User.UC
                 pnlCategoryLists.Width = categoriesPanel.Width - createCategoryPanel.Width - panelSpacing;
                 pnlCategoryLists.Left = createCategoryPanel.Width + panelSpacing;
 
-                // Căn chỉnh createCategoryPanel
                 int categoryContentWidth = createCategoryPanel.Width - 48;
                 txtCategoryName.Width = categoryContentWidth;
                 cmbCategoryType.Width = categoryContentWidth;
                 cmbIcon.Width = categoryContentWidth;
                 cmbColor.Width = categoryContentWidth;
 
-                // --- CẬP NHẬT LẠI CHIỀU RỘNG LIST KHI RESIZE ---
-                // Trừ hao scrollbar 25px
                 int scrollbarPadding = 25;
                 int listWidth = pnlCategoryLists.ClientSize.Width - scrollbarPadding;
 

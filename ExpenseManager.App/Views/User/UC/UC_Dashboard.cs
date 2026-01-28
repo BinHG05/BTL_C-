@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using ExpenseManager.App.Models.ViewModels;
 using ExpenseManager.App.Presenters;
 using ExpenseManager.App.Services;
-using FontAwesome.Sharp; // Bắt buộc có thư viện này
+using FontAwesome.Sharp; 
 
 namespace ExpenseManager.App.Views.Admin.UC
 {
@@ -18,21 +18,17 @@ namespace ExpenseManager.App.Views.Admin.UC
         private string _currentUserId;
         private readonly CultureInfo _cultureVI = new CultureInfo("vi-VN");
 
-        // --- Biến cho Biểu Đồ Đường (Line Chart) ---
         private List<BalanceTrendPoint> _currentBalanceTrends;
         private ToolTip _chartTooltip;
         private List<ChartHitSpot> _chartHitSpots = new List<ChartHitSpot>();
         private ChartHitSpot _lastHoveredSpot = null;
 
-        // --- Biến cho Biểu Đồ Cột (Bar Chart) ---
         private List<BarHitSpot> _barHitSpots = new List<BarHitSpot>();
         private BarHitSpot _lastHoveredBar = null;
 
-        // --- Layout Containers ---
         private TableLayoutPanel _mainGrid;
         private Panel _pnlBudgets, _pnlChart, _pnlRecent, _pnlGoals;
 
-        // --- Helper Classes ---
         private class ChartHitSpot { public PointF ScreenLocation { get; set; } public decimal Amount { get; set; } public string Label { get; set; } }
         private class BarHitSpot { public RectangleF Rect { get; set; } public decimal Amount { get; set; } public string TypeLabel { get; set; } public string DateLabel { get; set; } }
 
@@ -44,12 +40,10 @@ namespace ExpenseManager.App.Views.Admin.UC
             this.pnlHeader.SendToBack();
             //this.pnlHeader.Padding = new Padding(30, 50, 30, 30);
 
-            // Sự kiện Load - Chia đều 4 card
             this.Load += (s, e) => {
-                // Lấy chiều rộng thực tế của UC_Dashboard
-                int totalWidth = this.Width - 60; // Trừ padding 30px mỗi bên
-                int gap = 15; // Khoảng cách giữa các card
-                int cardWidth = (totalWidth - (gap * 3)) / 4; // Chia 4 card, trừ 3 khoảng cách
+                int totalWidth = this.Width - 60; 
+                int gap = 15;
+                int cardWidth = (totalWidth - (gap * 3)) / 4; 
 
                 // Set width và margin cho từng card
                 pnlTotalBalance.Width = cardWidth;
@@ -88,7 +82,7 @@ namespace ExpenseManager.App.Views.Admin.UC
 
             InitializeCustomComponents();
 
-            // Tự động kết nối Service (Dependency Injection)
+            // Tự động kết nối Service 
             if (!this.DesignMode)
             {
                 try
@@ -117,10 +111,7 @@ namespace ExpenseManager.App.Views.Admin.UC
         }
 
         private void InitializeCustomComponents()
-        {
-            // --- 1. CẤU HÌNH PHẦN GIỮA (Biểu đồ cũ & List cũ) ---
-
-            
+        {   
             lblBalanceTrendsAmount.Visible = false;
             lblBalanceTrendsChange.Visible = false;
 
@@ -143,7 +134,6 @@ namespace ExpenseManager.App.Views.Admin.UC
             pnlExpensesList.Height = pnlExpensesBreakdown.Height - 90;
             pnlExpensesList.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
 
-            // --- 2. KHỞI TẠO PHẦN DƯỚI CÙNG (GRID 2x2) ---
             InitializeBottomLayout();
 
             // Tooltip
@@ -218,7 +208,7 @@ namespace ExpenseManager.App.Views.Admin.UC
 
             if (stats.BalanceTrends != null && stats.BalanceTrends.Any())
             {
-                DrawBalanceChart(stats.BalanceTrends); // Gọi hàm vẽ ở đây
+                DrawBalanceChart(stats.BalanceTrends);
             }
 
             LoadExpensesData(stats.ExpenseBreakdown);
@@ -229,11 +219,6 @@ namespace ExpenseManager.App.Views.Admin.UC
 
             lblSubtitle.Text = stats.Comparison.IsFirstMonth ? "Chào mừng bạn đến với Ekash!" : "Dữ liệu được cập nhật mới nhất";
         }
-
-        // ============================================================
-        // 1. VẼ BIỂU ĐỒ ĐƯỜNG (LINE CHART) - ĐÃ SỬA LỖI
-        // ============================================================
-
         private void DrawBalanceChart(List<BalanceTrendPoint> trendPoints)
         {
             pnlBalanceChart.Controls.Clear();
@@ -366,8 +351,8 @@ namespace ExpenseManager.App.Views.Admin.UC
                 _chartTooltip.Show(
                     $"{hitSpot.Label}\n{FormatCurrency(hitSpot.Amount)}",
                     pnlBalanceChart,
-                    (int)hitSpot.ScreenLocation.X,      // Dùng hitSpot
-                    (int)hitSpot.ScreenLocation.Y - 40  // <--- SỬA CHỖ NÀY: spot -> hitSpot
+                    (int)hitSpot.ScreenLocation.X,      
+                    (int)hitSpot.ScreenLocation.Y - 40  
                 );
 
                 pnlBalanceChart.Cursor = Cursors.Hand;
@@ -381,9 +366,6 @@ namespace ExpenseManager.App.Views.Admin.UC
             }
         }
 
-        // ============================================================
-        // 2. VẼ BIỂU ĐỒ CỘT (BAR CHART)
-        // ============================================================
         private void RenderBarChart(List<DailyAnalysisDto> data)
         {
             _pnlChart.Controls.Clear();
@@ -398,7 +380,6 @@ namespace ExpenseManager.App.Views.Admin.UC
             PictureBox pic = new PictureBox { Location = new Point(20, 60), Size = new Size(_pnlChart.Width - 40, 240), Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom, BackColor = Color.White };
             _pnlChart.Controls.Add(pic);
 
-            // Đăng ký sự kiện MouseMove
             pic.MouseMove += PnlBarChart_MouseMove;
 
             pic.Paint += (s, e) => {
@@ -447,9 +428,6 @@ namespace ExpenseManager.App.Views.Admin.UC
             else if (spot == null && _lastHoveredBar != null) { _chartTooltip.Hide((Control)sender); _lastHoveredBar = null; }
         }
 
-        // ============================================================
-        // 3. RENDER GIAO DỊCH GẦN ĐÂY
-        // ============================================================
         private void RenderRecentList(List<RecentTransactionDto> txs)
         {
             _pnlRecent.Controls.Clear();
@@ -499,8 +477,6 @@ namespace ExpenseManager.App.Views.Admin.UC
                 y += 45;
             }
         }
-
-        // --- Helper Render ---
         private void LoadExpensesData(List<ExpenseCategoryBreakdown> expenses)
         {
             pnlExpensesList.Controls.Clear(); if (expenses == null) return;
@@ -515,7 +491,6 @@ namespace ExpenseManager.App.Views.Admin.UC
             p.Controls.Add(new Label { Text = FormatCurrency(exp.Amount), Location = new Point(p.Width - 220, 17), AutoSize = true, Font = new Font("Segoe UI", 12, FontStyle.Bold), Anchor = AnchorStyles.Top | AnchorStyles.Right });
             p.Controls.Add(new Label { Text = exp.Percentage + "%", Location = new Point(p.Width - 60, 18), AutoSize = true, ForeColor = Color.Gray, Anchor = AnchorStyles.Top | AnchorStyles.Right }); return p;
         }
-        // Trong UC_Dashboard.cs
 
         private void RenderBudgetList(List<BudgetDto> budgets)
         {
@@ -529,30 +504,30 @@ namespace ExpenseManager.App.Views.Admin.UC
             {
                 Color catColor = GetColorSafe(b.ColorHex);
 
-                // 1. Icon FontAwesome (Thay cho text tag 🏷️)
+                // 1. Icon FontAwesome 
                 IconPictureBox iconPic = new IconPictureBox
                 {
-                    IconChar = ParseIcon(b.CategoryIcon), // Parse icon từ tên
+                    IconChar = ParseIcon(b.CategoryIcon), 
                     IconColor = catColor,
                     IconSize = 20,
                     Size = new Size(20, 20),
-                    Location = new Point(20, y + 2), // Căn chỉnh vị trí
+                    Location = new Point(20, y + 2), 
                     BackColor = Color.Transparent,
                     SizeMode = PictureBoxSizeMode.CenterImage
                 };
                 _pnlBudgets.Controls.Add(iconPic);
 
-                // 2. Tên Ngân sách (Dịch sang phải để tránh đè icon)
+                // 2. Tên Ngân sách 
                 _pnlBudgets.Controls.Add(new Label
                 {
                     Text = b.Name,
-                    Location = new Point(50, y), // Cách lề 50px
+                    Location = new Point(50, y), 
                     AutoSize = true,
                     Font = new Font("Segoe UI", 10, FontStyle.Bold),
                     ForeColor = Color.FromArgb(55, 65, 81)
                 });
 
-                // 3. Số tiền (Giữ nguyên)
+                // 3. Số tiền 
                 Label lblAmt = new Label
                 {
                     Text = $"{FormatShort(b.Spent)}/{FormatShort(b.Limit)}",
@@ -566,7 +541,7 @@ namespace ExpenseManager.App.Views.Admin.UC
                 };
                 _pnlBudgets.Controls.Add(lblAmt);
 
-                // 4. Thanh Progress (Giữ nguyên)
+                // 4. Thanh Progress
                 Panel pnlBar = new Panel { Size = new Size(_pnlBudgets.Width - 40, 6), Location = new Point(20, y + 25), BackColor = Color.FromArgb(243, 244, 246), Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right };
                 Panel pnlFill = new Panel { Height = 6, BackColor = catColor, Location = new Point(0, 0) };
                 float pct = (float)Math.Min(b.Percent, 100);
@@ -621,7 +596,6 @@ namespace ExpenseManager.App.Views.Admin.UC
                             // Tính góc quét
                             float angle = (float)(g.Percent * 360) / 100;
 
-                            // TRICK: Nếu % > 0 mà góc quá nhỏ (< 5 độ), ép nó thành 5 độ để mắt thường nhìn thấy được vệt màu
                             if (angle < 5) angle = 5;
 
                             e.Graphics.DrawArc(p2, rect, -90, angle);
@@ -629,11 +603,9 @@ namespace ExpenseManager.App.Views.Admin.UC
                     }
 
                     // 3. Text % ở giữa
-                    // Nếu là số nguyên (10, 50) thì hiện 10%, 50%
-                    // Nếu là số lẻ (0.45) thì hiện 0.45%
                     string txt = (g.Percent % 1 == 0)
                         ? $"{g.Percent}%"
-                        : $"{g.Percent:0.##}%"; // Format tối đa 2 số lẻ
+                        : $"{g.Percent:0.##}%"; 
 
                     using (Font f = new Font("Segoe UI", 13, FontStyle.Bold))
                     {
@@ -645,7 +617,6 @@ namespace ExpenseManager.App.Views.Admin.UC
             }
         }
 
-        // --- Shared Helpers ---
         public void ShowLoading() { Cursor = Cursors.WaitCursor; }
         public void HideLoading() { Cursor = Cursors.Default; }
         public void DisplayError(string message) { MessageBox.Show(message); }
@@ -656,17 +627,14 @@ namespace ExpenseManager.App.Views.Admin.UC
         private GraphicsPath GetRoundedPath(Rectangle r, int d) { GraphicsPath p = new GraphicsPath(); int dia = d * 2; p.AddArc(r.X, r.Y, dia, dia, 180, 90); p.AddArc(r.Right - dia, r.Y, dia, dia, 270, 90); p.AddArc(r.Right - dia, r.Bottom - dia, dia, dia, 0, 90); p.AddArc(r.X, r.Bottom - dia, dia, dia, 90, 90); p.CloseFigure(); return p; }
         private void ApplyRoundedCorners(Panel p, int r) { p.Paint += (s, e) => { e.Graphics.SmoothingMode = SmoothingMode.AntiAlias; using (var path = GetRoundedPath(new Rectangle(0, 0, p.Width - 1, p.Height - 1), r)) using (var pen = new Pen(Color.FromArgb(229, 231, 235))) e.Graphics.DrawPath(pen, path); }; }
 
-        // --- HÀM PARSE ICON THÔNG MINH ---
         private IconChar ParseIcon(string name)
         {
             if (string.IsNullOrEmpty(name)) return IconChar.QuestionCircle;
             if (Enum.TryParse(name, true, out IconChar icon)) return icon;
 
-            // Xử lý chuỗi fa-solid fa-mug-hot -> mughot
             string cleanName = name.Split(' ').Last().Replace("fa-", "").Replace("-", "").Replace(" ", "");
             if (Enum.TryParse(cleanName, true, out IconChar cleanIcon)) return cleanIcon;
 
-            // Map thủ công
             switch (cleanName.ToLower())
             {
                 case "utensils": return IconChar.Utensils;

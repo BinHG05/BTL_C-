@@ -22,28 +22,22 @@ namespace ExpenseManager.App.Services
         {
             var stats = new KPIStatsDTO();
 
-            // Lấy thời gian hiện tại
             var now = DateTime.Now;
             var currentMonthStart = new DateTime(now.Year, now.Month, 1);
             var previousMonthStart = currentMonthStart.AddMonths(-1);
 
-            // ===== USER STATS =====
             stats.TotalUsers = await _repository.CountUsersAsync();
             stats.NewUsersThisMonth = await _repository.CountUsersCreatedInMonthAsync(currentMonthStart);
 
-            // Tính Growth Rate cho Users
             var newUsersLastMonth = await _repository.CountUsersCreatedInMonthAsync(previousMonthStart);
             stats.UserGrowthRate = CalculateGrowthRate(newUsersLastMonth, stats.NewUsersThisMonth);
 
-            // ===== TRANSACTION STATS =====
             stats.TotalTrans = await _repository.CountTransactionsAsync();
             stats.NewTransThisMonth = await _repository.CountTransactionsCreatedInMonthAsync(currentMonthStart);
 
-            // Tính Growth Rate cho Transactions
             var newTransLastMonth = await _repository.CountTransactionsCreatedInMonthAsync(previousMonthStart);
             stats.TransGrowthRate = CalculateGrowthRate(newTransLastMonth, stats.NewTransThisMonth);
 
-            // ===== TICKET STATS =====
             stats.TotalTickets = await _repository.CountTotalTicketsAsync();
             stats.PendingTickets = await _repository.CountPendingTicketsAsync();
             stats.OpenTickets = await _repository.CountOpenTicketsAsync();

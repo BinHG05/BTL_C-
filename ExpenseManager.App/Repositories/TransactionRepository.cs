@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using ExpenseManager.App.Models.EF;
 using ExpenseManager.App.Models.Entities;
 using ExpenseManager.App.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore; // Cần dòng này
+using Microsoft.EntityFrameworkCore;
 
 namespace ExpenseManager.App.Repositories
 {
@@ -26,10 +26,8 @@ namespace ExpenseManager.App.Repositories
         public async Task<PaginatedResult<Transaction>> GetTransactionsByWalletIdAsync(int walletId, int pageNumber, int pageSize)
         {
             var query = _context.Transactions
-                // 👇👇👇 BẮT BUỘC PHẢI CÓ 2 DÒNG NÀY ĐỂ LẤY ICON VÀ MÀU 👇👇👇
-                .Include(t => t.Category).ThenInclude(c => c.Icon)  // Lấy Icon
-                .Include(t => t.Category).ThenInclude(c => c.Color) // Lấy Màu (Thiếu dòng này là mất màu)
-                                                                    // 👆👆👆 --------------------------------------------- 👆👆👆
+                .Include(t => t.Category).ThenInclude(c => c.Icon)  
+                .Include(t => t.Category).ThenInclude(c => c.Color) 
 
                 .Where(t => t.WalletId == walletId)
                 .OrderByDescending(t => t.TransactionDate)

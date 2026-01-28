@@ -76,7 +76,7 @@ namespace ExpenseManager.App.Views
             }
         }
 
-        // ✅ THÊM - Phương thức kiểm tra định dạng email
+        // THÊM - Phương thức kiểm tra định dạng email
         private bool IsValidEmail(string email)
         {
             try
@@ -149,7 +149,7 @@ namespace ExpenseManager.App.Views
             }
             finally
             {
-                // ✅ QUAN TRỌNG: CHỈ ENABLE LẠI NẾU KHÔNG CHUYỂN TRANG
+                // QUAN TRỌNG: CHỈ ENABLE LẠI NẾU KHÔNG CHUYỂN TRANG
                 if (!shouldNavigate)
                 {
                     btnGoogleRegister.Enabled = true;

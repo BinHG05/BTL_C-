@@ -62,7 +62,6 @@ namespace ExpenseManager.App.Models.ViewModels
         public double Percent { get; set; }
     }
 
-    // --- CÁC CLASS CŨ (GIỮ NGUYÊN ĐỂ KHÔNG LỖI) ---
     public class BudgetInfo
     {
         public string BudgetName { get; set; }

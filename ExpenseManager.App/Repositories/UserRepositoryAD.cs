@@ -31,7 +31,6 @@ namespace ExpenseManager.App.Repositories
         {
             var query = _context.Users.AsQueryable();
 
-            // Apply search filter
             if (!string.IsNullOrWhiteSpace(filter.SearchText))
             {
                 var searchLower = filter.SearchText.ToLower();
@@ -42,13 +41,11 @@ namespace ExpenseManager.App.Repositories
                 );
             }
 
-            // Apply role filter
             if (filter.RoleFilter != "All Roles")
             {
                 query = query.Where(u => u.Role == filter.RoleFilter);
             }
 
-            // Apply status filter
             if (filter.StatusFilter == "Active")
             {
                 query = query.Where(u => u.IsActive);
@@ -58,10 +55,8 @@ namespace ExpenseManager.App.Repositories
                 query = query.Where(u => !u.IsActive);
             }
 
-            // Get total count
             var totalItems = await query.CountAsync();
 
-            // Apply pagination
             var users = await query
                 .OrderByDescending(u => u.CreatedAt)
                 .Skip((filter.PageNumber - 1) * filter.PageSize)

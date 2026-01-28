@@ -8,9 +8,7 @@ using ExpenseManager.App.Repositories.Interfaces;
 
 namespace ExpenseManager.App.Repositories
 {
-    /// <summary>
     /// Repository xử lý truy xuất và cập nhật dữ liệu User trong database
-    /// </summary>
     public class ProfileRepository : IProfileRepository
     {
         private readonly ExpenseDbContext _context;
@@ -20,9 +18,7 @@ namespace ExpenseManager.App.Repositories
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        /// <summary>
         /// Lấy thông tin User theo UserId
-        /// </summary>
         public async Task<User?> GetUserByIdAsync(string userId)
         {
             try
@@ -39,9 +35,7 @@ namespace ExpenseManager.App.Repositories
             }
         }
 
-        /// <summary>
         /// Cập nhật thông tin chung (FullName, Email, Avatar)
-        /// </summary>
         public async Task<bool> UpdateGeneralInfoAsync(string userId, string fullName, string? email, string? avatarUrl)
         {
             try
@@ -70,9 +64,7 @@ namespace ExpenseManager.App.Repositories
             }
         }
 
-        /// <summary>
         /// Cập nhật thông tin bảo mật (Email và Password)
-        /// </summary>
         public async Task<bool> UpdateSecurityInfoAsync(string userId, string? newEmail, string? newPasswordHash)
         {
             try
@@ -100,9 +92,7 @@ namespace ExpenseManager.App.Repositories
             }
         }
 
-        /// <summary>
         /// Cập nhật thông tin cá nhân (Address, City, DateOfBirth, Country)
-        /// </summary>
         public async Task<bool> UpdatePersonalInfoAsync(string userId, string? address, string? city, DateTime? dateOfBirth, string? country)
         {
             try
@@ -128,9 +118,7 @@ namespace ExpenseManager.App.Repositories
             }
         }
 
-        /// <summary>
         /// Kiểm tra email có tồn tại trong hệ thống hay không
-        /// </summary>
         public async Task<bool> IsEmailExistsAsync(string email, string excludeUserId)
         {
             try

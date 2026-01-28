@@ -29,7 +29,6 @@ namespace ExpenseManager.App.Services
             var lastMonth = currentMonth == 1 ? 12 : currentMonth - 1;
             var lastMonthYear = currentMonth == 1 ? currentYear - 1 : currentYear;
 
-            // 1. Dữ liệu cơ bản
             var totalBalance = await _repository.GetTotalBalanceAsync(userId);
             var monthlyIncome = await _repository.GetMonthlyIncomeAsync(userId, currentMonth, currentYear);
             var monthlyExpense = await _repository.GetMonthlyExpenseAsync(userId, currentMonth, currentYear);
@@ -39,8 +38,6 @@ namespace ExpenseManager.App.Services
             var comparison = await CalculateComparison(userId, currentMonth, currentYear, lastMonth, lastMonthYear, monthlyIncome, monthlyExpense);
             var trends = await CalculateBalanceTrends(userId);
             var breakdown = await CalculateExpenseBreakdown(userId, currentMonth, currentYear);
-
-            // 2. Dữ liệu mở rộng (Grid 2x2)
 
             // A. Ngân sách
             var activeBudgets = await _repository.GetActiveBudgetsAsync(userId);
@@ -121,7 +118,7 @@ namespace ExpenseManager.App.Services
             };
         }
 
-        // --- Helper Methods ---
+        //Helper Methods
         private async Task<BudgetInfo> CalculateBudgetInfo(string userId, ExpenseManager.App.Models.Entities.Budget budget)
         {
             if (budget == null) return null;

@@ -15,7 +15,6 @@ namespace ExpenseManager.App.Presenters
         private readonly ICategoryService _categoryService;
         private readonly IWalletService _walletService;
 
-        // Cache categories để đỡ phải gọi DB nhiều lần khi switch tab
         private List<Category> _allCategories;
 
         public AddTransactionPresenter(
@@ -73,7 +72,7 @@ namespace ExpenseManager.App.Presenters
         {
             try
             {
-                // Validate từ View (Presenter cũng có thể validate thêm)
+                // Validate từ View 
                 if (_view.SelectedWalletId == null || _view.SelectedCategoryId == null)
                 {
                     _view.ShowMessage("Vui lòng chọn Ví và Danh mục", "Thiếu thông tin", true);

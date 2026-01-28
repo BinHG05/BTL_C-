@@ -34,16 +34,15 @@ namespace ExpenseManager.App.Session
 
             CurrentUser = user;
 
-            // ✅ Verify ngay sau khi set
             Debug.WriteLine($"[Session] After SET - CurrentUser: {CurrentUser?.UserId ?? "NULL"}");
 
             if (CurrentUser == null)
             {
-                Debug.WriteLine("[Session] ⚠️⚠️⚠️ WARNING: CurrentUser is STILL NULL after SetUser!");
+                Debug.WriteLine("[Session] WARNING: CurrentUser is STILL NULL after SetUser!");
             }
             else
             {
-                Debug.WriteLine($"[Session] ✅ SUCCESS: CurrentUser = {CurrentUser.UserId}");
+                Debug.WriteLine($"[Session] SUCCESS: CurrentUser = {CurrentUser.UserId}");
             }
             Debug.WriteLine("========================================");
         }

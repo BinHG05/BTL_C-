@@ -1,10 +1,10 @@
 ﻿using ExpenseManager.App.Models.Entities;
 using ExpenseManager.App.Services.Interfaces;
-using ExpenseManager.App.Views.User.UC; // Đảm bảo bạn đã using ICategoryView
+using ExpenseManager.App.Views.User.UC;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore; // <<< THÊM DÒNG NÀY
+using Microsoft.EntityFrameworkCore; 
 
 namespace ExpenseManager.App.Presenters
 {
@@ -69,7 +69,7 @@ namespace ExpenseManager.App.Presenters
                 await _service.CreateCategoryAsync(category);
                 _view.ShowMessage("Tạo danh mục thành công!", "Thành công");
                 _view.ResetForm();
-                await LoadAllCategories(); // Tải lại danh sách
+                await LoadAllCategories(); 
             }
             catch (Exception ex)
             {
@@ -94,7 +94,7 @@ namespace ExpenseManager.App.Presenters
                 await _service.UpdateCategoryAsync(category);
                 _view.ShowMessage("Cập nhật thành công!", "Thành công");
                 _view.ResetForm();
-                await LoadAllCategories(); // Tải lại danh sách
+                await LoadAllCategories(); 
             }
             catch (Exception ex)
             {
@@ -115,7 +115,6 @@ namespace ExpenseManager.App.Presenters
             }
         }
 
-        // ===== BẮT ĐẦU SỬA LỖI XÓA =====
         private async void OnDeleteCategory(object sender, EventArgs e)
         {
             if (_view.SelectedCategoryId == null) return;
@@ -124,13 +123,12 @@ namespace ExpenseManager.App.Presenters
                 await _service.DeleteCategoryAsync(_view.SelectedCategoryId.Value);
                 _view.ShowMessage("Xóa thành công!", "Thành công");
                 _view.ResetForm();
-                await LoadAllCategories(); // Tải lại danh sách
+                await LoadAllCategories(); 
             }
-            catch (DbUpdateException dbEx) // Bắt lỗi cụ thể của EF
+            catch (DbUpdateException dbEx) 
             {
                 string errorMessage = dbEx.InnerException?.Message ?? dbEx.Message;
 
-                // Kiểm tra xem có phải lỗi Khóa Ngoại (Foreign Key) không
                 if (errorMessage.Contains("FOREIGN KEY constraint") || errorMessage.Contains("REFERENCE constraint"))
                 {
                     errorMessage = "Không thể xóa danh mục này vì nó đang được sử dụng bởi một Giao dịch (Transaction) hoặc Ngân sách (Budget) đã có.";
@@ -142,16 +140,14 @@ namespace ExpenseManager.App.Presenters
 
                 _view.ShowMessage(errorMessage, "Lỗi xóa", true);
             }
-            catch (Exception ex) // Bắt các lỗi chung khác
+            catch (Exception ex) 
             {
                 _view.ShowMessage($"Lỗi: {ex.Message}", "Lỗi xóa", true);
             }
         }
-        // ===== KẾT THÚC SỬA LỖI XÓA =====
 
         public void Dispose()
         {
-            // Hủy đăng ký sự kiện
             _view.LoadView -= OnLoadView;
             _view.CreateCategory -= OnCreateCategory;
             _view.UpdateCategory -= OnUpdateCategory;

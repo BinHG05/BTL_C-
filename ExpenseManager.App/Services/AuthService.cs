@@ -129,7 +129,6 @@ namespace ExpenseManager.App.Services
 
             await _userRepository.AddUserAsync(newUser);
 
-            // ✅ BƯỚC MỚI: TẠO CÁC DANH MỤC MẶC ĐỊNH
             await CreateDefaultCategoriesAsync(newUser.UserId);
 
             return (true, null);
@@ -143,20 +142,18 @@ namespace ExpenseManager.App.Services
 
             if (user != null)
             {
-                // User đã tồn tại -> Đăng nhập
                 user.LastLogin = DateTime.Now;
                 await _userRepository.UpdateUserAsync(user);
                 return user;
             }
             else
             {
-                // User chưa tồn tại -> Tự động tạo tài khoản mới
                 var newUser = new User
                 {
                     UserId = Guid.NewGuid().ToString(),
                     Email = email,
                     FullName = fullName,
-                    PasswordHash = BCrypt.Net.BCrypt.HashPassword(Guid.NewGuid().ToString()), // Password ngẫu nhiên
+                    PasswordHash = BCrypt.Net.BCrypt.HashPassword(Guid.NewGuid().ToString()), 
                     Role = "User",
                     IsActive = true,
                     CreatedAt = DateTime.Now,
@@ -165,7 +162,6 @@ namespace ExpenseManager.App.Services
 
                 await _userRepository.AddUserAsync(newUser);
 
-                // ✅ BƯỚC MỚI: TẠO CÁC DANH MỤC MẶC ĐỊNH
                 await CreateDefaultCategoriesAsync(newUser.UserId);
 
                 return newUser;
@@ -175,7 +171,6 @@ namespace ExpenseManager.App.Services
         {
             var defaultCategories = new List<Category>
             {
-                // 3 Chi tiêu (Expense)
                 new Category {
                     UserId = userId,
                     CategoryName = "Ăn uống",
@@ -201,7 +196,6 @@ namespace ExpenseManager.App.Services
                     IconId = 3 
                 },
                 
-                // 3 Thu nhập (Income)
                 new Category {
                     UserId = userId,
                     CategoryName = "Lương",

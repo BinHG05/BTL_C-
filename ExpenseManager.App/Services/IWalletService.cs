@@ -1,6 +1,6 @@
 ﻿using ExpenseManager.App.Models.Entities;
-using ExpenseManager.App.Repositories.Interfaces; // For PaginatedResult
-using ExpenseManager.App.Views.User.UC; // For CategoryExpense
+using ExpenseManager.App.Repositories.Interfaces; 
+using ExpenseManager.App.Views.User.UC; 
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

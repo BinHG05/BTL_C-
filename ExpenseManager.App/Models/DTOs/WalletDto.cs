@@ -1,8 +1,6 @@
 ﻿namespace ExpenseManager.App.Models.DTOs
 {
-    /// <summary>
-    /// DTO cho Wallet - dùng trong Analytics và các chức năng khác
-    /// </summary>
+    /// DTO cho Wallet dùng trong Analytics và các chức năng khác
     public class WalletDto
     {
         public int WalletID { get; set; }

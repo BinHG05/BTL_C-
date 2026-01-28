@@ -62,12 +62,10 @@ namespace ExpenseManager.App.Presenters
             _view.ChartTypeChanged += OnChartTypeChanged;
         }
 
-        // ✅ DISPOSE METHOD
         public void Dispose()
         {
             if (!_disposed)
             {
-                // Unsubscribe all events
                 _view.ViewLoaded -= OnViewLoaded;
                 _view.BudgetSelected -= OnBudgetSelected;
                 _view.DeleteBudgetClicked -= OnDeleteBudgetClicked;
@@ -75,7 +73,6 @@ namespace ExpenseManager.App.Presenters
                 _view.ChartDateRangeChanged -= OnChartDateRangeChanged;
                 _view.ChartTypeChanged -= OnChartTypeChanged;
 
-                // Clear data
                 _currentBudgets?.Clear();
                 _currentBudgets = null;
                 _selectedBudgetId = 0;
@@ -84,7 +81,6 @@ namespace ExpenseManager.App.Presenters
             }
         }
 
-        // ✅ Helper method to check if view can be updated
         private bool CanUpdateView()
         {
             if (_disposed) return false;
@@ -207,10 +203,6 @@ namespace ExpenseManager.App.Presenters
 
         private void OnChartTypeChanged(object sender, string chartType)
         {
-            // Không làm gì - để DatePicker trigger ChartDateRangeChanged
-            // Khi View đổi loại chart -> View tự update DatePicker 
-            // -> DatePicker kích hoạt ChartDateRangeChanged 
-            // -> ChartDateRangeChanged gọi LoadExpenseChartAsync
         }
 
         public async Task LoadBudgetsAsync()
@@ -270,10 +262,8 @@ namespace ExpenseManager.App.Presenters
                     {
                         _view.DisplayBudgetDetail(detail);
 
-                        // ✅ Cập nhật DatePicker về range của budget
                         _view.SetChartDateRange(detail.StartDate, detail.EndDate);
 
-                        // ✅ Load chart với date range đúng
                         var breakdown = await budgetService.GetExpenseBreakdownAsync(
                             budgetId, _view.CurrentUserId, detail.StartDate, detail.EndDate);
 
@@ -299,13 +289,11 @@ namespace ExpenseManager.App.Presenters
                 {
                     var budgetService = scope.ServiceProvider.GetRequiredService<IBudgetService>();
 
-                    // ✅ Truyền startDate và endDate vào Service
                     var breakdown = await budgetService.GetExpenseBreakdownAsync(
                         budgetId, _view.CurrentUserId, start, end);
 
                     if (!CanUpdateView()) return;
 
-                    // ✅ Service đã filter và group, không cần xử lý thêm
                     _view.DisplayExpenseChart(breakdown ?? Enumerable.Empty<ExpenseBreakdownDto>());
                 }
             }

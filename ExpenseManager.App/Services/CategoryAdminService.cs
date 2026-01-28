@@ -3,8 +3,8 @@ using ExpenseManager.App.Models.EF;
 using ExpenseManager.App.Repositories.Admin;
 using System.Collections.Generic;
 using System.Linq;
-using ColorEntity = ExpenseManager.App.Models.Entities.Color;  // ALIAS
-using IconEntity = ExpenseManager.App.Models.Entities.Icon;    // ALIAS
+using ColorEntity = ExpenseManager.App.Models.Entities.Color; 
+using IconEntity = ExpenseManager.App.Models.Entities.Icon;   
 
 namespace ExpenseManager.App.Services.Admin
 {
@@ -41,7 +41,7 @@ namespace ExpenseManager.App.Services.Admin
 
         public void AddIcon(IconDTO dto)
         {
-            var icon = new IconEntity  // DÙNG ALIAS
+            var icon = new IconEntity 
             {
                 IconName = dto.IconName,
                 IconClass = dto.IconClass
@@ -51,7 +51,7 @@ namespace ExpenseManager.App.Services.Admin
 
         public void AddColor(ColorDTO dto)
         {
-            var color = new ColorEntity  // DÙNG ALIAS
+            var color = new ColorEntity  
             {
                 ColorName = dto.ColorName,
                 HexCode = dto.HexCode

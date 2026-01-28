@@ -10,9 +10,6 @@ using BCrypt.Net;
 
 namespace ExpenseManager.App.Services
 {
-    /// <summary>
-    /// Service xử lý các nghiệp vụ liên quan đến Profile
-    /// </summary>
     public class ProfileServices : IProfileServices
     {
         private readonly IProfileRepository _repository;
@@ -22,9 +19,6 @@ namespace ExpenseManager.App.Services
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-        /// <summary>
-        /// Lấy thông tin User
-        /// </summary>
         public async Task<User?> GetUserProfileAsync(string userId)
         {
             if (string.IsNullOrWhiteSpace(userId))
@@ -33,9 +27,6 @@ namespace ExpenseManager.App.Services
             return await _repository.GetUserByIdAsync(userId);
         }
 
-        /// <summary>
-        /// Cập nhật thông tin chung
-        /// </summary>
         public async Task<(bool success, string errorMessage)> UpdateGeneralInfoAsync(
             string userId,
             string fullName,
@@ -79,9 +70,6 @@ namespace ExpenseManager.App.Services
                 return (false, "Không thể cập nhật thông tin. Vui lòng thử lại");
         }
 
-        /// <summary>
-        /// Cập nhật thông tin bảo mật
-        /// </summary>
         public async Task<(bool success, string errorMessage)> UpdateSecurityInfoAsync(
             string userId,
             string currentPassword,
@@ -138,9 +126,6 @@ namespace ExpenseManager.App.Services
                 return (false, "Không thể cập nhật thông tin bảo mật. Vui lòng thử lại");
         }
 
-        /// <summary>
-        /// Cập nhật thông tin cá nhân
-        /// </summary>
         public async Task<(bool success, string errorMessage)> UpdatePersonalInfoAsync(
             string userId,
             string? address,
@@ -172,11 +157,6 @@ namespace ExpenseManager.App.Services
                 return (false, "Không thể cập nhật thông tin cá nhân. Vui lòng thử lại");
         }
 
-        // ===== PRIVATE HELPER METHODS =====
-
-        /// <summary>
-        /// Hash password sử dụng SHA256
-        /// </summary>
         private string HashPassword(string password)
         {
             using (var sha256 = SHA256.Create())
@@ -191,18 +171,12 @@ namespace ExpenseManager.App.Services
             }
         }
 
-        /// <summary>
-        /// Xác thực password
-        /// </summary>
         private bool VerifyPassword(string password, string hash)
         {
             string hashedInput = HashPassword(password);
             return hashedInput.Equals(hash, StringComparison.OrdinalIgnoreCase);
         }
 
-        /// <summary>
-        /// Validate email format
-        /// </summary>
         private bool IsValidEmail(string email)
         {
             try
@@ -216,9 +190,6 @@ namespace ExpenseManager.App.Services
             }
         }
 
-        /// <summary>
-        /// Lưu avatar vào thư mục và trả về URL
-        /// </summary>
         private async Task<string?> SaveAvatarAsync(string sourceFilePath, string userId)
         {
             try

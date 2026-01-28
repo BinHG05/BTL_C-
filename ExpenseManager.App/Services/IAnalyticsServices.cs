@@ -6,7 +6,6 @@ namespace ExpenseManager.App.Services
 {
     public interface IAnalyticsService
     {
-        /// Lấy dữ liệu phân tích chi tiêu
         Task<(
             List<ExpenseBreakdownItem> Breakdown,
             List<TransactionDto> History,
@@ -19,7 +18,6 @@ namespace ExpenseManager.App.Services
             int page = 1,
             int pageSize = 7);
 
-        /// Lấy dữ liệu phân tích thu nhập
         Task<(
             List<IncomeBreakdownItem> Breakdown,
             List<IncomeTransactionDto> History,

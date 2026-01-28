@@ -22,7 +22,6 @@ namespace ExpenseManager.App.Services
 
         public async Task<(bool success, string errorMessage)> CreateTicketAsync(string description, string questionType, string userId)
         {
-            // Validation
             if (string.IsNullOrWhiteSpace(description))
             {
                 return (false, "Vui lòng nhập mô tả!");
@@ -40,7 +39,6 @@ namespace ExpenseManager.App.Services
 
             try
             {
-                // Create new ticket
                 var newTicket = new Ticket
                 {
                     UserId = userId,

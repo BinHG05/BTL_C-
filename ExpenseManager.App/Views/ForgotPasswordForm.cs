@@ -1,5 +1,5 @@
 ﻿using ExpenseManager.App.Presenters;
-using Microsoft.Extensions.DependencyInjection; // Cần cái này để lấy LoginForm
+using Microsoft.Extensions.DependencyInjection; 
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -38,7 +38,6 @@ namespace ExpenseManager.App.Views
             txtEmail.Focus();
         }
 
-        // --- BƯỚC 1: GỬI MÃ ---
         private async void btnSubmitEmail_Click(object sender, EventArgs e)
         {
             lblError.Text = string.Empty;
@@ -63,7 +62,7 @@ namespace ExpenseManager.App.Views
 
             if (result.Success)
             {
-                // Chuyển sang giao diện nhập mã (Bước 2)
+                // Chuyển sang giao diện nhập mã 
                 lblTitle.Text = "ĐẶT LẠI MẬT KHẨU";
                 pnlStep1.Visible = false;
                 pnlStep2.Visible = true;
@@ -76,7 +75,6 @@ namespace ExpenseManager.App.Views
             }
         }
 
-        // --- BƯỚC 2: XÁC NHẬN ĐỔI PASS ---
         private async void btnResetPassword_Click(object sender, EventArgs e)
         {
             lblError.Text = string.Empty;
@@ -113,7 +111,6 @@ namespace ExpenseManager.App.Views
             }
         }
 
-        // --- Helper Methods ---
         private void GoBackToLogin()
         {
             var loginForm = Program.ServiceProvider.GetRequiredService<LoginForm>();
@@ -131,7 +128,6 @@ namespace ExpenseManager.App.Views
             lblError.Text = message;
         }
 
-        // --- Các hàm UI Effect (Focus/Blur/ShowPass) giữ nguyên như cũ ---
         private void txtEmail_Enter(object sender, EventArgs e) { pnlEmailLine.BackColor = focusColor; }
         private void txtEmail_Leave(object sender, EventArgs e) { pnlEmailLine.BackColor = blurColor; }
         private void txtCode_Enter(object sender, EventArgs e) { pnlCodeLine.BackColor = focusColor; }

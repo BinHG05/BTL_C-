@@ -29,7 +29,6 @@ namespace ExpenseManager.App.Services
             int page = 1,
             int pageSize = 7)
         {
-            // Parse tháng (format: "yyyy-MM")
             DateTime? startDate = null;
             DateTime? endDate = null;
 
@@ -42,11 +41,9 @@ namespace ExpenseManager.App.Services
                 }
             }
 
-            // 1. Lấy Breakdown (Pie Chart Data) - AWAIT và ToList() ngay
             var categorySummaries = (await _repository.GetExpenseSummaryByCategoryAsync(
                 userId, walletId, startDate, endDate)).ToList();
 
-            // Tính tổng TRÊN LIST đã materialize (không query DB nữa)
             var totalAmount = categorySummaries.Sum(c => c.TotalAmount);
 
             var breakdown = categorySummaries.Select(c => new ExpenseBreakdownItem
@@ -57,11 +54,9 @@ namespace ExpenseManager.App.Services
                 ColorHex = c.ColorHex
             }).ToList();
 
-            // 2. Lấy Transaction History với phân trang - AWAIT
             var (transactions, totalCount) = await _repository.GetExpenseTransactionsAsync(
                 userId, walletId, startDate, endDate, page, pageSize);
 
-            // Map sang DTO ngay
             var history = transactions.Select(t => new TransactionDto
             {
                 TransactionID = t.TransactionId,
@@ -86,10 +81,8 @@ namespace ExpenseManager.App.Services
                 } : null
             }).ToList();
 
-            // 3. Lấy Trend Data (daily aggregation cho tháng hiện tại)
             var trendData = await GetExpenseTrendDataAsync(userId, walletId, startDate, endDate);
 
-            // 4. Tính Paging Info
             var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
             var pagingInfo = new PagingInfo
             {
@@ -113,7 +106,6 @@ namespace ExpenseManager.App.Services
             int page = 1,
             int pageSize = 7)
         {
-            // Parse tháng (format: "yyyy-MM")
             DateTime? startDate = null;
             DateTime? endDate = null;
 
@@ -126,11 +118,9 @@ namespace ExpenseManager.App.Services
                 }
             }
 
-            // 1. Lấy Breakdown (Pie Chart Data) - AWAIT và ToList() ngay
             var categorySummaries = (await _repository.GetIncomeSummaryByCategoryAsync(
                 userId, walletId, startDate, endDate)).ToList();
 
-            // Tính tổng TRÊN LIST đã materialize (không query DB nữa)
             var totalAmount = categorySummaries.Sum(c => c.TotalAmount);
 
             var breakdown = categorySummaries.Select(c => new IncomeBreakdownItem
@@ -141,11 +131,9 @@ namespace ExpenseManager.App.Services
                 ColorHex = c.ColorHex
             }).ToList();
 
-            // 2. Lấy Transaction History với phân trang - AWAIT
             var (transactions, totalCount) = await _repository.GetIncomeTransactionsAsync(
                 userId, walletId, startDate, endDate, page, pageSize);
 
-            // Map sang DTO ngay
             var history = transactions.Select(t => new IncomeTransactionDto
             {
                 TransactionID = t.TransactionId,
@@ -169,10 +157,8 @@ namespace ExpenseManager.App.Services
                 } : null
             }).ToList();
 
-            // 3. Lấy Trend Data (daily aggregation cho tháng hiện tại)
             var trendData = await GetIncomeTrendDataAsync(userId, walletId, startDate, endDate);
 
-            // 4. Tính Paging Info
             var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
             var pagingInfo = new PagingInfo
             {
@@ -193,7 +179,6 @@ namespace ExpenseManager.App.Services
             var dailySummary = await _repository.GetExpenseDailySummaryAsync(
                 userId, walletId, startDate, endDate);
 
-            // Nếu có startDate và endDate, tạo đầy đủ các ngày trong tháng
             if (startDate.HasValue && endDate.HasValue)
             {
                 var allDays = new List<TrendDataPoint>();
@@ -214,7 +199,6 @@ namespace ExpenseManager.App.Services
                 return allDays;
             }
 
-            // Nếu không có khoảng thời gian, trả về data có sẵn
             return dailySummary.Select(d => new TrendDataPoint
             {
                 Date = d.Date,
@@ -232,7 +216,6 @@ namespace ExpenseManager.App.Services
             var dailySummary = await _repository.GetIncomeDailySummaryAsync(
                 userId, walletId, startDate, endDate);
 
-            // Nếu có startDate và endDate, tạo đầy đủ các ngày trong tháng
             if (startDate.HasValue && endDate.HasValue)
             {
                 var allDays = new List<TrendDataPoint>();
@@ -253,7 +236,6 @@ namespace ExpenseManager.App.Services
                 return allDays;
             }
 
-            // Nếu không có khoảng thời gian, trả về data có sẵn
             return dailySummary.Select(d => new TrendDataPoint
             {
                 Date = d.Date,

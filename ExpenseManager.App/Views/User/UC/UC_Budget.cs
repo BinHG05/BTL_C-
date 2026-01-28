@@ -53,7 +53,7 @@ namespace ExpenseManager.App.Views.Admin.UC
                 InitializeChart();
                 Debug.WriteLine("[UC_Budget] Chart initialized");
 
-                // ✅ Kiểm tra Session
+                // Kiểm tra Session
                 if (CurrentUserSession.CurrentUser == null)
                 {
                     Debug.WriteLine("[UC_Budget] ❌ ERROR: CurrentUser is NULL!");
@@ -62,7 +62,7 @@ namespace ExpenseManager.App.Views.Admin.UC
 
                 Debug.WriteLine($"[UC_Budget] Creating Presenter for User: {CurrentUserSession.CurrentUser.UserId}");
 
-                // ✅ SỬ DỤNG ServiceProvider từ Program
+                // SỬ DỤNG ServiceProvider từ Program
                 _presenter = new BudgetPresenter(this, Program.ServiceProvider);
                 Debug.WriteLine("[UC_Budget] Presenter created");
 
@@ -73,7 +73,7 @@ namespace ExpenseManager.App.Views.Admin.UC
                 Debug.WriteLine($"[UC_Budget] ❌ Constructor ERROR: {ex.Message}");
                 Debug.WriteLine($"[UC_Budget] Stack Trace: {ex.StackTrace}");
 
-                // ✅ DISPOSE nếu lỗi để tránh memory leak
+                // DISPOSE nếu lỗi để tránh memory leak
                 if (_presenter != null)
                 {
                     try { _presenter.Dispose(); } catch { }
@@ -114,7 +114,7 @@ namespace ExpenseManager.App.Views.Admin.UC
             chartArea.AxisX.LineColor = Color.LightGray;
             chartArea.AxisY.LineColor = Color.LightGray;
 
-            // ✅ Cấu hình trục X cho DateTime
+            //Cấu hình trục X cho DateTime
             chartArea.AxisX.LabelStyle.Format = "dd/MM/yyyy";
             chartArea.AxisX.IntervalType = DateTimeIntervalType.Days;
 
@@ -126,7 +126,7 @@ namespace ExpenseManager.App.Views.Admin.UC
                 Color = Color.FromArgb(99, 102, 241),
                 IsValueShownAsLabel = true,
                 Font = new Font("Segoe UI", 8f),
-                XValueType = ChartValueType.DateTime // ✅ QUAN TRỌNG
+                XValueType = ChartValueType.DateTime 
             };
 
             series["PointWidth"] = "0.5";
@@ -403,16 +403,16 @@ namespace ExpenseManager.App.Views.Admin.UC
                 return;
             }
 
-            // ✅ Reset cấu hình trục X
+            // Reset cấu hình trục X
             _expenseChart.ChartAreas[0].AxisX.LabelStyle.Format = "";
             _expenseChart.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Auto;
 
-            // ✅ Set XValueType cho DateTime
+            // Set XValueType cho DateTime
             series.XValueType = ChartValueType.DateTime;
 
             foreach (var item in breakdown)
             {
-                // ✅ Truyền DateTime object, không phải string
+                // Truyền DateTime object, không phải string
                 int pointIndex = series.Points.AddXY(item.Date, (double)item.TotalAmount);
                 series.Points[pointIndex].Label = item.TotalAmount.ToString("N0");
                 series.Points[pointIndex].ToolTip = $"{item.Date:dd/MM/yyyy}\n{item.TotalAmount:N0}đ";
@@ -474,17 +474,17 @@ namespace ExpenseManager.App.Views.Admin.UC
             lblProgressPercent.Text = "0.0%";
             pbBudgetProgress.Percentage = 0;
 
-            // ✅ Clear cached data
+            // Clear cached data
             _warnedBudgetIds.Clear();
 
-            // ✅ Clear chart
+            // Clear chart
             if (_expenseChart?.Series.Count > 0)
             {
                 _expenseChart.Series[0].Points.Clear();
                 _expenseChart.Invalidate();
             }
 
-            // ✅ Clear budget list (giữ lại button Add)
+            // Clear budget list (giữ lại button Add)
             if (flpBudgetList != null)
             {
                 flpBudgetList.Controls.Clear();
@@ -510,7 +510,7 @@ namespace ExpenseManager.App.Views.Admin.UC
             }
         }
 
-        // ✅ DISPOSE METHOD
+        // DISPOSE METHOD
         protected override void Dispose(bool disposing)
         {
             if (disposing)

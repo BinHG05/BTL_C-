@@ -32,7 +32,7 @@ namespace ExpenseManager.App.Repositories
                     .ThenInclude(c => c.Color)
                 .Where(t => t.UserId == userId && t.Type == "Expense");
 
-            // Lọc theo ví (nếu có)
+            // Lọc theo ví
             if (walletId.HasValue)
             {
                 query = query.Where(t => t.WalletId == walletId.Value);
@@ -76,7 +76,7 @@ namespace ExpenseManager.App.Repositories
                     .ThenInclude(c => c.Color)
                 .Where(t => t.UserId == userId && t.Type == "Income");
 
-            // Lọc theo ví (nếu có)
+            // Lọc theo ví 
             if (walletId.HasValue)
             {
                 query = query.Where(t => t.WalletId == walletId.Value);

@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace ExpenseManager.App.Presenters
 {
-    /// <summary>
     /// Presenter xử lý logic điều khiển cho Profile View
-    /// </summary>
     public class ProfilePresenter
     {
         private readonly IProfileView _view;
@@ -25,9 +23,7 @@ namespace ExpenseManager.App.Presenters
             _view.SavePersonalInfoClicked += View_SavePersonalInfoClicked;
         }
 
-        /// <summary>
         /// Load dữ liệu User và hiển thị lên View
-        /// </summary>
         public async Task LoadUserProfileAsync()
         {
             try
@@ -55,9 +51,7 @@ namespace ExpenseManager.App.Presenters
             }
         }
 
-        /// <summary>
         /// Xử lý sự kiện Save General Info (Profile Panel)
-        /// </summary>
         private async void View_SaveGeneralInfoClicked(object? sender, EventArgs e)
         {
             try
@@ -66,18 +60,16 @@ namespace ExpenseManager.App.Presenters
                 string fullName = _view.FullName;
                 string avatarPath = _view.AvatarFilePath;
 
-                // Không cập nhật email ở đây (email chỉ đổi ở Security panel)
                 var (success, errorMessage) = await _services.UpdateGeneralInfoAsync(
                     userId,
                     fullName,
-                    null,  // không đổi email ở đây
+                    null,  
                     avatarPath);
 
                 if (success)
                 {
                     _view.ShowSuccess("Cập nhật thông tin thành công!");
 
-                    // Reload lại dữ liệu để hiển thị thông tin mới nhất
                     var updatedUser = await _services.GetUserProfileAsync(userId);
                     if (updatedUser != null)
                     {
@@ -96,9 +88,7 @@ namespace ExpenseManager.App.Presenters
             }
         }
 
-        /// <summary>
         /// Xử lý sự kiện Save Security Info (Password Panel)
-        /// </summary>
         private async void View_SaveSecurityClicked(object? sender, EventArgs e)
         {
             try
@@ -109,7 +99,6 @@ namespace ExpenseManager.App.Presenters
                 string newPassword = _view.NewPasswordInput;
                 string confirmPassword = _view.ConfirmNewPasswordInput;
 
-                // Validate password confirmation nếu có đổi password
                 if (!string.IsNullOrWhiteSpace(newPassword))
                 {
                     if (newPassword != confirmPassword)
@@ -119,7 +108,6 @@ namespace ExpenseManager.App.Presenters
                     }
                 }
 
-                // Gọi service để cập nhật
                 var (success, errorMessage) = await _services.UpdateSecurityInfoAsync(
                     userId,
                     currentPassword,
@@ -149,9 +137,7 @@ namespace ExpenseManager.App.Presenters
             }
         }
 
-        /// <summary>
         /// Xử lý sự kiện Save Personal Info
-        /// </summary>
         private async void View_SavePersonalInfoClicked(object? sender, EventArgs e)
         {
             try
@@ -162,7 +148,6 @@ namespace ExpenseManager.App.Presenters
                 DateTime? dateOfBirth = _view.DateOfBirthInput;
                 string country = _view.CountryInput;
 
-                // Gọi service để cập nhật
                 var (success, errorMessage) = await _services.UpdatePersonalInfoAsync(
                     userId,
                     address,
@@ -174,7 +159,6 @@ namespace ExpenseManager.App.Presenters
                 {
                     _view.ShowSuccess("Cập nhật thông tin cá nhân thành công!");
 
-                    // Reload lại dữ liệu
                     var updatedUser = await _services.GetUserProfileAsync(userId);
                     if (updatedUser != null)
                     {
@@ -193,9 +177,7 @@ namespace ExpenseManager.App.Presenters
             }
         }
 
-        /// <summary>
         /// Hủy đăng ký các sự kiện khi dispose
-        /// </summary>
         public void Dispose()
         {
             _view.SaveGeneralInfoClicked -= View_SaveGeneralInfoClicked;
