@@ -29,11 +29,9 @@ namespace ExpenseManager.App.Views.Admin.UC
 
         private void InitializeCustomComponents()
         {
-            // Tab button click events
             btnIconsTab.Click += (s, e) => SwitchTab("Icons");
             btnColorsTab.Click += (s, e) => SwitchTab("Colors");
 
-            // Add button click events
             btnAddIcon.Click += BtnAddIcon_Click;
             btnAddColor.Click += BtnAddColor_Click;
         }
@@ -42,13 +40,11 @@ namespace ExpenseManager.App.Views.Admin.UC
         {
             _selectedTab = tab;
 
-            // Reset button styles
             btnIconsTab.BackColor = Color.White;
             btnIconsTab.ForeColor = Color.FromArgb(100, 100, 100);
             btnColorsTab.BackColor = Color.White;
             btnColorsTab.ForeColor = Color.FromArgb(100, 100, 100);
 
-            // Highlight selected tab
             if (tab == "Icons")
             {
                 btnIconsTab.BackColor = Color.FromArgb(240, 248, 255);
@@ -72,11 +68,9 @@ namespace ExpenseManager.App.Views.Admin.UC
             flpIcons.Controls.Clear();
             lblIconCount.Text = $"{icons.Count} biểu tượng";
 
-            // Add "Thêm Icon" button
             var addPanel = CreateAddPanel("Icons");
             flpIcons.Controls.Add(addPanel);
 
-            // Add icon cards
             foreach (var icon in icons)
             {
                 var iconCard = CreateIconCard(icon);
@@ -89,11 +83,9 @@ namespace ExpenseManager.App.Views.Admin.UC
             flpColors.Controls.Clear();
             lblColorCount.Text = $"{colors.Count} màu";
 
-            // Add "Thêm Color" button
             var addPanel = CreateAddPanel("Colors");
             flpColors.Controls.Add(addPanel);
 
-            // Add color cards
             foreach (var color in colors)
             {
                 var colorCard = CreateColorCard(color);
@@ -112,7 +104,6 @@ namespace ExpenseManager.App.Views.Admin.UC
                 Cursor = Cursors.Hand
             };
 
-            // Dashed border effect
             panel.Paint += (s, e) =>
             {
                 using (var pen = new Pen(Color.LightGray, 2))
@@ -168,7 +159,6 @@ namespace ExpenseManager.App.Views.Admin.UC
                 Tag = icon
             };
 
-            // Parse FontAwesome icon class
             var iconChar = ParseFontAwesomeIcon(icon.IconClass);
 
             var iconBtn = new IconButton
@@ -241,7 +231,6 @@ namespace ExpenseManager.App.Views.Admin.UC
                 BackColor = ColorTranslator.FromHtml(color.HexCode)
             };
 
-            // Draw circle
             colorCircle.Paint += (s, e) =>
             {
                 e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
@@ -290,10 +279,8 @@ namespace ExpenseManager.App.Views.Admin.UC
 
         private IconChar ParseFontAwesomeIcon(string iconClass)
         {
-            // Remove "fa-solid " prefix and convert to IconChar
             var iconName = iconClass.Replace("fa-solid ", "").Replace("fa-", "");
 
-            // Map common icons
             switch (iconName)
             {
                 case "utensils": return IconChar.Utensils;

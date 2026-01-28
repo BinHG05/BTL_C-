@@ -14,6 +14,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -30,18 +31,12 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
         private IconButton btnChatbot;
         private ChatForm _chatForm;
 
-        // =========================================================
-        // ✅ CẬP NHẬT MÀU SẮC (Đã sửa lại màu chữ mặc định)
-        // =========================================================
-        private Color sidebarColor = Color.FromArgb(15, 23, 42);     // Màu nền sidebar (Dark Navy)
-        private Color activeColor = Color.FromArgb(99, 102, 241);      // Màu tím/indigo khi Active
-        private Color hoverColor = Color.FromArgb(30, 41, 59);         // Màu khi di chuột (Sáng hơn nền một chút)
+        private Color sidebarColor = Color.FromArgb(15, 23, 42);
+        private Color activeColor = Color.FromArgb(99, 102, 241);
+        private Color hoverColor = Color.FromArgb(30, 41, 59);
         private Color defaultBg = Color.Transparent;
 
-        // 🔥 ĐÂY LÀ DÒNG QUAN TRỌNG ĐÃ SỬA:
-        // Đổi từ màu xám đậm (71, 85, 105) sang màu trắng bạc (226, 232, 240) để nổi bật trên nền tối
         private Color defaultTextColor = Color.FromArgb(226, 232, 240);
-
         private Color activeTextColor = Color.White;
 
         private string _currentUserId;
@@ -50,12 +45,36 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
         private ToolStripMenuItem itemSettings;
         private ToolStripMenuItem itemLogout;
 
+        private bool _isLoading = false;
+        private DateTime _lastClickTime = DateTime.MinValue;
+        private const int CLICK_DELAY_MS = 300;
+
+        private Panel loadingOverlay;
+        private Timer spinnerTimer;
+        private int spinnerAngle = 0;
+
         public LayoutUser()
         {
             InitializeComponent();
             InitializeCustomComponents();
             InitializeUserSession();
             InitializeProfileMenu();
+            CreateLoadingOverlay(); 
+
+            this.FormClosing += LayoutUser_FormClosing;
+        }
+
+        private void LayoutUser_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            try
+            {
+                spinnerTimer?.Stop();
+                spinnerTimer?.Dispose();
+                loadingOverlay?.Dispose();
+            }
+            catch (Exception ex)
+            {
+            }
         }
 
         private void InitializeUserSession()
@@ -93,8 +112,120 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             RoundProfileButton();
 
             this.btnAddTransaction.Click += new System.EventHandler(this.BtnAddTransaction_Click);
-            //Tạo button Chatbot
             CreateChatbotButton();
+        }
+
+        private void CreateLoadingOverlay()
+        {
+            loadingOverlay = new Panel
+            {
+                BackColor = Color.FromArgb(200, 255, 255, 255), 
+                Dock = DockStyle.Fill,
+                Visible = false
+            };
+
+            loadingOverlay.Paint += LoadingOverlay_Paint;
+
+            contentPanel.Controls.Add(loadingOverlay);
+            loadingOverlay.BringToFront();
+
+            spinnerTimer = new Timer
+            {
+                Interval = 50 
+            };
+            spinnerTimer.Tick += SpinnerTimer_Tick;
+        }
+
+        private void LoadingOverlay_Paint(object sender, PaintEventArgs e)
+        {
+            if (!loadingOverlay.Visible) return;
+
+            Graphics g = e.Graphics;
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+
+            int centerX = loadingOverlay.Width / 2;
+            int centerY = loadingOverlay.Height / 2;
+            int radius = 40; 
+            int thickness = 6; 
+
+            using (Pen bgPen = new Pen(Color.FromArgb(100, 200, 200, 200), thickness))
+            {
+                g.DrawEllipse(bgPen,
+                    centerX - radius,
+                    centerY - radius,
+                    radius * 2,
+                    radius * 2);
+            }
+
+            using (Pen arcPen = new Pen(Color.FromArgb(99, 102, 241), thickness))
+            {
+                arcPen.StartCap = LineCap.Round;
+                arcPen.EndCap = LineCap.Round;
+
+                g.DrawArc(arcPen,
+                    centerX - radius,
+                    centerY - radius,
+                    radius * 2,
+                    radius * 2,
+                    spinnerAngle,
+                    270);
+            }
+
+            string loadingText = "Đang tải...";
+            using (Font font = new Font("Segoe UI", 12, FontStyle.Regular))
+            using (SolidBrush brush = new SolidBrush(Color.FromArgb(100, 100, 100)))
+            {
+                SizeF textSize = g.MeasureString(loadingText, font);
+                g.DrawString(loadingText, font, brush,
+                    centerX - textSize.Width / 2,
+                    centerY + radius + 20);
+            }
+        }
+
+        private void SpinnerTimer_Tick(object sender, EventArgs e)
+        {
+            spinnerAngle += 10; 
+            if (spinnerAngle >= 360)
+                spinnerAngle = 0;
+
+            loadingOverlay.Invalidate();
+        }
+
+        private void ShowLoading()
+        {
+            loadingOverlay.Visible = true;
+            loadingOverlay.BringToFront();
+            spinnerTimer.Start();
+
+            DisableNavigationButtons();
+        }
+
+        private void HideLoading()
+        {
+            spinnerTimer.Stop();
+            loadingOverlay.Visible = false;
+
+            EnableNavigationButtons();
+        }
+
+        private void DisableNavigationButtons()
+        {
+            btnDashboard.Enabled = false;
+            btnWallet.Enabled = false;
+            btnBudget.Enabled = false;
+            btnGoals.Enabled = false;
+            btnAnalytics.Enabled = false;
+            btnSettings.Enabled = false;
+        }
+
+        private void EnableNavigationButtons()
+        {
+            btnDashboard.Enabled = true;
+            btnWallet.Enabled = true;
+            btnBudget.Enabled = true;
+            btnGoals.Enabled = true;
+            btnAnalytics.Enabled = true;
+            btnSettings.Enabled = true;
         }
 
         private void InitializeProfileMenu()
@@ -158,13 +289,13 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             btnChatbot.Location = new Point(this.ClientSize.Width - 70, this.ClientSize.Height - 70);
             btnChatbot.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
 
-            // Make it circular
             btnChatbot.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, 50, 50, 50, 50));
 
             btnChatbot.Click += BtnChatbot_Click;
             this.Controls.Add(btnChatbot);
             btnChatbot.BringToFront();
         }
+
         private void BtnChatbot_Click(object sender, EventArgs e)
         {
             try
@@ -233,14 +364,12 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             btnProfileTop.Region = new Region(path);
         }
 
-        // ✅ CẬP NHẬT: Hover effects sử dụng màu chữ sáng
         private void SetupButtonHoverEffects()
         {
             var buttons = new[] { btnDashboard, btnWallet, btnBudget, btnGoals, btnAnalytics, btnSettings };
 
             foreach (var btn in buttons)
             {
-                // Đảm bảo ban đầu nút có màu đúng
                 if (btn != currentButton)
                 {
                     btn.ForeColor = defaultTextColor;
@@ -252,8 +381,6 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
                     if (btn != currentButton)
                     {
                         btn.BackColor = hoverColor;
-                        // Khi hover có thể giữ màu trắng hoặc đổi sang màu tím nhạt tùy bạn, 
-                        // ở đây tôi giữ màu trắng cho dễ nhìn
                         btn.ForeColor = Color.White;
                         btn.IconColor = Color.White;
                     }
@@ -264,7 +391,6 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
                     if (btn != currentButton)
                     {
                         btn.BackColor = defaultBg;
-                        // Khi rời chuột, trả về màu mặc định (Bây giờ là màu sáng)
                         btn.ForeColor = defaultTextColor;
                         btn.IconColor = defaultTextColor;
                     }
@@ -278,44 +404,73 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             centerPanel.Top = (headerPanel.Height - centerPanel.Height) / 2;
         }
 
-        // ✅ CẬP NHẬT: Active button logic
         private void ActivateButton(IconButton btn)
         {
             if (btn == currentButton) return;
 
             if (currentButton != null)
             {
-                // Trả nút cũ về màu mặc định (Màu sáng)
                 currentButton.BackColor = defaultBg;
                 currentButton.ForeColor = defaultTextColor;
                 currentButton.IconColor = defaultTextColor;
             }
 
             currentButton = btn;
-            // Nút đang chọn (Active)
             btn.BackColor = activeColor;
             btn.ForeColor = activeTextColor;
             btn.IconColor = activeTextColor;
         }
 
-        private void LoadContent(UserControl uc)
+        private bool CanNavigate()
         {
+            if (_isLoading)
+            {
+                return false;
+            }
+
+            TimeSpan timeSinceLastClick = DateTime.Now - _lastClickTime;
+            if (timeSinceLastClick.TotalMilliseconds < CLICK_DELAY_MS)
+            {
+                return false;
+            }
+
+            _lastClickTime = DateTime.Now;
+            return true;
+        }
+
+        private async void LoadContent(UserControl uc)
+        {
+            if (uc == null)
+            {
+                MessageBox.Show("Không thể tạo nội dung!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             try
             {
-                // ✅ Dispose control cũ
-                foreach (Control ctrl in contentPanel.Controls.OfType<UserControl>().ToList())
-                {
-                    contentPanel.Controls.Remove(ctrl);
-                    ctrl.Dispose();
-                }
+                _isLoading = true;
+                ShowLoading(); 
 
+                contentPanel.SuspendLayout();
+
+                var oldControls = contentPanel.Controls.OfType<UserControl>().ToList();
+                contentPanel.Controls.Remove(loadingOverlay); 
                 contentPanel.Controls.Clear();
 
-                // ✅ Kiểm tra control mới
-                if (uc == null)
+                await Task.Delay(10);
+
+                foreach (Control ctrl in oldControls)
                 {
-                    MessageBox.Show("Không thể tạo nội dung!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    try
+                    {
+                        if (ctrl != null && !ctrl.IsDisposed)
+                        {
+                            ctrl.Dispose();
+                        }
+                    }
+                    catch (Exception disposeEx)
+                    {
+                    }
                 }
 
                 if (uc.IsDisposed)
@@ -326,130 +481,138 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
 
                 uc.Dock = DockStyle.Fill;
                 contentPanel.Controls.Add(uc);
+                contentPanel.Controls.Add(loadingOverlay); 
                 uc.BringToFront();
+
+                await Task.Delay(300);
+
+                contentPanel.ResumeLayout(true);
+
+            }
+            catch (ObjectDisposedException odEx)
+            {
+                MessageBox.Show($"Đối tượng đã bị hủy:\n{odEx.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Lỗi khi tải nội dung:\n{ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            finally
+            {
+                _isLoading = false;
+                HideLoading(); 
+            }
         }
-
-
-        // ============== BUTTON CLICK EVENTS ==============
 
         private void BtnDashboard_Click(object sender, EventArgs e)
         {
-            // 1. Đổi màu nút trên Sidebar
-            ActivateButton(btnDashboard);
+            if (!CanNavigate()) return;
 
-            // 2. Tạo mới Dashboard
-            var dashboard = new UC_Dashboard();
-
-            // 3. [QUAN TRỌNG] Truyền UserID vào để Dashboard biết lấy dữ liệu của ai
-            // Biến _currentUserId đã được bạn lấy từ Session ở đầu Form LayoutUser rồi
-            if (!string.IsNullOrEmpty(_currentUserId))
+            try
             {
-                dashboard.SetUserId(_currentUserId);
-            }
-            else
-            {
-                // Phòng trường hợp lỗi Session (hiếm khi xảy ra nếu đã login)
-                MessageBox.Show("Lỗi: Không tìm thấy ID người dùng!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+                ActivateButton(btnDashboard);
 
-            // 4. Hiển thị Dashboard lên màn hình chính
-            LoadContent(dashboard);
+                var dashboard = new UC_Dashboard();
+
+                if (!string.IsNullOrEmpty(_currentUserId))
+                {
+                    dashboard.SetUserId(_currentUserId);
+                }
+                else
+                {
+                    MessageBox.Show("Lỗi: Không tìm thấy ID người dùng!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                LoadContent(dashboard);
+            }
+            catch (Exception ex)
+            {
+                _isLoading = false;
+                HideLoading();
+                MessageBox.Show($"Lỗi khi tải Dashboard:\n{ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void BtnWallet_Click(object sender, EventArgs e)
         {
-            ActivateButton(btnWallet);
-            LoadContent(new UC_Wallet());
+            if (!CanNavigate()) return;
+
+            try
+            {
+                ActivateButton(btnWallet);
+                LoadContent(new UC_Wallet());
+            }
+            catch (Exception ex)
+            {
+                _isLoading = false;
+                HideLoading();
+                MessageBox.Show($"Lỗi khi tải Ví:\n{ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void BtnBudget_Click(object sender, EventArgs e)
         {
-            ActivateButton(btnBudget);
+            if (!CanNavigate()) return;
 
             try
             {
-                Debug.WriteLine("========================================");
-                Debug.WriteLine("[LayoutUser] BtnBudget_Click START");
+                ActivateButton(btnBudget);
 
-                // ✅ Kiểm tra Session trước
                 if (CurrentUserSession.CurrentUser == null)
                 {
-                    Debug.WriteLine("[LayoutUser] ❌ Session is NULL!");
-                    MessageBox.Show("Phiên đăng nhập không hợp lệ. Vui lòng đăng nhập lại!",
-                        "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    _isLoading = false;
+                    HideLoading();
                     return;
                 }
 
-                Debug.WriteLine($"[LayoutUser] Current User: {CurrentUserSession.CurrentUser.UserId}");
-
-                // ✅ TẠO TRỰC TIẾP thay vì dùng DI
                 UC_Budget uc = null;
 
                 try
                 {
-                    Debug.WriteLine("[LayoutUser] Creating UC_Budget directly...");
                     uc = new UC_Budget();
-
-                    Debug.WriteLine($"[LayoutUser] UC_Budget created: {uc != null}");
-                    Debug.WriteLine($"[LayoutUser] UC_Budget disposed: {uc?.IsDisposed ?? true}");
                 }
                 catch (Exception createEx)
                 {
-                    Debug.WriteLine($"[LayoutUser] ❌ ERROR creating UC_Budget: {createEx.Message}");
-                    Debug.WriteLine($"[LayoutUser] Stack: {createEx.StackTrace}");
                     throw;
                 }
 
                 if (uc == null)
                 {
-                    Debug.WriteLine("[LayoutUser] ❌ UC_Budget is NULL!");
-                    MessageBox.Show("Không thể khởi tạo trang Ngân sách!",
-                        "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _isLoading = false;
+                    HideLoading();
                     return;
                 }
 
                 if (uc.IsDisposed)
                 {
-                    Debug.WriteLine("[LayoutUser] ❌ UC_Budget is DISPOSED!");
-                    MessageBox.Show("Trang Ngân sách đã bị hủy!",
-                        "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _isLoading = false;
+                    HideLoading();
                     return;
                 }
 
-                Debug.WriteLine("[LayoutUser] Loading UC_Budget into panel...");
                 LoadContent(uc);
-
-                Debug.WriteLine("[LayoutUser] ✅ BtnBudget_Click SUCCESS");
-                Debug.WriteLine("========================================");
             }
             catch (ObjectDisposedException odEx)
             {
-                Debug.WriteLine($"[LayoutUser] ObjectDisposedException: {odEx.Message}");
-                Debug.WriteLine($"[LayoutUser] Stack: {odEx.StackTrace}");
-                MessageBox.Show($"Đối tượng đã bị hủy:\n{odEx.Message}",
-                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _isLoading = false;
+                HideLoading();
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"[LayoutUser] Exception: {ex.Message}");
-                Debug.WriteLine($"[LayoutUser] Stack: {ex.StackTrace}");
-                Debug.WriteLine($"[LayoutUser] Inner: {ex.InnerException?.Message}");
-                MessageBox.Show($"Lỗi khi tải trang Ngân sách:\n{ex.Message}\n\nChi tiết:\n{ex.InnerException?.Message}",
-                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _isLoading = false;
+                HideLoading();
             }
         }
 
         private void BtnGoals_Click(object sender, EventArgs e)
         {
-            ActivateButton(btnGoals);
+            if (!CanNavigate()) return;
 
             try
             {
+                ActivateButton(btnGoals);
+
                 var goalService = Program.ServiceProvider.GetRequiredService<IGoalService>();
                 var goalsPresenter = new GoalsPresenter(goalService);
 
@@ -459,7 +622,8 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
                 }
                 else
                 {
-                    MessageBox.Show("Lỗi: Không tìm thấy thông tin người dùng.");
+                    _isLoading = false;
+                    HideLoading();
                     return;
                 }
 
@@ -467,20 +631,41 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi khi tải trang Mục tiêu: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _isLoading = false;
+                HideLoading();
             }
         }
 
         private void BtnAnalytics_Click(object sender, EventArgs e)
         {
-            ActivateButton(btnAnalytics);
-            LoadContent(new UC_Analytics());
+            if (!CanNavigate()) return;
+
+            try
+            {
+                ActivateButton(btnAnalytics);
+                LoadContent(new UC_Analytics());
+            }
+            catch (Exception ex)
+            {
+                _isLoading = false;
+                HideLoading();
+            }
         }
 
         private void BtnSettings_Click(object sender, EventArgs e)
         {
-            ActivateButton(btnSettings);
-            LoadContent(new UC_Settings());
+            if (!CanNavigate()) return;
+
+            try
+            {
+                ActivateButton(btnSettings);
+                LoadContent(new UC_Settings());
+            }
+            catch (Exception ex)
+            {
+                _isLoading = false;
+                HideLoading();
+            }
         }
 
         private void LayoutAdmin_Load(object sender, EventArgs e)
@@ -502,10 +687,19 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
 
         private void btnSearchInside_Click_1(object sender, EventArgs e)
         {
-            LoadContent(new UC_Search());
-        }
+            if (!CanNavigate()) return;
 
-        // ============== MENU RENDERER CLASSES ==============
+            try
+            {
+                LoadContent(new UC_Search());
+            }
+            catch (Exception ex)
+            {
+                _isLoading = false;
+                HideLoading();
+                MessageBox.Show($"Lỗi khi tải Search:\n{ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
         public class CustomMenuRenderer : ToolStripProfessionalRenderer
         {
