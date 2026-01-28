@@ -113,6 +113,7 @@ namespace ExpenseManager.App.Services
                         .Select(g => new ExpenseBreakdownDto
                         {
                             Date = g.Key,
+                            Label = $"{g.Key:dd/MM} - {g.Key.AddDays(6):dd/MM}",
                             TotalAmount = g.Sum(t => t.Amount),
                             TransactionCount = g.Count()
                         });
@@ -124,6 +125,7 @@ namespace ExpenseManager.App.Services
                         .Select(g => new ExpenseBreakdownDto
                         {
                             Date = g.Key,
+                            Label = g.Key.ToString("MM/yyyy"),
                             TotalAmount = g.Sum(t => t.Amount),
                             TransactionCount = g.Count()
                         });
@@ -135,6 +137,7 @@ namespace ExpenseManager.App.Services
                         .Select(g => new ExpenseBreakdownDto
                         {
                             Date = g.Key,
+                            Label = g.Key.ToString("dd/MM"),
                             TotalAmount = g.Sum(t => t.Amount),
                             TransactionCount = g.Count()
                         });
@@ -240,6 +243,7 @@ namespace ExpenseManager.App.Services
     public class ExpenseBreakdownDto
     {
         public DateTime Date { get; set; }
+        public string Label { get; set; }
         public decimal TotalAmount { get; set; }
         public int TransactionCount { get; set; }
         public string FormattedDate => Date.ToString("dd/MM/yyyy");

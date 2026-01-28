@@ -414,37 +414,52 @@ namespace ExpenseManager.App.Views.Admin.UC
                 int pointIndex = series.Points.AddXY(item.Date, (double)item.TotalAmount);
                 series.Points[pointIndex].Label = item.TotalAmount.ToString("N0");
                 series.Points[pointIndex].ToolTip = $"{item.Date:dd/MM/yyyy}\n{item.TotalAmount:N0}đ";
+
+                // ✅ Nếu có Label (dạng range hoặc tháng), dùng làm nhãn trục X
+                if (!string.IsNullOrEmpty(item.Label))
+                {
+                    series.Points[pointIndex].AxisLabel = item.Label;
+                }
             }
 
             var chartArea = _expenseChart.ChartAreas[0];
+            bool hasCustomLabels = breakdown.Any(b => !string.IsNullOrEmpty(b.Label));
 
-            if (breakdown.Count() > 10)
+            if (hasCustomLabels)
             {
-                chartArea.AxisX.LabelStyle.Format = "dd/MM";
-                chartArea.AxisX.LabelStyle.Angle = -45;
-                chartArea.AxisX.IntervalType = DateTimeIntervalType.Days;
+                chartArea.AxisX.LabelStyle.Format = "";
+                chartArea.AxisX.IntervalType = DateTimeIntervalType.Auto;
                 chartArea.AxisX.Interval = 1;
-            }
-            else if (breakdown.Count() > 1)
-            {
-                chartArea.AxisX.LabelStyle.Format = "dd/MM/yyyy";
-                chartArea.AxisX.LabelStyle.Angle = 0;
-                chartArea.AxisX.IntervalType = DateTimeIntervalType.Days;
 
-                var dates = breakdown.Select(b => b.Date).OrderBy(d => d).ToList();
-                var dayRange = (dates.Last() - dates.First()).Days;
-
-                if (dayRange > 30)
-                    chartArea.AxisX.Interval = 7;
-                else if (dayRange > 7)
-                    chartArea.AxisX.Interval = 3;
-                else
-                    chartArea.AxisX.Interval = 1;
+                chartArea.AxisX.LabelStyle.Angle = (breakdown.Count() > 5) ? -45 : 0;
             }
             else
             {
-                chartArea.AxisX.LabelStyle.Format = "dd/MM/yyyy";
-                chartArea.AxisX.LabelStyle.Angle = 0;
+                if (breakdown.Count() > 10)
+                {
+                    chartArea.AxisX.LabelStyle.Format = "dd/MM";
+                    chartArea.AxisX.LabelStyle.Angle = -45;
+                    chartArea.AxisX.IntervalType = DateTimeIntervalType.Days;
+                    chartArea.AxisX.Interval = 1;
+                }
+                else if (breakdown.Count() > 1)
+                {
+                    chartArea.AxisX.LabelStyle.Format = "dd/MM/yyyy";
+                    chartArea.AxisX.LabelStyle.Angle = 0;
+                    chartArea.AxisX.IntervalType = DateTimeIntervalType.Days;
+
+                    var dates = breakdown.Select(b => b.Date).OrderBy(d => d).ToList();
+                    var dayRange = (dates.Last() - dates.First()).Days;
+
+                    if (dayRange > 30) chartArea.AxisX.Interval = 7;
+                    else if (dayRange > 7) chartArea.AxisX.Interval = 3;
+                    else chartArea.AxisX.Interval = 1;
+                }
+                else
+                {
+                    chartArea.AxisX.LabelStyle.Format = "dd/MM/yyyy";
+                    chartArea.AxisX.LabelStyle.Angle = 0;
+                }
             }
 
             _expenseChart.Invalidate();
@@ -472,17 +487,14 @@ namespace ExpenseManager.App.Views.Admin.UC
             lblProgressPercent.Text = "0.0%";
             pbBudgetProgress.Percentage = 0;
 
-            // ✅ Clear cached data
             _warnedBudgetIds.Clear();
 
-            // ✅ Clear chart
             if (_expenseChart?.Series.Count > 0)
             {
                 _expenseChart.Series[0].Points.Clear();
                 _expenseChart.Invalidate();
             }
 
-            // ✅ Clear budget list (giữ lại button Add)
             if (flpBudgetList != null)
             {
                 flpBudgetList.Controls.Clear();
@@ -508,19 +520,16 @@ namespace ExpenseManager.App.Views.Admin.UC
             }
         }
 
-        // ✅ DISPOSE METHOD
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                // Dispose presenter
                 if (_presenter != null)
                 {
                     _presenter.Dispose();
                     _presenter = null;
                 }
 
-                // Unsubscribe events
                 this.Load -= UC_Budget_Load;
 
                 if (_btnAddCache != null)
@@ -541,14 +550,12 @@ namespace ExpenseManager.App.Views.Admin.UC
                 if (dtpChartTo != null)
                     dtpChartTo.ValueChanged -= DateRange_Changed;
 
-                // Dispose chart
                 if (_expenseChart != null)
                 {
                     _expenseChart.Dispose();
                     _expenseChart = null;
                 }
 
-                // Clear cache
                 _warnedBudgetIds?.Clear();
             }
 
