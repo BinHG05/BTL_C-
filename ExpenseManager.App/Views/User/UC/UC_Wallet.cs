@@ -37,7 +37,7 @@ namespace ExpenseManager.App.Views.Admin.UC
             SetupDataGridView();
             SetupChart();
 
-            // Sự kiện cho nút Add Wallet (vẫn giữ nguyên)
+            // Sự kiện cho nút Add Wallet
             this.btnAddWallet.Click += (s, e) => AddNewWallet?.Invoke(this, EventArgs.Empty);
 
             this.btnEdit.Click += (s, e) => EditWallet?.Invoke(this, EventArgs.Empty);
@@ -59,7 +59,6 @@ namespace ExpenseManager.App.Views.Admin.UC
             LoadView?.Invoke(this, EventArgs.Empty);
         }
 
-        // --- IWalletView Implementation ---
         public string UserId => CurrentUserSession.CurrentUser?.UserId;
         public int? SelectedWalletId
         {
@@ -82,7 +81,7 @@ namespace ExpenseManager.App.Views.Admin.UC
 
         public void DisplayWallets(List<Wallet> wallets)
         {
-            flpWallets.Controls.Clear(); // Xóa hết item cũ (kể cả nút Add nếu có)
+            flpWallets.Controls.Clear(); 
 
             if (_selectedWalletId == null && wallets.Any())
             {
@@ -101,7 +100,6 @@ namespace ExpenseManager.App.Views.Admin.UC
                 }
             }
 
-            // ✅ CỰC KỲ QUAN TRỌNG: THÊM NÚT "ADD NEW WALLET" VÀO CUỐI DANH SÁCH
             flpWallets.Controls.Add(this.btnAddWallet);
         }
 
@@ -112,18 +110,13 @@ namespace ExpenseManager.App.Views.Admin.UC
 
             foreach (Control control in flpWallets.Controls)
             {
-                if (control is UC_WalletItem item) // Chỉ check các item là ví, bỏ qua nút Add
+                if (control is UC_WalletItem item) 
                 {
                     item.SetSelected(item.WalletId == _selectedWalletId);
                 }
             }
             SelectWallet?.Invoke(this, EventArgs.Empty);
         }
-
-        // ... (Các hàm khác giữ nguyên: DisplayWalletDetails, DisplayTransactions, SetupDataGridView, v.v.) ...
-        // Bạn có thể giữ nguyên phần còn lại của file UC_Wallet.cs mà bạn đang có, 
-        // chỉ cần thay thế hàm DisplayWallets ở trên là đủ.
-        // (Để tránh bài quá dài, mình chỉ paste phần thay đổi quan trọng nhất).
 
         public void DisplayWalletDetails(Wallet wallet, decimal monthlyExpenses)
         {
@@ -134,7 +127,6 @@ namespace ExpenseManager.App.Views.Admin.UC
 
         public void DisplayTransactions(List<Transaction> transactions, int totalRecords, int pageSize)
         {
-            // Giữ nguyên code đã fix màu trước đó
             _totalRecords = totalRecords;
             _pageSize = pageSize;
             _totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
@@ -206,7 +198,6 @@ namespace ExpenseManager.App.Views.Admin.UC
 
         public void DisplayCategoryChart(List<CategoryExpense> categoryExpenses)
         {
-            // Giữ nguyên
             pieChart.Series.Clear();
             pieChart.Legends.Clear();
             pieChart.Titles.Clear();
@@ -218,7 +209,6 @@ namespace ExpenseManager.App.Views.Admin.UC
                 pieChart.Titles[0].ForeColor = Color.FromArgb(100, 116, 139);
                 return;
             }
-            // ... (giữ nguyên phần vẽ biểu đồ) ...
             var series = new Series("Expenses") { ChartType = SeriesChartType.Pie };
             Legend legend = new Legend("MainLegend") { Docking = Docking.Right, Alignment = StringAlignment.Center, Font = new Font("Segoe UI", 10F) };
             pieChart.Legends.Add(legend);
@@ -257,7 +247,6 @@ namespace ExpenseManager.App.Views.Admin.UC
 
         private void SetupDataGridView()
         {
-            // Giữ nguyên code setup bảng (nhớ là đã có cột ImageColumn)
             dgvTransactions.ColumnHeadersDefaultCellStyle.BackColor = Color.White;
             dgvTransactions.ColumnHeadersDefaultCellStyle.ForeColor = ColorTranslator.FromHtml("#1E293B");
             dgvTransactions.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 11F, FontStyle.Bold);

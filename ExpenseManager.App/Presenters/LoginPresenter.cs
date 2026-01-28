@@ -2,6 +2,7 @@
 using ExpenseManager.App.Services;
 using ExpenseManager.App.Session;
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace ExpenseManager.App.Presenters
@@ -40,7 +41,7 @@ namespace ExpenseManager.App.Presenters
             }
         }
 
-     
+
         public async Task<(bool Success, User User, string Error)> LoginWithGoogleAsync()
         {
             try
@@ -59,6 +60,11 @@ namespace ExpenseManager.App.Presenters
                 if (user != null)
                 {
                     CurrentUserSession.SetUser(user);
+
+                    if (CurrentUserSession.CurrentUser == null)
+                    {
+                        return (false, null, "Không thể lưu phiên đăng nhập");
+                    }
                     return (true, user, null);
                 }
                 else

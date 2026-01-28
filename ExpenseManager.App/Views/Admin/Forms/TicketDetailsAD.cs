@@ -12,7 +12,6 @@ namespace ExpenseManager.App.Views.Admin.Forms
 {
     public partial class TicketDetailsAD : Form
     {
-        // Properties to receive ticket data
         public string TicketID { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
@@ -44,17 +43,14 @@ namespace ExpenseManager.App.Views.Admin.Forms
         }
         private void InitializeForm()
         {
-            // Set form properties
             this.StartPosition = FormStartPosition.CenterParent;
             this.FormBorderStyle = FormBorderStyle.None;
 
-            // Add shadow effect
             this.BackColor = Color.White;
         }
 
         private void TicketDetailsAD_Load(object sender, EventArgs e)
         {
-            // Load data into controls
             lblUserNameValue.Text = UserName ?? "N/A";
             lblEmailValue.Text = Email ?? "N/A";
             lblQuestionValue.Text = Question ?? "N/A";
@@ -64,10 +60,8 @@ namespace ExpenseManager.App.Views.Admin.Forms
             cboStatus.Text = GetDisplayStatus(Status ?? "Open"); 
             UpdateStatusColor();
 
-            // Set admin note
             txtAdminNote.Text = AdminNote ?? "";
 
-            // Set dates
             lblCreatedValue.Text = CreatedDate ?? "N/A";
             lblUpdatedValue.Text = UpdatedDate ?? "N/A";
         }
@@ -105,23 +99,13 @@ namespace ExpenseManager.App.Views.Admin.Forms
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
-            // Update the properties with new values
             Status = GetLogicStatus(cboStatus.Text);
             AdminNote = txtAdminNote.Text;
             UpdatedDate = DateTime.Now.ToString("HH:mm:ss dd/MM/yyyy");
             lblUpdatedValue.Text = UpdatedDate;
 
-            //MessageBox.Show(
-            //    "Đã lưu thay đổi thành công!",
-            //    "Thông báo",
-            //    MessageBoxButtons.OK,
-            //    MessageBoxIcon.Information
-            //);
             this.DialogResult = DialogResult.OK; 
             this.Close();
-            // TODO: Add code to save to database here
-            // Example:
-            // ticketService.UpdateTicket(TicketID, Status, AdminNote);
         }
 
         private void BtnClose_Click(object sender, EventArgs e)
@@ -135,7 +119,6 @@ namespace ExpenseManager.App.Views.Admin.Forms
             this.Close();
         }
 
-        // Allow dragging the form
         private bool dragging = false;
         private Point dragCursorPoint;
         private Point dragFormPoint;

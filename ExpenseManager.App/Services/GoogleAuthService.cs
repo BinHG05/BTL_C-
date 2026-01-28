@@ -73,7 +73,6 @@ namespace ExpenseManager.App.Services
                 var context = await listener.GetContextAsync();
                 var code = context.Request.QueryString.Get("code");
 
-                // ===== SỬA LỖI ENCODING VÀ TỰ ĐỘNG ĐÓNG TAB =====
                 string html = @"
                     <html>
                         <head>
@@ -93,24 +92,18 @@ namespace ExpenseManager.App.Services
                 await context.Response.OutputStream.WriteAsync(buffer, 0, buffer.Length);
                 context.Response.OutputStream.Close();
 
-                // *** THÊM CẢI TIẾN ***
-                // Cho trình duyệt 500ms để thực thi JavaScript window.close()
-                // trước khi listener bị tắt hoàn toàn.
                 await Task.Delay(500);
 
                 listener.Stop();
-                // ===== KẾT THÚC SỬA =====
 
                 if (string.IsNullOrEmpty(code))
                 {
                     return (false, null, null, "Không nhận được authorization code.");
                 }
 
-                // Đổi code lấy token
                 var token = await flow.ExchangeCodeForTokenAsync("user", code, redirectUri, CancellationToken.None);
                 var credential = new UserCredential(flow, "user", token);
 
-                // Lấy thông tin user
                 var service = new Oauth2Service(new BaseClientService.Initializer
                 {
                     HttpClientInitializer = credential,

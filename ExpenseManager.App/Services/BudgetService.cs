@@ -91,7 +91,6 @@ namespace ExpenseManager.App.Services
             if (budget == null || budget.UserId != userId)
                 return new List<ExpenseBreakdownDto>();
 
-            // ✅ Nếu không truyền date range, dùng range của budget
             var effectiveStartDate = startDate ?? budget.StartDate;
             var effectiveEndDate = endDate ?? budget.EndDate;
 
@@ -221,9 +220,7 @@ namespace ExpenseManager.App.Services
         public string FormattedBudget => $"{BudgetAmount:N0}đ";
         public string FormattedSpent => $"{SpentAmount:N0}đ";
 
-        // --- SỬA ĐOẠN NÀY: Nếu âm thì hiển thị là 0đ ---
         public string FormattedRemaining => $"{(RemainingAmount < 0 ? 0 : RemainingAmount):N0}đ";
-        // ------------------------------------------------
 
         public string FormattedStartDate => StartDate.ToString("dd/MM/yyyy");
         public string FormattedEndDate => EndDate.ToString("dd/MM/yyyy");

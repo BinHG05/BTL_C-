@@ -9,6 +9,6 @@ namespace ExpenseManager.App.Models.DTOs
     public class GoalContributionDTO
     {
         public string WalletName { get; set; }
-        public decimal ContributedAmount { get; set; } // Số tiền đã nạp
+        public decimal ContributedAmount { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using ExpenseManager.App.Models.Entities;
 using ExpenseManager.App.Services.Interfaces;
-using ExpenseManager.App.Views; // Cho WalletForm
+using ExpenseManager.App.Views; 
 using ExpenseManager.App.Views.User.UC;
 using System;
 using System.Collections.Generic;
@@ -15,7 +15,7 @@ namespace ExpenseManager.App.Presenters
         private readonly IWalletView _view;
         private readonly IWalletService _service;
         private List<Wallet> _userWallets;
-        private const int PageSize = 10; // 10 giao dịch mỗi trang
+        private const int PageSize = 10; 
 
         public WalletPresenter(IWalletView view, IWalletService service)
         {
@@ -53,7 +53,7 @@ namespace ExpenseManager.App.Presenters
                 }
                 else
                 {
-                    _view.ShowEmptyState(true); // Hiển thị "Chưa có ví"
+                    _view.ShowEmptyState(true); 
                 }
             }
             catch (Exception ex)
@@ -114,7 +114,7 @@ namespace ExpenseManager.App.Presenters
                         };
                         await _service.CreateWalletAsync(newWallet);
                         _view.ShowMessage("Tạo ví mới thành công!", "Thành công");
-                        await LoadAllWalletsAsync(); // Tải lại toàn bộ
+                        await LoadAllWalletsAsync(); 
                     }
                     catch (Exception ex)
                     {
@@ -137,7 +137,7 @@ namespace ExpenseManager.App.Presenters
                 {
                     try
                     {
-                        walletToEdit.WalletName = form.WalletName; // Chỉ cập nhật tên
+                        walletToEdit.WalletName = form.WalletName; 
                         await _service.UpdateWalletAsync(walletToEdit);
                         _view.ShowMessage("Cập nhật ví thành công!", "Thành công");
 
@@ -167,11 +167,10 @@ namespace ExpenseManager.App.Presenters
                 {
                     await _service.DeleteWalletAsync(_view.SelectedWalletId.Value);
                     _view.ShowMessage("Xóa ví thành công!", "Thành công");
-                    await LoadAllWalletsAsync(); // Tải lại từ đầu
+                    await LoadAllWalletsAsync();
                 }
                 catch (InvalidOperationException opEx)
                 {
-                    // Lỗi nghiệp vụ (ví còn tiền, ví có giao dịch)
                     _view.ShowMessage(opEx.Message, "Không thể xóa", true);
                 }
                 catch (Exception ex)

@@ -6,11 +6,9 @@ namespace ExpenseManager.App.Views
 {
     public partial class WalletForm : Form
     {
-        // Public properties để Presenter lấy dữ liệu
         public string WalletName => txtWalletName.Text;
         public decimal InitialBalance => txtInitialBalance.Value;
 
-        // Lấy giá trị "thô" (Bank, Cash...)
         public string WalletType
         {
             get
@@ -30,10 +28,9 @@ namespace ExpenseManager.App.Views
         public WalletForm()
         {
             InitializeComponent();
-            cmbWalletType.SelectedIndex = 0; // Chọn "Tiền mặt" làm mặc định
+            cmbWalletType.SelectedIndex = 0; 
         }
 
-        // Constructor dùng cho "Sửa Ví"
         public WalletForm(Wallet walletToEdit)
         {
             InitializeComponent();
@@ -43,9 +40,8 @@ namespace ExpenseManager.App.Views
 
             txtWalletName.Text = walletToEdit.WalletName;
 
-            // Không cho sửa số dư ban đầu và loại ví khi đã tạo
             txtInitialBalance.Value = walletToEdit.InitialBalance;
-            txtInitialBalance.Enabled = false; // Khóa không cho sửa
+            txtInitialBalance.Enabled = false; 
 
             // Tìm và chọn đúng loại ví
             string type = walletToEdit.WalletType;
@@ -53,9 +49,9 @@ namespace ExpenseManager.App.Views
             else if (type == "E-Wallet") cmbWalletType.SelectedIndex = 2;
             else if (type == "Credit Card") cmbWalletType.SelectedIndex = 3;
             else if (type == "Other") cmbWalletType.SelectedIndex = 4;
-            else cmbWalletType.SelectedIndex = 0; // Cash
+            else cmbWalletType.SelectedIndex = 0; 
 
-            cmbWalletType.Enabled = false; // Khóa không cho sửa
+            cmbWalletType.Enabled = false;
         }
 
         private void btnSave_Click(object sender, EventArgs e)

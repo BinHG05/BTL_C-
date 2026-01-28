@@ -11,7 +11,6 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-// ✅ FIX LỖI QUAN TRỌNG: Định danh rõ Color dùng cho giao diện
 using Color = System.Drawing.Color;
 
 namespace ExpenseManager.App.Views.User.Forms
@@ -20,12 +19,10 @@ namespace ExpenseManager.App.Views.User.Forms
     {
         private AddTransactionPresenter _presenter;
 
-        // --- 1. IMPLEMENT INTERFACE EVENTS ---
         public event EventHandler LoadView;
         public event EventHandler SaveTransaction;
         public event EventHandler TypeChanged;
 
-        // --- 2. IMPLEMENT INTERFACE PROPERTIES ---
         public string UserId => CurrentUserSession.CurrentUser?.UserId;
 
         private string _transactionType = "Expense";
@@ -38,7 +35,7 @@ namespace ExpenseManager.App.Views.User.Forms
         public decimal Amount
         {
             get => decimal.TryParse(txtAmount.Text, out decimal result) ? result : 0;
-            set => txtAmount.Text = value.ToString("N0"); // Format số có dấu phẩy
+            set => txtAmount.Text = value.ToString("N0");
         }
 
         public int? SelectedCategoryId { get; set; } = null;
@@ -60,8 +57,6 @@ namespace ExpenseManager.App.Views.User.Forms
             get => txtDescription.Text;
             set => txtDescription.Text = value;
         }
-
-        // --- 3. CONSTRUCTOR & INIT ---
         public AddTransactionForm(
             ITransactionService transactionService,
             ICategoryService categoryService,
@@ -69,22 +64,17 @@ namespace ExpenseManager.App.Views.User.Forms
         {
             InitializeComponent();
 
-            // Khởi tạo Presenter
             _presenter = new AddTransactionPresenter(this, transactionService, categoryService, walletService);
 
-            // Setup UI
             ApplyRoundedCorners();
             dtpTransaction.Value = DateTime.Now;
 
-            // Đăng ký sự kiện UI
             txtAmount.KeyPress += TxtAmount_KeyPress;
             btnSubmit.Click += (s, e) => SaveTransaction?.Invoke(this, EventArgs.Empty);
 
-            // Gọi LoadView khi form hiển thị
             this.Load += (s, e) => LoadView?.Invoke(this, EventArgs.Empty);
         }
 
-        // --- 4. UI METHODS (INTERFACE IMPLEMENTATION) ---
 
         public void LoadWallets(IEnumerable<Wallet> wallets)
 
@@ -93,25 +83,21 @@ namespace ExpenseManager.App.Views.User.Forms
             cmbWallet.DataSource = wallets.ToList();
             cmbWallet.DisplayMember = "WalletName";
             cmbWallet.ValueMember = "WalletId";
-            cmbWallet.SelectedIndex = -1; // Mặc định chưa chọn ví nào
+            cmbWallet.SelectedIndex = -1; 
         }
 
-        // 1. Hàm phụ trợ: Xử lý chuỗi "fa-solid fa-mug-hot" thành IconChar.MugHot
         private IconChar ParseIcon(string iconClass)
         {
             if (string.IsNullOrWhiteSpace(iconClass)) return IconChar.QuestionCircle;
 
             try
             {
-                // Lấy phần tên chính: "fa-solid fa-mug-hot" -> lấy "fa-mug-hot"
                 var parts = iconClass.Split(' ');
                 var iconName = parts.Length > 0 ? parts[parts.Length - 1] : iconClass;
 
-                // Bỏ tiền tố "fa-": "fa-mug-hot" -> "mug-hot"
                 if (iconName.StartsWith("fa-"))
                     iconName = iconName.Substring(3);
 
-                // Chuyển kebab-case sang PascalCase: "mug-hot" -> "MugHot"
                 var words = iconName.Split('-');
                 for (int i = 0; i < words.Length; i++)
                 {
@@ -120,7 +106,6 @@ namespace ExpenseManager.App.Views.User.Forms
                 }
                 var enumString = string.Join("", words);
 
-                // Ép kiểu sang Enum của thư viện
                 if (Enum.TryParse(enumString, true, out IconChar result))
                 {
                     return result;
@@ -128,10 +113,9 @@ namespace ExpenseManager.App.Views.User.Forms
             }
             catch { }
 
-            return IconChar.QuestionCircle; // Trả về dấu ? nếu lỗi
+            return IconChar.QuestionCircle; 
         }
 
-        // 2. Hàm LoadCategories đã sửa
         public void LoadCategories(IEnumerable<Category> categories)
         {
             categoryFlowPanel.Controls.Clear();
@@ -176,17 +160,14 @@ namespace ExpenseManager.App.Views.User.Forms
                     Cursor = Cursors.Hand
                 };
 
-                // --- SỬA LỖI Ở ĐÂY: Dùng IconClass thay vì IconName ---
                 if (category.Icon != null)
                 {
-                    // Gọi hàm ParseIcon ta vừa viết ở trên với cột IconClass
                     iconPic.IconChar = ParseIcon(category.Icon.IconClass);
                 }
                 else
                 {
                     iconPic.IconChar = IconChar.QuestionCircle;
                 }
-                // -----------------------------------------------------
 
                 // Label tên
                 Label lblName = new Label
@@ -258,8 +239,6 @@ namespace ExpenseManager.App.Views.User.Forms
             this.Close();
         }
 
-        // --- 5. UI EVENT HANDLERS ---
-
         private void BtnExpense_Click(object sender, EventArgs e)
         {
             TransactionType = "Expense";
@@ -309,8 +288,6 @@ namespace ExpenseManager.App.Views.User.Forms
                 e.Handled = true;
             }
         }
-
-        // --- 6. STYLING HELPERS (BO TRÒN GÓC) ---
 
         private void ApplyRoundedCorners()
         {

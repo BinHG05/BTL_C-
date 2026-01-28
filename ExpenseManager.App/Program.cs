@@ -15,6 +15,8 @@ using ExpenseManager.App.Views.User;
 using ExpenseManager.App.Views.User.Forms;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace ExpenseManager.App
 {
@@ -27,7 +29,7 @@ namespace ExpenseManager.App
         {
             ApplicationConfiguration.Initialize();
 
-            string connectionString = ConfigurationManager.ConnectionStrings["ExpenseDB"]?.ConnectionString;
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ExpenseDB"]?.ConnectionString;
             if (string.IsNullOrEmpty(connectionString))
             {
                 MessageBox.Show("Không tìm thấy connection string 'ExpenseDB' trong App.config", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -51,6 +53,13 @@ namespace ExpenseManager.App
 
         private static void ConfigureServices(IServiceCollection services, string connectionString)
         {
+            // 0. Configuration
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+            IConfiguration configuration = builder.Build();
+            services.AddSingleton<IConfiguration>(configuration);
+
             // 1. DB Context
             services.AddDbContext<ExpenseDbContext>(options =>
                 options.UseSqlServer(connectionString)
@@ -88,6 +97,7 @@ namespace ExpenseManager.App
 
             // *** THÊM ANALYTICS SERVICE ***
             services.AddScoped<IAnalyticsService, AnalyticsService>();
+            services.AddScoped<IAIChatService, AIChatService>();
 
             // 4. Presenters
             services.AddTransient<LoginPresenter>();
@@ -106,7 +116,7 @@ namespace ExpenseManager.App
             services.AddTransient<LayoutAdmin>();
             services.AddTransient<UC_Goals>();
             services.AddScoped<UC_Budget>();
-
+            services.AddTransient<ChatForm>();
 
             // Form thêm giao dịch
             services.AddTransient<AddTransactionForm>();

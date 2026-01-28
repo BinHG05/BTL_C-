@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-// Thêm 2 dòng alias này
 using DbColor = ExpenseManager.App.Models.Entities.Color;
 using DbIcon = ExpenseManager.App.Models.Entities.Icon;
 
@@ -29,13 +28,11 @@ namespace ExpenseManager.App.Services
             return _categoryRepository.GetCategoriesByUserIdAsync(userId);
         }
 
-        // Sửa dùng alias DbIcon
         public Task<List<DbIcon>> GetAllIconsAsync()
         {
             return _iconRepository.GetAllIconsAsync();
         }
 
-        // Sửa dùng alias DbColor
         public Task<List<DbColor>> GetAllColorsAsync()
         {
             return _colorRepository.GetAllColorsAsync();
@@ -60,7 +57,6 @@ namespace ExpenseManager.App.Services
             if (existingCategory == null)
                 throw new ArgumentException("Category not found.");
 
-            // Cập nhật các trường
             existingCategory.CategoryName = category.CategoryName;
             existingCategory.Type = category.Type;
             existingCategory.IconId = category.IconId;
@@ -75,10 +71,6 @@ namespace ExpenseManager.App.Services
             var existingCategory = await _categoryRepository.GetCategoryByIdAsync(categoryId);
             if (existingCategory == null)
                 throw new ArgumentException("Category not found.");
-
-            // (Kiểm tra logic, ví dụ: không cho xóa nếu có transaction)
-            // if (existingCategory.Transactions.Any())
-            //    throw new InvalidOperationException("Cannot delete category with existing transactions.");
 
             _categoryRepository.DeleteCategory(existingCategory);
             await _categoryRepository.SaveChangesAsync();

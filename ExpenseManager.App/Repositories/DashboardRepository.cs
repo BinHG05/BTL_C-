@@ -14,13 +14,12 @@ namespace ExpenseManager.App.Repositories
         Task<decimal> GetMonthlyIncomeAsync(string userId, int month, int year);
         Task<decimal> GetMonthlyExpenseAsync(string userId, int month, int year);
 
-        Task<Budget> GetFirstActiveBudgetAsync(string userId); // Hàm cũ lấy 1 cái
-        Task<List<Budget>> GetActiveBudgetsAsync(string userId); // Hàm MỚI lấy list
+        Task<Budget> GetFirstActiveBudgetAsync(string userId); 
+        Task<List<Budget>> GetActiveBudgetsAsync(string userId); 
 
         Task<List<Transaction>> GetMonthlyTransactionsAsync(string userId, int month, int year);
         Task<List<Transaction>> GetTransactionsByDateRangeAsync(string userId, DateTime startDate, DateTime endDate);
 
-        // Hàm MỚI cho phần mở rộng
         Task<List<Transaction>> GetRecentTransactionsAsync(string userId, int count);
         Task<List<Goal>> GetGoalsAsync(string userId);
     }
@@ -63,7 +62,7 @@ namespace ExpenseManager.App.Repositories
                 .FirstOrDefaultAsync();
         }
 
-        // MỚI: Lấy danh sách ngân sách đang chạy (để hiện list thanh ngang)
+        //Lấy danh sách ngân sách đang chạy 
         public async Task<List<Budget>> GetActiveBudgetsAsync(string userId)
         {
             var now = DateTime.Now;
@@ -90,12 +89,12 @@ namespace ExpenseManager.App.Repositories
                 .ToListAsync();
         }
 
-        // MỚI: Lấy 5 giao dịch gần nhất
+        //Lấy 5 giao dịch gần nhất
         public async Task<List<Transaction>> GetRecentTransactionsAsync(string userId, int count)
         {
             return await _context.Transactions
                 .Include(t => t.Category).ThenInclude(c => c.Color)
-                .Include(t => t.Category).ThenInclude(c => c.Icon) // <=== THÊM DÒNG NÀY (Lấy bảng Icon)
+                .Include(t => t.Category).ThenInclude(c => c.Icon) 
                 .Where(t => t.UserId == userId)
                 .OrderByDescending(t => t.TransactionDate)
                 .ThenByDescending(t => t.CreatedAt)
@@ -103,13 +102,13 @@ namespace ExpenseManager.App.Repositories
                 .ToListAsync();
         }
 
-        // MỚI: Lấy danh sách mục tiêu
+        //Lấy danh sách mục tiêu
         public async Task<List<Goal>> GetGoalsAsync(string userId)
         {
             return await _context.Goals
-                .Where(g => g.UserId == userId && g.Status != "Completed") // Lấy mục tiêu đang chạy
+                .Where(g => g.UserId == userId && g.Status != "Completed") 
                 .OrderByDescending(g => g.CreatedAt)
-                .Take(3) // Lấy 3 cái cho đẹp
+                .Take(3) 
                 .ToListAsync();
         }
     }

@@ -22,13 +22,12 @@ namespace ExpenseManager.App.Presenters
 
         public async void LoadInitialData()
         {
-            await Task.Delay(100); // Small delay to ensure UI is ready
+            await Task.Delay(100);
             await SearchTransactionsAsync();
         }
 
         public async void LoadCategories()
         {
-            // Skip if already loaded
             if (_categoriesLoaded)
                 return;
 
@@ -53,7 +52,6 @@ namespace ExpenseManager.App.Presenters
 
         public async void SearchTransactions()
         {
-            // Prevent concurrent searches
             lock (_searchLock)
             {
                 if (_isSearching)
@@ -105,10 +103,8 @@ namespace ExpenseManager.App.Presenters
 
         public void ResetFilters()
         {
-            // Use the new method that doesn't reload categories
             _view.ResetFiltersUI();
 
-            // Search with default filters
             LoadInitialData();
         }
     }

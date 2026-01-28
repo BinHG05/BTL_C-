@@ -17,7 +17,6 @@ namespace ExpenseManager.App.Presenters
             _view = view ?? throw new ArgumentNullException(nameof(view));
             _userService = userService ?? throw new ArgumentNullException(nameof(userService));
 
-            // Initialize default filter
             _currentFilter = new UserSearchFilter
             {
                 PageNumber = 1,
@@ -48,15 +47,12 @@ namespace ExpenseManager.App.Presenters
         {
             try
             {
-                // Load users
                 var usersResult = await _userService.GetUsersAsync(_currentFilter);
                 _view.DisplayUsers(usersResult);
 
-                // Load statistics
                 var stats = await _userService.GetStatisticsAsync();
                 _view.DisplayStatistics(stats);
 
-                // Update pagination info
                 _view.UpdatePaginationInfo($"Showing {usersResult.StartIndex} to {usersResult.EndIndex} of {usersResult.TotalItems} users");
                 _view.UpdatePaginationInfo($"Page {usersResult.PageNumber} of {usersResult.TotalPages}");
                 _view.EnablePagination(usersResult.PageNumber > 1, usersResult.PageNumber < usersResult.TotalPages);
@@ -73,7 +69,7 @@ namespace ExpenseManager.App.Presenters
             {
                 _view.ShowLoading(true);
                 _currentFilter.SearchText = searchText;
-                _currentFilter.PageNumber = 1; // Reset to first page
+                _currentFilter.PageNumber = 1;
                 await LoadDataAsync();
             }
             catch (Exception ex)
@@ -92,7 +88,7 @@ namespace ExpenseManager.App.Presenters
             {
                 _view.ShowLoading(true);
                 _currentFilter.RoleFilter = role;
-                _currentFilter.PageNumber = 1; // Reset to first page
+                _currentFilter.PageNumber = 1;
                 await LoadDataAsync();
             }
             catch (Exception ex)
@@ -111,7 +107,7 @@ namespace ExpenseManager.App.Presenters
             {
                 _view.ShowLoading(true);
                 _currentFilter.StatusFilter = status;
-                _currentFilter.PageNumber = 1; // Reset to first page
+                _currentFilter.PageNumber = 1; 
                 await LoadDataAsync();
             }
             catch (Exception ex)
@@ -130,7 +126,6 @@ namespace ExpenseManager.App.Presenters
             {
                 _view.ShowLoading(true);
 
-                // Reset filter
                 _currentFilter = new UserSearchFilter
                 {
                     PageNumber = 1,
@@ -189,7 +184,7 @@ namespace ExpenseManager.App.Presenters
                         $"User '{userName}' status has been toggled successfully!",
                         "Success"
                     );
-                    await LoadDataAsync(); // Reload data
+                    await LoadDataAsync(); 
                 }
                 else
                 {
@@ -228,7 +223,7 @@ namespace ExpenseManager.App.Presenters
                         $"User '{userName}' has been deleted successfully!",
                         "Success"
                     );
-                    await LoadDataAsync(); // Reload data
+                    await LoadDataAsync(); 
                 }
                 else
                 {

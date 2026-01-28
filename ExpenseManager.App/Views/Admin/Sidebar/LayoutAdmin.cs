@@ -1,9 +1,9 @@
 ﻿using ExpenseManager.App.Models.EF;
-using ExpenseManager.App.Session; // Namespace chứa CurrentUserSession
+using ExpenseManager.App.Session; 
 using ExpenseManager.App.Views.Admin.UC;
 using FontAwesome.Sharp;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection; // Namespace cho DI
+using Microsoft.Extensions.DependencyInjection; 
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -25,7 +25,6 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
         {
             InitializeComponent();
 
-            // Load mặc định
             LoadContent(new UC_DashboardAD());
             ActivateButton(btnDashboard);
             DisplayNameAdmin();
@@ -46,8 +45,6 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
 
             if (currentUser != null)
             {
-                // Giả định đối tượng CurrentUser có thuộc tính FullName
-                // Nếu bạn lưu tên ở thuộc tính khác 
                 if (!string.IsNullOrEmpty(currentUser.FullName))
                 {
                     userName = currentUser.FullName;
@@ -58,7 +55,6 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
                 }
             }
 
-            // 2. Gán giá trị vào Label
             lblAdminName.Text = $"Welcome back, {userName} !";
         }
         private void ActivateButton(IconButton selectedButton)
@@ -79,8 +75,6 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             selectedButton.ForeColor = Color.White;
             selectedButton.IconColor = Color.White;
         }
-
-        // --- EVENTS CLICK ---
 
         private void BtnDashboard_Click(object sender, EventArgs e)
         {
@@ -111,7 +105,6 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
             profileMenu.Show(Cursor.Position);
         }
 
-        // --- LOGIC ĐĂNG XUẤT (ĐÃ SỬA) ---
         private void BtnLogout_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show(
@@ -123,14 +116,11 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
 
             if (result == DialogResult.Yes)
             {
-                // 1. Xóa session (Sử dụng hàm ClearUser của bạn)
                 CurrentUserSession.ClearUser();
 
-                // 2. Mở lại form đăng nhập
                 var loginForm = Program.ServiceProvider.GetRequiredService<LoginForm>();
                 loginForm.Show();
 
-                // 3. Đóng form Admin
                 this.Close();
             }
         }
@@ -152,10 +142,8 @@ namespace ExpenseManager.App.Views.Admin.Sidebar
 
         private void LayoutAdmin_Load(object sender, EventArgs e)
         {
-            // Không cần làm gì thêm nếu đã load ở Constructor
         }
 
-        // --- HÀM LOAD CONTENT ---
         private void LoadContent(UserControl uc)
         {
             contentPanel.Controls.Clear();

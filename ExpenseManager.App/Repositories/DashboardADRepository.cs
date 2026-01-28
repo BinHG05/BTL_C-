@@ -9,10 +9,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ExpenseManager.App.Repositories
 {
-    /// <summary>
     /// Repository thực hiện các truy vấn dữ liệu thô từ database
     /// Sử dụng EF Core để truy cập dữ liệu
-    /// </summary>
     public class DashboardADRepository : IDashboardADRepository
     {
         private readonly DbContext _context;

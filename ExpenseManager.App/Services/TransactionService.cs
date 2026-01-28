@@ -14,9 +14,8 @@ namespace ExpenseManager.App.Services
     {
         private readonly ITransactionRepository _transactionRepository;
         private readonly IWalletRepository _walletRepository;
-        private readonly ExpenseDbContext _context; // Cần context để SaveChanges chung
+        private readonly ExpenseDbContext _context; 
 
-        // Lưu ý: Trong thực tế nên dùng UnitOfWork pattern, ở đây tôi dùng context trực tiếp cho đơn giản theo kiến trúc hiện tại của bạn
         public TransactionService(
             ITransactionRepository transactionRepository,
             IWalletRepository walletRepository,
@@ -38,7 +37,6 @@ namespace ExpenseManager.App.Services
                 throw new ArgumentException("Vui lòng chọn danh mục.");
 
             // 2. Lấy ví hiện tại để cập nhật số dư
-            // Lưu ý: Không dùng AsNoTracking() ở đây vì ta cần update nó
             var wallet = await _context.Wallets.FindAsync(transaction.WalletId);
             if (wallet == null)
                 throw new ArgumentException("Ví không tồn tại.");

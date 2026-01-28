@@ -63,12 +63,10 @@ namespace ExpenseManager.App.Presenters
             _view.ChartTypeChanged += OnChartTypeChanged;
         }
 
-        // ✅ DISPOSE METHOD
         public void Dispose()
         {
             if (!_disposed)
             {
-                // Unsubscribe all events
                 _view.ViewLoaded -= OnViewLoaded;
                 _view.BudgetSelected -= OnBudgetSelected;
                 _view.DeleteBudgetClicked -= OnDeleteBudgetClicked;
@@ -76,7 +74,6 @@ namespace ExpenseManager.App.Presenters
                 _view.ChartDateRangeChanged -= OnChartDateRangeChanged;
                 _view.ChartTypeChanged -= OnChartTypeChanged;
 
-                // Clear data
                 _currentBudgets?.Clear();
                 _currentBudgets = null;
                 _selectedBudgetId = 0;
@@ -85,7 +82,6 @@ namespace ExpenseManager.App.Presenters
             }
         }
 
-        // ✅ Helper method to check if view can be updated
         private bool CanUpdateView()
         {
             if (_disposed) return false;
@@ -287,10 +283,8 @@ namespace ExpenseManager.App.Presenters
                     {
                         _view.DisplayBudgetDetail(detail);
 
-                        // ✅ Cập nhật DatePicker về range của budget
                         _view.SetChartDateRange(detail.StartDate, detail.EndDate);
 
-                        // ✅ Load chart với date range đúng
                         var breakdown = await budgetService.GetExpenseBreakdownAsync(
                             budgetId, _view.CurrentUserId, detail.StartDate, detail.EndDate, _currentGrouping);
 
@@ -316,13 +310,11 @@ namespace ExpenseManager.App.Presenters
                 {
                     var budgetService = scope.ServiceProvider.GetRequiredService<IBudgetService>();
 
-                    // ✅ Truyền startDate, endDate và grouping vào Service
                     var breakdown = await budgetService.GetExpenseBreakdownAsync(
                         budgetId, _view.CurrentUserId, start, end, grouping);
 
                     if (!CanUpdateView()) return;
 
-                    // ✅ Service đã filter và group, không cần xử lý thêm
                     _view.DisplayExpenseChart(breakdown ?? Enumerable.Empty<ExpenseBreakdownDto>());
                 }
             }

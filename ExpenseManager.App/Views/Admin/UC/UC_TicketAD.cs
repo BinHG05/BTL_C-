@@ -21,7 +21,6 @@ namespace ExpenseManager.App.Views.Admin.UC
         private int totalPages = 1;
         private int itemsPerPage = 25;
 
-        // Implement các event từ ITicketADView
         public event EventHandler LoadTickets;
         public event EventHandler ViewTicket;
         public event EventHandler DeleteTicket;
@@ -49,7 +48,7 @@ namespace ExpenseManager.App.Views.Admin.UC
 
         private void InitializeComboBox()
         {
-            cboItemsPerPage.SelectedIndex = 1; // Chọn "25" mặc định
+            cboItemsPerPage.SelectedIndex = 1; 
         }
 
         #region ITicketADView Implementation
@@ -139,7 +138,7 @@ namespace ExpenseManager.App.Views.Admin.UC
 
                 // Helper function để dịch status
                 string translatedStatus;
-                switch (ticket.Status) // Sử dụng status từ entity (giả định là Open/Pending/Resolved)
+                switch (ticket.Status) 
                 {
                     case "Open":
                         translatedStatus = "Mở";
@@ -162,12 +161,11 @@ namespace ExpenseManager.App.Views.Admin.UC
                 row.Cells["colUser"].Value = ticket.User?.FullName ?? "N/A";
                 row.Cells["colEmail"].Value = ticket.User?.Email ?? "N/A";
                 row.Cells["colType"].Value = ticket.QuestionType ?? "";
-                row.Cells["colStatus"].Value = translatedStatus; // CHUYỂN: Gán giá trị đã dịch
+                row.Cells["colStatus"].Value = translatedStatus; 
                 row.Cells["colCreated"].Value = ticket.CreatedAt.ToString("HH:mm dd/MM/yyyy");
                 row.Cells["colNote"].Value = string.IsNullOrEmpty(ticket.AdminNote) ? "" :
                     (ticket.AdminNote.Length > 30 ? ticket.AdminNote.Substring(0, 30) + "..." : ticket.AdminNote);
 
-                // Set màu cho status cell (vẫn dùng status tiếng Anh để xác định màu)
                 ApplyStatusColor(row.Cells["colStatus"], ticket.Status);
             }
 
@@ -278,20 +276,16 @@ namespace ExpenseManager.App.Views.Admin.UC
 
             if (columnName == "colView")
             {
-                // Trigger event ViewTicket
                 ViewTicket?.Invoke(this, EventArgs.Empty);
             }
             else if (columnName == "colDelete")
             {
-                // Trigger event DeleteTicket
                 DeleteTicket?.Invoke(this, EventArgs.Empty);
             }
         }
 
         private void TxtSearch_TextChanged(object sender, EventArgs e)
         {
-            // TODO: Implement search functionality
-            // Có thể filter _allTickets theo từ khóa tìm kiếm và reload trang
         }
 
         #endregion

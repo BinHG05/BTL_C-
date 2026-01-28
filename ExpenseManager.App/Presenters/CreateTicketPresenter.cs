@@ -15,7 +15,6 @@ namespace ExpenseManager.App.Presenters
             _view = view;
             _service = service;
 
-            // Subscribe to events
             _view.SubmitTicketClicked += OnSubmitTicketClicked;
             _view.CancelClicked += OnCancelClicked;
         }
@@ -36,19 +35,16 @@ namespace ExpenseManager.App.Presenters
             {
                 _view.SetLoading(true);
 
-                // Get data from view
                 var description = _view.Description;
                 var questionType = _view.QuestionType;
                 var userId = _view.UserId;
 
-                // Validate selected index
                 if (_view.SelectedQuestionTypeIndex == 0)
                 {
                     _view.ShowError("Vui lòng chọn loại yêu cầu!");
                     return;
                 }
 
-                // Call service to create ticket
                 var (success, errorMessage) = await _service.CreateTicketAsync(description, questionType, userId);
 
                 if (success)

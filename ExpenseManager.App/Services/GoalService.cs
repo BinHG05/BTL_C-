@@ -29,6 +29,7 @@ namespace ExpenseManager.App.Services
             foreach (var goal in goals)
             {
                 var lastMonthDeposit = await _goalRepository.GetLastMonthDepositAsync(goal.GoalId);
+                var lastDepositDate = goal.GoalDeposits.OrderByDescending(d => d.DepositDate).FirstOrDefault()?.DepositDate;
                 var progressPercentage = goal.TargetAmount > 0
                     ? Math.Round((goal.CurrentAmount / goal.TargetAmount) * 100, 2)
                     : 0;
@@ -46,7 +47,8 @@ namespace ExpenseManager.App.Services
                     WalletId = goal.WalletId,
                     WalletName = goal.Wallet?.WalletName,
                     CompletionDate = goal.CompletionDate,
-                    LastMonthDeposit = lastMonthDeposit
+                    LastMonthDeposit = lastMonthDeposit,
+                    LastDepositDate = lastDepositDate
                 });
             }
 
@@ -59,6 +61,7 @@ namespace ExpenseManager.App.Services
             if (goal == null) return null;
 
             var lastMonthDeposit = await _goalRepository.GetLastMonthDepositAsync(goalId);
+            var lastDepositDate = goal.GoalDeposits.OrderByDescending(d => d.DepositDate).FirstOrDefault()?.DepositDate;
             var progressPercentage = goal.TargetAmount > 0
                 ? Math.Round((goal.CurrentAmount / goal.TargetAmount) * 100, 2)
                 : 0;
@@ -76,7 +79,8 @@ namespace ExpenseManager.App.Services
                 WalletId = goal.WalletId,
                 WalletName = goal.Wallet?.WalletName,
                 CompletionDate = goal.CompletionDate,
-                LastMonthDeposit = lastMonthDeposit
+                LastMonthDeposit = lastMonthDeposit,
+                LastDepositDate = lastDepositDate
             };
         }
 
@@ -90,7 +94,8 @@ namespace ExpenseManager.App.Services
                 CurrentAmount = 0,
                 Status = "Active",
                 CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now
+                UpdatedAt = DateTime.Now,
+                CompletionDate = createGoalDto.CompletionDate
             };
 
             var createdGoal = await _goalRepository.CreateGoalAsync(goal);
@@ -106,7 +111,8 @@ namespace ExpenseManager.App.Services
                 CreatedAt = createdGoal.CreatedAt,
                 UpdatedAt = createdGoal.UpdatedAt,
                 WalletId = createdGoal.WalletId,
-                LastMonthDeposit = 0
+                LastMonthDeposit = 0,
+                CompletionDate = createdGoal.CompletionDate
             };
         }
 
@@ -118,6 +124,7 @@ namespace ExpenseManager.App.Services
             goal.GoalName = updateGoalDto.GoalName;
             goal.TargetAmount = updateGoalDto.TargetAmount;
             goal.WalletId = updateGoalDto.WalletId;
+            goal.CompletionDate = updateGoalDto.CompletionDate;
 
             if (!string.IsNullOrEmpty(updateGoalDto.Status))
             {
@@ -141,22 +148,21 @@ namespace ExpenseManager.App.Services
             if (wallet.Balance < depositDto.Amount) return false;
 
             // 2. THỰC HIỆN TÍNH TOÁN
-            wallet.Balance -= depositDto.Amount;      // Trừ tiền ví
-            goal.CurrentAmount += depositDto.Amount;  // Cộng tiền mục tiêu
+            wallet.Balance -= depositDto.Amount;
+            goal.CurrentAmount += depositDto.Amount; 
 
-            // 3. GỌI REPOSITORY ĐỂ UPDATE (QUAN TRỌNG)
-            // Bạn phải gọi hàm này thì DB mới biết Ví đã bị trừ tiền
+            // 3. GỌI REPOSITORY ĐỂ UPDATE
             await _walletRepository.UpdateWallet(wallet);
 
             // Cập nhật Mục tiêu
             await _goalRepository.UpdateGoalAsync(goal);
 
-            // 4. TẠO LỊCH SỬ (Lưu ý: Chỉ gán ID, KHÔNG gán object Wallet để tránh lỗi Tracking)
+            // 4. TẠO LỊCH SỬ 
             var deposit = new GoalDeposit
             {
                 GoalId = depositDto.GoalId,
                 UserId = depositDto.UserId,
-                WalletId = depositDto.WalletId, // <--- Chỉ gán ID
+                WalletId = depositDto.WalletId, 
                 Amount = depositDto.Amount,
                 Note = depositDto.Note ?? string.Empty,
                 DepositDate = DateTime.Now

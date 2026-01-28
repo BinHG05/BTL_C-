@@ -49,6 +49,20 @@ namespace ExpenseManager.App.Views
                 return;
             }
 
+            // 1. Kiểm tra định dạng email
+            if (!IsValidEmail(email))
+            {
+                ShowErrorMessage("Email không đúng định dạng.");
+                return;
+            }
+
+            // 2. Kiểm tra độ dài mật khẩu (ít nhất 6 ký tự)
+            if (password.Length < 6)
+            {
+                ShowErrorMessage("Mật khẩu phải có ít nhất 6 ký tự.");
+                return;
+            }
+
             var (success, errorMessage) = await _presenter.RegisterAsync(fullName, email, password);
 
             if (success)
@@ -62,9 +76,21 @@ namespace ExpenseManager.App.Views
             }
         }
 
-        // ✅ THÊM - Đăng ký bằng Google
-        // ✅ SỬA - Đăng ký bằng Google (Xử lý khi user hủy)
-        // ✅ SỬA LẠI HOÀN TOÀN - Đăng ký bằng Google
+        // THÊM - Phương thức kiểm tra định dạng email
+        private bool IsValidEmail(string email)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        // Đăng ký bằng Google
         private async void btnGoogleRegister_Click(object sender, EventArgs e)
         {
             bool shouldNavigate = false; // Flag để check có chuyển trang không
@@ -123,7 +149,7 @@ namespace ExpenseManager.App.Views
             }
             finally
             {
-                // ✅ QUAN TRỌNG: CHỈ ENABLE LẠI NẾU KHÔNG CHUYỂN TRANG
+                // QUAN TRỌNG: CHỈ ENABLE LẠI NẾU KHÔNG CHUYỂN TRANG
                 if (!shouldNavigate)
                 {
                     btnGoogleRegister.Enabled = true;

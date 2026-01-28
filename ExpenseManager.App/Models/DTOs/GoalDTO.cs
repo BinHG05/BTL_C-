@@ -17,6 +17,7 @@ namespace ExpenseManager.App.Models.DTOs
         public string WalletName { get; set; }
         public DateTime? CompletionDate { get; set; }
         public decimal LastMonthDeposit { get; set; }
+        public DateTime? LastDepositDate { get; set; }
     }
 
     // DTO tạo mới Goal

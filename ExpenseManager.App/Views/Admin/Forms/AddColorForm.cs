@@ -9,18 +9,10 @@ namespace ExpenseManager.App.Views.Admin.Forms
         public string ColorName { get; private set; }
         public string HexCode { get; private set; }
 
-        // XÓA KHAI BÁO CONTROLS Ở ĐÂY - Chuyển sang Designer.cs
-        // private Label lblTitle;
-        // private Label lblColorName;
-        // ...
-
         public AddColorForm()
         {
-            InitializeComponent();  // GỌI method từ Designer.cs
+            InitializeComponent(); 
         }
-
-        // XÓA METHOD InitializeComponent() Ở ĐÂY
-        // Nó phải nằm trong Designer.cs
 
         private void BtnChooseColor_Click(object sender, EventArgs e)
         {
