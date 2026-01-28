@@ -5,6 +5,7 @@
     <UseWindowsForms>true</UseWindowsForms>
     <RootNamespace>ExpenseManager.App</RootNamespace>
     <Nullable>enable</Nullable>
+    <UserSecretsId>74841714-1828-4702-b9d6-7ff2067346a4</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="image\logo.png" />
