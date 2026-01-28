@@ -185,7 +185,6 @@ namespace ExpenseManager.App.Views.Admin.UC
                         e.Graphics.DrawString(firstChar, font, brush, avatarRect, sf);
                     }
 
-                    // Vẽ Text (Tính tọa độ trực tiếp)
                     var textX = avatarRect.Right + 12;
                     var nameY = e.CellBounds.Y + 12;
                     using (var fontName = new Font("Segoe UI", 10F, FontStyle.Bold))
@@ -204,13 +203,11 @@ namespace ExpenseManager.App.Views.Admin.UC
                 var role = e.Value?.ToString();
                 if (!string.IsNullOrEmpty(role))
                 {
-                    // Lấy vai trò đã được dịch
-                    string translatedRole = role.Trim() == "Admin" ? "Quản trị viên" : "Người dùng"; // CHUYỂN
+                    string translatedRole = role.Trim() == "Admin" ? "Quản trị viên" : "Người dùng";
                     bool isAdmin = role.Trim() == "Admin";
                     var bgColor = isAdmin ? Color.FromArgb(225, 240, 255) : Color.FromArgb(242, 244, 247);
                     var fgColor = isAdmin ? Color.FromArgb(0, 123, 255) : Color.FromArgb(100, 116, 139);
 
-                    // Sử dụng translatedRole để tính kích thước và vẽ
                     var textSize = e.Graphics.MeasureString(translatedRole, new Font("Segoe UI", 9F, FontStyle.Bold));
                     var rect = new Rectangle(e.CellBounds.X + 5, e.CellBounds.Y + (e.CellBounds.Height - 26) / 2, (int)textSize.Width + 20, 26);
 
@@ -219,12 +216,11 @@ namespace ExpenseManager.App.Views.Admin.UC
                     using (var brush = new SolidBrush(fgColor))
                     {
                         var sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
-                        e.Graphics.DrawString(translatedRole, font, brush, rect, sf); // Sử dụng translatedRole
+                        e.Graphics.DrawString(translatedRole, font, brush, rect, sf); 
                     }
                 }
                 e.Handled = true;
             }
-            // Vẽ cột TRẠNG THÁI (colStatus)
             else if (e.ColumnIndex == dgvUsers.Columns["colStatus"].Index)
             {
                 var status = e.Value?.ToString();
@@ -234,8 +230,7 @@ namespace ExpenseManager.App.Views.Admin.UC
                     var bgColor = isActive ? Color.FromArgb(220, 252, 231) : Color.FromArgb(254, 226, 226);
                     var fgColor = isActive ? Color.FromArgb(22, 163, 74) : Color.FromArgb(220, 38, 38);
 
-                    // Lấy text hiển thị đã được dịch
-                    var text = isActive ? "Hoạt động" : "Bị chặn"; // CHUYỂN
+                    var text = isActive ? "Hoạt động" : "Bị chặn"; 
 
                     var rect = new Rectangle(e.CellBounds.X + 5, e.CellBounds.Y + (e.CellBounds.Height - 26) / 2, 80, 40);
 
@@ -299,7 +294,6 @@ namespace ExpenseManager.App.Views.Admin.UC
             string selectedText = cmbRole.SelectedItem.ToString();
             string filterValue;
 
-            // Ánh xạ chuỗi tiếng Việt sang giá trị lọc
             switch (selectedText)
             {
                 case "Tất cả vai trò":
@@ -312,7 +306,7 @@ namespace ExpenseManager.App.Views.Admin.UC
                     filterValue = "Admin";
                     break;
                 default:
-                    filterValue = "All Roles"; // Giá trị mặc định an toàn
+                    filterValue = "All Roles"; 
                     break;
             }
 
@@ -325,7 +319,6 @@ namespace ExpenseManager.App.Views.Admin.UC
             string selectedText = cmbStatus.SelectedItem.ToString();
             string filterValue;
 
-            // Ánh xạ chuỗi tiếng Việt sang giá trị lọc (giả định là tiếng Anh)
             switch (selectedText)
             {
                 case "Tất cả trạng thái":
@@ -338,7 +331,7 @@ namespace ExpenseManager.App.Views.Admin.UC
                     filterValue = "Blocked";
                     break;
                 default:
-                    filterValue = "All Status"; // Giá trị mặc định an toàn
+                    filterValue = "All Status"; 
                     break;
             }
 
@@ -348,7 +341,6 @@ namespace ExpenseManager.App.Views.Admin.UC
         private void LblPaginationInfo_Click(object sender, EventArgs e) { /* Logic phân trang */ }
         private void DgvUsers_CellClick(object sender, DataGridViewCellEventArgs e) { if (e.RowIndex < 0) return; if (e.ColumnIndex == dgvUsers.Columns["colActions"].Index) { var userId = dgvUsers.Rows[e.RowIndex].Tag?.ToString(); var userName = dgvUsers.Rows[e.RowIndex].Cells["colUser"].Value?.ToString()?.Split('\n')[0]; if (!string.IsNullOrEmpty(userId)) ShowActionsMenu(userId, userName, e.RowIndex); } }
 
-        // Menu Actions
         private void ShowActionsMenu(string userId, string userName, int rowIndex)
         {
             var menu = new ContextMenuStrip { Font = new Font("Segoe UI", 10F) };

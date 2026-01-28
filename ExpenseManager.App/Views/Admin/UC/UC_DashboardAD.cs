@@ -34,8 +34,7 @@ namespace ExpenseManager.App.Views.Admin.UC
             SetupLoadingPanel();
             SetupCardShadows();
             DisplayWelcomeMessage();
-            // Set default filter
-            cmbFilter.SelectedIndex = 1; // Theo tháng
+            cmbFilter.SelectedIndex = 1; 
             cmbFilter.SelectedIndexChanged += CmbFilter_SelectedIndexChanged;
         }
         private void DisplayWelcomeMessage()
@@ -47,8 +46,6 @@ namespace ExpenseManager.App.Views.Admin.UC
 
             if (currentUser != null)
             {
-                // Giả định đối tượng CurrentUser có thuộc tính FullName
-                // Nếu bạn lưu tên ở thuộc tính khác 
                 if (!string.IsNullOrEmpty(currentUser.FullName))
                 {
                     userName = currentUser.FullName;
@@ -60,27 +57,18 @@ namespace ExpenseManager.App.Views.Admin.UC
             }
 
             // 2. Gán giá trị vào Label
-            // Cú pháp cũ trong Designer là: lblWelcome.Text = "Welcome back, Âu Dương Tấn AD!";
             lblWelcome.Text = $"Chào mừng trở lại, {userName} !";
         }
-        /// <summary>
-        /// Khởi tạo Presenter với Dependency Injection
-        /// Phương thức này nên được gọi từ bên ngoài sau khi tạo UC
-        /// </summary>
+
         public void InitializePresenter(DbContext dbContext)
         {
-            // Setup Dependency Injection
             var repository = new DashboardADRepository(dbContext);
             var service = new DashboardADService(repository);
             _presenter = new DashboardADPresenter(this, service);
 
-            // Load dữ liệu ban đầu
             _ = LoadDashboardDataAsync();
         }
 
-        /// <summary>
-        /// Load toàn bộ dữ liệu Dashboard
-        /// </summary>
         private async Task LoadDashboardDataAsync()
         {
             if (_presenter != null)
@@ -91,9 +79,6 @@ namespace ExpenseManager.App.Views.Admin.UC
 
         #region IDashboardADView Implementation
 
-        /// <summary>
-        /// Hiển thị dữ liệu KPI lên các thẻ
-        /// </summary>
         public void DisplayKPIStats(KPIStatsDTO stats)
         {
             if (InvokeRequired)
@@ -102,10 +87,8 @@ namespace ExpenseManager.App.Views.Admin.UC
                 return;
             }
 
-            // ===== USERS CARD =====
             lblUsersValue.Text = stats.TotalUsers.ToString();
 
-            // Hiển thị số users mới và growth rate
             string usersChangeText = $"+{stats.NewUsersThisMonth} người dùng mới tháng này";
             if (stats.UserGrowthRate != 0)
             {
@@ -116,7 +99,6 @@ namespace ExpenseManager.App.Views.Admin.UC
                 ? Color.FromArgb(46, 204, 113)  // Xanh lá nếu tăng
                 : Color.FromArgb(231, 76, 60);   // Đỏ nếu giảm
 
-            // ===== TRANSACTIONS CARD =====
             lblTransValue.Text = stats.TotalTrans.ToString();
 
             string transChangeText = $"+{stats.NewTransThisMonth} giao dịch mới tháng này";
@@ -129,7 +111,6 @@ namespace ExpenseManager.App.Views.Admin.UC
                 ? Color.FromArgb(46, 204, 113)
                 : Color.FromArgb(231, 76, 60);
 
-            // ===== TICKETS CARD =====
             lblTicketsValue.Text = stats.TotalTickets.ToString();
 
             // Pending (Sử dụng lblTicketsChange)
@@ -153,9 +134,6 @@ namespace ExpenseManager.App.Views.Admin.UC
             lblTicketsLabel.Text = (stats.TotalTickets > 0) ? "Yêu cầu" : "Không có yêu cầu";
         }
 
-        /// <summary>
-        /// Hiển thị dữ liệu biểu đồ tăng trưởng User
-        /// </summary>
         public void DisplayUserGrowthChart(List<ChartDataPointDTO> data)
         {
             if (InvokeRequired)
@@ -164,23 +142,17 @@ namespace ExpenseManager.App.Views.Admin.UC
                 return;
             }
 
-            // Chuyển đổi từ DTO sang model nội bộ
             chartData = data.Select(d => new ChartDataPoint
             {
                 Label = d.Label,
                 Value = d.Value
             }).ToList();
 
-            // Cập nhật tiêu đề biểu đồ
             UpdateChartTitle();
 
-            // Vẽ lại biểu đồ
             chartContainer.Invalidate();
         }
 
-        /// <summary>
-        /// Hiển thị thông báo lỗi
-        /// </summary>
         public void ShowError(string message)
         {
             if (InvokeRequired)
@@ -192,9 +164,6 @@ namespace ExpenseManager.App.Views.Admin.UC
             MessageBox.Show(message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        /// <summary>
-        /// Hiển thị/ẩn loading indicator
-        /// </summary>
         public void ShowLoading(bool isLoading)
         {
             if (InvokeRequired)
@@ -219,7 +188,6 @@ namespace ExpenseManager.App.Views.Admin.UC
             currentFilter = cmbFilter.SelectedItem.ToString();
             UpdateChartTitle();
 
-            // Load lại dữ liệu biểu đồ qua Presenter
             if (_presenter != null)
             {
                 await _presenter.LoadUserGrowthChartAsync(currentFilter);
@@ -285,7 +253,6 @@ namespace ExpenseManager.App.Views.Admin.UC
 
         private void SetupCardShadows()
         {
-            // Thêm shadow effect cho các cards
             ApplyCardStyle(cardUsers);
             ApplyCardStyle(cardTrans);
             ApplyCardStyle(cardTickets);
@@ -463,7 +430,7 @@ namespace ExpenseManager.App.Views.Admin.UC
             // Tránh chia cho 0
             if (valueRange == 0) valueRange = 1;
 
-            // Vẽ grid lines (lưới nền)
+            // Vẽ grid lines 
             using (var gridPen = new Pen(Color.FromArgb(224, 224, 224), 1))
             {
                 // Horizontal grid lines
