@@ -66,6 +66,9 @@ namespace ExpenseManager.App.Views.Admin.UC
                 _presenter = new BudgetPresenter(this, Program.ServiceProvider);
                 Debug.WriteLine("[UC_Budget] Presenter created");
 
+                InitializeChartTypeComboBox(); // ✅ Khôi phục khởi tạo ComboBox
+                Debug.WriteLine("[UC_Budget] ComboBox initialized");
+
                 Debug.WriteLine("[UC_Budget] ✅ Constructor SUCCESS");
             }
             catch (Exception ex)
@@ -101,6 +104,19 @@ namespace ExpenseManager.App.Views.Admin.UC
             if (cmbChartType != null) cmbChartType.SelectedIndexChanged += CmbChartType_SelectedIndexChanged;
             if (dtpChartFrom != null) dtpChartFrom.ValueChanged += DateRange_Changed;
             if (dtpChartTo != null) dtpChartTo.ValueChanged += DateRange_Changed;
+        }
+
+        private void InitializeChartTypeComboBox()
+        {
+            if (cmbChartType != null)
+            {
+                cmbChartType.Items.Clear();
+                cmbChartType.Items.Add("Theo Ngày");
+                cmbChartType.Items.Add("Theo Tuần");
+                cmbChartType.Items.Add("Theo Tháng");
+                cmbChartType.SelectedIndex = 0; // Mặc định "Theo Ngày"
+                cmbChartType.DropDownStyle = ComboBoxStyle.DropDownList;
+            }
         }
 
         private void InitializeChart()
@@ -315,9 +331,23 @@ namespace ExpenseManager.App.Views.Admin.UC
 
         private void CmbChartType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cmbChartType.SelectedItem != null)
+            if (cmbChartType == null || cmbChartType.SelectedItem == null)
+                return;
+
+            string chartType = cmbChartType.SelectedItem.ToString();
+
+            if (dtpChartFrom == null || dtpChartTo == null)
+                return;
+
+            // Trigger event để thông báo loại chart đã thay đổi (Presenter sẽ cập nhật _currentGrouping)
+            ChartTypeChanged?.Invoke(this, chartType);
+
+            // Tạm unsubscribe để tránh trigger event nhiều lần khi cập nhật Format/ShowUpDown
+            dtpChartFrom.ValueChanged -= DateRange_Changed;
+            dtpChartTo.ValueChanged -= DateRange_Changed;
+
+            try
             {
-                string chartType = cmbChartType.SelectedItem.ToString();
                 switch (chartType)
                 {
                     case "Theo Ngày":
@@ -341,7 +371,19 @@ namespace ExpenseManager.App.Views.Admin.UC
                         dtpChartTo.ShowUpDown = true;
                         break;
                 }
-                ChartTypeChanged?.Invoke(this, chartType);
+
+                // Trigger reload để load data với grouping mới trên date range hiện tại
+                ChartDateRangeChanged?.Invoke(this, new BudgetViewDateRangeEventArgs
+                {
+                    StartDate = dtpChartFrom.Value.Date,
+                    EndDate = dtpChartTo.Value.Date
+                });
+            }
+            finally
+            {
+                // Subscribe lại
+                dtpChartFrom.ValueChanged += DateRange_Changed;
+                dtpChartTo.ValueChanged += DateRange_Changed;
             }
         }
 
@@ -416,37 +458,53 @@ namespace ExpenseManager.App.Views.Admin.UC
                 int pointIndex = series.Points.AddXY(item.Date, (double)item.TotalAmount);
                 series.Points[pointIndex].Label = item.TotalAmount.ToString("N0");
                 series.Points[pointIndex].ToolTip = $"{item.Date:dd/MM/yyyy}\n{item.TotalAmount:N0}đ";
+
+                // ✅ Sử dụng nhãn tùy chỉnh (Tuần hoặc Tháng) nếu có
+                if (!string.IsNullOrEmpty(item.Label))
+                {
+                    series.Points[pointIndex].AxisLabel = item.Label;
+                }
             }
 
             var chartArea = _expenseChart.ChartAreas[0];
+            bool hasCustomLabels = breakdown.Any(b => !string.IsNullOrEmpty(b.Label));
 
-            if (breakdown.Count() > 10)
+            if (hasCustomLabels)
             {
-                chartArea.AxisX.LabelStyle.Format = "dd/MM";
-                chartArea.AxisX.LabelStyle.Angle = -45;
-                chartArea.AxisX.IntervalType = DateTimeIntervalType.Days;
+                chartArea.AxisX.LabelStyle.Format = "";
+                chartArea.AxisX.IntervalType = DateTimeIntervalType.Auto;
                 chartArea.AxisX.Interval = 1;
-            }
-            else if (breakdown.Count() > 1)
-            {
-                chartArea.AxisX.LabelStyle.Format = "dd/MM/yyyy";
-                chartArea.AxisX.LabelStyle.Angle = 0;
-                chartArea.AxisX.IntervalType = DateTimeIntervalType.Days;
 
-                var dates = breakdown.Select(b => b.Date).OrderBy(d => d).ToList();
-                var dayRange = (dates.Last() - dates.First()).Days;
-
-                if (dayRange > 30)
-                    chartArea.AxisX.Interval = 7;
-                else if (dayRange > 7)
-                    chartArea.AxisX.Interval = 3;
-                else
-                    chartArea.AxisX.Interval = 1;
+                // Xoay nhãn nếu có nhiều điểm để tránh đè lên nhau
+                chartArea.AxisX.LabelStyle.Angle = (breakdown.Count() > 5) ? -45 : 0;
             }
             else
             {
-                chartArea.AxisX.LabelStyle.Format = "dd/MM/yyyy";
-                chartArea.AxisX.LabelStyle.Angle = 0;
+                if (breakdown.Count() > 10)
+                {
+                    chartArea.AxisX.LabelStyle.Format = "dd/MM";
+                    chartArea.AxisX.LabelStyle.Angle = -45;
+                    chartArea.AxisX.IntervalType = DateTimeIntervalType.Days;
+                    chartArea.AxisX.Interval = 1;
+                }
+                else if (breakdown.Count() > 1)
+                {
+                    chartArea.AxisX.LabelStyle.Format = "dd/MM/yyyy";
+                    chartArea.AxisX.LabelStyle.Angle = 0;
+                    chartArea.AxisX.IntervalType = DateTimeIntervalType.Days;
+
+                    var dates = breakdown.Select(b => b.Date).OrderBy(d => d).ToList();
+                    var dayRange = (dates.Last() - dates.First()).Days;
+
+                    if (dayRange > 30) chartArea.AxisX.Interval = 7;
+                    else if (dayRange > 7) chartArea.AxisX.Interval = 3;
+                    else chartArea.AxisX.Interval = 1;
+                }
+                else
+                {
+                    chartArea.AxisX.LabelStyle.Format = "dd/MM/yyyy";
+                    chartArea.AxisX.LabelStyle.Angle = 0;
+                }
             }
 
             _expenseChart.Invalidate();
