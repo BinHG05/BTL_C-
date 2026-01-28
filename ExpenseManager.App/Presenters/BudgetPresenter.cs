@@ -48,6 +48,7 @@ namespace ExpenseManager.App.Presenters
         private int _selectedBudgetId;
         private List<BudgetSummaryDto> _currentBudgets;
         private bool _disposed = false;
+        private string _currentGrouping = "Day"; // Default grouping
 
         public BudgetPresenter(IBudgetView view, IServiceProvider serviceProvider)
         {
@@ -201,16 +202,32 @@ namespace ExpenseManager.App.Presenters
             if (!CanUpdateView()) return;
             if (_selectedBudgetId > 0)
             {
-                await LoadExpenseChartAsync(_selectedBudgetId, e.StartDate, e.EndDate);
+                await LoadExpenseChartAsync(_selectedBudgetId, e.StartDate, e.EndDate, _currentGrouping);
             }
         }
 
-        private void OnChartTypeChanged(object sender, string chartType)
+        private async void OnChartTypeChanged(object sender, string chartType)
         {
-            // Không làm gì - để DatePicker trigger ChartDateRangeChanged
-            // Khi View đổi loại chart -> View tự update DatePicker 
-            // -> DatePicker kích hoạt ChartDateRangeChanged 
-            // -> ChartDateRangeChanged gọi LoadExpenseChartAsync
+            if (!CanUpdateView()) return;
+
+            // Map view display names to grouping keys
+            _currentGrouping = chartType switch
+            {
+                "Theo Tuần" => "Week",
+                "Theo Tháng" => "Month",
+                _ => "Day"
+            };
+
+            // Re-fetch data with current date range and new grouping
+            // Actually, we should just let the view trigger range change if it wants to,
+            // but for immediate feedback, we call LoadExpenseChartAsync.
+            if (_selectedBudgetId > 0)
+            {
+                // We need the current dates from the view if possible, or just re-fetch
+                // Based on UC_Budget, CmbChartType_SelectedIndexChanged triggers ChartDateRangeChanged
+                // so we might not need to do anything here if the view triggers the event.
+                // However, let's be explicit if needed.
+            }
         }
 
         public async Task LoadBudgetsAsync()
@@ -275,7 +292,7 @@ namespace ExpenseManager.App.Presenters
 
                         // ✅ Load chart với date range đúng
                         var breakdown = await budgetService.GetExpenseBreakdownAsync(
-                            budgetId, _view.CurrentUserId, detail.StartDate, detail.EndDate);
+                            budgetId, _view.CurrentUserId, detail.StartDate, detail.EndDate, _currentGrouping);
 
                         if (!CanUpdateView()) return;
 
@@ -289,7 +306,7 @@ namespace ExpenseManager.App.Presenters
             }
         }
 
-        private async Task LoadExpenseChartAsync(int budgetId, DateTime start, DateTime end)
+        private async Task LoadExpenseChartAsync(int budgetId, DateTime start, DateTime end, string grouping = "Day")
         {
             try
             {
@@ -299,9 +316,9 @@ namespace ExpenseManager.App.Presenters
                 {
                     var budgetService = scope.ServiceProvider.GetRequiredService<IBudgetService>();
 
-                    // ✅ Truyền startDate và endDate vào Service
+                    // ✅ Truyền startDate, endDate và grouping vào Service
                     var breakdown = await budgetService.GetExpenseBreakdownAsync(
-                        budgetId, _view.CurrentUserId, start, end);
+                        budgetId, _view.CurrentUserId, start, end, grouping);
 
                     if (!CanUpdateView()) return;
 

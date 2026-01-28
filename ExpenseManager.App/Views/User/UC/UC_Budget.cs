@@ -39,6 +39,7 @@ namespace ExpenseManager.App.Views.Admin.UC
 
             SetupEventHandlers();
             InitializeChart();
+            InitializeChartTypeComboBox(); // ✅ Khởi tạo ComboBox
             _presenter = new BudgetPresenter(this, Program.ServiceProvider);
         }
 
@@ -55,6 +56,20 @@ namespace ExpenseManager.App.Views.Admin.UC
             if (cmbChartType != null) cmbChartType.SelectedIndexChanged += CmbChartType_SelectedIndexChanged;
             if (dtpChartFrom != null) dtpChartFrom.ValueChanged += DateRange_Changed;
             if (dtpChartTo != null) dtpChartTo.ValueChanged += DateRange_Changed;
+        }
+
+        // ✅ KHỞI TẠO COMBOBOX CHART TYPE
+        private void InitializeChartTypeComboBox()
+        {
+            if (cmbChartType != null)
+            {
+                cmbChartType.Items.Clear();
+                cmbChartType.Items.Add("Theo Ngày");
+                cmbChartType.Items.Add("Theo Tuần");
+                cmbChartType.Items.Add("Theo Tháng");
+                cmbChartType.SelectedIndex = 0; // Mặc định "Theo Ngày"
+                cmbChartType.DropDownStyle = ComboBoxStyle.DropDownList;
+            }
         }
 
         private void InitializeChart()
@@ -267,11 +282,26 @@ namespace ExpenseManager.App.Views.Admin.UC
 
         private void BtnEdit_Click(object sender, EventArgs e) => EditBudgetClicked?.Invoke(this, EventArgs.Empty);
 
+        // ✅ SỬA EVENT HANDLER COMBOBOX
         private void CmbChartType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cmbChartType.SelectedItem != null)
+            if (cmbChartType == null || cmbChartType.SelectedItem == null)
+                return;
+
+            string chartType = cmbChartType.SelectedItem.ToString();
+
+            if (dtpChartFrom == null || dtpChartTo == null)
+                return;
+
+            // Trigger event để thông báo loại chart đã thay đổi (Presenter sẽ cập nhật _currentGrouping)
+            ChartTypeChanged?.Invoke(this, chartType);
+
+            // Tạm unsubscribe để tránh trigger event nhiều lần khi cập nhật Format
+            dtpChartFrom.ValueChanged -= DateRange_Changed;
+            dtpChartTo.ValueChanged -= DateRange_Changed;
+
+            try
             {
-                string chartType = cmbChartType.SelectedItem.ToString();
                 switch (chartType)
                 {
                     case "Theo Ngày":
@@ -280,12 +310,14 @@ namespace ExpenseManager.App.Views.Admin.UC
                         dtpChartFrom.ShowUpDown = false;
                         dtpChartTo.ShowUpDown = false;
                         break;
+
                     case "Theo Tuần":
                         dtpChartFrom.Format = DateTimePickerFormat.Short;
                         dtpChartTo.Format = DateTimePickerFormat.Short;
                         dtpChartFrom.ShowUpDown = false;
                         dtpChartTo.ShowUpDown = false;
                         break;
+
                     case "Theo Tháng":
                         dtpChartFrom.Format = DateTimePickerFormat.Custom;
                         dtpChartFrom.CustomFormat = "MM/yyyy";
@@ -295,7 +327,19 @@ namespace ExpenseManager.App.Views.Admin.UC
                         dtpChartTo.ShowUpDown = true;
                         break;
                 }
-                ChartTypeChanged?.Invoke(this, chartType);
+
+                // Trigger date range changed để load data với grouping mới
+                ChartDateRangeChanged?.Invoke(this, new BudgetViewDateRangeEventArgs
+                {
+                    StartDate = dtpChartFrom.Value.Date,
+                    EndDate = dtpChartTo.Value.Date
+                });
+            }
+            finally
+            {
+                // Subscribe lại
+                dtpChartFrom.ValueChanged += DateRange_Changed;
+                dtpChartTo.ValueChanged += DateRange_Changed;
             }
         }
 
@@ -509,6 +553,11 @@ namespace ExpenseManager.App.Views.Admin.UC
             }
 
             base.Dispose(disposing);
+        }
+
+        private void pnlChartArea_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

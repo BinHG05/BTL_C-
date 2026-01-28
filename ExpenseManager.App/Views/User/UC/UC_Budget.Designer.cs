@@ -448,6 +448,7 @@
             cmbChartType.Name = "cmbChartType";
             cmbChartType.Size = new System.Drawing.Size(121, 31);
             cmbChartType.TabIndex = 1;
+            cmbChartType.SelectedIndexChanged += CmbChartType_SelectedIndexChanged;
             // 
             // dtpChartFrom
             // 
@@ -487,6 +488,7 @@
             pnlChartArea.Name = "pnlChartArea";
             pnlChartArea.Size = new System.Drawing.Size(1080, 230);
             pnlChartArea.TabIndex = 5;
+            pnlChartArea.Paint += pnlChartArea_Paint;
             // 
             // UC_Budget
             // 
